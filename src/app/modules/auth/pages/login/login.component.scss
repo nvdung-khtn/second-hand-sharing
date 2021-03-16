@@ -6,6 +6,14 @@
     height: 100vh;
     font-size: $title-font-size;
 
+    @media (min-width: 768px) and (max-width: 1024px) {
+        display: block;
+    }
+
+    @media (max-width: 767px) {
+        display: block;
+    }
+
     &__left{
         margin: 3% 13%;
 
@@ -24,6 +32,14 @@
                 align-items: center;
                 flex-basis: 100%;
 
+                @media (min-width: 768px) and (max-width: 1024px) {
+                    display: none;
+                }
+
+                @media (max-width: 767px) {
+                    display: none;
+                }
+
                 &__text {
                     margin-left: 10%;
                     font-weight: $font-weight-medium;
@@ -41,6 +57,14 @@
 
 
         &__form {
+
+            @media (min-width: 1281px) {
+                margin-top: 20px;
+            }
+
+            @media (min-width: 1025px) and (max-width: 1280px) {
+                margin-top: 50px;
+            }
             
             &__title {
                 font-weight: $font-weight-bold;
@@ -77,7 +101,42 @@
                 }
             }
 
+            &__sign-up-free {
+                display: inline-block;
+
+                @media (min-width: 1281px) {
+                    display: none;
+                }
+    
+                @media (min-width: 1025px) and (max-width: 1280px) {
+                    display: none;
+                }
+                color: $primary-lightest-text-color;
+                text-align: right;
+                margin: 5% 0;
+                cursor: pointer;
+            }
+
             &__forgot {
+                display: inline-block;
+                float: right;
+
+                @media (min-width: 1281px) {
+                    display: block;
+                    float: none;
+                }
+    
+                @media (min-width: 1025px) and (max-width: 1280px) {
+                    display: block;
+                    float: none;
+                }
+
+                @media (max-width: 480px) {
+                    display: block;
+                    float: none;
+                    text-align: left;
+                }
+
                 color: $primary-lightest-text-color;
                 text-align: right;
                 margin: 5% 0;
@@ -138,6 +197,14 @@
         background-image: $linear-vertical;
         display: flex;
         align-items: center;
+
+        @media (min-width: 768px) and (max-width: 1024px) {
+            display: none;
+        }
+
+        @media (max-width: 767px) {
+            display: none;
+        }
 
         &__circle {
             width: 90%;
