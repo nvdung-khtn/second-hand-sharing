@@ -1,0 +1,13 @@
+@import '../../../../../styles/variables';
+.auth-btn {
+  width: 100%;
+  border: none;
+  text-align: center;
+  margin: 5% 0;
+  padding: 3% 0;
+  background-color: $btn-color;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 10px 20px 0 $box-shadow-color;
+}

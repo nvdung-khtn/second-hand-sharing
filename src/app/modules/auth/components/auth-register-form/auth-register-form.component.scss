@@ -1,0 +1,57 @@
+@import "../../../../../styles/variables";
+.register-form {
+  @media (min-width: 1281px) {
+    margin-top: 20px;
+  }
+
+  @media (min-width: 1025px) and (max-width: 1280px) {
+    margin-top: 50px;
+  }
+
+  &__title {
+    font-weight: $font-weight-bold;
+    font-size: $largest-font-size;
+    color: $primary-text-color;
+    margin-bottom: 5%;
+  }
+
+  &__describe {
+    color: $primary-light-text-color;
+    margin-bottom: 8%;
+  }
+
+  &__input {
+    &__text {
+      margin-top: 4%;
+
+      &__inside {
+        border: none;
+        padding: 2% 0;
+        border-bottom: 1px solid $primary-color;
+        width: 100%;
+        color: $primary-color;
+        font-size: $default-font-size;
+
+        &:focus {
+          outline: none;
+        }
+
+        &::placeholder {
+          color: $primary-color;
+        }
+      }
+    }
+  }
+  &__btn {
+    width: 100%;
+    border: none;
+    text-align: center;
+    margin: 5% 0;
+    padding: 3% 0;
+    background-color: $btn-color;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 10px 20px 0 $box-shadow-color;
+  }
+}

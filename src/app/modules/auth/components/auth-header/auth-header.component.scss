@@ -1,0 +1,40 @@
+@import "../../../../../styles/variables";
+
+.auth-heading {
+  display: flex;
+
+  &__logo {
+    display: flex;
+    width: 60%;
+    max-width: 180px;
+  }
+
+  &__category {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-basis: 100%;
+
+    @media (min-width: 768px) and (max-width: 1024px) {
+      display: none;
+    }
+
+    @media (max-width: 767px) {
+      display: none;
+    }
+
+    &__text {
+      //margin-left: 10%;
+      font-weight: $font-weight-medium;
+      color: $primary-light-text-color;
+      cursor: pointer;
+
+      &__selected {
+        margin-left: 10%;
+        font-weight: $font-weight-bold;
+        color: $selected-text-color;
+        cursor: pointer;
+      }
+    }
+  }
+}
