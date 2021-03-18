@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
+import { OtpVerificationComponent } from './pages/forgot-password/otp-verification/otp-verification.component';
 
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
@@ -21,6 +23,8 @@ const routes: Routes = [
   // },
   { path: 'auth/register', component: LoginComponent, redirectTo: '/auth/register', pathMatch: 'full' },
   { path: 'auth/login', component: RegisterComponent },
+  { path: 'auth/forgot-password', component: ForgotPasswordComponent },
+  { path: 'auth/forgot-password/otp-verification', component: OtpVerificationComponent },
 ];
 
 @NgModule({

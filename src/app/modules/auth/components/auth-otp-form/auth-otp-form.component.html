@@ -1,0 +1,33 @@
+<div class="otp-form">
+    <div class="otp-form__title">
+      Nhập mã xác thực
+    </div>
+  
+    <div class="otp-form__describe">
+        Mã xác thực gồm 4 số được gửi về <b>{{this.emailAddress}}</b> của bạn
+    </div>
+  
+    <div class="otp-form__otp">
+      <div class="otp-form__otp__outer">
+        <div class="otp-form__otp__outer__inner">
+          <input class="otp-form__otp__outer__inner__input" type="text" maxlength="4">
+        </div>
+      </div>
+    </div>
+  
+    <div class="otp-form__btn">
+      Xác nhận
+    </div>
+
+    <div class="otp-form__resend">
+      Gửi lại mã
+    </div>
+
+    <div class="otp-form__another" (click)="navigation('another-email')">
+      Dùng địa chỉ email khác
+    </div>
+
+    <div class="otp-form__noted">
+      <p>Lưu ý:</p> Không chia sẻ mã xác thực và mật khẩu cho bất kỳ ai để tránh trường hợp không mong muốn xảy ra
+    </div>
+</div>

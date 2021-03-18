@@ -23,18 +23,18 @@
       display: none;
     }
 
-    &__text {
+    &__sign-in {
       //margin-left: 10%;
       font-weight: $font-weight-medium;
       color: $primary-light-text-color;
       cursor: pointer;
+    }
 
-      &__selected {
-        margin-left: 10%;
-        font-weight: $font-weight-bold;
-        color: $selected-text-color;
-        cursor: pointer;
-      }
+    &__sign-up {
+      margin-left: 10%;
+      font-weight: $font-weight-medium;
+      color: $primary-light-text-color;
+      cursor: pointer;
     }
   }
 }

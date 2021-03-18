@@ -1,0 +1,131 @@
+@import "../../../../../styles/variables";
+.otp-form {
+  @media (min-width: 1281px) {
+    margin-top: 20px;
+  }
+
+  @media (min-width: 1025px) and (max-width: 1280px) {
+    margin-top: 50px;
+  }
+
+  &__title {
+    font-weight: $font-weight-bold;
+    font-size: $largest-font-size;
+    color: $primary-text-color;
+    margin-bottom: 5%;
+  }
+
+  &__describe {
+    color: $primary-light-text-color;
+    margin-bottom: 5%;
+  }
+
+  &__otp {
+    border: 1px solid $primary-border-otp-color;
+    width: 95%;
+    padding: 20px 10px;
+    margin: 0 auto;
+    text-align: center;
+
+    &:focus {
+        outline: none;
+    }
+    
+    &__outer {
+      overflow: hidden;
+      width: 190px; 
+      margin: 0 auto;
+
+      @media (max-width: 350px) {
+        width: 100%;
+      }
+
+      &__inner {
+        left: 0;
+        position: sticky;
+        
+        &__input {
+          font-size: $title-font-size;
+          color: $primary-text-color;
+          padding-left: 13px; //15px
+          letter-spacing: 39px; //42px 
+          border: 0;
+          background-image: linear-gradient(to left, black 70%, rgba(255, 255, 255, 0) 0%);
+          background-position: bottom;
+          background-size: 50px 1px;
+          background-repeat: repeat-x;
+          background-position-x: 35px;
+          width: 220px;
+          min-width: 220px;
+  
+          &:focus {
+               outline: none;
+          }
+  
+          @media (max-width: 320px) {
+            font-size: $default-font-size;
+            padding-left: 0;
+            letter-spacing: 0;
+            border: 0;
+            background-image: none;
+            background-position: none;
+            background-size: none;
+            background-repeat: none;
+            background-position-x: none;
+            text-align: center;
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+  
+  &__btn {
+    width: 100%;
+    border: none;
+    text-align: center;
+    margin: 5% 0;
+    padding: 3% 0;
+    background-color: $btn-color;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 10px 20px 0 $box-shadow-color;
+
+    &:hover {
+      background-color: $btn-selected;
+    }
+  }
+
+  
+  &__resend {
+    font-weight: $font-weight-bold;
+    color: $selected-text-color;
+    margin-bottom: 3%;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__another {
+    color: $selected-text-color;
+    margin-bottom: 3%;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__noted {
+    color: $primary-light-text-color;
+    margin-bottom: 12%;
+
+    p {
+      display: inline-block;
+      color: red;
+    }
+  }
+}
