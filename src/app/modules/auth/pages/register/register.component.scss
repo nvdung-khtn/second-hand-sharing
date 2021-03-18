@@ -1,0 +1,65 @@
+@import "../../../../../styles/variables";
+
+.register-container {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  height: 100vh;
+  font-size: $title-font-size;
+
+  @media (min-width: 768px) and (max-width: 1024px) {
+    display: block;
+  }
+
+  @media (max-width: 767px) {
+    display: block;
+  }
+
+  &__left {
+    margin: 3% 13%;
+  }
+
+  &__right {
+    background-image: $linear-vertical;
+    display: flex;
+    align-items: center;
+
+    @media (min-width: 768px) and (max-width: 1024px) {
+      display: none;
+    }
+
+    @media (max-width: 767px) {
+      display: none;
+    }
+
+    &__circle {
+      width: 90%;
+      padding-top: 90%; //height = width
+      background-color: #9dd0ff2b;
+      border-radius: 50%;
+      display: inline-block;
+      text-align: center;
+      margin-left: auto;
+      margin-right: auto;
+      left: 0;
+      right: 0;
+      position: relative;
+
+      &::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 85%;
+        padding-top: 85%; //height = width
+        border-radius: 50%;
+        background-color: #9ed0ff2b;
+        background-size: 100px 100px;
+        background-size: 75%;
+        background-image: url("../../../../../assets//image/image-sign-in.svg");
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+    }
+  }
+}

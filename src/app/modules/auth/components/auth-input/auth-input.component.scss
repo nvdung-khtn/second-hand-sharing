@@ -1,0 +1,21 @@
+@import '../../../../../styles/variables';
+.auth-input__text {
+  margin-top: 4%;
+
+  &__inside {
+    border: none;
+    padding: 2% 0;
+    border-bottom: 1px solid $primary-color;
+    width: 100%;
+    color: $primary-color;
+    font-size: $default-font-size;
+
+    &:focus {
+      outline: none;
+    }
+
+    &::placeholder {
+      color: $primary-color;
+    }
+  }
+}

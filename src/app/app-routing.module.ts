@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './modules/auth/pages/login/login.component';
+import { RegisterComponent } from './modules/auth/pages/register/register.component';
 
 const routes: Routes = [
   {
@@ -8,6 +9,7 @@ const routes: Routes = [
     redirectTo: '/auth/login',
     pathMatch: 'full'
   },
+  { path: 'auth/register', component: RegisterComponent},
   {
     path: 'auth/login',
     component: LoginComponent,
