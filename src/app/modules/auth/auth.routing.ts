@@ -7,24 +7,10 @@ import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 
 const routes: Routes = [
-  // {
-  //   path: '',
-  //   redirectTo: '/auth/login',
-  //   pathMatch: 'full'
-  // },
-  // {
-  //   path: '',
-  //   children: [
-  //     {
-  //       path: 'login',
-  //       component: LoginComponent
-  //     },
-  //   ]
-  // },
-  { path: 'auth/register', component: LoginComponent, redirectTo: '/auth/register', pathMatch: 'full' },
-  { path: 'auth/login', component: RegisterComponent },
-  { path: 'auth/forgot-password', component: ForgotPasswordComponent },
-  { path: 'auth/forgot-password/otp-verification', component: OtpVerificationComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: 'forgot-password/otp-verification', component: OtpVerificationComponent },
 ];
 
 @NgModule({

@@ -11,6 +11,7 @@ import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password
 import { AuthOtpFormComponent } from './components/auth-otp-form/auth-otp-form.component';
 import { OtpVerificationComponent } from './pages/forgot-password/otp-verification/otp-verification.component';
 import { FormsModule } from '@angular/forms';
+import { AuthRoutingModule } from './auth.routing';
 
 
 
@@ -18,7 +19,8 @@ import { FormsModule } from '@angular/forms';
   declarations: [LoginComponent, RegisterComponent, AuthHeaderComponent, AuthBtnComponent, AuthInputComponent, AuthRegisterFormComponent, AuthForgotPasswordComponent, ForgotPasswordComponent, AuthOtpFormComponent, OtpVerificationComponent],
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    AuthRoutingModule,
   ]
 })
 export class AuthModule { }
