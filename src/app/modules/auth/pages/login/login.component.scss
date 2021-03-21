@@ -147,6 +147,11 @@
                 cursor: pointer;
             }
 
+            &__error {
+                display: none;
+                color: red;
+            }
+
             &__btn {
                 width: 100%;
                 border: none;

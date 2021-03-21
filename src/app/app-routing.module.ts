@@ -13,7 +13,7 @@ const routes: Routes = [
       import('./modules/auth/auth.module').then(m => m.AuthModule)
   },
   // Fallback when no prior routes is matched
-  { path: '**', redirectTo: '/auth/login'}
+  { path: '**', redirectTo: '/auth/login', pathMatch: 'full'}
 ];
 
 @NgModule({

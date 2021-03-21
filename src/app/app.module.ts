@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -17,6 +18,7 @@ import { RegisterComponent } from './modules/auth/pages/register/register.compon
     AppRoutingModule,
     FormsModule,
     AuthRoutingModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
