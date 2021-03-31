@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { LoginModel, URL_LOGIN } from './auth.constant';
+import { environment } from "src/environments/environment"
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  URL = `${environment.apiUrl}/${URL_LOGIN}`;
   headers = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -16,9 +18,8 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  // tslint:disable-next-line: typedef
-  login(loginData: any) {
+  login(loginData: LoginModel) {
     const body = JSON.stringify(loginData);
-    return this.http.post(`https://localhost:44300/${URL_LOGIN}`, body, this.headers);
+    return this.http.post(this.URL, body, this.headers);
   }
 }

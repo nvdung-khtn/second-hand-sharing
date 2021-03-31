@@ -1,27 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoginModel } from 'src/app/core/services/auth/auth.constant';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
   userName: string;
   password: string;
   isError = false;
 
-  constructor(
-    private router: Router,
-    private authService: AuthService,
-  ) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   navigation(str: string) {
-    switch(str){
+    switch (str) {
       case 'register':
         this.router.navigateByUrl('/auth/register');
         break;
@@ -34,21 +29,19 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     const loginData = {
       userName: this.userName,
-      password: this.password
+      password: this.password,
     };
-    this.authService.login(loginData)
-    .subscribe(
-      (data: LoginModel ) => {
+    this.authService.login(loginData).subscribe(
+      (data) => {
         this.isError = false;
         console.log(data);
         // this.router.navigateByUrl('/home');
       },
-      (err) =>  {
-                  /* this.onLoginFail(); */
-                  this.isError = true;
-                  console.log(err);
-                }
-  );
-
+      (err) => {
+        /* this.onLoginFail(); */
+        this.isError = true;
+        console.log(err);
+      }
+    );
   }
 }
