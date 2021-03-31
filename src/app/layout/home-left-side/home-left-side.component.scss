@@ -1,0 +1,101 @@
+
+@import '../../../styles/variables';
+
+.home-left-side {
+
+    &__profile {
+        display: flex;
+        align-items: center;
+        padding: 5px 2%;
+        margin: 0px 12px;
+        margin-top: 15px;
+
+        &:hover {
+            cursor: pointer;
+            background-color: $primary-icon-background-color;
+            border-radius: 5px;
+        }
+
+        &__avatar {
+            width: 100%;
+            max-width: 50px;
+            margin-right: 2%;
+        }
+
+        &__name {
+            font-weight: $font-weight-medium;
+            color: $primary-text-color;
+        }
+    }
+
+    &__category {
+
+        &__list {
+            display: flex;
+            align-items: center;
+            padding: 12px 2%;
+            margin: 0px 12px;
+
+            &:hover {
+                cursor: pointer;
+                background-color: $primary-icon-background-color;
+                border-radius: 5px;
+            }
+
+            &__icon {
+                font-size: 32px;
+                color: $primary-color;
+                width: auto;
+                margin-right: 10px;
+            }
+
+            fa-icon {
+                font-size: 25px;
+            }
+
+            &__title {
+                color: $primary-icon-color;
+            }
+        }
+    }
+
+    &__shortcut {
+
+        &__title {
+            padding: 15px 0;
+            border-top: 1px solid $primary-icon-background-color;
+            border-bottom: 1px solid $primary-icon-background-color;
+            font-weight: $font-weight-medium;
+            color: $primary-icon-color;
+            margin: 0 6%;
+        }
+
+        &__list {
+
+            &__item {
+                display: flex;
+                align-items: center;
+                padding: 12px 2%;
+                margin: 0px 12px;
+
+                &:hover {
+                    cursor: pointer;
+                    background-color: $primary-icon-background-color;
+                    border-radius: 5px;
+                }
+
+                &__image {
+                    margin-right: 5px;
+                    width: 100%;
+                    max-width: 40px;
+                }
+
+                &__name {
+                    color: $primary-icon-color;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+            }
+        }
+    }
+}

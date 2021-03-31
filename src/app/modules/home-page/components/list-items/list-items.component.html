@@ -1,0 +1,25 @@
+<div class="list-items">
+    <div class="list-items__grid">
+        <div class="list-items__grid__card" *ngFor="let item of this.listItems?.data">
+            <div class="list-items__grid__card__image">
+                <img class="list-items__grid__card__image__inside" src={{checkImage(item?.imageUrl)}}>
+            </div>
+
+            <div class="list-items__grid__card__name">
+                {{item?.itemName}}
+            </div>
+
+            <div class="list-items__grid__card__post-info">
+                <div class="list-items__grid__card__post-info__time">
+                    {{this.subtractDate(item?.postTime)}} - {{item?.receiveAddress}}
+                </div>
+            </div>
+
+            <div class="list-items__grid__card__line"></div>
+
+            <div class="list-items__grid__card__description">
+                {{item?.description}}
+            </div>
+        </div>
+    </div>
+</div>

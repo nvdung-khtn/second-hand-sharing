@@ -32,10 +32,10 @@ export class LoginComponent implements OnInit {
       password: this.password,
     };
     this.authService.login(loginData).subscribe(
-      (data) => {
+      (data: any) => {
         this.isError = false;
-        console.log(data);
-        // this.router.navigateByUrl('/home');
+        localStorage.setItem('currentUser', JSON.stringify(data?.data));
+        this.router.navigateByUrl('/home');
       },
       (err) => {
         /* this.onLoginFail(); */

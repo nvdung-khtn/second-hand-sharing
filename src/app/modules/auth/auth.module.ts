@@ -16,7 +16,16 @@ import { AuthRoutingModule } from './auth.routing';
 
 
 @NgModule({
-  declarations: [LoginComponent, RegisterComponent, AuthHeaderComponent, AuthBtnComponent, AuthInputComponent, AuthRegisterFormComponent, AuthForgotPasswordComponent, ForgotPasswordComponent, AuthOtpFormComponent, OtpVerificationComponent],
+  declarations: [
+    LoginComponent,
+    RegisterComponent,
+    AuthHeaderComponent,
+    AuthBtnComponent,
+    AuthInputComponent,
+    AuthRegisterFormComponent,
+    AuthForgotPasswordComponent,
+    ForgotPasswordComponent, AuthOtpFormComponent,
+    OtpVerificationComponent],
   imports: [
     CommonModule,
     FormsModule,
