@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://localhost:44300',
+  //apiUrl: 'https://localhost:44300',
+  apiUrl: 'https://twohandsharing.appspot.com',
 };
 
 /*

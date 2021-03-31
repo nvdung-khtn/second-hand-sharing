@@ -8,14 +8,14 @@
   </div>
 
   <div class="register-form__input">
-    <app-auth-input [valueInput]="'Họ tên'"></app-auth-input>
-    <app-auth-input [valueInput]="'Email'"></app-auth-input>
-    <app-auth-input [valueInput]="'Mât khẩu'"></app-auth-input>
-    <app-auth-input [valueInput]="'Xác nhận mật khẩu'"></app-auth-input>
+    <app-auth-input [placeholderValue]="'Họ tên'" (completedInput)="handleInput($event)" [type]="'userName'"></app-auth-input>
+    <app-auth-input [placeholderValue]="'Email'" (completedInput)="handleInput($event)" [type]="'email'"></app-auth-input>
+    <app-auth-input [placeholderValue]="'Mât khẩu'" (completedInput)="handleInput($event)" [type]="'password'"></app-auth-input>
+    <app-auth-input [placeholderValue]="'Xác nhận mật khẩu'" (completedInput)="handleInput($event)" [type]="'confirmPassword'"></app-auth-input>
   </div>
 
-  <div class="register-form__btn">
+  <button class="register-form__btn" (click)="onSubmit()">
     Đăng ký
-  </div>
+  </button>
 
 </div>

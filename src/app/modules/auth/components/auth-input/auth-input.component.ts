@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-auth-input',
@@ -6,10 +6,21 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./auth-input.component.scss']
 })
 export class AuthInputComponent implements OnInit {
-  @Input() valueInput = "abc";
+  @Input() placeholderValue;
+  @Input() type;
+  Inputvalue:string;
+  @Output() completedInput = new EventEmitter();
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  sendInput() {
+    const data = {
+      value: this.Inputvalue,
+      type: this.type
+    };
+
+    this.completedInput.emit(data);
+  }
 }
