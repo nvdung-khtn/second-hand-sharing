@@ -1,1 +1,10 @@
-<router-outlet></router-outlet>
+<app-header *ngIf="isLogin"></app-header>
+<div class='home-aside-left'>
+    <app-home-left-side *ngIf="isLogin"></app-home-left-side>
+</div>
+<div class='home-aside-right'>
+    <app-home-right-side *ngIf="isLogin"></app-home-right-side>
+</div>
+<div class="another-page-position">
+    <router-outlet></router-outlet>
+</div>

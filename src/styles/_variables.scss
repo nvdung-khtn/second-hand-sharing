@@ -1,6 +1,10 @@
 // Declare variables
 
 //color
+$light-blue: #9DD0FF;
+$lightest-blue: #cbe6ff;
+$light-grey: #767676;
+
 $primary-color: #0E88FA;
 $selected-text-color: #0E88FA;
 $primary-text-color: #333333;
@@ -8,16 +12,20 @@ $primary-light-text-color: #494949;
 $primary-lightest-text-color: #A9A9A9;
 $linear-vertical: linear-gradient(#0E88FA , #9DD0FF);
 $primary-border-otp-color: #c4c4c4;
+$primary-icon-color: #4D4D4D;
+$primary-icon-background-color: #F2F2F2;
 
 //button
 $btn-color: #0E88FA;
 $btn-selected: #0773D9;
+
 
 //font: 1rem = 16px
 $title-font-size: 1.25rem;
 $default-font-size: 1rem;
 $main-font-size: 0.9375rem;
 $largest-font-size: 1.5rem;
+$min-font-size: 0.813rem;
 
 //font-weight;
 $font-weight-bold: 700;
@@ -25,6 +33,10 @@ $font-weight-medium: 600;
 
 //box-shadow;
 $box-shadow-color: #55ACFC;
+
+//border-radius
+$border-radius-default: 10px;
+$border-radius-light: 5px;
 
 //screen size
 

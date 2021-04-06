@@ -1,0 +1,21 @@
+<div class="home-right-side">
+    <div class="home-right-side__title">
+        Top Vinh danh trong tháng
+    </div>
+
+    <div class="home-right-side__list">
+        <div class="home-right-side__list__profile" *ngFor="let user of topUserData">
+            <img class="home-right-side__list__profile__avatar" src={{user?.avatarURL}} />
+        
+            <div class="home-right-side__list__profile__info">
+                <div class="home-right-side__list__profile__info__name">
+                    {{user?.name}}
+                </div>
+
+                <div class="home-right-side__list__profile__info__times">
+                    {{user?.times}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

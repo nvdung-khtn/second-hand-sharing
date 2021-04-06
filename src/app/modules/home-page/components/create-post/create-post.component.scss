@@ -1,0 +1,39 @@
+@import '../../../../../styles/_variables.scss';
+
+.create-post {
+
+    background-color: #ffffff;
+    padding: 15px 2%;
+    display: flex;
+    border-radius: $border-radius-light;
+
+    &__avatar {
+        display: flex;
+        width: 100%;
+        max-width: 40px;
+        margin-right: 2%;
+    }
+
+    &__btn {
+        display: flex;
+        width: 100%;
+        border-radius: 5px;
+        color: $primary-color;
+        background-color: $lightest-blue;
+
+        font-weight: $font-weight-medium;
+        font-size: $default-font-size;
+        align-items: center;
+        text-align: center;
+
+        &:hover {
+            color: #ffffff;
+            background-color: $light-blue;
+            cursor: pointer;
+        }
+
+        &__inside {
+            width: 100%;
+        }
+    }
+}
