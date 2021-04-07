@@ -4,7 +4,7 @@
     </div>
 
     <div class="home__section">
-        <app-category></app-category>
+        <app-category [selectedFromParent]="this.defaultSelectedCategory" (categoryIDChange)="this.selectedCategory=$event"></app-category>
     </div>
 
     <div class="home__section">

@@ -1,0 +1,50 @@
+<div class="address-modal" [style.maxHeight]="this.displayError ? '435px' : '390px'"> 
+    <span class="address-modal__close" (click)="onClose()">&times;</span>
+
+    <div class="address-modal__title">
+        Chọn địa chỉ
+    </div>
+
+    <div class="address-modal__dropdown">
+        <app-dropdown-form [inputData]="provinceData" 
+                            [property]="'Title'" 
+                            [dropdownLabel]="'Tỉnh/Thành phố'"
+                            (selectedValue)="this.sendData.province.name=$event"
+                            (selectedIndex)="this.sendData.province.id = this.provinceData[$event].ID">
+        </app-dropdown-form>
+    </div>
+
+    <div class="address-modal__dropdown">
+        <app-dropdown-form [inputData]="districtData" 
+                            [property]="'Title'" 
+                            [dropdownLabel]="'Quận/Huyện'"
+                            (selectedValue)="this.sendData.district.name=$event"
+                            (selectedIndex)="this.sendData.district.id = this.districtData[$event].ID">
+        </app-dropdown-form>
+    </div>
+
+    <div class="address-modal__dropdown">
+        <app-dropdown-form [inputData]="wardData" 
+                            [property]="'Title'" 
+                            [dropdownLabel]="'Phường/Xã'"
+                            (selectedValue)="this.sendData.ward.name=$event"
+                            (selectedIndex)="this.sendData.ward.id = this.wardData[$event].ID">
+        </app-dropdown-form>
+    </div>
+
+    <input class="address-modal__street" type="text" placeholder="Tòa nhà/Tên đường" [(ngModel)]="this.sendData.street">
+
+    <div class="address-modal__error" [style.display]="this.displayError ? 'block' : 'none'">
+        Vui lòng chọn và điền đầy đủ tất cả thông tin để hoàn thành địa chỉ hoặc sử dụng địa chỉ mặc định
+    </div>
+
+    <div class="address-modal__btn">
+        <button class="address-modal__btn--back" (click)="onClose()">
+            Trở lại
+        </button>
+
+        <button class="address-modal__btn--done" (click)="onSubmit()">
+            Hoàn thành
+        </button>
+    </div>
+</div>

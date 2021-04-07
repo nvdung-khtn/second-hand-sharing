@@ -1,0 +1,126 @@
+@import '../../../../../styles/variables';
+
+.address-modal {
+    width: 35%;
+    background-color: #fff;
+    margin: 0 auto;
+    position: relative;
+    padding: 1% 2%;
+    border-radius: 5px;
+    color: #333333;
+    max-width: 500px;
+    height: 60%;   
+    max-height: 390px;
+    overflow-y: scroll;
+    transform: translateY(10%);
+    color: $primary-text-color;
+
+    @media (max-width: 1024px) {
+        width: 80%;
+        max-width: none;
+    }
+
+    @media (max-height: 600px) {
+        height: 50%;
+    }
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+
+    &__close {
+        position: absolute;
+        top: 5px;
+        right: 10px;
+        color: $primary-text-color;
+        font-size: 30px;
+        transition: 0.3s;
+
+        &:hover, &:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    }
+
+    .mat-form-field {
+        width: 100%;
+        border-radius: $border-radius-light;
+    }
+
+    &__title {
+        margin-bottom: 20px;
+        text-align: center;
+        font-weight: bold;
+        padding-bottom: 10px;
+        border-bottom: 1px solid $primary-light-text-color;
+        font-size: $default-font-size;
+    }
+
+    &__street {
+        width: 100%;
+        background-color: $primary-icon-background-color;
+        padding: 2%;
+        box-sizing: border-box;
+        line-height: 2rem;
+        border-radius: $border-radius-light;
+        border: 1px solid $primary-icon-background-color;
+        margin-bottom: 10px;
+    }
+
+    &__btn {
+        text-align: end;
+
+        &--back, &--done {
+            width: 100%;
+            max-width: 100px;
+            border: none;
+            text-align: center;
+            margin-top: 10px;
+            padding: 10px 0;
+            background-color: $btn-color;
+            color: white;
+            border-radius: $border-radius-light;
+            cursor: pointer;
+            box-shadow: 0 10px 20px 0 $box-shadow-color;
+        
+            &:hover {
+                background-color: $btn-selected;
+            }
+        }
+
+        &--done {
+            margin-left: 10px;
+
+            @media (max-width: 276px) {
+                margin-left: 0;
+            }
+        }
+
+        &--back {
+            background-color: white;
+            color: $primary-text-color;
+            box-shadow: none;
+
+            &:hover {
+                background-color: $primary-icon-background-color;
+                box-shadow: 0 10px 20px 0 $primary-icon-background-color;
+            }
+
+            @media (max-width: 276px) {
+                display: none;
+            }
+        }
+    }
+
+    &__error {
+        display: none;
+        color: red;
+        margin: 10px 0;
+
+        @media (max-width: 276px) {
+            margin: 0;
+        }
+    }
+}

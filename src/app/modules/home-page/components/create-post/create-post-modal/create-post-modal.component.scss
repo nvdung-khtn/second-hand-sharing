@@ -1,0 +1,270 @@
+@import "../../../../../../styles/variables";
+
+.create-post-modal {
+    width: 40%;
+    background-color: #fff;
+    margin: 0 auto;
+    position: relative;
+    padding: 1%;
+    border-radius: $border-radius-light;
+    color: $primary-text-color;
+    max-width: 750px;
+    height: 80%;
+    max-height: 580px;
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    @media (max-width: 1024px) {
+        width: 90%;
+        max-width: none;
+    }
+
+    @media (max-height: 600px) {
+        height: 60%;
+    }
+
+    &__close {
+        position: absolute;
+        top: 5px;
+        right: 10px;
+        color: $primary-text-color;
+        font-size: 30px;
+        transition: 0.3s;
+
+        &:hover, &:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    }
+
+    &__title {
+        padding-bottom: 10px;
+        font-size: $default-font-size;
+        border-bottom: 1px solid $primary-light-text-color;
+        font-weight: $font-weight-bold;
+        text-align: center;
+    }
+
+    &__user-info {
+        display: grid;
+        grid-template-columns: 70% 30%;
+        align-items: center;
+        margin-top: 10px;
+        padding: 10px 0;
+
+        &__profile {
+            display: flex;
+            align-items: center;
+
+            &__avatar{
+                margin-right: 1%;
+                width: 45px;
+                height: 45px;
+            }
+
+            &__info {
+                box-sizing: border-box;
+                overflow: hidden;
+
+                &__name {
+                    font-weight: $font-weight-bold;
+                    margin-left: 5px;
+                }
+
+                &__address {
+                    display: flex;
+                    align-items: center;
+                    overflow: hidden;
+                    white-space: nowrap;
+
+                    &__location {
+                        color: #EB5757;
+                    }
+                }
+            }    
+        }
+
+        &__address {
+            text-align: right;
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+
+            &:hover {
+                cursor: pointer;
+            }
+
+            &__title {
+                margin-right: 5px;
+                text-decoration: underline;
+                font-style: italic;
+            }
+
+            &__icon {
+                color: $primary-color;
+                background-color: $light-blue;
+                padding: 5px;
+                border-radius: 100%;
+            }
+        }
+    }
+
+    &__input-title, &__phone, &__description {
+        margin-top: 10px;
+        padding: 10px;
+        background-color: $primary-icon-background-color;
+        border: none;
+        border-radius: $border-radius-light;
+        width: 100%;
+        box-sizing: border-box;
+
+        &::placeholder {
+            color: $primary-text-color;
+        }
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    &__add-image {
+        margin-top: 10px;
+        padding: 10px;
+        background-color: $primary-icon-background-color;
+        border: none;
+        border-radius: $border-radius-light;
+        width: 100%;
+        box-sizing: border-box;
+        display: grid;
+        grid-template-columns: repeat(4,1fr);
+        text-align: center;
+        align-items: center;
+        height: 100px;
+        overflow: scroll;
+
+        @media (max-width: 480px) {
+            grid-template-columns: repeat(3,1fr);
+        }
+
+        @media (max-width: 350px) {
+            grid-template-columns: repeat(2,1fr);
+        }
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+
+        &__btn {
+            text-align: center;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: $border-radius-default;
+            border: 1px solid $primary-light-text-color;
+            position: relative;
+            height: 50px;
+            width: 75px;
+            grid-column: 1;
+            grid-row: 1;
+            margin-bottom: 10px;
+
+            & >  input[type="file"] {
+                position: absolute;
+                display: none;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0
+              }
+              
+            & > label {
+                position: absolute;
+                top: 0;
+                right: 0;
+                left: 0;
+                bottom: 0;
+                border-radius: 10px;
+                line-height: 30px;
+                text-align: center;
+                cursor: pointer
+            }
+
+            &__icon {
+                margin-top: 7px;
+            }
+        }
+
+        &__container {
+            position: relative;
+            height: 100%;
+
+            &__image {
+                max-width: 80px;
+                max-height: 80px;
+                object-fit: cover;
+            }
+    
+            &__close {
+                position: absolute;
+                right: 0;
+                top: 0;
+            }
+        }
+    }
+
+    &__category {
+        margin-top: 10px;
+        background-color: $primary-icon-background-color;
+        border: none;
+        border-radius: $border-radius-light;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    &__description {
+        overflow-y: scroll;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+
+    &__btn {
+        width: 100%;
+        border: none;
+        text-align: center;
+        margin-top: 10px;
+        padding: 10px 0;
+        background-color: $btn-color;
+        color: white;
+        border-radius: $border-radius-light;
+        cursor: pointer;
+        box-shadow: 0 10px 20px 0 $box-shadow-color;
+        margin-bottom: 10px;
+    
+        &:hover {
+          background-color: $btn-selected;
+        }
+    }
+
+    .address-modal {
+        display: none;
+        position: fixed; /* Stay in place */
+        z-index: 3; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: -20px;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgba(0,0,0,0.5); /* Black w/ opacity */
+
+        @media (max-width: 1024px) {
+            top: 10%;
+        }
+    
+    }
+}

@@ -1,11 +1,13 @@
-<div class="category">
-    <div class="category__item" 
+<div class="category" [style.backgroundColor]="this.categoryBackground && this.categoryBackground">
+    <div class="category__item"
         *ngFor="let item of categoryContext"
-        [ngClass]="{'selected': (this.selectedTab === item?.id)}"
+        [ngClass]="{'selected': (this.selectedCategory === item?.id)}"
+        (click)="onClick(item?.id)"
     >
         <fa-icon 
             class="category__item__icon" [icon]="item?.icon"
-            [ngClass]="{'selectedIcon': (this.selectedTab === item?.id)}"
+            [style.backgroundColor]="this.categoryIconBackground && this.categoryIconBackground" 
+            [ngClass]="{'selectedIcon': (this.selectedCategory === item?.id)}"
         ></fa-icon>
 
         <div class="category__item__name">

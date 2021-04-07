@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { faAlignJustify, faBoxes, faBriefcase, faChair, faHouseDamage, faRunning, faTshirt, faTv } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -7,7 +7,12 @@ import { faAlignJustify, faBoxes, faBriefcase, faChair, faHouseDamage, faRunning
   styleUrls: ['./category.component.scss']
 })
 export class CategoryComponent implements OnInit {
-  selectedTab = 0;
+  @Input() categoryIconBackground = '';
+  @Input() categoryBackground = '';
+  @Input() selectedFromParent: number;
+  @Output() categoryIDChange = new EventEmitter<number>(); // return of tab id
+
+  selectedCategory = -1;
   categoryContext = [];
   // category get from api
   categoryData = [{
@@ -45,6 +50,8 @@ export class CategoryComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    // tslint:disable-next-line: no-unused-expression
+    !this.selectedFromParent && (this.selectedCategory = this.selectedFromParent);
     this.categoryContext = [...this.defaultContext, ...this.categoryData];
     this.assignIcon(this.categoryContext);
   }
@@ -56,6 +63,11 @@ export class CategoryComponent implements OnInit {
     for (let i = 0; i < categoryArr?.length; i++) {
       categoryArr[i].icon = iconList[i];
     }
+  }
+
+  onClick = (id: number) => {
+    this.selectedCategory = id;
+    this.categoryIDChange.emit(id);
   }
 
 }
