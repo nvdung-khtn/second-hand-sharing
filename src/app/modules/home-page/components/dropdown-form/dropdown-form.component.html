@@ -1,0 +1,12 @@
+<div class="dropdown-form">
+    <form>
+        <mat-form-field appearance="fill">
+          <mat-label>{{dropdownLabel}}</mat-label>
+          <mat-select [(ngModel)]="this.selected" name="dropdown" disableOptionCentering (selectionChange)="onSelect()">
+            <mat-option *ngFor="let data of inputData" [value]="data[property]">
+              {{data[property]}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+    </form>
+</div>

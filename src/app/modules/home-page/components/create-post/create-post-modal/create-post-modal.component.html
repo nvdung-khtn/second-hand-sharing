@@ -1,0 +1,76 @@
+<div class="create-post-modal">
+    <span class="create-post-modal__close" (click)="onClose()">&times;</span>
+    
+    <div class="create-post-modal__title">
+        Đăng bài viết
+    </div>
+
+    <div class="create-post-modal__user-info">
+        <div class="create-post-modal__user-info__profile">
+            <img class="create-post-modal__user-info__profile__avatar" src="assets/image/default-avatar.png" />
+
+            <div class="create-post-modal__user-info__profile__info">
+                <div class="create-post-modal__user-info__profile__info__name">
+                    {{userData.name}}
+                </div>
+    
+                <div class="create-post-modal__user-info__profile__info__address">
+                    <mat-icon class="create-post-modal__user-info__profile__info__address__location"> location_on</mat-icon>
+                
+                    <div class="create-post-modal__user-info__profile__info__address__address">
+                        {{!formData?.address && userData.address}}
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="create-post-modal__user-info__address" (click)="onOpenAddressModal()">
+            <div class="create-post-modal__user-info__address__title">
+                Địa chỉ liên hệ
+            </div>
+    
+            <mat-icon class="create-post-modal__user-info__address__icon">map</mat-icon>
+        </div>
+
+    </div>
+    
+    <input class="create-post-modal__input-title" placeholder="Tiêu đề" [(ngModel)]="this.formData.title">
+
+    <div class="create-post-modal__add-image">
+        <div *ngFor="let item of url; let index = index" class="create-post-modal__add-image__container">
+            <img [src]="item" *ngIf="url" class="create-post-modal__add-image__container__image">
+
+            <span class="create-post-modal__add-image__container__close" (click)="onRemoveSelectedFile(index)">&times;</span>            
+        </div>
+
+        <div class="create-post-modal__add-image__btn">
+            <label for="uploadImage">
+                <mat-icon class="create-post-modal__add-image__btn__icon">add_photo_alternate</mat-icon>
+                <div class="create-post-modal__add-image__btn__text">Thêm ảnh</div>
+            </label>
+
+            <input type='file' id="uploadImage" accept="image/png" multiple (change)="onSelectFile($event)">
+        </div>
+    </div>
+
+    <div class="create-post-modal__category">
+        <app-category [categoryBackground]="this.categoryTabBackground" [categoryIconBackground]="this.categoryIconBackground"></app-category>
+    </div>
+
+    <input class="create-post-modal__phone" placeholder="Số điện thoại liên hệ" [(ngModel)]="this.formData.phone">
+
+    <textarea rows="4" class="create-post-modal__description" placeholder="Nội dung bài đăng" [(ngModel)]="this.formData.description"></textarea>
+
+    <button class="create-post-modal__btn">
+        Đăng bài
+    </button>
+
+    <div class="address-modal" [style.display]="this.isOpenAddressModal ? 'block' : 'none'">
+        <app-address-modal [isOpenModal]="this.isOpenAddressModal" 
+                            (modalChange)="this.isOpenAddressModal=$event" 
+                            (addressData)="this.formData.address=$event">
+        </app-address-modal>
+    </div>
+</div> 

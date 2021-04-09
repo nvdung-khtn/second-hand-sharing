@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  defaultSelectedCategory = 0;
+  selectedCategory = 0; // follow selected category id to display data
 
   constructor() { }
 

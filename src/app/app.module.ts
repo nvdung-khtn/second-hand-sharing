@@ -12,7 +12,7 @@ import { HomePageModule } from './modules/home-page/home-page.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { GroupRoutingModule } from './modules/group/group-routing';
+import { GroupRoutingModule } from './modules/group/group.routing';
 import { GroupModule } from './modules/group/group.module';
 import { NotificationModule } from './modules/notification/notification.module';
 import { NotificationRoutingModule } from './modules/notification/notification.routing';

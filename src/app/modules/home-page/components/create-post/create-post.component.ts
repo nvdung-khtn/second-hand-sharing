@@ -6,10 +6,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./create-post.component.scss']
 })
 export class CreatePostComponent implements OnInit {
+  isOpenModal = false;
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  onClick = () => {
+    this.isOpenModal = true;
   }
 
 }
