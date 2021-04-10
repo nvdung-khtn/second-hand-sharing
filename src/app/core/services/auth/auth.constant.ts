@@ -14,7 +14,7 @@ export const URL_REGISTER = `${baseUrl}/Identity/register`;
 // }
 
 export class LoginModel {
-  userName: string;
+  email: string;
   password: string;
 }
 
