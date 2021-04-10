@@ -7,7 +7,7 @@ import { AuthService } from 'src/app/core/services/auth/auth.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  userName: string;
+  email: string;
   password: string;
   isError = false;
 
@@ -27,8 +27,9 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log(this.email);
     const loginData = {
-      userName: this.userName,
+      email: this.email,
       password: this.password,
     };
     this.authService.login(loginData).subscribe(
