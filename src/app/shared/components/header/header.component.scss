@@ -1,4 +1,4 @@
-@import '../../../styles/variables';
+@import '../../../../styles/variables';
 
 .header {
     display: flex;
@@ -10,7 +10,7 @@
     width: -webkit-fill-available;
     top: 0;
     z-index: 2;
-    
+
     @media (max-width: 1024px) {
         display: inline-block;
         width: 100%;
@@ -24,7 +24,7 @@
 
         @media (max-width: 1024px) {
             width: 100%;
-        }  
+        }
 
         &__logo {
             display: flex;
@@ -32,17 +32,17 @@
             max-width: 120px;
             margin-right: 2%;
             object-fit: cover;
-            
+
             &:hover {
                 cursor: pointer;
             }
-    
+
             @media (max-width: 1024px) {
                 max-width: 85px;
-                display: inline-flex;   
-            }    
+                display: inline-flex;
+            }
         }
-    
+
         &__search {
             display: flex;
             align-items: center;
@@ -52,8 +52,8 @@
             @media (max-width: 1024px) {
                 width: 90vw;
                 flex-grow: 1;
-            }    
-    
+            }
+
             &__inside {
                 align-items: center;
                 display: flex;
@@ -66,29 +66,29 @@
                 width: 100%;
                 max-width: 200px;
                 box-sizing: border-box;
-    
+
                 @media (max-width: 1024px) {
-                    padding: 0 1%; 
+                    padding: 0 1%;
                     max-width: none;
                 }
-    
+
                 &__icon {
                     display: inline-block;
                     vertical-align: bottom;
                 }
-    
+
                 &__text {
                     display: inline-block;
                     border: none;
                     width: 100%;
-    
+
                     &:focus {
                         outline: none;
                     }
                 }
             }
         }
-    
+
     }
 
     &__second-group {
@@ -101,7 +101,7 @@
             align-items: center;
             justify-content: center;
             color: $primary-icon-color;
-            width: 75%; 
+            width: 75%;
 
             @media (max-width: 1024px) {
                 display: grid;
@@ -110,7 +110,7 @@
                 text-align: center;
                 width: 65%;
             }
-    
+
            &__inside {
                 display: flex;
                 flex-direction: column;
@@ -118,11 +118,11 @@
                 justify-content: center;
                 height: 100%;
                 padding: 0 5%;
-    
+
                 @media (max-width: 1024px) {
                     display: inline-block;
-                }    
-                
+                }
+
                 &:hover {
                     cursor: pointer;
                     background-color: $primary-icon-background-color;
@@ -131,30 +131,30 @@
                 &:focus {
                     outline: none;
                 }
-    
+
                 fa-icon {
                     width: auto;
                     font-size: 22px;
                 }
-    
+
                 &__icon {
                     width: auto;
                     font-size: 30px;
                     margin-bottom: 5px;
                     color: $primary-icon-color;
                 }
-    
+
                 &__title {
                     display: inline-flex;
                     vertical-align: middle;
-    
+
                     @media (max-width: 1024px) {
-                        display: none;   
-                    }   
+                        display: none;
+                    }
                 }
            }
         }
-    
+
         &__profile {
             display: flex;
             align-items: center;
@@ -162,25 +162,25 @@
             padding: 2%;
 
             @media (max-width: 1024px) {
-                display: none;          
+                display: none;
             }
-    
+
             &:hover {
                 cursor: pointer;
                 background-color: $primary-icon-background-color;
             }
-    
+
             &__avatar {
                 display: inline-block;
                 vertical-align: middle;
             }
-    
+
             &__name {
                 display: inline-block;
-    
+
             }
         }
-    
+
         &__other {
             display: flex;
             align-items: center;
@@ -196,7 +196,7 @@
             &:focus {
                 outline: none;
             }
-            
+
             &__icon {
                 display: inline-block;
                 max-width: 28px;
@@ -217,7 +217,7 @@
                     border-radius: 0;
                     margin: 0;
                 }
-    
+
                 &:hover {
                     cursor: pointer;
                     background-color: $primary-lightest-text-color;
@@ -230,7 +230,7 @@
                 &:focus {
                     outline: none;
                 }
-                
+
 
                 &--menu {
                     display: none;
@@ -240,12 +240,12 @@
                     border-radius: 100%;
                     padding: 10%;
                     margin: 0 10%;
-        
+
                     &:hover {
                         cursor: pointer;
                     }
 
-                    
+
 
                     @media (max-width: 1024px) {
                         display: inline-block;
@@ -262,7 +262,7 @@
                 }
             }
         }
-    
+
     }
 
     .selectedTabStyle {
@@ -284,7 +284,7 @@
     .selectedOtherTabStyle {
         font-weight: $font-weight-bold;
         color: $primary-color !important;
-        
+
         @media (max-width: 1024px) {
             border-bottom: 2px solid $primary-color;
         }

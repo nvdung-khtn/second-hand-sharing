@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/core/services/auth/auth.service';
+import { AuthClient } from 'src/app/core/api-clients/auth.client';
 
 @Component({
   selector: 'app-auth-register-form',
@@ -19,7 +19,7 @@ export class AuthRegisterFormComponent implements OnInit {
   };
 
   private isSuccess:boolean;
-  constructor(private authService: AuthService) { }
+  constructor(private authClient: AuthClient) { }
 
   ngOnInit(): void {
   }
@@ -30,8 +30,8 @@ export class AuthRegisterFormComponent implements OnInit {
   }
 
   async onSubmit() {
-    const response = await this.authService.register(this.formData);
-    this.authService.register(this.formData).subscribe(
+    const response = await this.authClient.register(this.formData);
+    this.authClient.register(this.formData).subscribe(
       (data) => {
         this.isSuccess = true;
         console.log(data);

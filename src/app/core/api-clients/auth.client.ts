@@ -5,12 +5,12 @@ import {
   RegisterModel,
   URL_LOGIN,
   URL_REGISTER,
-} from './auth.constant';
+} from '../constants/auth.constant';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService {
+export class AuthClient {
   headers = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',

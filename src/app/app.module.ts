@@ -2,45 +2,38 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { AuthRoutingModule } from './modules/auth/auth.routing';
-import { HeaderComponent } from './layout/header/header.component';
-import { HomePageRoutingModule } from './modules/home-page/home-page.routing';
-import { HomePageModule } from './modules/home-page/home-page.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatIconModule } from '@angular/material/icon';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { GroupRoutingModule } from './modules/group/group.routing';
+
+import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
+
+import { SharedModule } from './shared/shared.module';
+import { HomePageModule } from './modules/home-page/home-page.module';
 import { GroupModule } from './modules/group/group.module';
 import { NotificationModule } from './modules/notification/notification.module';
-import { NotificationRoutingModule } from './modules/notification/notification.routing';
-import { HomeLeftSideComponent } from './layout/home-left-side/home-left-side.component';
-import { HomeRightSideComponent } from './layout/home-right-side/home-right-side.component';
+
+//import { AuthRoutingModule } from './modules/auth/auth.routing';
+//import { HomePageRoutingModule } from './modules/home-page/home-page.routing';
+//import { GroupRoutingModule } from './modules/group/group.routing';
+//import { NotificationRoutingModule } from './modules/notification/notification.routing';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
-    HomeLeftSideComponent,
-    HomeRightSideComponent,
   ],
   imports: [
+    // Modules of Angular
     BrowserModule,
     AppRoutingModule,
+    BrowserAnimationsModule,
     FormsModule,
-    AuthRoutingModule,
-    HomePageRoutingModule,
+    HttpClientModule,
+
+    // Custom Modules
+    SharedModule,
     HomePageModule,
-    GroupRoutingModule,
     GroupModule,
     NotificationModule,
-    NotificationRoutingModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    MatIconModule,
-    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

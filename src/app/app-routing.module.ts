@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AnonymousGuard } from './core/services/anonymous-guard/anonymous-guard.service';
-import { AuthGuard } from './core/services/auth-guard/auth-guard.service';
+import { AnonymousGuard } from './shared/service/anonymous-guard.service';
+import { AuthGuard } from './core/guards/auth.guard';
 
 const routes: Routes = [
   {
