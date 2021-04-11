@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -11,6 +11,7 @@ import { SharedModule } from './shared/shared.module';
 import { HomePageModule } from './modules/home-page/home-page.module';
 import { GroupModule } from './modules/group/group.module';
 import { NotificationModule } from './modules/notification/notification.module';
+import { TokenInterceptor } from './core/interceptors/token.interceptor';
 
 //import { AuthRoutingModule } from './modules/auth/auth.routing';
 //import { HomePageRoutingModule } from './modules/home-page/home-page.routing';
@@ -18,9 +19,7 @@ import { NotificationModule } from './modules/notification/notification.module';
 //import { NotificationRoutingModule } from './modules/notification/notification.routing';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-  ],
+  declarations: [AppComponent],
   imports: [
     // Modules of Angular
     BrowserModule,
@@ -35,7 +34,13 @@ import { NotificationModule } from './modules/notification/notification.module';
     GroupModule,
     NotificationModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true,
+    },
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

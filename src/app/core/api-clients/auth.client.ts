@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import {
   LoginModel,
   RegisterModel,
@@ -11,23 +11,15 @@ import {
   providedIn: 'root',
 })
 export class AuthClient {
-  headers = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      'My-Custom-Header': 'foobar',
-      'Access-Control-Allow-Origin': '*',
-    }),
-  };
-
   constructor(private http: HttpClient) {}
 
   login(loginData: LoginModel) {
     const body = JSON.stringify(loginData);
-    return this.http.post(URL_LOGIN, body, this.headers);
+    return this.http.post(URL_LOGIN, body);
   }
 
   register(formData: RegisterModel) {
     const body = JSON.stringify(formData);
-    return this.http.post(URL_REGISTER, body, this.headers);
+    return this.http.post(URL_REGISTER, body);
   }
 }

@@ -27,7 +27,6 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.email);
     const loginData = {
       email: this.email,
       password: this.password,
@@ -39,7 +38,6 @@ export class LoginComponent implements OnInit {
         this.router.navigateByUrl('/home');
       },
       (err) => {
-        /* this.onLoginFail(); */
         this.isError = true;
         console.log(err);
       }

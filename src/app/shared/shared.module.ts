@@ -8,8 +8,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HeaderComponent } from './components/header/header.component';
 import { HomeLeftSideComponent } from './components/home-left-side/home-left-side.component';
 import { HomeRightSideComponent } from './components/home-right-side/home-right-side.component';
-
-
+import { UserService } from './service/user.service';
 
 @NgModule({
   declarations: [
@@ -18,6 +17,7 @@ import { HomeRightSideComponent } from './components/home-right-side/home-right-
     HomeLeftSideComponent
   ],
   imports: [CommonModule, RouterModule, MatIconModule, FontAwesomeModule],
-  exports: [HeaderComponent, HomeRightSideComponent, HomeLeftSideComponent]
+  exports: [HeaderComponent, HomeRightSideComponent, HomeLeftSideComponent],
+  providers: [UserService],
 })
 export class SharedModule {}
