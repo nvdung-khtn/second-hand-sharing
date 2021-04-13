@@ -8,6 +8,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 export class AuthInputComponent implements OnInit {
   @Input() placeholderValue;
   @Input() type;
+  @Input() dataType = "text";
   Inputvalue:string;
   @Output() completedInput = new EventEmitter();
   constructor() { }

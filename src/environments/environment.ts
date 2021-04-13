@@ -5,8 +5,8 @@
 export const environment = {
   production: false,
   //apiUrl: 'https://localhost:44300',
-  //apiUrl: 'https://twohandsharing.appspot.com',
-  apiUrl: 'https://webapi-s2yui3igrq-as.a.run.app',
+  apiUrl: 'https://twohandsharing.appspot.com',
+  //apiUrl: 'https://webapi-s2yui3igrq-as.a.run.app',
 };
 
 /*

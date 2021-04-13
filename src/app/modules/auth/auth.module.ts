@@ -1,5 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatNativeDateModule } from '@angular/material/core';
+
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { AuthHeaderComponent } from './components/auth-header/auth-header.component';
@@ -10,10 +16,8 @@ import { AuthForgotPasswordComponent } from './components/auth-forgot-password/a
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { AuthOtpFormComponent } from './components/auth-otp-form/auth-otp-form.component';
 import { OtpVerificationComponent } from './pages/forgot-password/otp-verification/otp-verification.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthRoutingModule } from './auth.routing';
-
-
 
 @NgModule({
   declarations: [
@@ -25,11 +29,18 @@ import { AuthRoutingModule } from './auth.routing';
     AuthRegisterFormComponent,
     AuthForgotPasswordComponent,
     ForgotPasswordComponent, AuthOtpFormComponent,
-    OtpVerificationComponent],
+    OtpVerificationComponent,
+    //MatFormField
+  ],
   imports: [
     CommonModule,
     FormsModule,
     AuthRoutingModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatNativeDateModule,
+    ReactiveFormsModule
   ]
 })
 export class AuthModule { }
