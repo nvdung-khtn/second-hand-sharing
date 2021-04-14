@@ -50,6 +50,11 @@ export class HeaderComponent implements OnInit {
       icon : 'menu',
       id: 6,
     },
+    {
+      title: 'Đăng xuất',
+      icon : 'exit_to_app',
+      id: 7,
+    },
   ];
 
   constructor(private router: Router) {
@@ -73,6 +78,10 @@ export class HeaderComponent implements OnInit {
         return (i + 1);
       }
     }
+  }
+  onLogOut = () => {
+    localStorage.clear();
+    this.router.navigateByUrl('/auth/login');
   }
 
 
