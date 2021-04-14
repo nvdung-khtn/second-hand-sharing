@@ -81,6 +81,22 @@
   }
 }
 
+.auth-input__date {
+  font-size: $default-font-size;
+  margin-top: 4%;
+}
+
+.auth-input__date ::ng-deep .mat-form-field-flex {
+  padding: 0;
+  background-color: #fff;
+}
+.auth-input__date ::ng-deep .mat-form-field-infix {
+  padding: 2% 0;
+}
+.auth-input__date ::ng-deep .mat-form-field-underline::before {
+  background-color: $primary-color;
+}
+
 .message-error {
   margin-top: 6px;
 }
