@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {
-  LoginModel,
-  RegisterModel,
+  LoginRequest,
+  LoginResponse,
+  RegisterRequest,
   URL_LOGIN,
   URL_REGISTER,
 } from '../constants/auth.constant';
+import { Observable } from 'rxjs';
+import { ResponseModel } from '../constants/common.constant';
 
 @Injectable({
   providedIn: 'root',
@@ -13,13 +16,11 @@ import {
 export class AuthClient {
   constructor(private http: HttpClient) {}
 
-  login(loginData: LoginModel) {
-    const body = JSON.stringify(loginData);
-    return this.http.post(URL_LOGIN, body);
+  login(loginForm: LoginRequest): Observable<ResponseModel<LoginResponse>> {
+    return this.http.post<ResponseModel<LoginResponse>>(URL_LOGIN, loginForm);
   }
 
-  register(formData: RegisterModel) {
-    const body = JSON.stringify(formData);
-    return this.http.post(URL_REGISTER, body);
+  register(registerForm: RegisterRequest): Observable<ResponseModel<string>> {
+    return this.http.post<ResponseModel<string>>(URL_REGISTER, registerForm);
   }
 }

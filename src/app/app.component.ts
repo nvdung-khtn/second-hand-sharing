@@ -18,7 +18,7 @@ export class AppComponent {
   }
 
   checkLogin = () => {
-    const token = JSON.parse(localStorage.getItem('currentUser'));
+    const token = localStorage.getItem('access_token');
     if (token !== null) {
         this.isLogin = true;
     } else {

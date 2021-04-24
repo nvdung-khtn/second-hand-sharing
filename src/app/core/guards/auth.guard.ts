@@ -11,7 +11,7 @@ export class AuthGuard implements CanActivate {
 
     // tslint:disable-next-line: typedef
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        if (JSON.parse(localStorage.getItem('currentUser')) != null) {
+        if (localStorage.getItem('access_token') != null) {
             return true;
         } else {
             this.router.navigateByUrl('/auth/login');

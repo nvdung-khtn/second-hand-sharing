@@ -1,8 +1,8 @@
 <div class="list-items">
     <div class="list-items__grid">
-        <div class="list-items__grid__card" *ngFor="let item of this.listItems?.data">
+        <div class="list-items__grid__card" *ngFor="let item of items">
             <div class="list-items__grid__card__image">
-                <img class="list-items__grid__card__image__inside" src={{checkImage(item?.imageUrl)}}>
+                <img class="list-items__grid__card__image__inside" [src]="item?.imageUrl ? item.imageUrl : 'assets/image/default-image.png'">
             </div>
 
             <div class="list-items__grid__card__name">

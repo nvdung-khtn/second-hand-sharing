@@ -1,78 +1,82 @@
 <div class="login-container">
-    <div class="login-container__left">
-        <div class="login-container__left__heading">
-            <img class="login-container__left__heading__logo" src="assets/image/2hand-sharing.png" />
-            
-            <div class="login-container__left__heading__category">
-                <div class="login-container__left__heading__category__text__selected">
-                    Đăng nhập
-                </div>
-    
-                <div class="login-container__left__heading__category__text">
-                    <p (click)="navigation('register')">Đăng ký</p>
-                </div>
-            </div>
-            
+  <div class="login-container__left">
+    <div class="login-container__left__heading">
+      <img class="login-container__left__heading__logo" src="assets/image/2hand-sharing.png" />
+
+      <div class="login-container__left__heading__category">
+        <div class="login-container__left__heading__category__text__selected">
+          Đăng nhập
         </div>
 
-        <div class="login-container__left__form">
-            <div class="login-container__left__form__title">
-                ĐĂNG NHẬP
-            </div>
-
-            <div class="login-container__left__form__describe">
-                Đăng nhập để chia sẻ món đồ của bạn
-            </div>
-
-            <div class="login-container__left__form__input">
-                <div class="login-container__left__form__input__text">
-                    <input type="email" class="login-container__left__form__input__text__inside" placeholder="Tên đăng nhập" [(ngModel)]="this.email">
-                </div>
-
-                <div class="login-container__left__form__input__text">
-                    <input type="password" class="login-container__left__form__input__text__inside" placeholder="Mật khẩu" [(ngModel)]="this.password">
-                </div>
-            </div>
-
-            <div class="login-container__left__form__sign-up-free">
-                <p (click)="navigation('register')">Đăng ký miễn phí</p>
-            </div>
-
-            <div class="login-container__left__form__forgot">
-                <p (click)="navigation('forgot')">Quên mật khẩu?</p>
-            </div>
-
-            <div class="login-container__left__form__error" [style.display]="this.isError ? 'block' : 'none'">
-                Tên đăng nhập hoặc mật khẩu không đúng
-            </div>
-
-            <div class="login-container__left__form__btn" (click)="onSubmit()">
-                <p>Đăng nhập</p>
-            </div>
-
-            <div class="login-container__left__form__other">
-                <span>Hoặc</span>
-            </div>
-
-            <div class="login-container__left__form__other">
-                Đăng nhập với
-            </div>
-
-            <div class="login-container__left__form__image">
-                <span>
-                    <img class="login-container__left__form__image__logo" src="assets/image/google.png" />
-                </span>
-
-                <span>
-                    <img class="login-container__left__form__image__logo" src="assets/image/facebook.png" />
-                </span>
-            </div>
-            
+        <div class="login-container__left__heading__category__text">
+          <p (click)="navigation('register')">Đăng ký</p>
         </div>
+      </div>
+
     </div>
 
-    <div class="login-container__right">
-        <div class="login-container__right__circle">
+    <div class="login-container__left__form">
+      <div class="login-container__left__form__title">
+        ĐĂNG NHẬP
+      </div>
+
+      <div class="login-container__left__form__describe">
+        Đăng nhập để chia sẻ món đồ của bạn
+      </div>
+      <form [formGroup]="loginForm" autocomplete="on" (ngSubmit)="onSubmit()">
+        <div class="login-container__left__form__input">
+          <div class="login-container__left__form__input__text">
+            <input type="email" class="login-container__left__form__input__text__inside" placeholder="Tên đăng nhập"
+              formControlName="email">
+          </div>
+
+          <div class="login-container__left__form__input__text">
+            <input type="password" class="login-container__left__form__input__text__inside" placeholder="Mật khẩu"
+              formControlName="password">
+          </div>
         </div>
+      </form>
+
+
+      <div class="login-container__left__form__sign-up-free">
+        <p (click)="navigation('register')">Đăng ký miễn phí</p>
+      </div>
+
+      <div class="login-container__left__form__forgot">
+        <p (click)="navigation('forgot')">Quên mật khẩu?</p>
+      </div>
+
+      <div class="login-container__left__form__error" [style.display]="this.isError ? 'block' : 'none'">
+        Tên đăng nhập hoặc mật khẩu không đúng
+      </div>
+
+      <div class="login-container__left__form__btn" (click)="onSubmit()">
+        <button type="button" (click)="onSubmit">Đăng nhập</button>
+      </div>
+
+      <div class="login-container__left__form__other">
+        <span>Hoặc</span>
+      </div>
+
+      <div class="login-container__left__form__other">
+        Đăng nhập với
+      </div>
+
+      <div class="login-container__left__form__image">
+        <span>
+          <img class="login-container__left__form__image__logo" src="assets/image/google.png" />
+        </span>
+
+        <span>
+          <img class="login-container__left__form__image__logo" src="assets/image/facebook.png" />
+        </span>
+      </div>
+
     </div>
+  </div>
+
+  <div class="login-container__right">
+    <div class="login-container__right__circle">
+    </div>
+  </div>
 </div>

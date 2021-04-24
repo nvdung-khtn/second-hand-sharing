@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthClient } from 'src/app/core/api-clients/auth.client';
 @Component({
@@ -10,10 +11,20 @@ export class LoginComponent implements OnInit {
   email: string;
   password: string;
   isError = false;
+  loginForm: FormGroup;
 
-  constructor(private router: Router, private authClient: AuthClient) {}
+  constructor(
+    private router: Router,
+    private authClient: AuthClient,
+    private fb: FormBuilder
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required]],
+      password: ['', [Validators.required]],
+    });
+  }
 
   navigation(str: string) {
     switch (str) {
@@ -27,19 +38,18 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    const loginData = {
-      email: this.email,
-      password: this.password,
-    };
-    this.authClient.login(loginData).subscribe(
-      (data: any) => {
+    this.authClient.login(this.loginForm.value).subscribe(
+      response => {
+        console.log('data: ', response);
         this.isError = false;
-        localStorage.setItem('currentUser', JSON.stringify(data?.data));
-        this.router.navigateByUrl('/home');
+        localStorage.setItem('access_token', response.data.jwToken);
+        localStorage.setItem('expiration', response.data.expiration.toString());
+        this.router.navigate(['/home']);
       },
       (err) => {
         this.isError = true;
         console.log(err);
+        // Ném Error ra interceptor handling error.
       }
     );
   }
