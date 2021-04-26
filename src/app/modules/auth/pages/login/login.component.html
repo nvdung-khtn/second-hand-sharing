@@ -28,11 +28,24 @@
           <div class="login-container__left__form__input__text">
             <input type="email" class="login-container__left__form__input__text__inside" placeholder="Tên đăng nhập"
               formControlName="email">
+            <div *ngIf="email.invalid && (email.dirty || email.touched)" class="message-error">
+              <div *ngIf="email.errors?.required" class="text text-danger">
+                Vui lòng nhập trường này!
+              </div>
+              <div *ngIf="email.errors?.email" class="text text-danger">
+                Email không hợp lệ!
+              </div>
+            </div>
           </div>
 
           <div class="login-container__left__form__input__text">
             <input type="password" class="login-container__left__form__input__text__inside" placeholder="Mật khẩu"
               formControlName="password">
+            <div *ngIf="password.invalid && (password.dirty || password.touched)" class="message-error">
+              <div *ngIf="password.errors?.required" class="text text-danger">
+                Vui lòng nhập trường này!
+              </div>
+            </div>
           </div>
         </div>
       </form>
@@ -47,11 +60,11 @@
       </div>
 
       <div class="login-container__left__form__error" [style.display]="this.isError ? 'block' : 'none'">
-        Tên đăng nhập hoặc mật khẩu không đúng
+        Tên đăng nhập hoặc mật khẩu không đúng!
       </div>
 
       <div class="login-container__left__form__btn" (click)="onSubmit()">
-        <button type="button" (click)="onSubmit">Đăng nhập</button>
+        <div type="button" (click)="onSubmit">Đăng nhập</div>
       </div>
 
       <div class="login-container__left__form__other">

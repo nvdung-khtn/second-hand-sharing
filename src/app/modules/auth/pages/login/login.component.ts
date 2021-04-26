@@ -8,9 +8,8 @@ import { AuthClient } from 'src/app/core/api-clients/auth.client';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  email: string;
-  password: string;
   isError = false;
+  message: string;
   loginForm: FormGroup;
 
   constructor(
@@ -19,9 +18,17 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder
   ) {}
 
+  get email() {
+    return this.loginForm.get('email');
+  }
+
+  get password() {
+    return this.loginForm.get('password');
+  }
+
   ngOnInit(): void {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
     });
   }
@@ -48,7 +55,7 @@ export class LoginComponent implements OnInit {
       },
       (err) => {
         this.isError = true;
-        console.log(err);
+        this.message = err.message;
         // Ném Error ra interceptor handling error.
       }
     );

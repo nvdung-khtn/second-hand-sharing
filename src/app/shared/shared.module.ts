@@ -9,15 +9,20 @@ import { HeaderComponent } from './components/header/header.component';
 import { HomeLeftSideComponent } from './components/home-left-side/home-left-side.component';
 import { HomeRightSideComponent } from './components/home-right-side/home-right-side.component';
 import { UserService } from './service/user.service';
+import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 
 @NgModule({
   declarations: [
     HeaderComponent,
     HomeRightSideComponent,
-    HomeLeftSideComponent
+    HomeLeftSideComponent,
   ],
   imports: [CommonModule, RouterModule, MatIconModule, FontAwesomeModule],
   exports: [HeaderComponent, HomeRightSideComponent, HomeLeftSideComponent],
-  providers: [UserService],
+  providers: [
+    UserService,
+    JwtHelperService,
+    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+  ],
 })
 export class SharedModule {}
