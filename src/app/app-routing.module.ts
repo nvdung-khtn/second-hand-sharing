@@ -33,6 +33,12 @@ const routes: Routes = [
       import('./modules/notification/notification.module').then(m => m.NotificationModule),
     canActivate: [AuthGuard]
   },
+  {
+    path: 'item',
+    loadChildren: () =>
+      import('./modules/item/item.module').then(m => m.ItemModule),
+    canActivate: [AuthGuard]
+  },
   // Fallback when no prior routes is matched
   { path: '**', redirectTo: '/auth/login', pathMatch: 'full'}
 ];

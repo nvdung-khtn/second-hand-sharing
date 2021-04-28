@@ -1,11 +1,12 @@
 @import './../styles/variables';
 
 .another-page-position {
-    position: relative;
+    /* position: relative; */
     width: calc(100% - 6% - 540px);
     max-width: 1264px;
     margin: 0 auto;
-    top: calc(56px + 2%);
+    margin-top: 70px;
+    /* top: calc(56px + 2%); */
     left: 0;
     right: 0;
     z-index: 1;
@@ -13,7 +14,8 @@
     @media (max-width: 1024px) {
         width: 100%;
         left: 0;
-        top: calc(120px + 2%);
+        /* top: calc(120px + 2%); */
+        margin-top: 134px;
     }
     p { margin: 0 }
 
@@ -28,14 +30,14 @@
     position: fixed;
     overflow: auto;
     overflow-y: scroll;
-    top: 57px;
+    top: 0;
+    margin-top: 70px;
     bottom: 0px;
     border-radius: $border-radius-light;
 
     @media (max-width: 1024px) {
-        display: none;
+        display: none !important;
     }
-
 
     //scrollbar
     &::-webkit-scrollbar {
@@ -44,8 +46,7 @@
 }
 
 .home-aside-right {
-    right: 1%;
-    margin: 1% 0;
+    right: 0;
 }
 
 .no-login {

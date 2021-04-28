@@ -51,17 +51,17 @@
                 (click)="isSelectedTab(cate?.id)"
                 [ngClass]="{'selectedOtherTabStyle': (this.selectedTab === cate?.id)}">
                 
-                <div *ngIf="cate?.id === 5; else elseBlock">
+                <div *ngIf="cate?.id === 5">
                     <mat-icon class= "header__second-group__other__icon" aria-hidden="false" aria-label="icon">{{cate?.icon}}</mat-icon>        
                 </div>
 
-                <div *ngIf="cate?.id === 7; else elseBlock">
+                <div *ngIf="cate?.id === 7">
                     <mat-icon (click)="onLogOut()" class= "header__second-group__other__exit" aria-hidden="false" aria-label="icon">{{cate?.icon}}</mat-icon>        
                 </div>
         
-                <ng-template #elseBlock>
+                <div *ngIf="cate?.id === 6">
                     <mat-icon class= "header__second-group__other__icon--menu" aria-hidden="false" aria-label="icon">{{cate?.icon}}</mat-icon>        
-                </ng-template>
+                </div>
             </div>      
         </div>
 

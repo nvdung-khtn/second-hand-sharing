@@ -1,0 +1,49 @@
+@import '../../../../../styles/variables';
+
+.detail-item {
+    display: none;
+    box-sizing: border-box;
+    display: flex;
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 2;
+    background: rgba(0,0,0,.8);
+    color: white;
+
+    &__grid {
+        display: grid;
+        grid-template-columns: 75% 25%;
+        height: 100%;
+        width: 100%;
+        box-sizing: border-box;
+
+        &__card {
+    
+            &__left {
+                padding: 60px 0;
+                height: 100%;
+                box-sizing: border-box;
+                align-items: center;
+                justify-content: center;
+                vertical-align: middle;
+                display: flex;
+
+                &__image {
+                    width: 100%;
+                    max-width: 800px;
+                    max-height: 640px;
+                }
+            }
+
+            &__right {
+                background-color: $primary-icon-background-color;
+                height: 100%;
+                box-sizing: border-box;
+                padding: 60px 0;
+            }
+        }
+    }
+}
