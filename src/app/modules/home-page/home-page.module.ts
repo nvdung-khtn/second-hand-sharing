@@ -8,7 +8,7 @@ import { CategoryComponent } from './components/category/category.component';
 import { ListItemsComponent } from './components/list-items/list-items.component';
 import { CreatePostComponent } from './components/create-post/create-post.component';
 import { CreatePostModalComponent } from './components/create-post/create-post-modal/create-post-modal.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddressModalComponent } from './components/address-modal/address-modal.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
@@ -26,6 +26,7 @@ import { DropdownFormComponent } from './components/dropdown-form/dropdown-form.
     FormsModule,
     MatFormFieldModule,
     MatSelectModule,
+    ReactiveFormsModule
   ]
 })
 export class HomePageModule { }

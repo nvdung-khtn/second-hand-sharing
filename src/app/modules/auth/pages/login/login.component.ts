@@ -51,6 +51,8 @@ export class LoginComponent implements OnInit {
         this.isError = false;
         localStorage.setItem('access_token', response.data.jwToken);
         localStorage.setItem('expiration', response.data.expiration.toString());
+        localStorage.setItem('userInfo', JSON.stringify(response.data.userInfo));
+
         this.router.navigate(['/home']);
       },
       (err) => {

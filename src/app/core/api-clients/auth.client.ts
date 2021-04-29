@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {
   LoginRequest,
-  LoginResponse,
+  Login,
   RegisterRequest,
   URL_LOGIN,
   URL_REGISTER,
@@ -16,8 +16,8 @@ import { ResponseModel } from '../constants/common.constant';
 export class AuthClient {
   constructor(private http: HttpClient) {}
 
-  login(loginForm: LoginRequest): Observable<ResponseModel<LoginResponse>> {
-    return this.http.post<ResponseModel<LoginResponse>>(URL_LOGIN, loginForm);
+  login(loginForm: LoginRequest): Observable<ResponseModel<Login>> {
+    return this.http.post<ResponseModel<Login>>(URL_LOGIN, loginForm);
   }
 
   register(registerForm: RegisterRequest): Observable<ResponseModel<string>> {

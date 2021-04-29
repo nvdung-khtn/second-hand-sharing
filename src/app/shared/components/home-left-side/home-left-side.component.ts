@@ -25,9 +25,14 @@ export class HomeLeftSideComponent implements OnInit {
       image: 'assets/image/default-avatar.png',
     }
   ];
+  currentName: string;
   constructor() { }
 
   ngOnInit(): void {
+    this.getCurrentName();
   }
 
+  getCurrentName() {
+    this.currentName = JSON.parse(localStorage.getItem('userInfo')).fullName;
+  }
 }

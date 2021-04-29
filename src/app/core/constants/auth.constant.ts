@@ -1,4 +1,5 @@
 import { environment } from "src/environments/environment"
+import { UserInfo } from "./user.constant";
 
 const baseUrl = environment.apiUrl;
 export const URL_LOGIN = `${baseUrl}/Identity/authenticate`;
@@ -9,11 +10,12 @@ export class LoginRequest {
   password: string;
 }
 
-export class LoginResponse {
+export class Login {
   jwToken: string;
   expiration: Date;
   roles: string;
   isVerified: boolean;
+  userInfo: UserInfo
 }
 
 export class RegisterRequest {

@@ -6,13 +6,13 @@ import {
   HttpInterceptor,
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { UserService } from '../../shared/service/user.service';
+import { AuthService } from '../../shared/service/auth.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TokenInterceptor implements HttpInterceptor {
-  constructor(public auth: UserService) {}
+  constructor(public auth: AuthService) {}
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
@@ -21,7 +21,7 @@ export class TokenInterceptor implements HttpInterceptor {
       setHeaders: {
         Authorization: `Bearer ${this.auth.getToken()}`,
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*'
+        'Access-Control-Allow-Origin': '*',
       },
     });
     return next.handle(request);

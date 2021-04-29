@@ -8,7 +8,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HeaderComponent } from './components/header/header.component';
 import { HomeLeftSideComponent } from './components/home-left-side/home-left-side.component';
 import { HomeRightSideComponent } from './components/home-right-side/home-right-side.component';
-import { UserService } from './service/user.service';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 
 @NgModule({
@@ -20,7 +19,6 @@ import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
   imports: [CommonModule, RouterModule, MatIconModule, FontAwesomeModule],
   exports: [HeaderComponent, HomeRightSideComponent, HomeLeftSideComponent],
   providers: [
-    UserService,
     JwtHelperService,
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
   ],

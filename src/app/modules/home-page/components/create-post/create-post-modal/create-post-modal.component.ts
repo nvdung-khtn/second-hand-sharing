@@ -1,16 +1,21 @@
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { UploadImageService } from 'src/app/shared/service/uploadImage.service';
+import { Address } from 'src/app/core/constants/address.constant';
+import { HomeClient } from 'src/app/core/api-clients/home.client';
+import { CreateItem } from 'src/app/core/constants/item.constant';
 
 @Component({
   selector: 'app-create-post-modal',
   templateUrl: './create-post-modal.component.html',
-  styleUrls: ['./create-post-modal.component.scss']
+  styleUrls: ['./create-post-modal.component.scss'],
 })
 export class CreatePostModalComponent implements OnInit {
   @Input() isOpenModal;
   @Output() modalChange = new EventEmitter<boolean>();
 
   isOpenAddressModal = false;
-  url: any [] = [];
+  url: any[] = [];
 
   categoryTabBackground = '#f2f2f2';
   categoryIconBackground = '#ffffff';
@@ -19,26 +24,31 @@ export class CreatePostModalComponent implements OnInit {
     name: 'Lê Trường Vĩ',
     address: '147A Nguyễn Thị Minh Khai',
   };
-
-  // data of create post
-  formData = {
-    title: '',
-    phone: '',
-    description: '',
-    address: '', // return data of address modal
-  };
-
-  myFiles: string [] = [];
-
-  constructor() { }
+  myFiles: string[] = [];
+  ////////////////////////////////////////////////////////////////
+  public postForm!: FormGroup;
+  receiveAddress: Address;
+  selectedCatId: number;
+  preSignUrl: string[] = [];
+  selectedFiles?: FileList = null;
+  constructor(
+    private uploadImageService: UploadImageService,
+    private fb: FormBuilder,
+    private homeClient: HomeClient
+  ) {}
 
   ngOnInit(): void {
+    this.postForm = this.fb.group({
+      itemName: ['', [Validators.required]],
+      phoneNumber: ['', [Validators.required]], // sao ko co thong tin nay
+      description: ['', [Validators.required]],
+    });
   }
 
   onClose = () => {
     this.isOpenModal = false;
     this.modalChange.emit(this.isOpenModal);
-  }
+  };
 
   onSelectFile = (event) => {
     // tslint:disable-next-line: prefer-for-of
@@ -56,17 +66,65 @@ export class CreatePostModalComponent implements OnInit {
     }
   }
 
+  selectFile(event: any): void {
+    this.selectedFiles = event.target.files;
+    console.log(this.selectedFiles);
+  }
+
+  uploadImages(urls) {
+    //Reset selectedFiles
+    let images = this.selectedFiles;
+    this.selectedFiles = null;
+    debugger;
+    // Upload to cloude
+    if (images) {
+      const count = images.length;
+      console.log(`count: ${count}`);
+
+      for (let index = 0; index < count; index++) {
+        this.uploadImageService.uploadSingleImage(urls[index], images[index]).subscribe();
+      }
+    }
+  }
+
   onRemoveSelectedFile = (index: number) => {
     this.myFiles.splice(index, 1);
     this.url.splice(index, 1);
-  }
+  };
 
   onOpenAddressModal = () => {
     this.isOpenAddressModal = true;
+  };
+
+  onSubmitPost() {
+    console.log('onSubmitPost: ', this.selectedFiles.length);
+    const formData = {
+      ...this.postForm.value,
+      receiveAddress: this.receiveAddress,
+      imageNumber: this.selectedFiles?.length,
+      categoryId: this.selectedCatId,
+    };
+    console.log(formData);
+    this.homeClient.createItem(formData).subscribe(
+      (response) => {
+        response.data.imageUploads.forEach((image) =>
+          this.preSignUrl.push(image.presignUrl)
+        );
+        debugger;
+        // Upload image to cloud
+        this.uploadImages(this.preSignUrl);
+        alert('thanh cong');
+      },
+      (error) => console.log(error)
+    );
   }
 
-  test = () => {
-    console.log(this.formData)
+  handleAddress(event) {
+    this.receiveAddress = new Address(event);
   }
 
+  handleCategoryId(catId: number) {
+    console.log(`catId: ${catId}`);
+    this.selectedCatId = catId;
+  }
 }
