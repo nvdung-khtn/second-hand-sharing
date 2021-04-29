@@ -17,10 +17,13 @@ export class TokenInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
+    if (request.url.startsWith("https://storage.googleapis.com/twohandsharing.appspot.com/")){
+      return next.handle(request);
+    }
     request = request.clone({
       setHeaders: {
         Authorization: `Bearer ${this.auth.getToken()}`,
-        'Content-Type': 'application/json',
+        //'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
       },
     });
