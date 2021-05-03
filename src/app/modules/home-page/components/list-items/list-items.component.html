@@ -1,6 +1,6 @@
 <div class="list-items">
     <div class="list-items__grid">
-        <div class="list-items__grid__card" routerLink="/item/{{item?.id}}" *ngFor="let item of this.listItems?.data">
+        <div class="list-items__grid__card" routerLink="/item/{{item?.id}}" *ngFor="let item of this.items">
             <div class="list-items__grid__card__image">
                 <img class="list-items__grid__card__image__inside" [src]="item?.imageUrl ? item.imageUrl : 'assets/image/default-image.png'">
             </div>

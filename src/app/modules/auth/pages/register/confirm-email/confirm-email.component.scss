@@ -1,10 +1,14 @@
-@import "../../../../../styles/variables";
+@import "../../../../../../styles/variables";
 
-.register-container {
+.confirm-email-container {
   display: grid;
   grid-template-columns: 50% 50%;
   //height: 100vh;
+  font-size: $title-font-size;
+  height: 100vh;
   font-size: 1rem;
+  color: $primary-text-color;
+  text-align: center;
 
   @media (min-width: 768px) and (max-width: 1024px) {
     display: block;
@@ -56,7 +60,7 @@
         background-color: #9ed0ff2b;
         background-size: 100px 100px;
         background-size: 75%;
-        background-image: url("../../../../../assets//image/image-sign-up.svg");
+        background-image: url("../../../../../../assets//image/image-sign-up.svg");
         background-repeat: no-repeat;
         background-position: center;
       }
@@ -66,5 +70,20 @@
     font-weight: $font-weight-bold;
     color: $selected-text-color;
     cursor: pointer;
+  }
+
+  &__text {
+    margin-top: 5%;
+  }
+
+  &__redirect {
+    margin-top: 10%;
+    cursor: pointer;
+    text-decoration: underline;
+    color: $primary-light-text-color;
+
+    &:hover {
+      font-weight: $font-weight-bold;
+    }
   }
 }
