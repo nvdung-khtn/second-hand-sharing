@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, NavigationEnd} from '@angular/router';
+import { Router, NavigationEnd, NavigationStart} from '@angular/router';
 // tslint:disable-next-line: no-unused-expression
 import { faHands, faHandsHelping } from '@fortawesome/free-solid-svg-icons';
 import {filter} from 'rxjs/operators';
@@ -81,7 +81,9 @@ export class HeaderComponent implements OnInit {
   }
   onLogOut = () => {
     localStorage.clear();
-    this.router.navigateByUrl('/auth/login');
+    this.router.navigateByUrl('/auth/login').then(() => {
+      window.location.reload();
+    });
   }
 
 

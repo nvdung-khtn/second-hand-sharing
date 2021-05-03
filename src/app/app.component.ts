@@ -11,11 +11,11 @@ export class AppComponent {
   title = 'second-hand-sharing';
   isLogin = false;
   constructor(private router: Router, private authService: AuthService) {
-    // this.router.events.forEach((event) => {
-    //   if (event instanceof NavigationStart) {
-    //      this.checkLogin();
-    //     }
-    // });
+    this.router.events.forEach((event) => {
+      if (event instanceof NavigationStart) {
+        this.checkLogin();
+      }
+    });
   }
 
   checkLogin() {

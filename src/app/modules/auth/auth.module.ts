@@ -15,9 +15,10 @@ import { AuthRegisterFormComponent } from './components/auth-register-form/auth-
 import { AuthForgotPasswordComponent } from './components/auth-forgot-password/auth-forgot-password.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { AuthOtpFormComponent } from './components/auth-otp-form/auth-otp-form.component';
-import { OtpVerificationComponent } from './pages/forgot-password/otp-verification/otp-verification.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthRoutingModule } from './auth.routing';
+import { ResetPasswordComponent } from './pages/forgot-password/reset-password/reset-password.component';
+import { ConfirmEmailComponent } from './pages/register/confirm-email/confirm-email.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { AuthRoutingModule } from './auth.routing';
     AuthRegisterFormComponent,
     AuthForgotPasswordComponent,
     ForgotPasswordComponent, AuthOtpFormComponent,
-    OtpVerificationComponent,
+    ResetPasswordComponent,
+    ConfirmEmailComponent,
     //MatFormField
   ],
   imports: [
