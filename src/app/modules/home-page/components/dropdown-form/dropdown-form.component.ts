@@ -1,28 +1,44 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  AddressModel,
+  EnumAddress,
+} from 'src/app/core/constants/address.constant';
 
 @Component({
   selector: 'app-dropdown-form',
   templateUrl: './dropdown-form.component.html',
-  styleUrls: ['./dropdown-form.component.scss']
+  styleUrls: ['./dropdown-form.component.scss'],
 })
 export class DropdownFormComponent implements OnInit {
   @Input() inputData;
   @Input() property;
   @Input() dropdownLabel;
-  @Output() selectedIndex = new EventEmitter<number>();
-  @Output() selectedValue = new EventEmitter<any>();
+  @Output() selectedValue = new EventEmitter<AddressModel>();
+  @Output() selectedType = new EventEmitter<EnumAddress>();
 
-  selected: any;
+  selected: string; // Giá trị đã selected
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   onSelect = () => {
-    this.selectedValue.emit(this.selected);
-    const index = this.inputData.findIndex(item => item[this.property] === this.selected);
-    this.selectedIndex.emit(index);
-  }
+    // Emit type of address
+    if (this.property === 'cityName') {
+      this.selectedType.emit(EnumAddress.CITY);
+    }
 
+    if (this.property === 'districtName') {
+      this.selectedType.emit(EnumAddress.DISTRICT);
+    }
+
+    if (this.property === 'wardName') {
+      this.selectedType.emit(EnumAddress.WARD);
+    }
+
+    const address = this.inputData.find(
+      (item) => item[this.property] === this.selected
+    );
+    this.selectedValue.emit(address);
+  };
 }

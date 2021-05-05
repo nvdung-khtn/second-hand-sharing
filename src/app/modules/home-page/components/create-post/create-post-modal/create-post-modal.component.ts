@@ -1,7 +1,7 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { UploadImageService } from 'src/app/shared/service/uploadImage.service';
-import { Address } from 'src/app/core/constants/address.constant';
+import { Address, AddressModel } from 'src/app/core/constants/address.constant';
 import { HomeClient } from 'src/app/core/api-clients/home.client';
 import { CreateItem } from 'src/app/core/constants/item.constant';
 
@@ -22,7 +22,7 @@ export class CreatePostModalComponent implements OnInit {
 
   userData = {
     name: 'Lê Trường Vĩ',
-    address: '147A Nguyễn Thị Minh Khai',
+    address: '',
   };
   myFiles: string[] = [];
   ////////////////////////////////////////////////////////////////
@@ -50,25 +50,31 @@ export class CreatePostModalComponent implements OnInit {
     this.modalChange.emit(this.isOpenModal);
   };
 
-  onSelectFile = (event) => {
+  showSelectedFile = (event) => {
+    //let event = originalEvent;
     // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < event.target.files.length; i++) {
       this.myFiles.push(event.target.files[i]);
-      if (!event.target.files[i] || event.target.files[i].length === 0) { return; }
+      if (!event.target.files[i] || event.target.files[i].length === 0) {
+        return;
+      }
 
       const mimeType = event.target.files[i].type;
-      if (mimeType.match(/image\/*/) == null) { return; }
+      if (mimeType.match(/image\/*/) == null) {
+        return;
+      }
       const reader = new FileReader();
       reader.readAsDataURL(event.target.files[i]);
       // tslint:disable-next-line: variable-name
       reader.onload = (_event) => {
-        this.url.push(reader.result); };
+        this.url.push(reader.result);
+      };
     }
-  }
+  };
 
   selectFile(event: any): void {
     this.selectedFiles = event.target.files;
-    console.log(this.selectedFiles);
+    this.showSelectedFile(event);
   }
 
   uploadImages(urls) {
@@ -82,7 +88,9 @@ export class CreatePostModalComponent implements OnInit {
       console.log(`count: ${count}`);
 
       for (let index = 0; index < count; index++) {
-        this.uploadImageService.uploadSingleImage(urls[index], images[index]).subscribe();
+        this.uploadImageService
+          .uploadSingleImage(urls[index], images[index])
+          .subscribe();
       }
     }
   }
@@ -110,7 +118,6 @@ export class CreatePostModalComponent implements OnInit {
         response.data.imageUploads.forEach((image) =>
           this.preSignUrl.push(image.presignUrl)
         );
-        debugger;
         // Upload image to cloud
         this.uploadImages(this.preSignUrl);
         alert('thanh cong');
@@ -119,8 +126,10 @@ export class CreatePostModalComponent implements OnInit {
     );
   }
 
-  handleAddress(event) {
-    this.receiveAddress = new Address(event);
+  handleAddress(address: AddressModel) {
+    console.log('receiveAddress:', address);
+    this.userData.address = `${address.street} ${address.wardName} ${address.districtName} ${address.cityName}`;
+    this.receiveAddress = new Address(address);
   }
 
   handleCategoryId(catId: number) {
