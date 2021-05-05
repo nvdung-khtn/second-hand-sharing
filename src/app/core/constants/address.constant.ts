@@ -7,8 +7,25 @@ export class Address {
 
   constructor(fullAddress) {
     this.street = fullAddress.street;
-    this.wardId = fullAddress.ward.id;
-    this.districtId = fullAddress.district.id;
-    this.cityId = fullAddress.province.id;
+    this.wardId = fullAddress.wardId;
+    this.districtId = fullAddress.districtId;
+    this.cityId = fullAddress.cityId;
   }
+}
+
+export class AddressModel {
+  wardId: number;
+  wardName: string;
+  districtId: number;
+  districtName: string;
+  cityId: number;
+  cityName: string;
+  street: string;
+}
+
+export enum EnumAddress{
+  STREET,
+  WARD,
+  DISTRICT,
+  CITY
 }
