@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   FormBuilder,
   FormControl,
@@ -9,41 +9,42 @@ import {
 import { passwordMatchValidator } from 'src/app/core/validators/password-match.validator';
 import Swal from 'sweetalert2';
 import { AuthClient } from 'src/app/core/api-clients/auth.client';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-reset-password',
   templateUrl: './reset-password.component.html',
-  styleUrls: ['./reset-password.component.scss']
+  styleUrls: ['./reset-password.component.scss'],
 })
 export class ResetPasswordComponent implements OnInit {
-  /* emailAddress!: string;
-
-  constructor(public route: ActivatedRoute) { }
-
-  ngOnInit(): void {
-    this.emailAddress = this.route.snapshot.queryParamMap.get('emailAddress');
-  } */
-  registerForm: FormGroup;
+  resetForm: FormGroup;
+  code: string;
 
   private isSuccess: boolean;
-  constructor(private authClient: AuthClient, private fb: FormBuilder) {}
+  constructor(
+    private authClient: AuthClient,
+    private fb: FormBuilder,
+    private router: Router
+  ) {}
 
   get email() {
-    return this.registerForm.get('email');
+    return this.resetForm.get('email');
   }
 
   get password() {
-    return this.registerForm.get('password');
+    return this.resetForm.get('password');
   }
 
   get confirmPassword() {
-    return this.registerForm.get('confirmPassword');
+    return this.resetForm.get('confirmPassword');
   }
 
   ngOnInit(): void {
-    this.registerForm = this.fb.group(
+    this.getCodeFromURL();
+
+    // Initialize reset form
+    this.resetForm = this.fb.group(
       {
-        fullName: ['', [Validators.required]],
         email: ['', [Validators.required, Validators.email]],
         password: [
           '',
@@ -54,23 +55,15 @@ export class ResetPasswordComponent implements OnInit {
           ]),
         ],
         confirmPassword: ['', [Validators.required]],
-        phoneNumber: ['', [Validators.required]],
-        dob: [new Date()],
+        token: this.code,
       },
       { validator: passwordMatchValidator }
     );
   }
 
-  // handleInput(data) {
-  //   //this.formData[`${data.type}`] = data.value;
-  //   const key = `${data.type}`;
-  //   this.registerForm.patchValue({
-  //     key : data.value
-  //   })
-  // }
-
   async onSubmit() {
-    if (this.registerForm.invalid) {
+    console.log('resetForm: ', this.resetForm.value);
+    if (this.resetForm.invalid) {
       Swal.fire({
         icon: 'error',
         title: 'Error...',
@@ -78,23 +71,45 @@ export class ResetPasswordComponent implements OnInit {
       });
       return;
     }
-    console.log('data: ', this.registerForm.value);
 
-    const response = await this.authClient.register(this.registerForm.value);
-    this.authClient.register(this.registerForm.value).subscribe(
-      (data) => {
+    const response = await this.authClient.resetPassword(this.resetForm.value);
+    this.authClient.resetPassword(this.resetForm.value).subscribe(
+      async (data) => {
         this.isSuccess = true;
         console.log(data);
-        Swal.fire({
+        await Swal.fire({
           icon: 'success',
           title: 'Success...',
-          text: 'Đăng ký tài khoản thành công.',
+          text: 'Thay đổi mật khẩu thành công.',
         });
+
+        this.router.navigate(['/auth/login']);
       },
       (err) => {
         this.isSuccess = false;
         console.log(err);
       }
     );
+  }
+
+  getCodeFromURL() {
+    const URL = this.router.url;
+    const index = URL.indexOf('code=');
+    let code = URL.slice(index + 5, URL.length);
+
+    // Handle code
+    for (let i = 0; i < code.length; i++) {
+      if (code[i] === '%' && code[i + 2]) {
+        if (code[i + 2] === 'F') {
+          code = code.slice(0, i) + '/' + code.slice(i + 3, code.length);
+        }
+
+        if (code[i + 2] === '0') {
+          code = code.slice(0, i) + '+' + code.slice(i + 3, code.length);
+        }
+      }
+    }
+
+    this.code = code;
   }
 }
