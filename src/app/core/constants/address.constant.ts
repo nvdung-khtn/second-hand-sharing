@@ -23,9 +23,9 @@ export class AddressModel {
   street: string;
 }
 
-export enum EnumAddress{
+export enum EnumAddress {
   STREET,
   WARD,
   DISTRICT,
-  CITY
+  CITY,
 }
