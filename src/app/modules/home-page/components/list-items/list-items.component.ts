@@ -12,17 +12,18 @@ export class ListItemsComponent implements OnInit {
   pageNumber: number;
   pageSize: number;
   message: string;
+  isOpenModal = false;
 
-  constructor(private homeClient:HomeClient) { }
+  constructor(private homeClient: HomeClient) { }
 
   ngOnInit(): void {
     this.homeClient.getItems().subscribe(
       response => {
         this.items = response.data;
-        console.log("items:", this.items);
+        console.log('items:', this.items);
       },
       error => console.log(error)
-    )
+    );
   }
 
   subtractDate = (date: string) => {

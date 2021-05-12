@@ -10,14 +10,22 @@ import { CreatePostComponent } from './components/create-post/create-post.compon
 import { CreatePostModalComponent } from './components/create-post/create-post-modal/create-post-modal.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddressModalComponent } from './components/address-modal/address-modal.component';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatSelectModule} from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
 import { DropdownFormComponent } from './components/dropdown-form/dropdown-form.component';
-
+import { MatCarouselModule } from '@ngbmodule/material-carousel';
 
 @NgModule({
   // tslint:disable-next-line: max-line-length
-  declarations: [HomeComponent, CategoryComponent, ListItemsComponent, CreatePostComponent, CreatePostModalComponent, AddressModalComponent, DropdownFormComponent],
+  declarations: [
+    HomeComponent,
+    CategoryComponent,
+    ListItemsComponent,
+    CreatePostComponent,
+    CreatePostModalComponent,
+    AddressModalComponent,
+    DropdownFormComponent,
+  ],
   imports: [
     CommonModule,
     HomePageRoutingModule,
@@ -26,7 +34,8 @@ import { DropdownFormComponent } from './components/dropdown-form/dropdown-form.
     FormsModule,
     MatFormFieldModule,
     MatSelectModule,
-    ReactiveFormsModule
-  ]
+    ReactiveFormsModule,
+    MatCarouselModule.forRoot(),
+  ],
 })
-export class HomePageModule { }
+export class HomePageModule {}
