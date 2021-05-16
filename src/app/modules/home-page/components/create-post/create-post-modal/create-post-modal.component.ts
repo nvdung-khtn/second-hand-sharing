@@ -121,6 +121,9 @@ export class CreatePostModalComponent implements OnInit {
         // Upload image to cloud
         this.uploadImages(this.preSignUrl);
         alert('thanh cong');
+        this.isOpenModal = false;
+        this.modalChange.emit(this.isOpenModal);
+        window.location.reload();
       },
       (error) => console.log(error)
     );

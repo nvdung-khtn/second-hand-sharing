@@ -13,12 +13,95 @@
   background: rgba(0, 0, 0, 0.8);
   color: $primary-text-color;
 
+  .title {
+    font-size: $default-font-size;
+    font-weight: bold;
+    margin: 2% 0;
+  }
+
+  .list {
+    margin-bottom: 6%;
+    padding: 1% 4%;
+    box-sizing: border-box;
+    max-height: 250px;
+    height: 100%;
+    overflow-y: scroll;
+    border: 1px solid $primary-border-otp-color;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    .avatar {
+      display: flex;
+      width: 100%;
+      max-width: 40px;
+      margin-right: 2%;
+    }
+  
+    .request-list {
+      display: flex;
+      align-items: center;
+      margin: 4% 0;
+      justify-content: space-between;
+  
+      &__info {
+        width: 100%;
+        display: flex;
+        align-items: center;
+      }
+    }
+
+    .button {
+      width: 100%;
+      max-width: 6rem;
+      padding: 1% 2%;
+      text-align: center;
+      cursor: pointer;
+      background-color: $btn-color;
+      color: white;
+      border-radius: $border-radius-light;
+      cursor: pointer;
+
+      &:hover {
+        background-color: $btn-selected;
+      }
+    }
+
+    .cancel-request {
+      display: none;
+    }
+  }
+
   &__grid {
     display: grid;
     grid-template-columns: 75% 25%;
     height: 100%;
     width: 100%;
     box-sizing: border-box;
+
+    .flex {
+      display: flex;
+      margin-bottom: 2%;
+    }
+
+    .confirm {
+      margin-right: 1%;
+      background-color: $light-green;
+
+      &:hover {
+        background-color: $green;
+      }
+    }
+    
+    .thanks {
+      margin-left: 1%;
+      background-color: $light-pink;
+
+      &:hover {
+        background-color: $pink;
+      }
+    }
 
     &__card {
       &__left {
@@ -35,6 +118,7 @@
           height: 100%;
           max-width: 800px;
           max-height: 640px;
+          color: white;
         }
 
         &__close {
@@ -79,6 +163,7 @@
           background-color: $btn-color;
           color: white;
           border-radius: $border-radius-light;
+          cursor: pointer;
 
           &:hover {
             background-color: $btn-selected;
@@ -126,5 +211,9 @@
     @media (max-width: 1024px) {
       top: 0;
     }
+  }
+
+  .mat-icon-button.mat-primary{
+    color: white !important
   }
 }

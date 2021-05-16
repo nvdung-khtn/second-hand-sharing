@@ -4,9 +4,15 @@ import { DetailItemComponent } from './pages/detail-item/detail-item.component';
 import { ItemRoutingModule } from './item.routing';
 import { MatCarouselModule } from '@ngbmodule/material-carousel';
 import { RequestModalComponent } from './components/request-modal/request-modal.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [DetailItemComponent, RequestModalComponent],
-  imports: [CommonModule, ItemRoutingModule, MatCarouselModule.forRoot()],
+  imports: [
+    CommonModule,
+    ItemRoutingModule,
+    MatCarouselModule.forRoot(),
+    FormsModule,
+  ],
 })
 export class ItemModule {}

@@ -20,14 +20,14 @@ export class ListItemsComponent implements OnInit {
     this.homeClient.getItems().subscribe(
       response => {
         this.items = response.data;
-        console.log('items:', this.items);
       },
       error => console.log(error)
     );
   }
 
   subtractDate = (date: string) => {
-    const endDate = new Date();
+    const gmt0Time = new Date().toString().replace('+0700', '+1400');
+    const endDate = new Date(gmt0Time);
     const startDate = new Date(date);
     const diff = endDate.getTime() - startDate.getTime();
     const years = Math.floor(diff / (60 * 60 * 24 * 1000 * 365));
@@ -36,19 +36,19 @@ export class ListItemsComponent implements OnInit {
     const minutes = Math.floor(diff / (60 * 1000)) - ((days * 24 * 60) + (hours * 60));
     const seconds = Math.floor(diff / 1000) - ((days * 24 * 60 * 60) + (hours * 60 * 60) + (minutes * 60));
     if (years > 0) {
-        return (years + ' năm trước')
+        return (years + ' năm trước');
     }
     if (days > 0) {
-        return (days + ' ngày trước')
+        return (days + ' ngày trước');
     }
     if (hours > 0) {
-        return (hours + ' giờ trước')
+        return (hours + ' giờ trước');
     }
     if (minutes > 0) {
-        return (minutes + ' phút trước')
+        return (minutes + ' phút trước');
     }
     if (seconds > 0) {
-        return (seconds + ' giây trước')
+        return (seconds + ' giây trước');
     }
   }
 }
