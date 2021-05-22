@@ -1,0 +1,72 @@
+@import "../../../../styles/variables";
+
+.message-modal {
+  display: block;
+  position: fixed; /* Stay in place */
+  z-index: 3; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0, 0, 0, 0.8); /* Black w/ opacity */
+  font-size: $default-font-size;
+
+  /*     @media (max-width: 1024px) {
+        top: 10%;
+    } */
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: absolute;
+    color: $primary-text-color;
+    height: 100%;
+    width: 100%;
+    max-height: 12rem;
+    max-width: 20rem;
+    background-color: white;
+    box-sizing: border-box;
+    border-radius: $border-radius-default;
+    padding: 1.25rem 1.5rem;
+    margin: 0;
+    top: 30%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+
+  &__group-btn {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__button {
+    width: 100%;
+    max-width: 5rem;
+    height: 2rem;
+    text-align: center;
+    background-color: white;
+    border: 1px solid $primary-color;
+    color: $primary-color;
+    border-radius: $border-radius-light;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $primary-color;
+      color: white;
+    }
+  }
+
+  &__icon {
+    width: 100%;
+    max-width: 4.5rem;
+  }
+
+  .success,
+  .error {
+    display: none;
+  }
+}

@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-home-left-side',
   templateUrl: './home-left-side.component.html',
-  styleUrls: ['./home-left-side.component.scss']
+  styleUrls: ['./home-left-side.component.scss'],
 })
 export class HomeLeftSideComponent implements OnInit {
   categoryContext = [
@@ -14,25 +14,30 @@ export class HomeLeftSideComponent implements OnInit {
     },
     {
       title: 'Đã đăng ký nhận',
-      icon : 'bookmark',
+      icon: 'bookmark',
       type: 'mat-icon',
-    }
+    },
+    {
+      title: 'Bài đã đăng',
+      icon: 'card_giftcard',
+      type: 'mat-icon',
+    },
   ];
 
   shortcutData = [
     {
       name: 'Quyên góp sách vở quần áo cũ',
       image: 'assets/image/default-avatar.png',
-    }
+    },
   ];
   currentName: string;
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
     this.getCurrentName();
   }
 
-  getCurrentName() {
+  getCurrentName = () => {
     this.currentName = JSON.parse(localStorage.getItem('userInfo')).fullName;
   }
 }
