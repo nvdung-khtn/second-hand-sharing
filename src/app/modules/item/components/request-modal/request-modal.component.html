@@ -5,8 +5,8 @@
       Nội dung đăng ký nhận
     </div>
 
-    <input class="request-modal__text" placeholder="Tin nhắn">
+    <input class="request-modal__text" type="text" placeholder="Tin nhắn" [(ngModel)]="this.messageValue">
 
-    <div class="request-modal__confirm">Đăng ký</div>
+    <div class="request-modal__confirm" (click)="onClick()">Đăng ký</div>
   </div>
   

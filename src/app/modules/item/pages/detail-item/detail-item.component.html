@@ -2,14 +2,16 @@
   <div class="detail-item__grid">
     <div class="detail-item__grid__card">
       <div class="detail-item__grid__card__left">
-        <span class="detail-item__grid__card__left__close" (click)="onClose()">&times;</span>
+        <span class="detail-item__grid__card__left__close" (click)="onClose()"
+          >&times;</span
+        >
 
         <mat-carousel
           class="detail-item__grid__card__left__image"
           timings="250ms ease-in"
           [autoplay]="true"
           interval="5000"
-          color="primary"
+          color="arrow"
           maxWidth="800px"
           proportion="25"
           slides="5"
@@ -19,7 +21,7 @@
           [useKeyboard]="true"
           [useMouseWheel]="false"
           orientation="ltr"
-          [maintainAspectRatio] ="false"
+          [maintainAspectRatio]="false"
         >
           <mat-carousel-slide
             #matCarouselSlide
@@ -27,7 +29,6 @@
             [image]="this.data?.imageUrl[i]"
             overlayColor="#00000040"
             [hideOverlay]="false"
-            
           ></mat-carousel-slide>
         </mat-carousel>
       </div>
@@ -64,14 +65,72 @@
           </div>
         </div>
 
-        <div class="detail-item__grid__card__right__btn" (click)="onClickBtn()">
+        <!-- FORM NGƯỜI NHẬN -->
+        <div
+          class="detail-item__grid__card__right__btn"
+          (click)="onClickRegister()"
+          [style.display]="
+            !this.isOwner && !this.checkMessage ? 'block' : 'none'
+          "
+        >
           Đăng ký nhận
+        </div>
+
+        <div
+          [style.display]="
+            !this.isOwner && this.checkMessage ? 'block' : 'none'
+          "
+        >
+          <div class="flex">
+            <div class="detail-item__grid__card__right__btn thanks">
+              Gửi lời cảm ơn
+            </div>
+          </div>
+
+          <div
+            class="detail-item__grid__card__right__btn cancel"
+            (click)="onClickUnregister()"
+          >
+            Hủy đăng ký
+          </div>
+        </div>
+
+        <!-- FORM NGƯỜI CHO -->
+        <div [style.display]="this.isOwner ? 'block' : 'none'">
+          <div class="title">Danh sách yêu cầu</div>
+
+          <div class="list">
+            <div
+              class="request-list"
+              *ngFor="let request of this.requestListData"
+            >
+              <div class="request-list__info">
+                <img class="avatar" src="assets/image/default-avatar.png" />
+
+                <div>
+                  <div>{{ request.receiverName }}</div>
+
+                  <div>{{ request.receiveReason }}</div>
+                </div>
+              </div>
+              <div class="button approve-request" (click)="onClickApprove(request.id)" >{{this.isApproved !== request.id ? 'Chấp nhận' : 'Hủy'}} </div>
+              <!-- <div class="button approve-request">{{this.isApproved !== request.id ? 'Chấp nhận' : 'Hủy'}} </div> -->
+            </div>
+          </div>
+          <div class="detail-item__grid__card__right__btn">Xác nhận đã cho</div>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<div class="detail-item__modal" [style.display]="this.isOpenModal ? 'block' : 'none'">
-  <app-request-modal [isOpenModal]="this.isOpenModal" (modalChange)="this.isOpenModal=$event"></app-request-modal>
+<div
+  class="detail-item__modal"
+  [style.display]="this.isOpenModal ? 'block' : 'none'"
+>
+  <app-request-modal
+    [isOpenModal]="this.isOpenModal"
+    (modalChange)="this.isOpenModal = $event"
+    (message)="this.checkMessage = $event"
+  ></app-request-modal>
 </div>

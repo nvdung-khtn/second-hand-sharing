@@ -1,8 +1,8 @@
-@import './styles/variables';
+@import "./styles/variables";
 
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
-@import '~@angular/material/theming';
+@import "~@angular/material/theming";
 // Plus imports for other components in your app.
 
 // Include the common styles for Angular Material. We include this here so that you only
@@ -15,19 +15,22 @@
 // hue. Available color palettes: https://material.io/design/color/
 $second-hand-sharing-primary: mat-palette($mat-indigo);
 $second-hand-sharing-accent: mat-palette($mat-pink, A200, A100, A400);
-
 // The warn palette is optional (defaults to red).
 $second-hand-sharing-warn: mat-palette($mat-red);
+$second-hand-sharing-arrow: mat-palette($mat-grey, A100, 600);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
-$second-hand-sharing-theme: mat-light-theme((
-  color: (
-    primary: $second-hand-sharing-primary,
-    accent: $second-hand-sharing-accent,
-    warn: $second-hand-sharing-warn,
+$second-hand-sharing-theme: mat-light-theme(
+  (
+    color: (
+      primary: $second-hand-sharing-primary,
+      accent: $second-hand-sharing-accent,
+      warn: $second-hand-sharing-warn,
+      arrow: $second-hand-sharing-arrow
+    ),
   )
-));
+);
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
@@ -36,11 +39,23 @@ $second-hand-sharing-theme: mat-light-theme((
 
 /* You can add global styles to this file, and also import other style files */
 body {
-    margin: 0;
-    background-color: $primary-icon-background-color;
-    font-size: $main-font-size;
+  margin: 0;
+  background-color: $primary-icon-background-color;
+  font-size: $main-font-size;
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
