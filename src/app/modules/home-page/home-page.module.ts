@@ -37,5 +37,8 @@ import { MatCarouselModule } from '@ngbmodule/material-carousel';
     ReactiveFormsModule,
     MatCarouselModule.forRoot(),
   ],
+  exports: [
+    AddressModalComponent
+  ]
 })
 export class HomePageModule {}

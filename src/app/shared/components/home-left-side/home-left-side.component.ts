@@ -13,7 +13,7 @@ export class HomeLeftSideComponent implements OnInit {
       type: 'mat-icon',
     },
     {
-      title: 'Đã lưu',
+      title: 'Đã đăng ký nhận',
       icon : 'bookmark',
       type: 'mat-icon',
     }

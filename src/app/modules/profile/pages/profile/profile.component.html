@@ -1,0 +1,95 @@
+<form [formGroup]="form">
+  <div class="profile">
+    <img class="profile__avatar" src="assets/image/default-avatar.png" />
+    <div
+      class="profile__edit-btn"
+      (click)="onClickEdit()"
+      [style.visibility]="this.canEdit ? 'hidden' : 'unset'"
+    >
+      Chỉnh sửa
+    </div>
+
+    <div class="profile__grid">
+      <div class="title">Tên</div>
+      <input
+        formControlName="fullName"
+        required
+        [disabled]="!this.canEdit"
+        [style.borderBottom]="this.canEdit ? '1px solid #0E88FA' : 'unset'"
+      />
+    </div>
+
+    <div class="profile__grid">
+      <div class="title">Email</div>
+      <div>
+        {{ this.myInfo.email }}
+      </div>
+    </div>
+
+    <div class="profile__grid">
+      <div class="title">Số điện thoại</div>
+      <input
+        formControlName="phoneNumber"
+        [disabled]="!this.canEdit"
+        [style.borderBottom]="this.canEdit ? '1px solid #0E88FA' : 'unset'"
+      />
+    </div>
+
+    <div class="profile__grid">
+      <div class="title">Ngày sinh</div>
+      <!-- anh tự handle chọn ngày sinh như lúc đkí -->
+      <div>
+        {{ this.myInfo.dob }}
+      </div>
+    </div>
+
+    <div class="profile__grid">
+      <div class="title">Địa chỉ</div>
+      <div class="profile__address">
+        <div class="profile__address__input" >
+          {{ this.myInfo.address }}
+        </div>
+
+        <div
+          class="profile__edit-btn"
+          [style.display]="this.canEdit ? 'block' : 'none'"
+          (click)="openModalAddress()"
+        >
+          Chọn địa chỉ
+        </div>
+      </div>
+    </div>
+
+    <div class="profile__group-btn">
+      <button
+        class="profile__cancel-btn"
+        (click)="onClickCancel()"
+        [style.display]="this.canEdit ? 'block' : 'none'"
+      >
+        Hủy
+      </button>
+
+      <button
+        class="profile__save-btn"
+        (click)="onClickSave()"
+        [style.display]="this.canEdit ? 'block' : 'none'"
+      >
+        Lưu lại
+      </button>
+    </div>
+
+    <div
+      class="profile__noti"
+      [style.display]="this.canEdit ? 'none' : 'block'"
+      [style.color]="this.messageColor"
+    >
+      {{ this.messageAfterSave }}
+    </div>
+  </div>
+</form>
+
+<div class="address-modal" [style.display]="this.isOpenAddressModal ? 'block' : 'none'">
+  <app-address-modal [isOpenModal]="this.isOpenAddressModal" (modalChange)="this.isOpenAddressModal=$event"
+    (addressData)="handleAddress($event)">
+  </app-address-modal>
+</div>

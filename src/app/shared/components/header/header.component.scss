@@ -173,6 +173,8 @@
             &__avatar {
                 display: inline-block;
                 vertical-align: middle;
+                max-width: 40px;
+                border-radius: 100%;
             }
 
             &__name {
