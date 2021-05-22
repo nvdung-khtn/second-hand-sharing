@@ -14,6 +14,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { DropdownFormComponent } from './components/dropdown-form/dropdown-form.component';
 import { MatCarouselModule } from '@ngbmodule/material-carousel';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   // tslint:disable-next-line: max-line-length
@@ -35,6 +36,7 @@ import { MatCarouselModule } from '@ngbmodule/material-carousel';
     MatFormFieldModule,
     MatSelectModule,
     ReactiveFormsModule,
+    SharedModule,
     MatCarouselModule.forRoot(),
   ],
   exports: [

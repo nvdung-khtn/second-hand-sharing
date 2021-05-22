@@ -1,0 +1,16 @@
+<div class="message-modal" [style.display]="this.openMessageModal ? 'block' : 'none'">
+  <div class="message-modal__container">
+    <div>
+        <img src="assets/image/success.png" class="message-modal__icon success" [style.display]="this.isSuccessButton ? 'initial' : 'none'"/>
+        <img src="assets/image/error.png" class="message-modal__icon error" [style.display]="!this.isSuccessButton ? 'initial' : 'none'"/>
+    </div>
+
+    <div class="message-modal__message">
+      {{ this.message }}
+    </div>
+
+    <div class="message-modal__group-btn">
+        <button class="message-modal__button" (click)="onClick()">OK</button>
+    </div>
+  </div>
+</div>

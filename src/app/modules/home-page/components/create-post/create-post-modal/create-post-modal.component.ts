@@ -14,6 +14,11 @@ export class CreatePostModalComponent implements OnInit {
   @Input() isOpenModal;
   @Output() modalChange = new EventEmitter<boolean>();
 
+  // biến cho message modal khi gọi xong api đăng bài
+  isOpenMessageModal = false;
+  isSuccess = true;
+  messageModalMessage = '';
+
   isOpenAddressModal = false;
   url: any[] = [];
 
@@ -48,10 +53,10 @@ export class CreatePostModalComponent implements OnInit {
   onClose = () => {
     this.isOpenModal = false;
     this.modalChange.emit(this.isOpenModal);
-  };
+  }
 
   showSelectedFile = (event) => {
-    //let event = originalEvent;
+    // let event = originalEvent;
     // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < event.target.files.length; i++) {
       this.myFiles.push(event.target.files[i]);
@@ -70,18 +75,19 @@ export class CreatePostModalComponent implements OnInit {
         this.url.push(reader.result);
       };
     }
-  };
+  }
 
   selectFile(event: any): void {
     this.selectedFiles = event.target.files;
     this.showSelectedFile(event);
   }
 
-  uploadImages(urls) {
-    //Reset selectedFiles
-    let images = this.selectedFiles;
+  uploadImages = (urls) => {
+    // Reset selectedFiles
+    const images = this.selectedFiles;
+    console.log(this.selectedFiles);
     this.selectedFiles = null;
-    debugger;
+    /* debugger; */
     // Upload to cloude
     if (images) {
       const count = images.length;
@@ -98,13 +104,13 @@ export class CreatePostModalComponent implements OnInit {
   onRemoveSelectedFile = (index: number) => {
     this.myFiles.splice(index, 1);
     this.url.splice(index, 1);
-  };
+  }
 
   onOpenAddressModal = () => {
     this.isOpenAddressModal = true;
-  };
+  }
 
-  onSubmitPost() {
+  onSubmitPost = () => {
     console.log('onSubmitPost: ', this.selectedFiles.length);
     const formData = {
       ...this.postForm.value,
@@ -120,22 +126,22 @@ export class CreatePostModalComponent implements OnInit {
         );
         // Upload image to cloud
         this.uploadImages(this.preSignUrl);
-        alert('thanh cong');
-        this.isOpenModal = false;
-        this.modalChange.emit(this.isOpenModal);
-        window.location.reload();
+        this.uploadImages(this.preSignUrl);
+        this.isOpenMessageModal = true;
+        this.isSuccess = true;
+        this.messageModalMessage = 'Đăng bài thành công';
       },
       (error) => console.log(error)
     );
   }
 
-  handleAddress(address: AddressModel) {
+  handleAddress = (address: AddressModel) => {
     console.log('receiveAddress:', address);
     this.userData.address = `${address.street} ${address.wardName} ${address.districtName} ${address.cityName}`;
     this.receiveAddress = new Address(address);
   }
 
-  handleCategoryId(catId: number) {
+  handleCategoryId = (catId: number) => {
     console.log(`catId: ${catId}`);
     this.selectedCatId = catId;
   }

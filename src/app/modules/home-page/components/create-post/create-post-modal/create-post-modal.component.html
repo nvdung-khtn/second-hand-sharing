@@ -59,7 +59,7 @@
 
     <div class="create-post-modal__category">
       <app-category [categoryBackground]="this.categoryTabBackground"
-        [categoryIconBackground]="this.categoryIconBackground" (categoryIDChange)="handleCategoryId($event)"></app-category>
+        [categoryIconBackground]="this.categoryIconBackground" (categoryIDChange)="handleCategoryId($event)" [disableAllCate]="true"></app-category>
     </div>
 
     <input type="number" class="create-post-modal__phone" placeholder="Số điện thoại liên hệ" formControlName="phoneNumber">
@@ -78,3 +78,5 @@
     </app-address-modal>
   </div>
 </div>
+
+<app-message-modal [isSuccessButton]="this.isSuccess" [message]="this.messageModalMessage" [openMessageModal]="this.isOpenMessageModal" [handleCloseParent]="this.isOpenModal" (modalChange)="this.modalChange.emit($event)" ></app-message-modal>

@@ -18,6 +18,7 @@ import { Category } from 'src/app/core/constants/category.constant';
   styleUrls: ['./category.component.scss'],
 })
 export class CategoryComponent implements OnInit {
+  @Input() disableAllCate = false;
   @Input() categoryIconBackground = '';
   @Input() categoryBackground = '';
   @Input() selectedFromParent: number;
@@ -36,51 +37,63 @@ export class CategoryComponent implements OnInit {
   ];
   constructor(private categoryClient: CategoryClient) {}
 
+  // tslint:disable-next-line: typedef
   async ngOnInit() {
     // tslint:disable-next-line: no-unused-expression
-    await this.getCategories();
-
     // !this.selectedFromParent &&
     //   (this.selectedCategory = this.selectedFromParent);
     // this.categoryContext = [...this.defaultContext, ...this.categories];
     // this.assignIcon(this.categoryContext);
+    await this.getCategories();
   }
 
   // map icon
   assignIcon = (categoryArr) => {
-    const iconList = [
-      faAlignJustify,
-      faTshirt,
-      faHouseDamage,
-      faBriefcase,
-      faRunning,
-      faTv,
-      faChair,
-      faBoxes,
-    ];
+    const iconList = !this.disableAllCate
+      ? [
+          faAlignJustify,
+          faTshirt,
+          faHouseDamage,
+          faBriefcase,
+          faRunning,
+          faTv,
+          faChair,
+          faBoxes,
+        ]
+      : [
+          faTshirt,
+          faHouseDamage,
+          faBriefcase,
+          faRunning,
+          faTv,
+          faChair,
+          faBoxes,
+        ];
     // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < categoryArr?.length; i++) {
       categoryArr[i].icon = iconList[i];
     }
-  };
+  }
 
   onClick = (id: number) => {
     this.selectedCategory = id;
     this.categoryIDChange.emit(id);
-  };
+  }
 
-  getCategories() {
+  getCategories = () => {
     this.categoryClient.getCategories().subscribe(
       (categories) => {
         this.categories = categories;
 
+        // tslint:disable-next-line: no-unused-expression
         !this.selectedFromParent &&
           (this.selectedCategory = this.selectedFromParent);
-        this.categoryContext = [...this.defaultContext, ...this.categories];
+        this.categoryContext = !this.disableAllCate
+          ? [...this.defaultContext, ...this.categories]
+          : this.categories;
         this.assignIcon(this.categoryContext);
       },
       (error) => console.log(error)
     );
   }
-
 }
