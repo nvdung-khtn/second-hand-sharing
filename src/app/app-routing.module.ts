@@ -28,6 +28,12 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'profile',
+    loadChildren: () =>
+      import('./modules/profile/profile.module').then(m => m.ProfileModule),
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'notification',
     loadChildren: () =>
       import('./modules/notification/notification.module').then(m => m.NotificationModule),

@@ -12,11 +12,12 @@ import { HomePageModule } from './modules/home-page/home-page.module';
 import { GroupModule } from './modules/group/group.module';
 import { NotificationModule } from './modules/notification/notification.module';
 import { TokenInterceptor } from './core/interceptors/token.interceptor';
+import { ProfileModule } from './modules/profile/profile.module';
 
-//import { AuthRoutingModule } from './modules/auth/auth.routing';
-//import { HomePageRoutingModule } from './modules/home-page/home-page.routing';
-//import { GroupRoutingModule } from './modules/group/group.routing';
-//import { NotificationRoutingModule } from './modules/notification/notification.routing';
+// import { AuthRoutingModule } from './modules/auth/auth.routing';
+// import { HomePageRoutingModule } from './modules/home-page/home-page.routing';
+// import { GroupRoutingModule } from './modules/group/group.routing';
+// import { NotificationRoutingModule } from './modules/notification/notification.routing';
 
 @NgModule({
   declarations: [AppComponent],
@@ -33,6 +34,7 @@ import { TokenInterceptor } from './core/interceptors/token.interceptor';
     SharedModule,
     HomePageModule,
     GroupModule,
+    ProfileModule,
     NotificationModule,
   ],
   providers: [

@@ -5,8 +5,8 @@
     width: calc(100% - 6% - 540px);
     max-width: 1264px;
     margin: 0 auto;
-    margin-top: 70px;
-    /* top: calc(56px + 2%); */
+    padding-top: 70px;
+    height: calc(100vh - 70px);
     left: 0;
     right: 0;
     z-index: 1;
@@ -28,8 +28,6 @@
     background-color: #fff;
     margin: 1%;
     position: fixed;
-    overflow: auto;
-    overflow-y: scroll;
     top: 0;
     margin-top: 70px;
     bottom: 0px;

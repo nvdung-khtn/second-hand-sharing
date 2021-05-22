@@ -15,6 +15,12 @@
     }
 
     &__list {
+        height: calc(100vh - 9rem);
+        overflow-y: scroll;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
 
         &__profile {
             display: flex;
@@ -32,6 +38,7 @@
                 width: 100%;
                 max-width: 45px;
                 margin-right: 2%;
+                border-radius: 100%;
             }
 
             &__info {

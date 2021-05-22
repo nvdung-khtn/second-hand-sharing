@@ -6,7 +6,9 @@
     display: flex;
     border-radius: $border-radius-light;
     color: $primary-text-color;
-
+    height: calc(100vh - 19rem);
+    overflow-y: scroll;
+    
     &__grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
