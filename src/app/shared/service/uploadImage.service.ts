@@ -10,9 +10,9 @@ export class UploadImageService {
   uploadSingleImage = (url, image) => {
     const headers = new HttpHeaders({
       'Content-Type': 'image/png',
-      'Access-Control-Allow-Origin': '*'
+      'Access-Control-Allow-Origin': '*',
     });
 
-    return this.http.put(url, image, {headers});
-  }
+    return this.http.put(url, image, { headers });
+  };
 }

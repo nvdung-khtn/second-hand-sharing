@@ -12,12 +12,16 @@ import { AuthService } from '../../shared/service/auth.service';
   providedIn: 'root',
 })
 export class TokenInterceptor implements HttpInterceptor {
-  constructor(public auth: AuthService) {}
+  constructor(public auth: AuthService) { }
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    if (request.url.startsWith("https://storage.googleapis.com/twohandsharing.appspot.com/")){
+    if (
+      request.url.startsWith(
+        'https://storage.googleapis.com/secondhandsharing.appspot.com/'
+      )
+    ) {
       return next.handle(request);
     }
     request = request.clone({

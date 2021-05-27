@@ -20,5 +20,4 @@ export class AuthService {
   getCurrentName() {
     return JSON.parse(localStorage.getItem('userInfo')).fullName;
   }
-  
 }

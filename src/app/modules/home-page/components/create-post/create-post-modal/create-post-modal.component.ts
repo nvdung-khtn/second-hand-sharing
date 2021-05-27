@@ -53,7 +53,7 @@ export class CreatePostModalComponent implements OnInit {
   onClose = () => {
     this.isOpenModal = false;
     this.modalChange.emit(this.isOpenModal);
-  }
+  };
 
   showSelectedFile = (event) => {
     // let event = originalEvent;
@@ -75,7 +75,7 @@ export class CreatePostModalComponent implements OnInit {
         this.url.push(reader.result);
       };
     }
-  }
+  };
 
   selectFile(event: any): void {
     this.selectedFiles = event.target.files;
@@ -93,22 +93,23 @@ export class CreatePostModalComponent implements OnInit {
       const count = images.length;
       console.log(`count: ${count}`);
 
+      debugger;
       for (let index = 0; index < count; index++) {
         this.uploadImageService
           .uploadSingleImage(urls[index], images[index])
           .subscribe();
       }
     }
-  }
+  };
 
   onRemoveSelectedFile = (index: number) => {
     this.myFiles.splice(index, 1);
     this.url.splice(index, 1);
-  }
+  };
 
   onOpenAddressModal = () => {
     this.isOpenAddressModal = true;
-  }
+  };
 
   onSubmitPost = () => {
     console.log('onSubmitPost: ', this.selectedFiles.length);
@@ -126,23 +127,22 @@ export class CreatePostModalComponent implements OnInit {
         );
         // Upload image to cloud
         this.uploadImages(this.preSignUrl);
-        this.uploadImages(this.preSignUrl);
         this.isOpenMessageModal = true;
         this.isSuccess = true;
         this.messageModalMessage = 'Đăng bài thành công';
       },
       (error) => console.log(error)
     );
-  }
+  };
 
   handleAddress = (address: AddressModel) => {
     console.log('receiveAddress:', address);
     this.userData.address = `${address.street} ${address.wardName} ${address.districtName} ${address.cityName}`;
     this.receiveAddress = new Address(address);
-  }
+  };
 
   handleCategoryId = (catId: number) => {
     console.log(`catId: ${catId}`);
     this.selectedCatId = catId;
-  }
+  };
 }

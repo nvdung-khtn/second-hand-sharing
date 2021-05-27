@@ -1,19 +1,25 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
+import {
+  ActivatedRouteSnapshot,
+  Router,
+  RouterStateSnapshot,
+} from '@angular/router';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AnonymousGuard {
+  constructor(private router: Router) {}
 
-  constructor(private router: Router) { }
-
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): boolean {
     if (localStorage.getItem('access_token') != null) {
-        this.router.navigateByUrl('/home');
-        return false;
+      this.router.navigateByUrl('/home');
+      return false;
     } else {
-        return true;
+      return true;
     }
-}
+  }
 }
