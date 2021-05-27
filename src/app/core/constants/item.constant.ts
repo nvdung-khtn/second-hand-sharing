@@ -1,10 +1,4 @@
-import { environment } from 'src/environments/environment';
 import { Address } from './address.constant';
-
-// URLs
-const baseUrl = environment.apiUrl;
-export const URL_GET_ITEMS = `${baseUrl}/Item?PageNumber=1&PageSize=100`;
-export const URL_POST_ITEM = `${baseUrl}/Item`;
 
 // Models
 export class Item {
@@ -13,8 +7,11 @@ export class Item {
   receiveAddress: Address;
   postTime: Date; // Có thể phát sinh lỗi
   description: string;
-  imageUrl: string;
+  imageUrl: string[];
+  donateAccountId: number;
   donateAccountName: string;
+  userRequestId: number;
+  status: ItemStatus;
 }
 
 export class CreateItemRequest {
@@ -33,4 +30,10 @@ export class CreateItem {
 class imageUpload {
   imageName: string;
   presignUrl: string;
+}
+
+enum ItemStatus {
+  NEW,
+  PROCESSING,
+  COMPLETED,
 }

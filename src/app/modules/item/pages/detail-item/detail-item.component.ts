@@ -1,5 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { HomeClient } from 'src/app/core/api-clients/home.client';
+import { Address, AddressModel } from 'src/app/core/constants/address.constant';
+import { Item } from 'src/app/core/constants/item.constant';
+import { ReceiveRequest } from 'src/app/core/constants/receive-request.constant';
+import { AddressService } from 'src/app/shared/service/address.service';
 
 @Component({
   selector: 'app-detail-item',
@@ -13,29 +18,6 @@ export class DetailItemComponent implements OnInit {
   isApproved = -1;
   toggleApprove = 0;
   selectedUser = {};
-
-  data = {
-    id: 9,
-    itemName: 'áo khoác cũ test 3',
-    receiveAddress: {
-      street: '225 Nguyễn Văn Cừ',
-      wardId: 1,
-      districtId: 1,
-      cityId: 1,
-    },
-    postTime: '2021-04-12T07:08:10.614975',
-    description: 'áo khoác cũ nhưng mới nhưng mà cũ',
-    imageUrl: [
-      'https://cellphones.com.vn/sforum/wp-content/uploads/2020/04/LR-29-scaled.jpg',
-      'https://cellphones.com.vn/sforum/wp-content/uploads/2020/04/LR-29-scaled.jpg',
-      'https://cellphones.com.vn/sforum/wp-content/uploads/2020/04/LR-29-scaled.jpg',
-      'https://cellphones.com.vn/sforum/wp-content/uploads/2020/04/LR-29-scaled.jpg',
-      'https://cellphones.com.vn/sforum/wp-content/uploads/2020/04/LR-29-scaled.jpg',
-      'https://cellphones.com.vn/sforum/wp-content/uploads/2020/04/LR-29-scaled.jpg',
-      'https://cellphones.com.vn/sforum/wp-content/uploads/2020/04/LR-29-scaled.jpg',
-    ],
-    donateAccountName: 'Lê Mậu Toàn',
-  };
 
   requestListData = [
     {
@@ -76,33 +58,57 @@ export class DetailItemComponent implements OnInit {
     },
   ];
 
-  constructor(private router: Router) {}
+  // Define by me
+  private itemId;
+  public item: Item;
+  public addressString: string;
+  public receiveRequests: ReceiveRequest[];
+  constructor(
+    private _route: ActivatedRoute,
+    private router: Router,
+    private homeClient: HomeClient,
+    private addressService: AddressService
+  ) {
+    this.itemId = this._route.snapshot.paramMap.get('itemId');
+  }
 
-  ngOnInit(): // Đầu tiên check xem là người cho hay người nhận
-
-  /*  Nếu là người xin nhận
+  ngOnInit /*  Nếu là người xin nhận // Đầu tiên check xem là người cho hay người nhận
         call api để check người dùng đã đkí nhận chưa
-        nếu rồi thì đổi giá trị của checkMessage = true */
-
-  /*  Nếu là người cho
+        nếu rồi thì đổi giá trị của checkMessage = true */ /*  Nếu là người cho
         call api request user list
-        check người dùng nào đang dc approve và thay đổi giá trị isApprove và thay đổi thông tin selected User*/
-  void {}
+       check người dùng nào đang dc approve và thay đổi giá trị isApprove và thay đổi thông tin selected User*/() {
+    // Get item detail
+    this.homeClient.getItemById(this.itemId).subscribe(
+      (response) => {
+        this.item = response.data;
+        this.addressService
+          .getAddressString(response.data.receiveAddress)
+          .then((data) => (this.addressString = data));
+      },
+      (error) => console.log('Error in Item detail: ', error)
+    );
 
-  onClose = () => {
+    // Get all receive request
+    this.homeClient
+      .getAllReceiveRequest(this.itemId)
+      .subscribe((response) => (this.receiveRequests = response.data));
+  }
+
+  onClose() {
     this.router.navigateByUrl('/home');
-  };
+  }
 
-  onClickRegister = () => {
+  onClickRegister() {
     this.isOpenModal = true;
-  };
-  onClickUnregister = () => {
+  }
+
+  onClickUnregister() {
     // call api huy dang ky
     this.checkMessage = false;
-  };
+  }
 
   // flow người cho
-  onClickApprove = (id: number) => {
+  onClickApprove(id: number) {
     if (this.isApproved !== id) {
       this.toggleApprove = 0;
       // gọi api approve người dùng mới
@@ -114,5 +120,5 @@ export class DetailItemComponent implements OnInit {
       this.isApproved = -1;
       // gọi api hủy
     }
-  };
+  }
 }

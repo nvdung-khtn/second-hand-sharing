@@ -4,6 +4,7 @@ import { UploadImageService } from 'src/app/shared/service/uploadImage.service';
 import { Address, AddressModel } from 'src/app/core/constants/address.constant';
 import { HomeClient } from 'src/app/core/api-clients/home.client';
 import { CreateItem } from 'src/app/core/constants/item.constant';
+import { AddressService } from 'src/app/shared/service/address.service';
 
 @Component({
   selector: 'app-create-post-modal',
@@ -39,7 +40,8 @@ export class CreatePostModalComponent implements OnInit {
   constructor(
     private uploadImageService: UploadImageService,
     private fb: FormBuilder,
-    private homeClient: HomeClient
+    private homeClient: HomeClient,
+    private addressService: AddressService
   ) {}
 
   ngOnInit(): void {
@@ -50,12 +52,12 @@ export class CreatePostModalComponent implements OnInit {
     });
   }
 
-  onClose = () => {
+  onClose() {
     this.isOpenModal = false;
     this.modalChange.emit(this.isOpenModal);
-  };
+  }
 
-  showSelectedFile = (event) => {
+  showSelectedFile(event) {
     // let event = originalEvent;
     // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < event.target.files.length; i++) {
@@ -75,7 +77,7 @@ export class CreatePostModalComponent implements OnInit {
         this.url.push(reader.result);
       };
     }
-  };
+  }
 
   selectFile(event: any): void {
     this.selectedFiles = event.target.files;
@@ -102,16 +104,16 @@ export class CreatePostModalComponent implements OnInit {
     }
   };
 
-  onRemoveSelectedFile = (index: number) => {
+  onRemoveSelectedFile(index: number) {
     this.myFiles.splice(index, 1);
     this.url.splice(index, 1);
-  };
+  }
 
-  onOpenAddressModal = () => {
+  onOpenAddressModal() {
     this.isOpenAddressModal = true;
-  };
+  }
 
-  onSubmitPost = () => {
+  onSubmitPost() {
     console.log('onSubmitPost: ', this.selectedFiles.length);
     const formData = {
       ...this.postForm.value,
@@ -133,16 +135,16 @@ export class CreatePostModalComponent implements OnInit {
       },
       (error) => console.log(error)
     );
-  };
+  }
 
-  handleAddress = (address: AddressModel) => {
-    console.log('receiveAddress:', address);
-    this.userData.address = `${address.street} ${address.wardName} ${address.districtName} ${address.cityName}`;
+  handleAddress(address: AddressModel) {
+    this.userData.address =
+      this.addressService.convertAddressToAddressString(address);
     this.receiveAddress = new Address(address);
-  };
+  }
 
-  handleCategoryId = (catId: number) => {
+  handleCategoryId(catId: number) {
     console.log(`catId: ${catId}`);
     this.selectedCatId = catId;
-  };
+  }
 }
