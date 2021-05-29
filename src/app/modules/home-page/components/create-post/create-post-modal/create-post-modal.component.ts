@@ -1,17 +1,25 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { UploadImageService } from 'src/app/shared/service/uploadImage.service';
 import { Address, AddressModel } from 'src/app/core/constants/address.constant';
 import { HomeClient } from 'src/app/core/api-clients/home.client';
 import { CreateItem } from 'src/app/core/constants/item.constant';
 import { AddressService } from 'src/app/shared/service/address.service';
+import { UserInfo } from 'src/app/core/constants/user.constant';
 
 @Component({
   selector: 'app-create-post-modal',
   templateUrl: './create-post-modal.component.html',
   styleUrls: ['./create-post-modal.component.scss'],
 })
-export class CreatePostModalComponent implements OnInit {
+export class CreatePostModalComponent implements OnInit, OnDestroy {
   @Input() isOpenModal;
   @Output() modalChange = new EventEmitter<boolean>();
 
@@ -26,9 +34,9 @@ export class CreatePostModalComponent implements OnInit {
   categoryTabBackground = '#f2f2f2';
   categoryIconBackground = '#ffffff';
 
-  userData = {
-    name: 'Lê Trường Vĩ',
-    address: '',
+  currentUser = {
+    fullName: '',
+    addressString: '',
   };
   myFiles: string[] = [];
   ////////////////////////////////////////////////////////////////
@@ -45,11 +53,22 @@ export class CreatePostModalComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    console.log('create-post-modal init');
     this.postForm = this.fb.group({
       itemName: ['', [Validators.required]],
       phoneNumber: ['', [Validators.required]], // sao ko co thong tin nay
       description: ['', [Validators.required]],
     });
+
+    this.getCurrentName();
+  }
+
+  // get information of CurrentUser
+  getCurrentName() {
+    const user: any = JSON.parse(localStorage.getItem('userInfo'));
+    const addressString = localStorage.getItem('addressString');
+    this.currentUser.fullName = user.fullName;
+    this.currentUser.addressString = addressString;
   }
 
   onClose() {
@@ -138,7 +157,7 @@ export class CreatePostModalComponent implements OnInit {
   }
 
   handleAddress(address: AddressModel) {
-    this.userData.address =
+    this.currentUser.addressString =
       this.addressService.convertAddressToAddressString(address);
     this.receiveAddress = new Address(address);
   }
@@ -146,5 +165,9 @@ export class CreatePostModalComponent implements OnInit {
   handleCategoryId(catId: number) {
     console.log(`catId: ${catId}`);
     this.selectedCatId = catId;
+  }
+
+  ngOnDestroy() {
+    console.log('create-post-model destroy');
   }
 }

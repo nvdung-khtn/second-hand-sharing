@@ -18,4 +18,14 @@ export class ProcessClient {
     const url = `${this.baseUrl}/ReceiveItem/${requestId}/cancel-receive`;
     return this.http.put(url, { requestId });
   }
+
+  approveReceiver(requestId) {
+    const url = `${this.baseUrl}/ReceiveItem/${requestId}/accept`;
+    return this.http.put(url, { requestId });
+  }
+
+  rejectReceiver(requestId) {
+    const url = `${this.baseUrl}/ReceiveItem/${requestId}/cancel-receiver`;
+    return this.http.put(url, { requestId });
+  }
 }

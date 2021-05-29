@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthClient } from 'src/app/core/api-clients/auth.client';
+import { AddressModel } from 'src/app/core/constants/address.constant';
+import { AddressService } from 'src/app/shared/service/address.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -15,7 +17,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private router: Router,
     private authClient: AuthClient,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private addressService: AddressService
   ) {}
 
   get email() {
@@ -46,13 +49,20 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     this.authClient.login(this.loginForm.value).subscribe(
-      response => {
+      async (response) => {
         console.log('data: ', response);
         this.isError = false;
+        const addressString = await this.addressService.getAddressString(
+          response.data.userInfo.address
+        );
+
         localStorage.setItem('access_token', response.data.jwToken);
         localStorage.setItem('expiration', response.data.expiration.toString());
-        localStorage.setItem('userInfo', JSON.stringify(response.data.userInfo));
-
+        localStorage.setItem(
+          'userInfo',
+          JSON.stringify(response.data.userInfo)
+        );
+        localStorage.setItem('addressString', addressString);
         this.router.navigate(['/home']);
       },
       (err) => {

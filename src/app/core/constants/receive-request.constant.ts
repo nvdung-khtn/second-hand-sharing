@@ -8,7 +8,7 @@ export class ReceiveRequest {
   receiveStatus: ReceiveStatus;
 }
 
-enum ReceiveStatus {
+export enum ReceiveStatus {
   PENDING,
-  RECEIVING,
+  APPROVED,
 }

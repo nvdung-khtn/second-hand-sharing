@@ -11,14 +11,14 @@
 
       <div class="create-post-modal__user-info__profile__info">
         <div class="create-post-modal__user-info__profile__info__name">
-          {{userData.name}}
+          {{currentUser.fullName}}
         </div>
 
         <div class="create-post-modal__user-info__profile__info__address">
           <mat-icon class="create-post-modal__user-info__profile__info__address__location"> location_on</mat-icon>
 
           <div class="create-post-modal__user-info__profile__info__address__address">
-            {{userData.address}}
+            {{currentUser.addressString}}
           </div>
         </div>
 
@@ -59,10 +59,12 @@
 
     <div class="create-post-modal__category">
       <app-category [categoryBackground]="this.categoryTabBackground"
-        [categoryIconBackground]="this.categoryIconBackground" (categoryIDChange)="handleCategoryId($event)" [disableAllCate]="true"></app-category>
+        [categoryIconBackground]="this.categoryIconBackground" (categoryIDChange)="handleCategoryId($event)"
+        [disableAllCate]="true"></app-category>
     </div>
 
-    <input type="number" class="create-post-modal__phone" placeholder="Số điện thoại liên hệ" formControlName="phoneNumber">
+    <input type="number" class="create-post-modal__phone" placeholder="Số điện thoại liên hệ"
+      formControlName="phoneNumber">
 
     <textarea rows="4" class="create-post-modal__description" placeholder="Nội dung bài đăng"
       formControlName="description"></textarea>
@@ -79,4 +81,6 @@
   </div>
 </div>
 
-<app-message-modal [isSuccessButton]="this.isSuccess" [message]="this.messageModalMessage" [openMessageModal]="this.isOpenMessageModal" [handleCloseParent]="this.isOpenModal" (modalChange)="this.modalChange.emit($event)" ></app-message-modal>
+<app-message-modal [isSuccessButton]="this.isSuccess" [message]="this.messageModalMessage"
+  [openMessageModal]="this.isOpenMessageModal" [handleCloseParent]="this.isOpenModal"
+  (modalChange)="this.modalChange.emit($event)"></app-message-modal>

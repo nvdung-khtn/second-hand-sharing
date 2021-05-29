@@ -1,3 +1,4 @@
+import { ReceiveStatus } from './../../../../core/constants/receive-request.constant';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HomeClient } from 'src/app/core/api-clients/home.client';
@@ -16,7 +17,8 @@ import Swal from 'sweetalert2';
   styleUrls: ['./detail-item.component.scss'],
 })
 export class DetailItemComponent implements OnInit {
-  isApproved = -1;
+  approvedRequestId: number = -1;
+  nomineeName: string;
   toggleApprove = 0;
   selectedUser = {};
 
@@ -61,9 +63,15 @@ export class DetailItemComponent implements OnInit {
     );
 
     // Get all receive request
-    this.homeClient
-      .getAllReceiveRequest(this.itemId)
-      .subscribe((response) => (this.receiveRequests = response.data));
+    this.homeClient.getAllReceiveRequest(this.itemId).subscribe((response) => {
+      this.receiveRequests = response.data;
+      // find nominee in the past
+      const nominee = this.receiveRequests.find(
+        (receiver) => receiver.receiveStatus === ReceiveStatus.APPROVED
+      );
+      this.approvedRequestId = nominee.id;
+      this.nomineeName = nominee.receiverName;
+    });
   }
 
   onClose() {
@@ -112,18 +120,67 @@ export class DetailItemComponent implements OnInit {
     });
   }
 
-  // flow người cho
-  onClickApprove(id: number) {
-    if (this.isApproved !== id) {
-      this.toggleApprove = 0;
-      // gọi api approve người dùng mới
+  async handleProcess(requestId, receiverName) {
+    if (this.approvedRequestId === -1) {
+      this.onApprove(requestId, receiverName);
     } else {
-      this.toggleApprove++;
+      const flag = this.approvedRequestId;
+      await this.onReject(this.approvedRequestId);
+
+      if (requestId != flag) {
+        this.onApprove(requestId, receiverName);
+      }
     }
-    this.isApproved = id;
-    if (this.toggleApprove === 1) {
-      this.isApproved = -1;
-      // gọi api hủy
-    }
+  }
+
+  // Xác nhận cho.
+  onApprove(requestId: number, receiverName: string) {
+    this.processClient.approveReceiver(requestId).subscribe((response) => {
+      this.approvedRequestId = requestId;
+      this.nomineeName = receiverName;
+      this.toastr.success('Đã phê duyệt người nhận.');
+    });
+  }
+
+  // if (this.approvedRequestId !== requestId) {
+  //   this.toggleApprove = 0;
+  //   // gọi api approve người dùng mới
+  // } else {
+  //   this.toggleApprove++;
+  // }
+  // this.isApproved = requestId;
+  // if (this.toggleApprove === 1) {
+  //   this.isApproved = -1;
+  //   // gọi api hủy
+  // }
+
+  async onReject(requestId: number) {
+    await Swal.fire({
+      title: 'Xác nhận thao tác',
+      text: `Hủy bỏ hiệu lực lệnh phê duyệt đăng ký cho ${this.nomineeName}?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Đúng vậy',
+      cancelButtonText: 'Hủy bỏ',
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        // reject receive request
+        // this.processClient.rejectReceiver(requestId).subscribe((response) => {
+        //   this.toastr.success(
+        //     `Đã hủy lệnh phê duyệt đăng ký cho ${this.nomineeName}`
+        //   );
+        //   this.approvedRequestId = -1;
+        //   this.nomineeName = '';
+        // });
+        await this.processClient.rejectReceiver(requestId).toPromise();
+        this.toastr.success(
+          `Đã hủy lệnh phê duyệt đăng ký cho ${this.nomineeName}`
+        );
+        this.approvedRequestId = -1;
+        this.nomineeName = '';
+      }
+    });
   }
 }

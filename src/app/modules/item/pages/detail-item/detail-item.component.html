@@ -46,27 +46,30 @@
         </div>
 
         <!-- FORM NGƯỜI NHẬN -->
-        <div *ngIf="!isOwner && item.userRequestId; else noReq">
-          <div class="flex">
-            <div class="detail-item__grid__card__right__btn thanks">
-              Gửi lời cảm ơn
+        <ng-container *ngIf="!isOwner; else isOwner">
+          <div *ngIf="item.userRequestId; else noReq">
+            <div class="flex">
+              <div class="detail-item__grid__card__right__btn thanks">
+                Gửi lời cảm ơn
+              </div>
+            </div>
+
+            <div class="detail-item__grid__card__right__btn cancel" (click)="onUnsubscribe()">
+              Hủy đăng ký
             </div>
           </div>
 
-          <div class="detail-item__grid__card__right__btn cancel" (click)="onUnsubscribe()">
-            Hủy đăng ký
-          </div>
-        </div>
+          <ng-template #noReq>
+            <div class="detail-item__grid__card__right__btn" (click)="onClickRegister()">
+              Đăng ký nhận
+            </div>
+          </ng-template>
+        </ng-container>
 
-        <ng-template #noReq>
-          <div class="detail-item__grid__card__right__btn" (click)="onClickRegister()">
-            Đăng ký nhận
-          </div>
-        </ng-template>
 
 
         <!-- FORM NGƯỜI CHO -->
-        <div [style.display]="isOwner ? 'block' : 'none'">
+        <ng-template #isOwner>
           <div class="title">Danh sách yêu cầu</div>
 
           <div class="list">
@@ -80,13 +83,15 @@
                   <div>{{ request.receiveReason }}</div>
                 </div>
               </div>
-              <div class="button approve-request" (click)="onClickApprove(request.id)">{{this.isApproved !== request.id
+              <div class="button approve-request" (click)="handleProcess(request.id, request.receiverName)">
+                {{this.approvedRequestId !== request.id
                 ? 'Chấp nhận' : 'Hủy'}} </div>
               <!-- <div class="button approve-request">{{this.isApproved !== request.id ? 'Chấp nhận' : 'Hủy'}} </div> -->
             </div>
           </div>
           <div class="detail-item__grid__card__right__btn">Xác nhận đã cho</div>
-        </div>
+        </ng-template>
+
       </div>
     </div>
   </div>

@@ -32,7 +32,7 @@ class imageUpload {
   presignUrl: string;
 }
 
-enum ItemStatus {
+export enum ItemStatus {
   NEW,
   PROCESSING,
   COMPLETED,
