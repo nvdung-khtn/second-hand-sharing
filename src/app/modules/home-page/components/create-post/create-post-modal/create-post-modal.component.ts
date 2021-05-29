@@ -1,16 +1,25 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { UploadImageService } from 'src/app/shared/service/uploadImage.service';
 import { Address, AddressModel } from 'src/app/core/constants/address.constant';
 import { HomeClient } from 'src/app/core/api-clients/home.client';
 import { CreateItem } from 'src/app/core/constants/item.constant';
+import { AddressService } from 'src/app/shared/service/address.service';
+import { UserInfo } from 'src/app/core/constants/user.constant';
 
 @Component({
   selector: 'app-create-post-modal',
   templateUrl: './create-post-modal.component.html',
   styleUrls: ['./create-post-modal.component.scss'],
 })
-export class CreatePostModalComponent implements OnInit {
+export class CreatePostModalComponent implements OnInit, OnDestroy {
   @Input() isOpenModal;
   @Output() modalChange = new EventEmitter<boolean>();
 
@@ -25,9 +34,9 @@ export class CreatePostModalComponent implements OnInit {
   categoryTabBackground = '#f2f2f2';
   categoryIconBackground = '#ffffff';
 
-  userData = {
-    name: 'Lê Trường Vĩ',
-    address: '',
+  currentUser = {
+    fullName: '',
+    addressString: '',
   };
   myFiles: string[] = [];
   ////////////////////////////////////////////////////////////////
@@ -39,23 +48,35 @@ export class CreatePostModalComponent implements OnInit {
   constructor(
     private uploadImageService: UploadImageService,
     private fb: FormBuilder,
-    private homeClient: HomeClient
+    private homeClient: HomeClient,
+    private addressService: AddressService
   ) {}
 
   ngOnInit(): void {
+    console.log('create-post-modal init');
     this.postForm = this.fb.group({
       itemName: ['', [Validators.required]],
       phoneNumber: ['', [Validators.required]], // sao ko co thong tin nay
       description: ['', [Validators.required]],
     });
+
+    this.getCurrentName();
   }
 
-  onClose = () => {
+  // get information of CurrentUser
+  getCurrentName() {
+    const user: any = JSON.parse(localStorage.getItem('userInfo'));
+    const addressString = localStorage.getItem('addressString');
+    this.currentUser.fullName = user.fullName;
+    this.currentUser.addressString = addressString;
+  }
+
+  onClose() {
     this.isOpenModal = false;
     this.modalChange.emit(this.isOpenModal);
-  };
+  }
 
-  showSelectedFile = (event) => {
+  showSelectedFile(event) {
     // let event = originalEvent;
     // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < event.target.files.length; i++) {
@@ -75,7 +96,7 @@ export class CreatePostModalComponent implements OnInit {
         this.url.push(reader.result);
       };
     }
-  };
+  }
 
   selectFile(event: any): void {
     this.selectedFiles = event.target.files;
@@ -102,16 +123,16 @@ export class CreatePostModalComponent implements OnInit {
     }
   };
 
-  onRemoveSelectedFile = (index: number) => {
+  onRemoveSelectedFile(index: number) {
     this.myFiles.splice(index, 1);
     this.url.splice(index, 1);
-  };
+  }
 
-  onOpenAddressModal = () => {
+  onOpenAddressModal() {
     this.isOpenAddressModal = true;
-  };
+  }
 
-  onSubmitPost = () => {
+  onSubmitPost() {
     console.log('onSubmitPost: ', this.selectedFiles.length);
     const formData = {
       ...this.postForm.value,
@@ -133,16 +154,20 @@ export class CreatePostModalComponent implements OnInit {
       },
       (error) => console.log(error)
     );
-  };
+  }
 
-  handleAddress = (address: AddressModel) => {
-    console.log('receiveAddress:', address);
-    this.userData.address = `${address.street} ${address.wardName} ${address.districtName} ${address.cityName}`;
+  handleAddress(address: AddressModel) {
+    this.currentUser.addressString =
+      this.addressService.convertAddressToAddressString(address);
     this.receiveAddress = new Address(address);
-  };
+  }
 
-  handleCategoryId = (catId: number) => {
+  handleCategoryId(catId: number) {
     console.log(`catId: ${catId}`);
     this.selectedCatId = catId;
-  };
+  }
+
+  ngOnDestroy() {
+    console.log('create-post-model destroy');
+  }
 }

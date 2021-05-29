@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Address } from 'src/app/core/constants/address.constant';
+import { Address, AddressModel } from 'src/app/core/constants/address.constant';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +16,7 @@ export class AddressService {
       .get<Address[]>('assets/address.json', { responseType: 'json' })
       .toPromise();
 
+    // Filter 63 province in VN
     data.forEach((address) => {
       if (address.cityId >= guardNumber) {
         guardNumber = address.cityId + 1;
@@ -33,14 +34,15 @@ export class AddressService {
       .get<Address[]>('assets/address.json', { responseType: 'json' })
       .toPromise();
 
-      data.forEach((address) => {
-        if (address.cityId === cityId && address.districtId >= guardNumber) {
-          guardNumber = address.districtId + 1;
-          districts.push(address);
-        }
-      });
+    // Filter all district that match with condition
+    data.forEach((address) => {
+      if (address.cityId === cityId && address.districtId >= guardNumber) {
+        guardNumber = address.districtId + 1;
+        districts.push(address);
+      }
+    });
 
-      return districts;
+    return districts;
   }
 
   async getAllWard(cityId: number, districtId: number) {
@@ -50,13 +52,56 @@ export class AddressService {
       .get<Address[]>('assets/address.json', { responseType: 'json' })
       .toPromise();
 
-      data.forEach((address) => {
-        if (address.cityId === cityId && address.districtId === districtId && address.wardId >= guardNumber) {
-          guardNumber = address.wardId + 1;
-          wards.push(address);
-        }
-      });
+    // Filter all ward that match with condition
+    data.forEach((address) => {
+      if (
+        address.cityId === cityId &&
+        address.districtId === districtId &&
+        address.wardId >= guardNumber
+      ) {
+        guardNumber = address.wardId + 1;
+        wards.push(address);
+      }
+    });
 
-      return wards;
+    return wards;
+  }
+
+  convertAddressToAddressString(address: AddressModel) {
+    return `${address.street} ${address.wardName} ${address.districtName} ${address.cityName}`;
+  }
+
+  async getAddressString(address: Address): Promise<string> {
+    const data = await this.http
+      .get<AddressModel[]>('assets/address.json', { responseType: 'json' })
+      .toPromise();
+
+    const result = data.find(
+      (res) =>
+        res.cityId === address.cityId &&
+        res.districtId === address.districtId &&
+        res.wardId === address.wardId
+    );
+
+    return `${address.street}, ${result.wardName}, ${result.districtName}, ${result.cityName}`;
+  }
+
+  async getAddressById(
+    cityId: number,
+    districtId: number,
+    wardId: number,
+    street: string
+  ): Promise<AddressModel> {
+    const data = await this.http
+      .get<Address[]>('assets/address.json', { responseType: 'json' })
+      .toPromise();
+
+    const result = data.find(
+      (address) =>
+        address.cityId === cityId &&
+        address.districtId === districtId &&
+        address.wardId === wardId
+    );
+    return <AddressModel>{ ...result, street };
   }
 }

@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -29,6 +30,13 @@ import { ProfileModule } from './modules/profile/profile.module';
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
+
+    // third-party modules
+    ToastrModule.forRoot({
+      timeOut: 2000,
+      progressBar: false,
+      enableHtml: true,
+    }),
 
     // Custom Modules
     SharedModule,

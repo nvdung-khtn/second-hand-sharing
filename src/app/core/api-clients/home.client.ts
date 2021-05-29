@@ -7,21 +7,34 @@ import {
   CreateItemRequest,
   CreateItem,
   Item,
-  URL_GET_ITEMS,
-  URL_POST_ITEM,
 } from '../constants/item.constant';
+import { environment } from 'src/environments/environment';
+import { ReceiveRequest } from '../constants/receive-request.constant';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HomeClient {
   constructor(private http: HttpClient) {}
+  private baseUrl = environment.apiUrl;
 
   getItems(): Observable<PagingList<Item>> {
-    return this.http.get<PagingList<Item>>(URL_GET_ITEMS);
+    const url = `${this.baseUrl}/Item?PageNumber=1&PageSize=100`;
+    return this.http.get<PagingList<Item>>(url);
   }
 
   createItem(item: CreateItemRequest): Observable<ResponseModel<CreateItem>> {
-    return this.http.post<ResponseModel<CreateItem>>(URL_POST_ITEM, item);
+    const url = `${this.baseUrl}/Item`;
+    return this.http.post<ResponseModel<CreateItem>>(url, item);
+  }
+
+  getItemById(itemId: string): Observable<ResponseModel<Item>> {
+    const url = `${this.baseUrl}/Item/${itemId}`;
+    return this.http.get<ResponseModel<Item>>(url);
+  }
+
+  getAllReceiveRequest(itemId): Observable<ResponseModel<ReceiveRequest[]>> {
+    const url = `${this.baseUrl}/Item/${itemId}/receive-request`;
+    return this.http.get<ResponseModel<ReceiveRequest[]>>(url);
   }
 }
