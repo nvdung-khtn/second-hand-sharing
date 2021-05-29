@@ -21,6 +21,7 @@ export class ListItemsComponent implements OnInit, OnChanges {
     message: string;
     isOpenModal = false;
     defaultReq: SearchRequest;
+    // tslint:disable: no-inferrable-types
     private defaultPageNumber: number = 1;
     private defaultPageSize: number = 4;
 
@@ -36,7 +37,6 @@ export class ListItemsComponent implements OnInit, OnChanges {
         this.homeClient.getItems(this.defaultReq).subscribe(
             (response) => {
                 this.items = response.data;
-                console.log(this.items);
             },
             (error) => this.toastr.error(error)
         );
@@ -61,7 +61,7 @@ export class ListItemsComponent implements OnInit, OnChanges {
         }
     }
 
-    onItemListScrollDown() {
+    onItemListScrollDown = () => {
         console.log('scrolled!!');
         this.defaultPageNumber += 1;
         const newReq = new SearchRequest(this.defaultPageNumber, this.defaultPageSize);

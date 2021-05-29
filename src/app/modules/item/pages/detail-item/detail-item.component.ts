@@ -119,7 +119,7 @@ export class DetailItemComponent implements OnInit {
 
         this.processClient.subscribeItem(formData).subscribe((response: any) => {
             this.item.userRequestId = response.data;
-            this.modal.message = '';
+            this.modal.message = response.message;
             this.modal.status = ModalStatus.CLOSE;
             this.toastr.success('Đăng ký nhận vật phẩm thành công!');
         });

@@ -1,11 +1,35 @@
 <app-header [style.display]="this.isLogin ? 'block' : 'none'"></app-header>
 
-<div class='home-aside-left' [style.display]="this.isLogin ? 'block' : 'none'">
+<div class="home-aside-left" [style.display]="this.isLogin ? 'block' : 'none'">
   <app-home-left-side></app-home-left-side>
 </div>
-<div class='home-aside-right' [style.display]="this.isLogin ? 'block' : 'none'">
-  <app-home-right-side></app-home-right-side>
+<div class="home-aside-right" [style.display]="this.isLogin ? 'block' : 'none'">
+  <app-home-right-side
+    [openMessageBox]="this.openMessageBox"
+    (modalChange)="this.openMessageBox = $event"
+    (userInfo)="this.messageBoxByUser = $event"
+  ></app-home-right-side>
 </div>
-<div [ngClass]="{'another-page-position': (this.isLogin === true), 'no-login': (this.isLogin === false)}">
+<div
+  [ngClass]="{
+    'another-page-position': this.isLogin === true,
+    'no-login': this.isLogin === false
+  }"
+>
   <router-outlet></router-outlet>
 </div>
+
+<div
+  class="detail-item__modal"
+  [style.display]="this.openMessageBox ? 'block' : 'none'"
+>
+  <!-- <app-request-modal [isOpenModal]="this.isOpenModal" (modalChange)="this.isOpenModal = $event"
+      (message)="onSubscribe($event)"></app-request-modal> -->
+  <app-messenger
+    [changeMessage] = "this.changeMessage"
+    [usersInfo] = "this.messageBoxByUser"
+    [isOpenModal]="this.openMessageBox"
+    (modalChange)="this.openMessageBox = $event"
+  ></app-messenger>
+</div>
+{{ message | async | json }}

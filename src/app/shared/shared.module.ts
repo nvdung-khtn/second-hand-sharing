@@ -12,6 +12,8 @@ import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { MessageModalComponent } from './components/modal/message-modal.component';
 import { TimePipe } from './pipes/time.pipe';
 import { AddressPipe } from './pipes/address.pipe';
+import { MessengerComponent } from './components/messenger/messenger.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
     declarations: [
@@ -19,10 +21,11 @@ import { AddressPipe } from './pipes/address.pipe';
         HomeRightSideComponent,
         HomeLeftSideComponent,
         MessageModalComponent,
+        MessengerComponent,
         TimePipe,
         AddressPipe,
     ],
-    imports: [CommonModule, RouterModule, MatIconModule, FontAwesomeModule],
+    imports: [CommonModule, RouterModule, MatIconModule, FontAwesomeModule, FormsModule],
     exports: [
         HeaderComponent,
         HomeRightSideComponent,
@@ -30,6 +33,7 @@ import { AddressPipe } from './pipes/address.pipe';
         MessageModalComponent,
         TimePipe,
         AddressPipe,
+        MessengerComponent,
     ],
     providers: [JwtHelperService, { provide: JWT_OPTIONS, useValue: JWT_OPTIONS }],
 })

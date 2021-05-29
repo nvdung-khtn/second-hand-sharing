@@ -1,52 +1,57 @@
-@import './../styles/variables';
+@import "./../styles/variables";
 
 .another-page-position {
-    /* position: relative; */
-    width: calc(100% - 6% - 540px);
-    max-width: 1264px;
-    margin: 0 auto;
-    padding-top: 70px;
-    height: calc(100vh - 70px);
+  /* position: relative; */
+  width: calc(100% - 5% - 40%);
+  max-width: 1264px;
+  margin: 0 auto;
+  padding-top: 70px;
+  height: calc(100vh - 90px);
+  left: 0;
+  right: 0;
+  z-index: 1;
+
+  @media (max-width: 1024px) {
+    width: 100%;
     left: 0;
-    right: 0;
-    z-index: 1;
+    margin-top: 134px;
+  }
+  p {
+    margin: 0;
+  }
 
-    @media (max-width: 1024px) {
-        width: 100%;
-        left: 0;
-        /* top: calc(120px + 2%); */
-        margin-top: 134px;
-    }
-    p { margin: 0 }
-
-    overflow: hidden;
-
+  overflow: hidden;
 }
 
-.home-aside-left, .home-aside-right {
-    width: 275px;
-    background-color: #fff;
-    margin: 1%;
-    position: fixed;
-    top: 0;
-    margin-top: 70px;
-    bottom: 0px;
-    border-radius: $border-radius-light;
+.home-aside-left,
+.home-aside-right {
+  width: 20%;
+  background-color: #fff;
+  margin: 1%;
+  position: fixed;
+  top: 0;
+  margin-top: 70px;
+  bottom: 0px;
+  border-radius: $border-radius-light;
 
-    @media (max-width: 1024px) {
-        display: none !important;
-    }
+  @media (max-width: 1024px) {
+    display: none !important;
+  }
 
-    //scrollbar
-    &::-webkit-scrollbar {
-        display: none;
-    }
+  //scrollbar
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .home-aside-right {
-    right: 0;
+  right: 0;
 }
 
 .no-login {
-    background-color: #fff;
+  background-color: #fff;
+}
+
+.root-message {
+  visibility: hidden;
 }

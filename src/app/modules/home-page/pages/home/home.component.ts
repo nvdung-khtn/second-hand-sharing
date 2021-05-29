@@ -1,20 +1,23 @@
 import { Component, OnInit, SimpleChanges } from '@angular/core';
+import { MessagingService } from 'src/app/shared/service/message.service';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+    selector: 'app-home',
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  defaultSelectedCategory = 0;
-  selectedCategory = 0; // follow selected category id to display data
+    defaultSelectedCategory = 0;
+    selectedCategory = 0; // follow selected category id to display data
 
-  constructor() { }
+    constructor(private messagingService: MessagingService) {}
 
-  ngOnInit(): void {}
+    onCategoryChange = (event: any) => {
+        this.selectedCategory = event;
+    };
 
-  onCategoryChange = (event: any) => {
-    this.selectedCategory = event;
-    console.log(this.selectedCategory);
-  }
+    ngOnInit(): void {
+        const myInfo = JSON.parse(localStorage.getItem('userInfo'));
+        this.messagingService.requestPermission(myInfo?.id);
+    }
 }
