@@ -1,10 +1,14 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HomeClient } from 'src/app/core/api-clients/home.client';
+import { ProcessClient } from 'src/app/core/api-clients/process.client';
 import { Address, AddressModel } from 'src/app/core/constants/address.constant';
 import { Item } from 'src/app/core/constants/item.constant';
 import { ReceiveRequest } from 'src/app/core/constants/receive-request.constant';
 import { AddressService } from 'src/app/shared/service/address.service';
+import { AuthService } from 'src/app/shared/service/auth.service';
+import { ToastrService } from 'ngx-toastr';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-detail-item',
@@ -12,75 +16,43 @@ import { AddressService } from 'src/app/shared/service/address.service';
   styleUrls: ['./detail-item.component.scss'],
 })
 export class DetailItemComponent implements OnInit {
-  isOpenModal = false;
-  checkMessage = false;
-  isOwner = true; // check nếu là người cho
   isApproved = -1;
   toggleApprove = 0;
   selectedUser = {};
 
-  requestListData = [
-    {
-      id: 2,
-      receiveReason: 'test nhan by le truong vi',
-      receiverId: 3,
-      receiverName: 'Lê Trường Vĩ',
-    },
-    {
-      id: 3,
-      receiveReason: 'test nhan by le truong vi',
-      receiverId: 4,
-      receiverName: 'Lê Trường Vĩ',
-    },
-    {
-      id: 4,
-      receiveReason: 'test nhan by le truong vi',
-      receiverId: 5,
-      receiverName: 'Lê Trường Vĩ',
-    },
-    {
-      id: 5,
-      receiveReason: 'test nhan by le truong vi',
-      receiverId: 6,
-      receiverName: 'Lê Trường Vĩ',
-    },
-    {
-      id: 6,
-      receiveReason: 'test nhan by le truong vi',
-      receiverId: 7,
-      receiverName: 'Lê Trường Vĩ',
-    },
-    {
-      id: 7,
-      receiveReason: 'test nhan by le truong vi',
-      receiverId: 8,
-      receiverName: 'Lê Trường Vĩ',
-    },
-  ];
-
   // Define by me
-  private itemId;
-  public item: Item;
-  public addressString: string;
-  public receiveRequests: ReceiveRequest[];
+  private userId: number;
+  isOwner = true;
+  itemId;
+  item: Item;
+  addressString: string;
+  receiveRequests: ReceiveRequest[];
+  isOpenModal = false;
   constructor(
     private _route: ActivatedRoute,
     private router: Router,
     private homeClient: HomeClient,
-    private addressService: AddressService
+    private addressService: AddressService,
+    private authService: AuthService,
+    private processClient: ProcessClient,
+    private toastr: ToastrService
   ) {
     this.itemId = this._route.snapshot.paramMap.get('itemId');
   }
 
-  ngOnInit /*  Nếu là người xin nhận // Đầu tiên check xem là người cho hay người nhận
-        call api để check người dùng đã đkí nhận chưa
-        nếu rồi thì đổi giá trị của checkMessage = true */ /*  Nếu là người cho
-        call api request user list
-       check người dùng nào đang dc approve và thay đổi giá trị isApprove và thay đổi thông tin selected User*/() {
+  ngOnInit() {
+    // Get user id
+    this.userId = this.authService.getUserId();
+
     // Get item detail
     this.homeClient.getItemById(this.itemId).subscribe(
       (response) => {
         this.item = response.data;
+        // Check owner or not?
+        if (this.userId !== this.item.donateAccountId) {
+          this.isOwner = false;
+        }
+        // Get address string
         this.addressService
           .getAddressString(response.data.receiveAddress)
           .then((data) => (this.addressString = data));
@@ -98,13 +70,46 @@ export class DetailItemComponent implements OnInit {
     this.router.navigateByUrl('/home');
   }
 
+  // Open receive register modal
   onClickRegister() {
     this.isOpenModal = true;
   }
 
-  onClickUnregister() {
-    // call api huy dang ky
-    this.checkMessage = false;
+  onSubscribe(receiveReason) {
+    const formData = {
+      itemId: this.itemId,
+      receiveReason: receiveReason,
+    };
+
+    this.processClient.subscribeItem(formData).subscribe((response: any) => {
+      this.item.userRequestId = response.data;
+      this.isOpenModal = !this.isOpenModal;
+      this.toastr.success('Đăng ký nhận vật phẩm thành công!');
+    });
+  }
+
+  onUnsubscribe() {
+    const requestId = this.item.userRequestId;
+    Swal.fire({
+      title: 'Xác nhận thao tác',
+      text: 'Bạn chắc chắn muốn hủy đăng ký?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Đúng vậy',
+      cancelButtonText: 'Hủy bỏ',
+    }).then((result) => {
+      // Handle when user want unsubscribeI] item
+      if (result.isConfirmed) {
+        this.item.userRequestId = 0;
+        this.processClient
+          .unsubscribeItem(requestId)
+          .subscribe(async (response) => {
+            await this.toastr.success('Đã Hủy đăng ký nhận vật phẩm!');
+          });
+      }
+    });
   }
 
   // flow người cho

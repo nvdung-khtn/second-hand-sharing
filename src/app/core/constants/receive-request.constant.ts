@@ -9,6 +9,6 @@ export class ReceiveRequest {
 }
 
 enum ReceiveStatus {
-  NEW,
-  CANCEL,
+  PENDING,
+  RECEIVING,
 }

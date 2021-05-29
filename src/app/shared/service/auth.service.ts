@@ -6,6 +6,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 })
 export class AuthService {
   constructor(public jwtHelper: JwtHelperService) {}
+  private userInfo = JSON.parse(localStorage.getItem('userInfo') || '[]');
 
   isAuthenticated(): boolean {
     const token = localStorage.getItem('access_token');
@@ -18,6 +19,10 @@ export class AuthService {
   }
 
   getCurrentName() {
-    return JSON.parse(localStorage.getItem('userInfo')).fullName;
+    return this.userInfo.fullName;
+  }
+
+  getUserId() {
+    return this.userInfo.id;
   }
 }

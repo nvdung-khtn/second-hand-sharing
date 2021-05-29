@@ -46,28 +46,27 @@
         </div>
 
         <!-- FORM NGƯỜI NHẬN -->
-        <div class="detail-item__grid__card__right__btn" (click)="onClickRegister()" [style.display]="
-            !this.isOwner && !this.checkMessage ? 'block' : 'none'
-          ">
-          Đăng ký nhận
-        </div>
-
-        <div [style.display]="
-            !this.isOwner && this.checkMessage ? 'block' : 'none'
-          ">
+        <div *ngIf="!isOwner && item.userRequestId; else noReq">
           <div class="flex">
             <div class="detail-item__grid__card__right__btn thanks">
               Gửi lời cảm ơn
             </div>
           </div>
 
-          <div class="detail-item__grid__card__right__btn cancel" (click)="onClickUnregister()">
+          <div class="detail-item__grid__card__right__btn cancel" (click)="onUnsubscribe()">
             Hủy đăng ký
           </div>
         </div>
 
+        <ng-template #noReq>
+          <div class="detail-item__grid__card__right__btn" (click)="onClickRegister()">
+            Đăng ký nhận
+          </div>
+        </ng-template>
+
+
         <!-- FORM NGƯỜI CHO -->
-        <div [style.display]="this.isOwner ? 'block' : 'none'">
+        <div [style.display]="isOwner ? 'block' : 'none'">
           <div class="title">Danh sách yêu cầu</div>
 
           <div class="list">
@@ -95,5 +94,5 @@
 
 <div class="detail-item__modal" [style.display]="this.isOpenModal ? 'block' : 'none'">
   <app-request-modal [isOpenModal]="this.isOpenModal" (modalChange)="this.isOpenModal = $event"
-    (message)="this.checkMessage = $event"></app-request-modal>
+    (message)="onSubscribe($event)"></app-request-modal>
 </div>
