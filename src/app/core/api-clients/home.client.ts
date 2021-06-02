@@ -6,6 +6,7 @@ import { PagingList, ResponseModel } from './../constants/common.constant';
 import { CreateItemRequest, CreateItem, Item } from '../constants/item.constant';
 import { environment } from 'src/environments/environment';
 import { ReceiveRequest } from '../constants/receive-request.constant';
+import { UserInfo } from '../constants/user.constant';
 
 @Injectable({
     providedIn: 'root',
@@ -37,5 +38,10 @@ export class HomeClient {
     confirmGiven(itemId: number): Observable<ResponseModel<number>> {
         const url = `${this.baseUrl}/Item/${itemId}/confirm-send`;
         return this.http.put<ResponseModel<number>>(url, { itemId });
+    }
+
+    getReceivedUser(itemId: number): Observable<ResponseModel<UserInfo>> {
+        const url = `${this.baseUrl}/Item/${itemId}/received-user`;
+        return this.http.get<ResponseModel<UserInfo>>(url);
     }
 }

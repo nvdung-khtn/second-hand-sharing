@@ -11,6 +11,7 @@ import { AuthService } from 'src/app/shared/service/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
 import { Modal, ModalType, ModalStatus } from 'src/app/core/constants/modal.constant';
+import { UserInfo } from 'src/app/core/constants/user.constant';
 @Component({
     selector: 'app-detail-item',
     templateUrl: './detail-item.component.html',
@@ -26,11 +27,11 @@ export class DetailItemComponent implements OnInit {
     addressVM: AddressModel;
     addressString: string;
     receiveRequests: ReceiveRequest[];
-    //isOpenModal = false;
     modal: Modal = new Modal(ModalType.REGISTER, '', ModalStatus.CLOSE);
     ItemStatus = ItemStatus;
     ModalType = ModalType;
     ModalStatus = ModalStatus;
+    receivedUser: UserInfo;
     constructor(
         private _route: ActivatedRoute,
         private router: Router,
@@ -75,7 +76,10 @@ export class DetailItemComponent implements OnInit {
             (error) => console.log('Error in Item detail: ', error)
         );
 
-        console.log(this.approvedRequestId, this.nomineeName);
+        // Get received user
+        this.homeClient.getReceivedUser(this.itemId).subscribe((response) => {
+            this.receivedUser = response.data;
+        });
     }
 
     // Turn off item detail page
@@ -85,8 +89,12 @@ export class DetailItemComponent implements OnInit {
 
     // Open receive register modal
     openInputModal(type) {
-        this.modal.status = ModalStatus.OPEN;
-        this.modal.type = type;
+        this.modal = {
+            ...this.modal,
+            status: ModalStatus.OPEN,
+            type: type,
+            message: '',
+        };
     }
 
     handleModalChange(receivedModal: Modal) {
@@ -199,6 +207,11 @@ export class DetailItemComponent implements OnInit {
     }
 
     sendThanksString(thanksMsg) {
-        this.processClient.sendThanksMessage(this.approvedRequestId, thanksMsg);
+        this.processClient
+            .sendThanksMessage(this.item.userRequestId, thanksMsg)
+            .subscribe((response) => {
+                this.toastr.success('Đã gửi lời cảm ơn thành công.');
+                this.modal.status = ModalStatus.CLOSE;
+            });
     }
 }

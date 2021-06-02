@@ -50,29 +50,25 @@
               ? 'Đã có người nhận' : 'Chưa có người nhận'}}</span>
           </div>
 
-          <div class="detail-item__grid__card__right__description"
-            *ngIf="item?.status===ItemStatus.COMPLETED; else noDone">
+          <div class="detail-item__grid__card__right__description" *ngIf="receivedUser; else noDone">
             Người nhận:
-            <!-- Cần cập nhập sau khi có API mới -->
-            <span class="text">{{ nomineeName }}</span>
+            <span class="text">{{ receivedUser?.fullName }}</span>
           </div>
         </div>
+
+        <button *ngIf="receivedUser?.id===userId" class="detail-item__grid__card__right__btn thanks"
+          (click)="openInputModal(ModalType.THANKS)">
+          Gửi lời cảm ơn
+        </button>
 
 
         <ng-template #noDone>
           <!-- FORM NGƯỜI NHẬN -->
           <ng-container *ngIf="userId != item?.donateAccountId; else isOwner">
             <div *ngIf="item?.userRequestId; else noReq">
-              <button *ngIf="item?.status===ItemStatus.COMPLETED; else register_btn"
-                class="detail-item__grid__card__right__btn thanks" (click)="openInputModal(ModalType.THANKS)">
-                Gửi lời cảm ơn
+              <button class="detail-item__grid__card__right__btn cancel" (click)="onUnsubscribe()">
+                Hủy đăng ký
               </button>
-
-              <ng-template #register_btn>
-                <button class="detail-item__grid__card__right__btn cancel" (click)="onUnsubscribe()">
-                  Hủy đăng ký
-                </button>
-              </ng-template>
             </div>
 
             <ng-template #noReq>
@@ -93,6 +89,7 @@
 
                   <div>
                     <div>{{ request.receiverName }}</div>
+                    <div>{{request.createDate | time}}</div>
                     <div>{{ request.receiveReason }}</div>
                   </div>
                 </div>

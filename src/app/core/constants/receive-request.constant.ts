@@ -6,6 +6,7 @@ export class ReceiveRequest {
     receiverId: number;
     receiverName: string;
     receiveStatus: ReceiveStatus;
+    createDate: string;
 }
 
 export enum ReceiveStatus {

@@ -1,8 +1,4 @@
-import { environment } from 'src/environments/environment';
 import { AddressIdModel } from './address.constant';
-
-const baseUrl = environment.apiUrl;
-
 export class UserInfo {
     id: number;
     fullname: string;
@@ -10,4 +6,5 @@ export class UserInfo {
     phoneNumber: string;
     avatar: string | null;
     address: AddressIdModel;
+    email: string;
 }

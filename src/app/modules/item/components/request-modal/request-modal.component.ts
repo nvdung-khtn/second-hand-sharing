@@ -1,4 +1,4 @@
-import { EventEmitter, Output, OnDestroy } from '@angular/core';
+import { EventEmitter, Output, OnDestroy, SimpleChanges, OnChanges } from '@angular/core';
 import { Input } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { ProcessClient } from 'src/app/core/api-clients/process.client';
@@ -9,19 +9,20 @@ import { Modal, ModalType, ModalStatus } from 'src/app/core/constants/modal.cons
     templateUrl: './request-modal.component.html',
     styleUrls: ['./request-modal.component.scss'],
 })
-export class RequestModalComponent implements OnInit {
+export class RequestModalComponent implements OnInit, OnChanges {
     @Input() modalData: Modal;
     @Output() modalChange = new EventEmitter<Modal>();
 
     messageValue: string = '';
     errorMessage: string = '';
-    public ModalType: ModalType;
+    ModalType: ModalType;
 
     constructor(private processClient: ProcessClient) {}
 
-    ngOnInit(): void {
-        console.log('init modal');
-        this.messageValue = '';
+    ngOnInit(): void {}
+
+    ngOnChanges(changes: SimpleChanges) {
+        this.messageValue = this.modalData.message;
     }
 
     onClose = () => {
