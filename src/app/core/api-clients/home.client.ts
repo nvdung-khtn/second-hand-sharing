@@ -24,13 +24,18 @@ export class HomeClient {
         return this.http.post<ResponseModel<CreateItem>>(url, item);
     }
 
-    getItemById(itemId: string): Observable<ResponseModel<Item>> {
+    getItemById(itemId: number): Observable<ResponseModel<Item>> {
         const url = `${this.baseUrl}/Item/${itemId}`;
         return this.http.get<ResponseModel<Item>>(url);
     }
 
-    getAllReceiveRequest(itemId): Observable<ResponseModel<ReceiveRequest[]>> {
+    getAllReceiveRequest(itemId: number): Observable<ResponseModel<ReceiveRequest[]>> {
         const url = `${this.baseUrl}/Item/${itemId}/receive-request`;
         return this.http.get<ResponseModel<ReceiveRequest[]>>(url);
+    }
+
+    confirmGiven(itemId: number): Observable<ResponseModel<number>> {
+        const url = `${this.baseUrl}/Item/${itemId}/confirm-send`;
+        return this.http.put<ResponseModel<number>>(url, { itemId });
     }
 }

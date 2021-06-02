@@ -1,45 +1,45 @@
-import { EventEmitter, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { EventEmitter, Output, OnDestroy } from '@angular/core';
 import { Input } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { ProcessClient } from 'src/app/core/api-clients/process.client';
+import { Modal, ModalType, ModalStatus } from 'src/app/core/constants/modal.constant';
 
 @Component({
-  selector: 'app-request-modal',
-  templateUrl: './request-modal.component.html',
-  styleUrls: ['./request-modal.component.scss'],
+    selector: 'app-request-modal',
+    templateUrl: './request-modal.component.html',
+    styleUrls: ['./request-modal.component.scss'],
 })
-export class RequestModalComponent implements OnInit, OnChanges {
-  @Input() isOpenModal;
-  @Output() modalChange = new EventEmitter<boolean>();
-  @Output() message = new EventEmitter<string>();
+export class RequestModalComponent implements OnInit {
+    @Input() modalData: Modal;
+    @Output() modalChange = new EventEmitter<Modal>();
 
-  isOpenAddressModal = false;
-  messageValue: string = '';
-  errorMessage: string = '';
+    messageValue: string = '';
+    errorMessage: string = '';
+    public ModalType: ModalType;
 
-  constructor(private processClient: ProcessClient) {}
+    constructor(private processClient: ProcessClient) {}
 
-  ngOnInit(): void {}
-
-  ngOnChanges(changes: SimpleChanges): void {
-    this.messageValue = '';
-  }
-
-  onClose = () => {
-    this.isOpenModal = false;
-    this.modalChange.emit(this.isOpenModal);
-  };
-
-  onClick() {
-    if (!this.messageValue) {
-      this.errorMessage = 'Vui lòng nhập lời nhắn.';
-      return;
+    ngOnInit(): void {
+        console.log('init modal');
+        this.messageValue = '';
     }
-    this.modalChange.emit(this.isOpenModal);
-    this.message.emit(this.messageValue);
-  }
 
-  onInput() {
-    this.errorMessage = '';
-  }
+    onClose = () => {
+        this.modalData.status = ModalStatus.CLOSE;
+        this.modalData.message = '';
+        this.modalChange.emit(this.modalData);
+    };
+
+    emitModalData() {
+        if (!this.messageValue) {
+            this.errorMessage = 'Vui lòng nhập lời nhắn.';
+            return;
+        }
+        this.modalData.message = this.messageValue;
+        this.modalChange.emit(this.modalData);
+    }
+
+    onInput() {
+        this.errorMessage = '';
+    }
 }

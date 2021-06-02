@@ -14,18 +14,23 @@ export class ProcessClient {
         return this.http.post(url, formData);
     }
 
-    unsubscribeItem(requestId) {
+    unsubscribeItem(requestId: number) {
         const url = `${this.baseUrl}/ReceiveItem/${requestId}/cancel-receive`;
         return this.http.put(url, { requestId });
     }
 
-    approveReceiver(requestId) {
+    approveReceiver(requestId: number) {
         const url = `${this.baseUrl}/ReceiveItem/${requestId}/accept`;
         return this.http.put(url, { requestId });
     }
 
-    rejectReceiver(requestId) {
+    rejectReceiver(requestId: number) {
         const url = `${this.baseUrl}/ReceiveItem/${requestId}/cancel-receiver`;
         return this.http.put(url, { requestId });
+    }
+
+    sendThanksMessage(requestId: number, thanksMsg: string) {
+        const url = `${this.baseUrl}/ReceiveItem/${requestId}/send-thanks`;
+        return this.http.put(url, { thanks: thanksMsg });
     }
 }

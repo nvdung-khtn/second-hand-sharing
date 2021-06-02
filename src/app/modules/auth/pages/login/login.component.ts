@@ -52,10 +52,13 @@ export class LoginComponent implements OnInit {
             async (response) => {
                 console.log('data: ', response);
                 this.isError = false;
-                const addressVM = await this.addressService.getAddressVMById(
-                    response.data.userInfo.address
-                );
-                const addressString = this.addressService.getAddressString(addressVM);
+                let addressString = '';
+                if (response.data.userInfo.address) {
+                    const addressVM = await this.addressService.getAddressVMById(
+                        response.data.userInfo.address
+                    );
+                    addressString = this.addressService.getAddressString(addressVM);
+                }
 
                 localStorage.setItem('access_token', response.data.jwToken);
                 localStorage.setItem('expiration', response.data.expiration.toString());

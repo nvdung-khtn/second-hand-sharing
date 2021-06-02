@@ -2,12 +2,12 @@
   <span class="request-modal__close" (click)="onClose()">&times;</span>
 
   <div class="request-modal__title">
-    Nội dung đăng ký nhận
+    {{modalData.type ? "Nội dung lời cảm ơn" : " Nội dung đăng ký nhận"}}
   </div>
 
-  <input class="request-modal__text" type="text" placeholder="Tin nhắn" [(ngModel)]="this.messageValue"
+  <input class="request-modal__text" type="text" placeholder="Nội dung" [(ngModel)]="this.messageValue"
     (input)="onInput()">
   <span [class.error]="errorMessage">{{errorMessage}}</span>
 
-  <div class="request-modal__confirm" (click)="onClick()">Đăng ký</div>
+  <div class="request-modal__confirm" (click)="emitModalData()">Xác nhận</div>
 </div>

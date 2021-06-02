@@ -4,13 +4,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HomeClient } from 'src/app/core/api-clients/home.client';
 import { ProcessClient } from 'src/app/core/api-clients/process.client';
 import { AddressIdModel, AddressModel } from 'src/app/core/constants/address.constant';
-import { Item } from 'src/app/core/constants/item.constant';
+import { Item, ItemStatus } from 'src/app/core/constants/item.constant';
 import { ReceiveRequest } from 'src/app/core/constants/receive-request.constant';
 import { AddressService } from 'src/app/shared/service/address.service';
 import { AuthService } from 'src/app/shared/service/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
-
+import { Modal, ModalType, ModalStatus } from 'src/app/core/constants/modal.constant';
 @Component({
     selector: 'app-detail-item',
     templateUrl: './detail-item.component.html',
@@ -19,18 +19,18 @@ import Swal from 'sweetalert2';
 export class DetailItemComponent implements OnInit {
     approvedRequestId: number = -1;
     nomineeName: string;
-    toggleApprove = 0;
-    selectedUser = {};
-
-    // Define by me
-    private userId: number;
-    isOwner = true;
+    userId: number;
+    isOwner: boolean = false;
     itemId;
     item: Item;
     addressVM: AddressModel;
     addressString: string;
     receiveRequests: ReceiveRequest[];
-    isOpenModal = false;
+    //isOpenModal = false;
+    modal: Modal = new Modal(ModalType.REGISTER, '', ModalStatus.CLOSE);
+    ItemStatus = ItemStatus;
+    ModalType = ModalType;
+    ModalStatus = ModalStatus;
     constructor(
         private _route: ActivatedRoute,
         private router: Router,
@@ -52,8 +52,19 @@ export class DetailItemComponent implements OnInit {
             async (response) => {
                 this.item = response.data;
                 // Check owner or not?
-                if (this.userId !== this.item.donateAccountId) {
-                    this.isOwner = false;
+                if (this.userId === this.item.donateAccountId) {
+                    this.isOwner = true;
+
+                    // Get all receive request
+                    this.homeClient.getAllReceiveRequest(this.itemId).subscribe((response) => {
+                        this.receiveRequests = response.data;
+                        // find nominee in the past
+                        const nominee = this.receiveRequests.find(
+                            (receiver) => receiver.receiveStatus === ReceiveStatus.APPROVED
+                        );
+                        this.approvedRequestId = nominee?.id;
+                        this.nomineeName = nominee?.receiverName;
+                    });
                 }
                 // Get address string
                 this.addressVM = await this.addressService.getAddressVMById(
@@ -64,25 +75,32 @@ export class DetailItemComponent implements OnInit {
             (error) => console.log('Error in Item detail: ', error)
         );
 
-        // Get all receive request
-        this.homeClient.getAllReceiveRequest(this.itemId).subscribe((response) => {
-            this.receiveRequests = response.data;
-            // find nominee in the past
-            const nominee = this.receiveRequests.find(
-                (receiver) => receiver.receiveStatus === ReceiveStatus.APPROVED
-            );
-            this.approvedRequestId = nominee.id;
-            this.nomineeName = nominee.receiverName;
-        });
+        console.log(this.approvedRequestId, this.nomineeName);
     }
 
+    // Turn off item detail page
     onClose() {
         this.router.navigateByUrl('/home');
     }
 
     // Open receive register modal
-    onClickRegister() {
-        this.isOpenModal = true;
+    openInputModal(type) {
+        this.modal.status = ModalStatus.OPEN;
+        this.modal.type = type;
+    }
+
+    handleModalChange(receivedModal: Modal) {
+        if (receivedModal.message) {
+            this.modal = receivedModal;
+            if (receivedModal.type === ModalType.REGISTER) {
+                this.onSubscribe(receivedModal.message);
+                return;
+            }
+
+            if (receivedModal.type === ModalType.THANKS) {
+                this.sendThanksString(receivedModal.message);
+            }
+        }
     }
 
     onSubscribe(receiveReason) {
@@ -93,7 +111,8 @@ export class DetailItemComponent implements OnInit {
 
         this.processClient.subscribeItem(formData).subscribe((response: any) => {
             this.item.userRequestId = response.data;
-            this.isOpenModal = !this.isOpenModal;
+            this.modal.message = '';
+            this.modal.status = ModalStatus.CLOSE;
             this.toastr.success('Đăng ký nhận vật phẩm thành công!');
         });
     }
@@ -112,9 +131,9 @@ export class DetailItemComponent implements OnInit {
         }).then((result) => {
             // Handle when user want unsubscribeI] item
             if (result.isConfirmed) {
-                this.item.userRequestId = 0;
-                this.processClient.unsubscribeItem(requestId).subscribe(async (response) => {
-                    await this.toastr.success('Đã Hủy đăng ký nhận vật phẩm!');
+                this.processClient.unsubscribeItem(requestId).subscribe((response) => {
+                    this.item.userRequestId = 0;
+                    this.toastr.success('Đã Hủy đăng ký nhận vật phẩm!');
                 });
             }
         });
@@ -140,22 +159,17 @@ export class DetailItemComponent implements OnInit {
             this.nomineeName = receiverName;
             this.toastr.success('Đã phê duyệt người nhận.');
         });
+
+        /** Test success */
+        // setTimeout(() => {
+        //     console.log('setTimeout func!');
+        //     this.onReject(requestId);
+        // }, 3000);
     }
 
-    // if (this.approvedRequestId !== requestId) {
-    //   this.toggleApprove = 0;
-    //   // gọi api approve người dùng mới
-    // } else {
-    //   this.toggleApprove++;
-    // }
-    // this.isApproved = requestId;
-    // if (this.toggleApprove === 1) {
-    //   this.isApproved = -1;
-    //   // gọi api hủy
-    // }
-
+    // Hủy yêu cầu.
     async onReject(requestId: number) {
-        await Swal.fire({
+        let result = await Swal.fire({
             title: 'Xác nhận thao tác',
             text: `Hủy bỏ hiệu lực lệnh phê duyệt đăng ký cho ${this.nomineeName}?`,
             icon: 'warning',
@@ -164,21 +178,27 @@ export class DetailItemComponent implements OnInit {
             cancelButtonColor: '#d33',
             confirmButtonText: 'Đúng vậy',
             cancelButtonText: 'Hủy bỏ',
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                // reject receive request
-                // this.processClient.rejectReceiver(requestId).subscribe((response) => {
-                //   this.toastr.success(
-                //     `Đã hủy lệnh phê duyệt đăng ký cho ${this.nomineeName}`
-                //   );
-                //   this.approvedRequestId = -1;
-                //   this.nomineeName = '';
-                // });
-                await this.processClient.rejectReceiver(requestId).toPromise();
-                this.toastr.success(`Đã hủy lệnh phê duyệt đăng ký cho ${this.nomineeName}`);
-                this.approvedRequestId = -1;
-                this.nomineeName = '';
-            }
         });
+
+        if (result.isConfirmed) {
+            await this.processClient.rejectReceiver(requestId).toPromise();
+            this.toastr.success(`Đã hủy lệnh phê duyệt đăng ký cho ${this.nomineeName}`);
+            this.approvedRequestId = -1;
+            this.nomineeName = '';
+        }
+    }
+
+    confirmGiven() {
+        this.homeClient.confirmGiven(this.itemId).subscribe(
+            (response) => {
+                this.item.status = ItemStatus.COMPLETED;
+                this.toastr.success('Xác nhận đã cho vật phẩm thành công!');
+            },
+            (error) => console.error(error)
+        );
+    }
+
+    sendThanksString(thanksMsg) {
+        this.processClient.sendThanksMessage(this.approvedRequestId, thanksMsg);
     }
 }

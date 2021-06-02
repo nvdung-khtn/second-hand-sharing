@@ -1,4 +1,4 @@
-@import '../../../../styles/variables';
+@import "../../../../styles/variables";
 
 .header {
     display: flex;
@@ -88,7 +88,6 @@
                 }
             }
         }
-
     }
 
     &__second-group {
@@ -105,13 +104,13 @@
 
             @media (max-width: 1024px) {
                 display: grid;
-                grid-template-columns: repeat(4,1fr);
+                grid-template-columns: repeat(4, 1fr);
                 margin: 0;
                 text-align: center;
                 width: 60%;
             }
 
-           &__inside {
+            &__inside {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
@@ -152,7 +151,7 @@
                         display: none;
                     }
                 }
-           }
+            }
         }
 
         &__profile {
@@ -179,7 +178,6 @@
 
             &__name {
                 display: inline-block;
-
             }
         }
 
@@ -234,7 +232,6 @@
                     outline: none;
                 }
 
-
                 &--menu {
                     display: none;
                     max-width: 28px;
@@ -247,8 +244,6 @@
                     &:hover {
                         cursor: pointer;
                     }
-
-
 
                     @media (max-width: 1024px) {
                         display: inline-block;
@@ -300,7 +295,6 @@
                 }
             }
         }
-
     }
 
     .selectedTabStyle {
