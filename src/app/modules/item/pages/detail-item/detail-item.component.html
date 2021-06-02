@@ -43,61 +43,70 @@
             Mô tả:
             <span class="text">{{ item?.description }}</span>
           </div>
+
+          <div class="detail-item__grid__card__right__description">
+            Trạng thái:
+            <span class="text"> {{item?.status === ItemStatus.COMPLETED
+              ? 'Đã có người nhận' : 'Chưa có người nhận'}}</span>
+          </div>
+
+          <div class="detail-item__grid__card__right__description" *ngIf="receivedUser; else noDone">
+            Người nhận:
+            <span class="text">{{ receivedUser?.fullName }}</span>
+          </div>
         </div>
 
-        <!-- FORM NGƯỜI NHẬN -->
-        <ng-container *ngIf="!isOwner; else isOwner">
-          <div *ngIf="item.userRequestId; else noReq">
-            <div class="flex">
-              <div class="detail-item__grid__card__right__btn thanks">
-                Gửi lời cảm ơn
+        <button *ngIf="receivedUser?.id===userId" class="detail-item__grid__card__right__btn thanks"
+          (click)="openInputModal(ModalType.THANKS)">
+          Gửi lời cảm ơn
+        </button>
+
+
+        <ng-template #noDone>
+          <!-- FORM NGƯỜI NHẬN -->
+          <ng-container *ngIf="userId != item?.donateAccountId; else isOwner">
+            <div *ngIf="item?.userRequestId; else noReq">
+              <button class="detail-item__grid__card__right__btn cancel" (click)="onUnsubscribe()">
+                Hủy đăng ký
+              </button>
+            </div>
+
+            <ng-template #noReq>
+              <div class="detail-item__grid__card__right__btn" (click)="openInputModal(ModalType.REGISTER)">
+                Đăng ký nhận
               </div>
-            </div>
+            </ng-template>
+          </ng-container>
 
-            <div class="detail-item__grid__card__right__btn cancel" (click)="onUnsubscribe()">
-              Hủy đăng ký
-            </div>
-          </div>
+          <!-- FORM NGƯỜI CHO -->
+          <ng-template #isOwner>
+            <div class="title">Danh sách yêu cầu</div>
+            <div class="list">
+              <span *ngIf="!receiveRequests?.length">Chưa có ai xin nhận vật phẩm này!</span>
+              <div class="request-list" *ngFor="let request of receiveRequests">
+                <div class="request-list__info">
+                  <img class="avatar" src="assets/image/default-avatar.png" />
 
-          <ng-template #noReq>
-            <div class="detail-item__grid__card__right__btn" (click)="onClickRegister()">
-              Đăng ký nhận
-            </div>
-          </ng-template>
-        </ng-container>
-
-
-
-        <!-- FORM NGƯỜI CHO -->
-        <ng-template #isOwner>
-          <div class="title">Danh sách yêu cầu</div>
-
-          <div class="list">
-            <div class="request-list" *ngFor="let request of receiveRequests">
-              <div class="request-list__info">
-                <img class="avatar" src="assets/image/default-avatar.png" />
-
-                <div>
-                  <div>{{ request.receiverName }}</div>
-
-                  <div>{{ request.receiveReason }}</div>
+                  <div>
+                    <div>{{ request.receiverName }}</div>
+                    <div>{{request.createDate | time}}</div>
+                    <div>{{ request.receiveReason }}</div>
+                  </div>
                 </div>
+                <div class="button approve-request" (click)="handleProcess(request.id, request.receiverName)">
+                  {{this.approvedRequestId != request.id
+                  ? 'Chấp nhận' : 'Hủy'}} </div>
               </div>
-              <div class="button approve-request" (click)="handleProcess(request.id, request.receiverName)">
-                {{this.approvedRequestId !== request.id
-                ? 'Chấp nhận' : 'Hủy'}} </div>
-              <!-- <div class="button approve-request">{{this.isApproved !== request.id ? 'Chấp nhận' : 'Hủy'}} </div> -->
             </div>
-          </div>
-          <div class="detail-item__grid__card__right__btn">Xác nhận đã cho</div>
+            <button (click)="confirmGiven()" class="detail-item__grid__card__right__btn"
+              [disabled]="approvedRequestId === -1">Xác nhận đã cho</button>
+          </ng-template>
         </ng-template>
-
       </div>
     </div>
   </div>
 </div>
 
-<div class="detail-item__modal" [style.display]="this.isOpenModal ? 'block' : 'none'">
-  <app-request-modal [isOpenModal]="this.isOpenModal" (modalChange)="this.isOpenModal = $event"
-    (message)="onSubscribe($event)"></app-request-modal>
+<div class="detail-item__modal" [style.display]="modal.status===ModalStatus.OPEN ? 'block' : 'none'">
+  <app-request-modal [modalData]="modal" (modalChange)="handleModalChange($event)"></app-request-modal>
 </div>

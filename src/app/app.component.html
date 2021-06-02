@@ -1,11 +1,11 @@
 <app-header [style.display]="this.isLogin ? 'block' : 'none'"></app-header>
 
 <div class='home-aside-left' [style.display]="this.isLogin ? 'block' : 'none'">
-    <app-home-left-side></app-home-left-side>
+  <app-home-left-side></app-home-left-side>
 </div>
 <div class='home-aside-right' [style.display]="this.isLogin ? 'block' : 'none'">
-    <app-home-right-side></app-home-right-side>
+  <app-home-right-side></app-home-right-side>
 </div>
 <div [ngClass]="{'another-page-position': (this.isLogin === true), 'no-login': (this.isLogin === false)}">
-    <router-outlet></router-outlet>
+  <router-outlet></router-outlet>
 </div>

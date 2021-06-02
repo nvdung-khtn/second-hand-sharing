@@ -1,31 +1,31 @@
 // Models
-export class Address {
-  street: string;
-  wardId: number;
-  districtId: number;
-  cityId: number;
+export class AddressIdModel {
+    street: string;
+    wardId: number;
+    districtId: number;
+    cityId: number;
 
-  constructor(fullAddress) {
-    this.street = fullAddress.street;
-    this.wardId = fullAddress.wardId;
-    this.districtId = fullAddress.districtId;
-    this.cityId = fullAddress.cityId;
-  }
+    constructor(address) {
+        this.street = address.street;
+        this.wardId = address.wardId;
+        this.districtId = address.districtId;
+        this.cityId = address.cityId;
+    }
 }
 
 export class AddressModel {
-  wardId: number;
-  wardName: string;
-  districtId: number;
-  districtName: string;
-  cityId: number;
-  cityName: string;
-  street: string;
+    wardId: number;
+    wardName: string;
+    districtId: number;
+    districtName: string;
+    cityId: number;
+    cityName: string;
+    street: string;
 }
 
 export enum EnumAddress {
-  STREET,
-  WARD,
-  DISTRICT,
-  CITY,
+    STREET,
+    WARD,
+    DISTRICT,
+    CITY,
 }

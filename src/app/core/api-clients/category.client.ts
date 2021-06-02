@@ -5,12 +5,12 @@ import { Observable } from 'rxjs';
 import { Category, URL_GET_CATEGORIES } from '../constants/category.constant';
 
 @Injectable({
-  providedIn: 'root',
+    providedIn: 'root',
 })
 export class CategoryClient {
-  constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) {}
 
-  getCategories(): Observable<Category[]> {
-    return this.http.get<Category[]>(URL_GET_CATEGORIES);
-  }
+    getCategories(): Observable<Category[]> {
+        return this.http.get<Category[]>(URL_GET_CATEGORIES);
+    }
 }

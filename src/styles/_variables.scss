@@ -1,28 +1,28 @@
 // Declare variables
 
 //color
-$light-blue: #9DD0FF;
+$light-blue: #9dd0ff;
 $lightest-blue: #cbe6ff;
 $light-grey: #767676;
 $light-pink: #f780a9;
-$pink:#f94885;
+$pink: #f94885;
 $light-green: #50e156;
 $green: #13c61a;
 
-$primary-color: #0E88FA;
-$selected-text-color: #0E88FA;
+$primary-color: #0e88fa;
+$selected-text-color: #0e88fa;
 $primary-text-color: #333333;
 $primary-light-text-color: #494949;
-$primary-lightest-text-color: #A9A9A9;
-$linear-vertical: linear-gradient(#0E88FA , #9DD0FF);
+$primary-lightest-text-color: #a9a9a9;
+$linear-vertical: linear-gradient(#0e88fa, #9dd0ff);
 $primary-border-otp-color: #c4c4c4;
-$primary-icon-color: #4D4D4D;
-$primary-icon-background-color: #F2F2F2;
+$primary-icon-color: #4d4d4d;
+$primary-icon-background-color: #f2f2f2;
 
 //button
-$btn-color: #0E88FA;
-$btn-selected: #0773D9;
-
+$btn-color: #0e88fa;
+$btn-selected: #0773d9;
+$btn-disabled: #979797;
 
 //font: 1rem = 16px
 $title-font-size: 1.25rem;
@@ -36,7 +36,7 @@ $font-weight-bold: 700;
 $font-weight-medium: 600;
 
 //box-shadow;
-$box-shadow-color: #55ACFC;
+$box-shadow-color: #55acfc;
 
 //border-radius
 $border-radius-default: 10px;
@@ -44,31 +44,22 @@ $border-radius-light: 5px;
 
 //screen size
 
-
 @media (min-width: 1281px) {
-  
     /* CSS */
-    
 }
-  
+
 @media (min-width: 1025px) and (max-width: 1280px) {
-
-/* CSS */
-
+    /* CSS */
 }
-  
-@media (min-width: 768px) and (max-width: 1024px) {
 
+@media (min-width: 768px) and (max-width: 1024px) {
 }
 
 @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
-
 }
 
 @media (min-width: 481px) and (max-width: 767px) {
-
 }
 
 @media (min-width: 320px) and (max-width: 480px) {
-    
 }
