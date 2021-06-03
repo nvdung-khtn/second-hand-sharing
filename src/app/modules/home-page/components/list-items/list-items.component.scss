@@ -1,4 +1,4 @@
-@import '../../../../../styles/variables';
+@import "../../../../../styles/variables";
 
 .list-items {
     background-color: #ffffff;
@@ -8,7 +8,14 @@
     color: $primary-text-color;
     height: calc(100vh - 19rem);
     overflow-y: scroll;
-    
+
+    .noData {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+    }
+
     &__grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
@@ -34,9 +41,8 @@
             padding: 4%;
 
             &__image {
-                
                 &__inside {
-                    width: 100%;   
+                    width: 100%;
                     border-radius: $border-radius-default;
                     height: 250px;
                     object-fit: cover;
@@ -52,13 +58,13 @@
                 color: $primary-lightest-text-color;
                 overflow: hidden;
                 text-overflow: ellipsis;
-                height: 24px;            
+                height: 24px;
             }
 
             &__description {
                 overflow: hidden;
                 text-overflow: ellipsis;
-                height: 45px;            
+                height: 45px;
             }
 
             &__line {
