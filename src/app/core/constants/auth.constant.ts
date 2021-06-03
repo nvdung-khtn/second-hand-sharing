@@ -35,3 +35,8 @@ export class ResetPwRequest {
     password: string;
     confirmPassword: string;
 }
+
+export class ConfirmEmailRequest {
+    userId: string;
+    code: string;
+}
