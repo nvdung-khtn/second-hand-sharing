@@ -46,7 +46,6 @@ export class CreatePostModalComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit(): void {
-        console.log('create-post-modal init');
         this.postForm = this.fb.group({
             itemName: ['', [Validators.required]],
             phoneNumber: ['', [Validators.required]], // sao ko co thong tin nay
@@ -156,7 +155,5 @@ export class CreatePostModalComponent implements OnInit, OnDestroy {
         this.selectedCatId = catId;
     }
 
-    ngOnDestroy() {
-        console.log('create-post-model destroy');
-    }
+    ngOnDestroy() {}
 }
