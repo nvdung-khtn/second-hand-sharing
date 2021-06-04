@@ -5,7 +5,7 @@ export class Item {
     id: number;
     itemName: string;
     receiveAddress: AddressIdModel;
-    postTime: Date; // Có thể phát sinh lỗi
+    postTime: string;
     description: string;
     imageUrl: string[];
     donateAccountId: number;
