@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-home',
@@ -11,7 +11,10 @@ export class HomeComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
+  onCategoryChange = (event: any) => {
+    this.selectedCategory = event;
+    console.log(this.selectedCategory);
+  }
 }

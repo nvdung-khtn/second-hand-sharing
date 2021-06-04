@@ -9,6 +9,8 @@ import {
     URL_FORGOT_PW,
     ResetPwRequest,
     URL_RESET_PW,
+    ConfirmEmailRequest,
+    URL_CONFIRM_EMAIL,
 } from '../constants/auth.constant';
 import { Observable } from 'rxjs';
 import { ResponseModel } from '../constants/common.constant';
@@ -36,5 +38,9 @@ export class AuthClient {
 
     resetPassword(resetForm: ResetPwRequest): Observable<ResponseModel<string>> {
         return this.http.post<ResponseModel<string>>(URL_RESET_PW, resetForm);
+    }
+
+    confirmEmail = (form: ConfirmEmailRequest) => {
+        return this.http.post<ResponseModel<string>>(URL_CONFIRM_EMAIL, form);
     }
 }
