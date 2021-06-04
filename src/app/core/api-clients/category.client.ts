@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { Category, URL_GET_CATEGORIES } from '../constants/category.constant';
-import { PagingList } from '../constants/common.constant';
+import { PagingList, SearchRequest } from '../constants/common.constant';
 import { Item } from '../constants/item.constant';
 import { environment } from 'src/environments/environment';
 
@@ -18,8 +18,13 @@ export class CategoryClient {
         return this.http.get<Category[]>(URL_GET_CATEGORIES);
     }
 
-    getItemByCategory(cateId: number): Observable<PagingList<Item>> {
-        const url = `${this.baseUrl}/Category/${cateId}?PageNumber=1&PageSize=100`;
-        return this.http.get<PagingList<Item>>(url);
+    getItemByCategory(cateId: number, req: SearchRequest): Observable<PagingList<Item>> {
+        const url = `${this.baseUrl}/Category/${cateId}`;
+        const params = {
+            PageNumber: `${req.pageNumber}`,
+            PageSize: `${req.pageSize}`,
+        };
+
+        return this.http.get<PagingList<Item>>(url, { params });
     }
 }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AddressIdModel, AddressModel } from 'src/app/core/constants/address.constant';
+import { delay } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root',
@@ -9,7 +10,7 @@ export class AddressService {
     private _address: AddressModel[];
     constructor(private http: HttpClient) {}
 
-    private async loadData(): Promise<void> {
+    async loadData(): Promise<void> {
         if (!this._address) {
             this._address = await this.http
                 .get<AddressModel[]>('assets/address.json', {
@@ -83,12 +84,44 @@ export class AddressService {
         return wards;
     }
 
-    getAddressString(address: AddressModel): string {
-        return `${address.street}, ${address.wardName}, ${address.districtName}, ${address.cityName}`;
+    // getAddressString(address: AddressModel): string {
+    //     const wardName = this.removeWordFromString(address.wardName, ['Phường', 'Xã']);
+    //     const districtName = this.removeWordFromString(address.districtName, [
+    //         'Thành phố',
+    //         'Huyện',
+    //         'Quận',
+    //         'Thị xã',
+    //         'Thị trấn',
+    //     ]);
+    //     const cityName = this.removeWordFromString(address.cityName, ['Thành phố', 'Tỉnh']);
+    //     return `${address.street}, P.${wardName}, Q.${districtName}, ${cityName}`;
+    // }
+    getAddressString(addressId: AddressIdModel): string {
+        const address = this.getAddressVMById(addressId);
+        const wardName = this.removeWordFromString(address.wardName, ['Phường', 'Xã']);
+        const districtName = this.removeWordFromString(address.districtName, [
+            'Thành phố',
+            'Huyện',
+            'Quận',
+            'Thị xã',
+            'Thị trấn',
+        ]);
+        const cityName = this.removeWordFromString(address.cityName, ['Thành phố', 'Tỉnh']);
+        return `${address.street}, P.${wardName}, Q.${districtName}, ${cityName}`;
     }
 
-    async getAddressVMById(addr: AddressIdModel): Promise<AddressModel> {
-        await this.loadData();
+    removeWordFromString(sourceString: string, removeWord: string[]) {
+        if (removeWord.length) {
+            removeWord.forEach((word) => {
+                sourceString = sourceString.replace(word, '');
+            });
+        }
+
+        return sourceString.trim();
+    }
+
+    getAddressVMById(addr: AddressIdModel): AddressModel {
+        //await this.loadData();
         const result = this._address.find(
             (address) =>
                 address.cityId === addr.cityId &&

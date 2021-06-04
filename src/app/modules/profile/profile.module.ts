@@ -8,16 +8,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { ProfileComponent } from './pages/profile/profile.component';
 
 @NgModule({
-  declarations: [
-    ProfileComponent,
-  ],
-  imports: [
-    CommonModule,
-    ProfileRoutingModule,
-    HomePageModule,
-    FormsModule,
-    MatFormFieldModule,
-    ReactiveFormsModule,
-  ],
+    declarations: [ProfileComponent],
+    imports: [
+        CommonModule,
+        ProfileRoutingModule,
+        HomePageModule,
+        FormsModule,
+        MatFormFieldModule,
+        ReactiveFormsModule,
+    ],
 })
 export class ProfileModule {}

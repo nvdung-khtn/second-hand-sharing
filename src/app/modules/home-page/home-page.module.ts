@@ -15,32 +15,32 @@ import { MatSelectModule } from '@angular/material/select';
 import { DropdownFormComponent } from './components/dropdown-form/dropdown-form.component';
 import { MatCarouselModule } from '@ngbmodule/material-carousel';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @NgModule({
-  // tslint:disable-next-line: max-line-length
-  declarations: [
-    HomeComponent,
-    CategoryComponent,
-    ListItemsComponent,
-    CreatePostComponent,
-    CreatePostModalComponent,
-    AddressModalComponent,
-    DropdownFormComponent,
-  ],
-  imports: [
-    CommonModule,
-    HomePageRoutingModule,
-    MatIconModule,
-    FontAwesomeModule,
-    FormsModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    ReactiveFormsModule,
-    SharedModule,
-    MatCarouselModule.forRoot(),
-  ],
-  exports: [
-    AddressModalComponent
-  ]
+    // tslint:disable-next-line: max-line-length
+    declarations: [
+        HomeComponent,
+        CategoryComponent,
+        ListItemsComponent,
+        CreatePostComponent,
+        CreatePostModalComponent,
+        AddressModalComponent,
+        DropdownFormComponent,
+    ],
+    imports: [
+        CommonModule,
+        HomePageRoutingModule,
+        MatIconModule,
+        FontAwesomeModule,
+        FormsModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        ReactiveFormsModule,
+        SharedModule,
+        InfiniteScrollModule,
+        MatCarouselModule.forRoot(),
+    ],
+    exports: [AddressModalComponent],
 })
 export class HomePageModule {}

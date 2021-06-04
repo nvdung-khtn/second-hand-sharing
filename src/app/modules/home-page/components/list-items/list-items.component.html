@@ -1,6 +1,8 @@
-<div class="list-items">
-  <div class="list-items__grid"  [style.display]="this.noData ? 'none' : 'grid'">
-    <div class="list-items__grid__card" routerLink="/item/{{item?.id}}" *ngFor="let item of this.items">
+<div class="list-items" infiniteScroll [infiniteScrollDistance]="itemListScrollDistance"
+  [infiniteScrollThrottle]="itemListScrollThrottle" (scrolled)="onItemListScrollDown()" [scrollWindow]="false"
+  [alwaysCallback]="true">
+  <div class="list-items__grid" [style.display]="items?.length === 0 ? 'none' : 'grid'">
+    <div class="list-items__grid__card" routerLink="/item/{{item?.id}}" *ngFor="let item of items">
       <div class="list-items__grid__card__image">
         <img class="list-items__grid__card__image__inside"
           [src]="item?.imageUrl ? item.imageUrl : 'assets/image/default-image.png'">
@@ -12,7 +14,7 @@
 
       <div class="list-items__grid__card__post-info">
         <div class="list-items__grid__card__post-info__time">
-          {{item?.postTime | time}} - {{item?.receiveAddress}}
+          {{item?.postTime | time}} - {{item?.address | address}}
         </div>
       </div>
 
@@ -23,7 +25,8 @@
       </div>
     </div>
   </div>
-  <div [style.display]="this.noData ? 'flex' : 'none'" class="noData">
+  <div [style.display]="items?.length === 0 ? 'flex' : 'none'" class="noData">
+    <!-- Them hình ảnh | icon -->
     Không có dữ liệu trong danh mục này
   </div>
 </div>

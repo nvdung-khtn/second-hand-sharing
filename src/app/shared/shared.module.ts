@@ -11,6 +11,7 @@ import { HomeRightSideComponent } from './components/home-right-side/home-right-
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { MessageModalComponent } from './components/modal/message-modal.component';
 import { TimePipe } from './pipes/time.pipe';
+import { AddressPipe } from './pipes/address.pipe';
 
 @NgModule({
     declarations: [
@@ -19,6 +20,7 @@ import { TimePipe } from './pipes/time.pipe';
         HomeLeftSideComponent,
         MessageModalComponent,
         TimePipe,
+        AddressPipe,
     ],
     imports: [CommonModule, RouterModule, MatIconModule, FontAwesomeModule],
     exports: [
@@ -27,6 +29,7 @@ import { TimePipe } from './pipes/time.pipe';
         HomeLeftSideComponent,
         MessageModalComponent,
         TimePipe,
+        AddressPipe,
     ],
     providers: [JwtHelperService, { provide: JWT_OPTIONS, useValue: JWT_OPTIONS }],
 })
