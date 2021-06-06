@@ -1,0 +1,30 @@
+<div class="messenger">
+  <span class="messenger__close" (click)="onClose()">&times;</span>
+
+  <div>
+    <div class="messenger__name">{{ handleAccountName(this.usersInfo) }}</div>
+
+    <div #scrollMe class="messenger__message">
+      <div
+        *ngFor="let message of messageData?.data.reverse()"
+        [ngClass]="
+          this.message?.sendFromAccountId === myInfo?.id ? 'right' : 'left'
+        "
+      >
+        <span
+          [ngClass]="
+            this.message?.sendFromAccountId === myInfo?.id
+              ? 'my-message'
+              : 'user-message'
+          "
+          >{{ message?.content }}</span
+        >
+      </div>
+    </div>
+  </div>
+
+  <div class="messenger__input-container">
+    <input class="messenger__input" type="text" placeholder="Aa" [(ngModel)]="this.myInput" (keyup.enter)="onSend()" />
+    <img class="messenger__send-btn" src="assets/image/send.png" (click)="onSend()"/>
+  </div>
+</div>

@@ -7,6 +7,7 @@ import { delay } from 'rxjs/operators';
     providedIn: 'root',
 })
 export class AddressService {
+    // tslint:disable-next-line: variable-name
     private _address: AddressModel[];
     constructor(private http: HttpClient) {}
 
@@ -35,7 +36,7 @@ export class AddressService {
     async getAllCity(): Promise<AddressModel[]> {
         await this.loadData();
         const citys: AddressModel[] = [];
-        let guardNumber: number = 1;
+        let guardNumber = 1;
 
         // Filter 63 province in VN
         this._address.forEach((address) => {
@@ -51,7 +52,7 @@ export class AddressService {
     async getAllDistrict(cityId: number): Promise<AddressModel[]> {
         await this.loadData();
         const districts: AddressModel[] = [];
-        let guardNumber: number = 1;
+        let guardNumber = 1;
 
         // Filter all district that match with condition
         this._address.forEach((address) => {
@@ -67,7 +68,7 @@ export class AddressService {
     async getAllWard(cityId: number, districtId: number): Promise<AddressModel[]> {
         await this.loadData();
         const wards: any[] = [];
-        let guardNumber: number = 1;
+        let guardNumber = 1;
 
         // Filter all ward that match with condition
         this._address.forEach((address) => {
@@ -110,24 +111,27 @@ export class AddressService {
         return `${address.street}, P.${wardName}, Q.${districtName}, ${cityName}`;
     }
 
+    // tslint:disable-next-line: typedef
     removeWordFromString(sourceString: string, removeWord: string[]) {
         if (removeWord.length) {
             removeWord.forEach((word) => {
-                sourceString = sourceString.replace(word, '');
+                if (sourceString) { sourceString = sourceString.replace(word, ''); }
             });
         }
-
-        return sourceString.trim();
+        if (sourceString) {
+            return sourceString.trim();
+        }
     }
 
     getAddressVMById(addr: AddressIdModel): AddressModel {
-        //await this.loadData();
-        const result = this._address.find(
-            (address) =>
-                address.cityId === addr.cityId &&
-                address.districtId === addr.districtId &&
-                address.wardId === addr.wardId
-        );
-        return <AddressModel>{ ...result, street: addr.street };
+        const result =
+            this._address &&
+            this._address.find(
+                (address) =>
+                    address.cityId === addr.cityId &&
+                    address.districtId === addr.districtId &&
+                    address.wardId === addr.wardId
+            );
+        return { ...result, street: addr.street } as AddressModel;
     }
 }

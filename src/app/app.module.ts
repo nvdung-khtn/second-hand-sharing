@@ -15,6 +15,14 @@ import { NotificationModule } from './modules/notification/notification.module';
 import { TokenInterceptor } from './core/interceptors/token.interceptor';
 import { ProfileModule } from './modules/profile/profile.module';
 
+import { AngularFireMessagingModule } from '@angular/fire/messaging';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireModule } from '@angular/fire';
+import { environment } from 'src/environments/environment';
+
+import { MessagingService } from 'src/app/shared/service/message.service';
+import { AsyncPipe } from '../../node_modules/@angular/common';
 // import { AuthRoutingModule } from './modules/auth/auth.routing';
 // import { HomePageRoutingModule } from './modules/home-page/home-page.routing';
 // import { GroupRoutingModule } from './modules/group/group.routing';
@@ -44,6 +52,10 @@ import { ProfileModule } from './modules/profile/profile.module';
     GroupModule,
     ProfileModule,
     NotificationModule,
+    AngularFireDatabaseModule,
+    AngularFireAuthModule,
+    AngularFireMessagingModule,
+    AngularFireModule.initializeApp(environment.firebase),
   ],
   providers: [
     {
@@ -51,6 +63,8 @@ import { ProfileModule } from './modules/profile/profile.module';
       useClass: TokenInterceptor,
       multi: true,
     },
+    MessagingService,
+    AsyncPipe,
   ],
   bootstrap: [AppComponent],
 })

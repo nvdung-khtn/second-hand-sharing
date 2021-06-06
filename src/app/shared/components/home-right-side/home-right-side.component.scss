@@ -1,62 +1,63 @@
-
-@import '../../../../styles/variables';
+@import "../../../../styles/variables";
 
 .home-right-side {
-    padding: 10px 4%;
+  padding: 10px 4%;
 
-    &__title {
-        color: $primary-icon-color;
-        padding: 5px 2%;
-        margin-bottom: 10px;
-        padding-bottom: 15px;
-        font-weight: $font-weight-medium;
-        font-style: italic;
-        border-bottom: 1px solid $primary-icon-background-color;
+  .margin {
+      margin-top: 10%;
+  }
+
+  &__title {
+    color: $primary-icon-color;
+    padding: 5px 2%;
+    margin-bottom: 10px;
+    padding-bottom: 15px;
+    font-weight: $font-weight-medium;
+    font-style: italic;
+    border-bottom: 1px solid $primary-icon-background-color;
+  }
+
+  &__list {
+    height: calc(50vh - 7rem);
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+      display: none;
     }
 
-    &__list {
-        height: calc(100vh - 9rem);
-        overflow-y: scroll;
+    &__profile {
+      display: flex;
+      align-items: center;
+      padding: 5px 2%;
+      margin-top: 5px;
 
-        &::-webkit-scrollbar {
-            display: none;
+      &:hover {
+        cursor: pointer;
+        background-color: $primary-icon-background-color;
+        border-radius: 5px;
+      }
+
+      &__avatar {
+        width: 100%;
+        max-width: 45px;
+        margin-right: 2%;
+        border-radius: 100%;
+      }
+
+      &__info {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+
+        &__name {
+          font-weight: $font-weight-medium;
+          color: $primary-text-color;
         }
 
-        &__profile {
-            display: flex;
-            align-items: center;
-            padding: 5px 2%;
-            margin-top: 5px;
-
-            &:hover {
-                cursor: pointer;
-                background-color: $primary-icon-background-color;
-                border-radius: 5px;
-            }
-
-            &__avatar {
-                width: 100%;
-                max-width: 45px;
-                margin-right: 2%;
-                border-radius: 100%;
-            }
-
-            &__info {
-                text-overflow: ellipsis;
-                overflow: hidden;
-                white-space: nowrap;
-
-                &__name {
-                    font-weight: $font-weight-medium;
-                    color: $primary-text-color;
-                }
-
-                &__times {
-                    font-style: italic;
-                }
-            }
-
-
+        &__times {
+          font-style: italic;
         }
+      }
     }
+  }
 }
