@@ -119,4 +119,13 @@ export class HomeRightSideComponent implements OnInit {
             : (name = user.sendToAccountName);
         return name;
     }
+
+    handleAvatar = (user: any) => {
+        // tslint:disable-next-line: no-unused-expression
+        let avatar = '';
+        user.sendFromAccountId !== this.myInfo.id
+            ? (avatar = user.avatarUrlSendFromAccount)
+            : (avatar = user.avatarUrlSendToAccount);
+        return avatar;
+    }
 }
