@@ -62,7 +62,6 @@ export class ListItemsComponent implements OnInit, OnChanges {
     }
 
     onItemListScrollDown = () => {
-        console.log('scrolled!!');
         this.defaultPageNumber += 1;
         const newReq = new SearchRequest(this.defaultPageNumber, this.defaultPageSize);
         this.homeClient.getItems(newReq).subscribe((response) => {

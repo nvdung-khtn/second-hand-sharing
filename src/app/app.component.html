@@ -32,4 +32,7 @@
     (modalChange)="this.openMessageBox = $event"
   ></app-messenger>
 </div>
-{{ message | async | json }}
+
+<div class="root-message">
+  {{ message | async | json }}
+</div>

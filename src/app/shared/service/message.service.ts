@@ -54,7 +54,6 @@ export class MessagingService {
     requestPermission(userId) {
         this.angularFireMessaging.requestToken.subscribe(
             (token) => {
-                console.log(token);
                 this.updateToken(userId, token);
                 const checkToken = localStorage.getItem('firebaseToken');
                 let oldToken = false;
