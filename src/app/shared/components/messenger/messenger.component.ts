@@ -68,7 +68,7 @@ export class MessengerComponent implements OnInit, AfterViewChecked {
     onClose = () => {
         this.isOpenModal = false;
         this.modalChange.emit(this.isOpenModal);
-    }
+    };
 
     onSend = () => {
         let id;
@@ -86,7 +86,7 @@ export class MessengerComponent implements OnInit, AfterViewChecked {
             },
             (error) => console.log(error)
         );
-    }
+    };
 
     handleAccountName = (user: any) => {
         let name = '';
@@ -98,5 +98,5 @@ export class MessengerComponent implements OnInit, AfterViewChecked {
                 : (name = user.sendToAccountName);
         }
         return name;
-    }
+    };
 }

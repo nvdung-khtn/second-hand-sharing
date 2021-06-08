@@ -106,10 +106,11 @@ export class HomeRightSideComponent implements OnInit {
     }
 
     onOpenMessageModal = (user) => {
+        debugger;
         this.openMessageBox = true;
         this.modalChange.emit(this.openMessageBox);
         this.userInfo.emit(user);
-    }
+    };
 
     handleAccountName = (user: any) => {
         // tslint:disable-next-line: no-unused-expression
@@ -118,7 +119,7 @@ export class HomeRightSideComponent implements OnInit {
             ? (name = user.sendFromAccountName)
             : (name = user.sendToAccountName);
         return name;
-    }
+    };
 
     handleAvatar = (user: any) => {
         // tslint:disable-next-line: no-unused-expression
@@ -127,5 +128,5 @@ export class HomeRightSideComponent implements OnInit {
             ? (avatar = user.avatarUrlSendFromAccount)
             : (avatar = user.avatarUrlSendToAccount);
         return avatar;
-    }
+    };
 }
