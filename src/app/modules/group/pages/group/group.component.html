@@ -1,1 +1,17 @@
-<p>group works! asdsadsadsad</p>
+<div class="group">
+    <div class="group__joined box-container">
+        <div class="group__heading">
+            <div class="group__title">
+                Nhóm
+            </div>
+
+            <div class="group__create-btn primary-button" (click)="handleOpenModal()">
+                + Tạo nhóm
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="create-group-modal" class="create-group-modal" [style.display]="this.isOpenModal ? 'block' : 'none'">
+    <app-create-group-modal [isOpenModal]="this.isOpenModal" (modalChange)="this.isOpenModal=$event"></app-create-group-modal>
+</div>

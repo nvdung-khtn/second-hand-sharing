@@ -1,0 +1,27 @@
+@import "/src/styles/variables";
+
+.create-group {
+    width: 40%;
+    background-color: #fff;
+    margin: 0 auto;
+    position: relative;
+    padding: 1%;
+    border-radius: $border-radius-light;
+    color: $primary-text-color;
+    max-width: 750px;
+    height: auto;
+    max-height: 580px;
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    &__title {
+        padding-bottom: 10px;
+        font-size: $default-font-size;
+        border-bottom: 1px solid $primary-light-text-color;
+        font-weight: $font-weight-bold;
+        text-align: center;
+    }
+}

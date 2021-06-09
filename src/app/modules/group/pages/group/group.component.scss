@@ -1,0 +1,36 @@
+@import '/src/styles/variables';
+
+.group {
+
+    &__heading {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__title {
+        font-weight: $font-weight-bold;
+    }
+
+    &__create-btn {
+        max-width: 7rem;
+        box-shadow: unset !important;
+    }
+}
+
+.create-group-modal {
+    display: none;
+    position: fixed; /* Stay in place */
+    z-index: 3; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: -20px;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.8); /* Black w/ opacity */
+
+    @media (max-width: 1024px) {
+        top: 0;
+    }
+}

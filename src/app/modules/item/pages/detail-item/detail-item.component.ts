@@ -12,6 +12,8 @@ import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
 import { Modal, ModalType, ModalStatus } from 'src/app/core/constants/modal.constant';
 import { UserInfo } from 'src/app/core/constants/user.constant';
+import { Location } from '@angular/common';
+
 @Component({
     selector: 'app-detail-item',
     templateUrl: './detail-item.component.html',
@@ -39,7 +41,8 @@ export class DetailItemComponent implements OnInit {
         private addressService: AddressService,
         private authService: AuthService,
         private processClient: ProcessClient,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private location: Location
     ) {
         this.itemId = this._route.snapshot.paramMap.get('itemId');
     }
@@ -84,7 +87,8 @@ export class DetailItemComponent implements OnInit {
 
     // Turn off item detail page
     onClose() {
-        this.router.navigateByUrl('/home');
+        /* this.router.navigateByUrl('/home'); */
+        this.location.back()
     }
 
     // Open receive register modal

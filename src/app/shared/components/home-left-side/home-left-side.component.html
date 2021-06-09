@@ -14,6 +14,7 @@
     <div
       class="home-left-side__category__list"
       *ngFor="let cate of this.categoryContext"
+      [routerLink]="[cate?.url]"
     >
       <div *ngIf="cate?.type == 'fas'; else elseBlock">
         <fa-icon

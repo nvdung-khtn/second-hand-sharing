@@ -45,6 +45,12 @@ const routes: Routes = [
       import('./modules/item/item.module').then(m => m.ItemModule),
     canActivate: [AuthGuard]
   },
+  {
+    path: 'my-donations',
+    loadChildren: () =>
+      import('./modules/my-donations/my-donations.module').then(m => m.MyDonationsModule),
+    canActivate: [AuthGuard]
+  },
   // Fallback when no prior routes is matched
   { path: '**', redirectTo: '/auth/login', pathMatch: 'full'}
 ];

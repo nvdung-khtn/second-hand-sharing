@@ -1,0 +1,21 @@
+@import "/src/styles/variables";
+
+.input {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: $primary-icon-background-color;
+    border: none;
+    border-radius: $border-radius-light;
+    width: 100%;
+    box-sizing: border-box;
+    resize: none;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+
+    &::placeholder {
+        color: $primary-text-color;
+    }
+
+    &:focus {
+        outline: none;
+    }
+}
