@@ -23,6 +23,7 @@ import { environment } from 'src/environments/environment';
 
 import { MessagingService } from 'src/app/shared/service/message.service';
 import { AsyncPipe } from '../../node_modules/@angular/common';
+import { MyDonationsModule } from './modules/my-donations/my-donations.module';
 // import { AuthRoutingModule } from './modules/auth/auth.routing';
 // import { HomePageRoutingModule } from './modules/home-page/home-page.routing';
 // import { GroupRoutingModule } from './modules/group/group.routing';
@@ -52,6 +53,7 @@ import { AsyncPipe } from '../../node_modules/@angular/common';
     GroupModule,
     ProfileModule,
     NotificationModule,
+    MyDonationsModule,
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     AngularFireMessagingModule,

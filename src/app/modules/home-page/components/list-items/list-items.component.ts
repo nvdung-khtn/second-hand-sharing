@@ -12,6 +12,8 @@ import { Item } from 'src/app/core/constants/item.constant';
 })
 export class ListItemsComponent implements OnInit, OnChanges {
     @Input() category: number;
+    @Input() data: any;
+    @Input() outsizeData: boolean;
 
     itemListScrollDistance = 3;
     itemListScrollThrottle = 50;
@@ -34,12 +36,15 @@ export class ListItemsComponent implements OnInit, OnChanges {
     }
 
     ngOnInit(): void {
-        this.homeClient.getItems(this.defaultReq).subscribe(
-            (response) => {
-                this.items = response.data;
-            },
-            (error) => this.toastr.error(error)
-        );
+        // tslint:disable-next-line: no-unused-expression
+        !this.outsizeData
+            ? this.homeClient.getItems(this.defaultReq).subscribe(
+                  (response) => {
+                      this.items = response.data;
+                  },
+                  (error) => this.toastr.error(error)
+              )
+            : (this.items = this.data);
     }
 
     // tslint:disable: use-lifecycle-interface
@@ -62,10 +67,12 @@ export class ListItemsComponent implements OnInit, OnChanges {
     }
 
     onItemListScrollDown = () => {
-        this.defaultPageNumber += 1;
-        const newReq = new SearchRequest(this.defaultPageNumber, this.defaultPageSize);
-        this.homeClient.getItems(newReq).subscribe((response) => {
-            this.items = [...this.items, ...response.data];
-        });
-    }
+        if (!this.outsizeData) {
+            this.defaultPageNumber += 1;
+            const newReq = new SearchRequest(this.defaultPageNumber, this.defaultPageSize);
+            this.homeClient.getItems(newReq).subscribe((response) => {
+                this.items = [...this.items, ...response.data];
+            });
+        }
+    };
 }

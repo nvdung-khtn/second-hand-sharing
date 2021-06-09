@@ -11,16 +11,19 @@ export class HomeLeftSideComponent implements OnInit {
       title: 'Nhóm',
       icon: 'group',
       type: 'mat-icon',
+      url: '/group'
     },
     {
       title: 'Đã đăng ký nhận',
       icon: 'bookmark',
       type: 'mat-icon',
+      url: ''
     },
     {
       title: 'Bài đã đăng',
       icon: 'card_giftcard',
       type: 'mat-icon',
+      url: '/my-donations'
     },
   ];
 

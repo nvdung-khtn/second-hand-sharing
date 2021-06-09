@@ -1,0 +1,49 @@
+@import "/src/styles/variables";
+
+.box-container {
+    padding: 1rem 2rem;
+    background-color: #fff;
+}
+
+.box-modal {
+    width: 40%;
+    background-color: #fff;
+    margin: 0 auto;
+    position: relative;
+    padding: 1%;
+    border-radius: $border-radius-light;
+    color: $primary-text-color;
+    max-width: 750px;
+    height: 80%;
+    max-height: 580px;
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    @media (max-width: 1024px) {
+        width: 90%;
+        max-width: none;
+    }
+
+    @media (max-height: 600px) {
+        height: 60%;
+    }
+}
+
+.box-modal-close {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    color: $primary-text-color;
+    font-size: 30px;
+    transition: 0.3s;
+
+    &:hover,
+    &:focus {
+        color: #bbb;
+        text-decoration: none;
+        cursor: pointer;
+    }
+}

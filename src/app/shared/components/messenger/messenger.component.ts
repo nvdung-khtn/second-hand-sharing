@@ -49,7 +49,7 @@ export class MessengerComponent implements OnInit, AfterViewChecked {
             (response) => {
                 this.messageData = response;
             },
-            (error) => console.log(error)
+            (error) => {/* console.log(error) */}
         );
     }
 
