@@ -4,9 +4,7 @@
 
 export const environment = {
     production: false,
-    apiUrl: 'https://secondhandsharing.appspot.com',
-    // apiUrl: 'https://twohandsharing.appspot.com',
-    // apiUrl: 'https://webapi-s2yui3igrq-as.a.run.app',
+    apiUrl: 'https://secondhandsharing-316714.as.r.appspot.com',
     firebase: {
         apiKey: 'AIzaSyBglB1eqRFoLbjbw1NnINUHuxN9upBM6jA',
         authDomain: 'two-hand-sharing.firebaseapp.com',

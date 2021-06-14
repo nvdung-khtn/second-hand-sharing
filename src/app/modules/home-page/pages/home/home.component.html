@@ -1,13 +1,14 @@
 <div class="home">
-    <div class="home__section">
-        <app-create-post></app-create-post>
-    </div>
+  <div class="home__section">
+    <app-create-post></app-create-post>
+  </div>
 
-    <div class="home__section">
-        <app-category [selectedFromParent]="this.defaultSelectedCategory" (categoryIDChange)="onCategoryChange($event)"></app-category>
-    </div>
+  <div class="home__section">
+    <app-category [selectedFromParent]="this.defaultSelectedCategory" (categoryIDChange)="onCategoryChange($event)">
+    </app-category>
+  </div>
 
-    <div class="home__section">
-        <app-list-items [category]="this.selectedCategory"></app-list-items>
-    </div>
+  <div class="home__section">
+    <app-list-items [category]="this.selectedCategory"></app-list-items>
+  </div>
 </div>
