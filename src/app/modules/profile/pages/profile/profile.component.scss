@@ -1,11 +1,18 @@
 @import "../../../../../styles/variables";
 
 .profile {
-    height: calc(100vh - 6rem);
+    height: 100%;
     background-color: white;
-    padding: 2% 4%;
-    font-size: $default-font-size;
+    padding: 20px;
+    margin-bottom: 2%;
+    font-size: 15px;
     color: $primary-text-color;
+    overflow-y: scroll;
+
+    &__heading {
+        font-weight: 600;
+        font-size: 24px;
+    }
 
     &__edit-btn {
         width: fit-content;
@@ -22,7 +29,7 @@
 
     &__avatar {
         width: 100%;
-        max-width: 150px;
+        max-width: 130px;
         border-radius: 100%;
         display: block;
         margin: 0 auto;
@@ -30,9 +37,26 @@
     }
 
     &__grid {
-        // display: grid;
-        // grid-template-columns: 30% 70%;
-        margin-bottom: 1rem;
+        padding: 8px 0;
+        border-top: 1px solid #eee;
+
+        &:nth-child(7) {
+            border-bottom: 1px solid #eee;
+        }
+
+        &__text {
+            font-weight: 500;
+        }
+
+        &__edit {
+            text-decoration: none;
+            display: flex;
+        }
+
+        &__edit .icon {
+            font-size: 18px;
+            width: 22px;
+        }
 
         .title {
             display: flex;
@@ -40,16 +64,16 @@
             font-weight: $font-weight-bold;
         }
 
-        input {
+        &__form-control {
             width: 100%;
             border: none;
             color: $primary-text-color;
             font-size: $default-font-size;
-            background-color: white;
-            padding: 0.5rem 0;
+            background-color: #eee;
+            padding: 0.5rem;
 
             &:focus {
-                border: unset;
+                border: 1px solid cadetblue !important;
                 outline: none;
             }
         }
@@ -117,11 +141,36 @@
     left: 0;
     top: -20px;
     width: 100%; /* Full width */
-    height: 100%; /* Full height */
+    min-height: 100%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
     background-color: rgba(0, 0, 0, 0.8); /* Black w/ opacity */
 
     @media (max-width: 1024px) {
         top: 10%;
     }
+}
+
+// .profile__grid:nth-child(3) {
+//     color: red !important;
+// }
+
+.none {
+    display: none !important;
+}
+
+.btn-cancel {
+    background-color: $btn-cancel-color;
+    margin-left: 6px;
+
+    &:hover {
+        background-color: $btn-cancel-color-hover;
+    }
+}
+
+.btn.btn-sm {
+    font-weight: 500;
+}
+
+.auth-input__date .mat-form-field-flex {
+    padding-top: 0 !important;
 }

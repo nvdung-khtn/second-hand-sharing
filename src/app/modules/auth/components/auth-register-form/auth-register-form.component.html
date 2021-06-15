@@ -7,21 +7,6 @@
     Vui lòng nhập thông tin theo yêu cầu bên dưới để thực hiện đăng ký.
   </div>
 
-  <!-- <form class="register-form__input" [formGroup]="registerForm">
-    <app-auth-input [placeholderValue]="'Họ tên'" (completedInput)="handleInput($event)" [type]="'fullName'" formControlName="fullName"></app-auth-input>
-    <app-auth-input [placeholderValue]="'Email'" (completedInput)="handleInput($event)" [type]="'email'"></app-auth-input>
-    <app-auth-input [dataType]="'password'" [placeholderValue]="'Mât khẩu'" (completedInput)="handleInput($event)" [type]="'password'"></app-auth-input>
-    <app-auth-input [dataType]="'password'" [placeholderValue]="'Xác nhận mật khẩu'" (completedInput)="handleInput($event)" [type]="'confirmPassword'"></app-auth-input>
-    <app-auth-input [dataType]="'number'" [placeholderValue]="'Số điện thoại'" (completedInput)="handleInput($event)" [type]="'phoneNumber'"></app-auth-input>
-    <mat-form-field  appearance="fill" style="width: 100%; color: #0e88fa">
-      <mat-label style="color: #0e88fa">Ngày sinh</mat-label>
-      <input matInput [matDatepicker]="picker" name=”datepicker” ngModel #dateCtrl="ngModel" required readonly>
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-      <mat-error *ngIf="dateCtrl.errors?.required && dateCtrl.touched">Choose a Date</mat-error>
-    </mat-form-field>
-  </form> -->
-
   <form class="register-form__input" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
     <div class="auth-input__text">
       <input formControlName="fullName" type="text" class="auth-input__text__inside" placeholder="Họ và tên">

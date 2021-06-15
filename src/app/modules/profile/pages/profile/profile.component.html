@@ -1,23 +1,23 @@
 <div class="profile">
   <img class="profile__avatar" src="assets/image/default-avatar.png" />
-  <h3>Thông tin cá nhân</h3>
+  <h3 class="profile__heading">Thông tin cá nhân</h3>
   <!-- Name -->
   <div class="profile__grid">
     <div class="row justify-content-between align-items-baseline">
       <label class="col-4">Tên tài khoản</label>
-      <div class="col-8 d-flex justify-content-between align-items-baseline">
-        <span>Nguyễn Văn Dũng</span>
-        <a>
-          <mat-icon>create</mat-icon>
+      <div class="col-8 d-flex justify-content-between align-items-baseline none">
+        <span class="profile__grid__text">Nguyễn Văn Dũng</span>
+        <a href="javascript:void(0)" class="profile__grid__edit">
+          <mat-icon class="icon">create</mat-icon>
           Chỉnh sửa
         </a>
       </div>
-      <div class="col-8" [style.display]="'none'">
-        <input type="text" class="form-control border-0 my-2" id="staticEmail" placeholder="Nhập tên tài khoản"
-          value="Nguyễn Dũng">
+      <div class="col-8">
+        <input type="text" class="profile__grid__form-control border-0 my-2" id="fullname"
+          placeholder="Nhập tên tài khoản" value="Nguyễn Dũng">
         <div class="my-2">
           <a class="btn btn-sm btn-primary">Lưu thay đổi</a>
-          <a class="btn btn-sm btn-light" style="margin-left: 5px;">Huỷ</a>
+          <a class="btn btn-sm btn-cancel">Huỷ</a>
         </div>
       </div>
     </div>
@@ -26,19 +26,19 @@
   <div class="profile__grid">
     <div class="row justify-content-between align-items-baseline">
       <label class="col-4">Email</label>
-      <div class="col-8 d-flex justify-content-between align-items-baseline">
-        <span>nvdung.khtn@gmail.com</span>
-        <a>
-          <mat-icon>create</mat-icon>
+      <div class="col-8 d-flex justify-content-between align-items-baseline none">
+        <span class="profile__grid__text">nvdung.khtn@gmail.com</span>
+        <a href="javascript:void(0)" class="profile__grid__edit">
+          <mat-icon class="icon">create</mat-icon>
           Chỉnh sửa
         </a>
       </div>
-      <div class="col-8" [style.display]="'none'">
-        <input type="text" class="form-control border-0 my-2" id="staticEmail" placeholder="Nhập tên tài khoản"
-          value="Nguyễn Dũng">
+      <div class="col-8">
+        <input type="email" class="profile__grid__form-control border-0 my-2" id="email"
+          placeholder="Nhập email của bạn" value="nvdung.khtn@gmail.com">
         <div class="my-2">
           <a class="btn btn-sm btn-primary">Lưu thay đổi</a>
-          <a class="btn btn-sm btn-light" style="margin-left: 5px;">Huỷ</a>
+          <a class="btn btn-sm btn-cancel">Huỷ</a>
         </div>
       </div>
     </div>
@@ -47,19 +47,19 @@
   <div class="profile__grid">
     <div class="row justify-content-between align-items-baseline">
       <label class="col-4">Số điện thoại</label>
-      <div class="col-8 d-flex justify-content-between align-items-baseline">
-        <span>0398202274</span>
-        <a href="" class="">
-          <mat-icon>create</mat-icon>
+      <div class="col-8 d-flex justify-content-between align-items-baseline d-none">
+        <span class="profile__grid__text">0398202274</span>
+        <a href="" class="profile__grid__edit">
+          <mat-icon class="icon">create</mat-icon>
           Chỉnh sửa
         </a>
       </div>
-      <div class="col-8" [style.display]="'none'">
-        <input type="text" class="form-control border-0 my-2" id="staticEmail" placeholder="Nhập tên tài khoản"
-          value="Nguyễn Dũng">
+      <div class="col-8">
+        <input type="number" class="profile__grid__form-control border-0 my-2" id="phone" placeholder="Nhập SĐT của bạn"
+          value="039 820 2274">
         <div class="my-2">
           <a class="btn btn-sm btn-primary">Lưu thay đổi</a>
-          <a class="btn btn-sm btn-light" style="margin-left: 5px;">Huỷ</a>
+          <a class="btn btn-sm btn-cancel">Huỷ</a>
         </div>
       </div>
     </div>
@@ -68,21 +68,24 @@
   <div class="profile__grid">
     <div class="row justify-content-between align-items-baseline">
       <label class="col-4">Ngày sinh</label>
-      <div class="col-8 d-flex justify-content-between align-items-baseline">
-        <span>11/03/1997</span>
-        <a href="" class="">
-          <mat-icon>create</mat-icon>
+      <div class="col-8 d-flex justify-content-between align-items-baseline none">
+        <span class="profile__grid__text">11/03/1997</span>
+        <a href="" class="profile__grid__edit">
+          <mat-icon class="icon">create</mat-icon>
           Chỉnh sửa
         </a>
       </div>
-      <div class="col-8" [style.display]="'none'">
-        <mat-form-field appearance="fill" style="width: 100%; color: #0e88fa" class="auth-input__date">
-          <mat-label style="color: #0e88fa">Ngày sinh</mat-label>
+      <div class="col-8">
+        <mat-form-field appearance="fill" style="width: 100%; color: #0e88fa; height: 60px;" class="auth-input__date">
           <input formControlName="dob" matInput [matDatepicker]="picker" name="datepicker" ngModel #dateCtrl required>
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
           <mat-error *ngIf="dateCtrl.errors?.required && dateCtrl.touched">Choose a Date</mat-error>
         </mat-form-field>
+        <div class="my-2">
+          <a class="btn btn-sm btn-primary">Lưu thay đổi</a>
+          <a class="btn btn-sm btn-cancel">Huỷ</a>
+        </div>
       </div>
     </div>
   </div>
@@ -91,9 +94,9 @@
     <div class="row justify-content-between align-items-baseline">
       <label class="col-4">Địa chỉ</label>
       <div class="col-8 d-flex justify-content-between align-items-baseline">
-        <span>127/48/30 Âu Cơ, P.14, Q.11, Hcm</span>
-        <a href="javascript:void(0)" (click)="openModalAddress()">
-          <mat-icon>create</mat-icon>
+        <span class="profile__grid__text">127/48/30 Âu Cơ, P.14, Q.11, Hcm</span>
+        <a href="javascript:void(0)" (click)="openModalAddress()" class="profile__grid__edit">
+          <mat-icon class="icon">create</mat-icon>
           Chỉnh sửa
         </a>
       </div>
@@ -107,34 +110,7 @@
       </div>
     </div>
   </div>
-  <!-- <div class="profile__grid">
-    <div class="title">Địa chỉ</div>
-    <div class="profile__address">
-      <div class="profile__address__input">
-        {{ this.myInfo.address }}
-      </div>
-
-      <div class="profile__edit-btn" [style.display]="this.canEdit ? 'block' : 'none'" (click)="openModalAddress()">
-        Chọn địa chỉ
-      </div>
-    </div>
-  </div> -->
-
-  <div class="profile__group-btn">
-    <button class="profile__cancel-btn" (click)="onClickCancel()" [style.display]="this.canEdit ? 'block' : 'none'">
-      Hủy
-    </button>
-
-    <button class="profile__save-btn" (click)="onClickSave()" [style.display]="this.canEdit ? 'block' : 'none'">
-      Lưu lại
-    </button>
-  </div>
-
-  <div class="profile__noti" [style.display]="this.canEdit ? 'none' : 'block'" [style.color]="this.messageColor">
-    {{ this.messageAfterSave }}
-  </div>
 </div>
-
 
 <div class="address-modal" [style.display]="this.isOpenAddressModal ? 'block' : 'none'">
   <app-address-modal [isOpenModal]="this.isOpenAddressModal" (modalChange)="this.isOpenAddressModal=$event"
