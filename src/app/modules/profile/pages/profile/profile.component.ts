@@ -17,6 +17,10 @@ export class ProfileComponent implements OnInit {
     messageColor = 'red';
     form: FormGroup;
 
+    selectedFiles?: FileList = null;
+    myFiles: string[] = [];
+    url: any[] = [];
+
     // data from API
     myInfo = {
         id: 3,
@@ -71,4 +75,30 @@ export class ProfileComponent implements OnInit {
         );
         this.receiveAddress = new AddressIdModel(address);
     };
+    showSelectedFile(event) {
+        // let event = originalEvent;
+        // tslint:disable-next-line: prefer-for-of
+        for (let i = 0; i < event.target.files.length; i++) {
+            this.myFiles.push(event.target.files[i]);
+            if (!event.target.files[i] || event.target.files[i].length === 0) {
+                return;
+            }
+
+            const mimeType = event.target.files[i].type;
+            if (mimeType.match(/image\/*/) == null) {
+                return;
+            }
+            const reader = new FileReader();
+            reader.readAsDataURL(event.target.files[i]);
+            // tslint:disable-next-line: variable-name
+            reader.onload = (_event) => {
+                this.url.push(reader.result);
+            };
+        }
+    }
+
+    selectFile(event: any): void {
+        this.selectedFiles = event.target.files;
+        this.showSelectedFile(event);
+    }
 }

@@ -64,7 +64,9 @@ export class LoginComponent implements OnInit {
                 localStorage.setItem('expiration', response.data.expiration.toString());
                 localStorage.setItem('userInfo', JSON.stringify(response.data.userInfo));
                 localStorage.setItem('addressString', addressString);
-                this.router.navigate(['/home']);
+                this.router.navigate(['/home']).then(() => {
+                    window.location.reload();
+                  });;
             },
             (err) => {
                 this.isError = true;

@@ -44,4 +44,8 @@
       <div><i>{{ noti?.createTime | time }}</i></div>
     </div>
   </div>
+
+  <div class="no-noti" *ngIf="notifications?.length === 0">
+    Bạn không có bất kì thông báo
+  </div>
 </div>

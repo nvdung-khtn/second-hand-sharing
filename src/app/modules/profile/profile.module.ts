@@ -6,7 +6,8 @@ import { HomePageModule } from '../home-page/home-page.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ProfileComponent } from './pages/profile/profile.component';
-
+import { MatIconModule } from '@angular/material/icon';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 @NgModule({
     declarations: [ProfileComponent],
     imports: [
@@ -16,6 +17,8 @@ import { ProfileComponent } from './pages/profile/profile.component';
         FormsModule,
         MatFormFieldModule,
         ReactiveFormsModule,
+        MatIconModule,
+        FontAwesomeModule,
     ],
 })
 export class ProfileModule {}

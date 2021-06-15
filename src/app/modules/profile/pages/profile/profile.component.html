@@ -1,6 +1,16 @@
 <form [formGroup]="form">
   <div class="profile">
-    <img class="profile__avatar" src="assets/image/default-avatar.png" />
+    <div class="profile__group-avatar">
+      <img class="profile__avatar" src="assets/image/default-avatar.png" />
+      <div class="profile__avatar-btn">
+        <label for="uploadImage">
+          <mat-icon class="profile__avatar-btn__icon">camera_alt</mat-icon>
+        </label>
+  
+        <input type="file" id="uploadImage" accept="image/png" multiple (change)="selectFile($event)">
+      </div>
+    </div>
+
     <div class="profile__edit-btn" (click)="onClickEdit()" [style.visibility]="this.canEdit ? 'hidden' : 'unset'">
       Chỉnh sửa
     </div>
