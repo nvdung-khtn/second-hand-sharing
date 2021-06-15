@@ -3,7 +3,8 @@
 .notification {
     height: 100%;
     overflow-y: scroll;
-
+    border-radius: 5px;
+    
     &::-webkit-scrollbar {
         display: none;
     }
@@ -41,5 +42,13 @@
         max-height: 2.6rem;
         line-height: 1.3rem;
         cursor: pointer;
+    }
+
+    .no-noti {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: white;
+        height: 100%;
     }
 }

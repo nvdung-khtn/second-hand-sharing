@@ -1,6 +1,9 @@
 @import '../../../../styles/variables';
 
 .home-left-side {
+    .selectedTab {
+        background-color: $lightest-blue;
+    }
 
     &__profile {
         display: flex;
@@ -35,6 +38,7 @@
             align-items: center;
             padding: 12px 2%;
             margin: 0px 12px;
+            background-color: #fff;
 
             &:hover {
                 cursor: pointer;
