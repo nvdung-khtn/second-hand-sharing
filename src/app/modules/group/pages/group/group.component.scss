@@ -2,6 +2,16 @@
 
 .group {
 
+    &__no-group {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &__container {
+        margin-bottom: 2%;
+    }
+
     &__heading {
         display: flex;
         justify-content: space-between;

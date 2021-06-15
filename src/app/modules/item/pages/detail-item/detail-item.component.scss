@@ -46,17 +46,27 @@
             margin: 4% 0;
             justify-content: space-between;
 
+            
+            @media (max-width: 1024px) {
+                display: block;
+            }
+
             &__info {
+                cursor: pointer;
                 width: 100%;
                 display: flex;
                 align-items: center;
+
+                &:hover {
+                    background-color: $primary-icon-background-color;
+                }
             }
         }
 
         .button {
             width: 100%;
             max-width: 6rem;
-            padding: 1% 2%;
+            padding: 2% 2%;
             text-align: center;
             cursor: pointer;
             background-color: $btn-color;
@@ -66,6 +76,26 @@
 
             &:hover {
                 background-color: $btn-selected;
+
+                @media (max-width: 1024px) {
+                    background-color: unset;
+                }
+            }
+
+            @media (min-width: 1025px) and (max-width: 1280px) {
+                width: 100%;
+                max-width: 5rem;
+            }
+
+            @media (max-width: 1024px) {
+                width: 100%;
+                max-width: unset;
+                text-align: right;
+                background-color: unset;
+                padding: 0 1rem;
+                box-sizing: border-box;
+                color: $primary-color;
+                margin-bottom: 1rem;
             }
         }
 
@@ -80,6 +110,11 @@
         height: 100%;
         width: 100%;
         box-sizing: border-box;
+        overflow-y: scroll;
+
+        @media (max-width: 1024px) {
+            grid-template-columns: 70% 30%;
+        }
 
         .flex {
             display: flex;
@@ -144,7 +179,7 @@
 
             &__right {
                 background-color: #fff;
-                height: 100%;
+                min-height: 100%;
                 box-sizing: border-box;
                 padding: 5%;
                 display: flex;
@@ -219,5 +254,36 @@
 
     .mat-icon-button.mat-primary {
         color: white !important;
+    }
+
+    .btn-user-info {
+        width: 100%;
+        padding: 10px 0;
+        text-align: center;
+        cursor: pointer;
+        color: $primary-color;
+        background-color: white;
+        border: 1px solid $btn-color;
+        border-radius: $border-radius-light;
+        cursor: pointer;
+        margin-top: 1rem;
+        margin-bottom: 0.5rem;
+        &:hover {
+            background-color: $light-blue;
+            border: 1px solid $light-blue;
+            color: white;
+        }
+    }
+
+    .margin-top {
+        margin-top: 8%;
+    }
+
+    .name {
+        font-weight: $font-weight-bold;
+    }
+
+    .time {
+        color: $primary-light-text-color;
     }
 }

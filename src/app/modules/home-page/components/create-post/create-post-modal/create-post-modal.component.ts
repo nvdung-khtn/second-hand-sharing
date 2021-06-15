@@ -17,6 +17,7 @@ export class CreatePostModalComponent implements OnInit, OnDestroy {
     @Output() modalChange = new EventEmitter<boolean>();
 
     // biến cho message modal khi gọi xong api đăng bài
+    loading = false;
     isOpenMessageModal = false;
     isSuccess = true;
     messageModalMessage = '';
@@ -121,6 +122,7 @@ export class CreatePostModalComponent implements OnInit, OnDestroy {
     }
 
     onSubmitPost() {
+        this.loading = true;
         const formData = {
             ...this.postForm.value,
             receiveAddress: this.receiveAddress,
@@ -130,6 +132,7 @@ export class CreatePostModalComponent implements OnInit, OnDestroy {
 
         this.homeClient.createItem(formData).subscribe(
             (response) => {
+                this.loading = false;
                 response.data.imageUploads.forEach((image) =>
                     this.preSignUrl.push(image.presignUrl)
                 );
@@ -139,7 +142,10 @@ export class CreatePostModalComponent implements OnInit, OnDestroy {
                 this.isSuccess = true;
                 this.messageModalMessage = 'Đăng bài thành công';
             },
-            (error) => console.log(error)
+            (error) => {
+                this.loading = false;
+                console.log(error);
+            }
         );
     }
 

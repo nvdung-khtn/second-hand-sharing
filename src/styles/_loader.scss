@@ -1,0 +1,44 @@
+     
+@import '/src/styles/variables';
+
+.loader-container {
+    position: absolute;
+    left: 50%;
+    top: 2%;
+    padding: 0.75rem;
+    border-radius: 100%;
+    background-color: $primary-light-text-color;
+}
+
+.loader {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: transparent;
+    border: 4px solid #fff;
+    border-top: 4px solid $primary-color;
+    animation: 1s spin linear infinite;
+}
+
+@-webkit-keyframes spin {
+    from {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+          
+@keyframes spin {
+    from {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}   

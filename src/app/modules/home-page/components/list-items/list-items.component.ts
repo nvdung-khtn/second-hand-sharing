@@ -2,6 +2,7 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { ToastrService } from 'ngx-toastr';
 import { CategoryClient } from 'src/app/core/api-clients/category.client';
 import { HomeClient } from 'src/app/core/api-clients/home.client';
+import { ItemClient } from 'src/app/core/api-clients/item.client';
 import { SearchRequest } from 'src/app/core/constants/common.constant';
 import { Item } from 'src/app/core/constants/item.constant';
 
@@ -12,9 +13,10 @@ import { Item } from 'src/app/core/constants/item.constant';
 })
 export class ListItemsComponent implements OnInit, OnChanges {
     @Input() category: number;
-    @Input() data: any;
-    @Input() outsizeData: boolean;
+    @Input() donations: boolean;
+    @Input() registration: boolean;
 
+    myInfo;
     itemListScrollDistance = 3;
     itemListScrollThrottle = 50;
     items: Item[];
@@ -30,21 +32,38 @@ export class ListItemsComponent implements OnInit, OnChanges {
     constructor(
         private homeClient: HomeClient,
         private categoryClient: CategoryClient,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private itemClient: ItemClient
     ) {
         this.defaultReq = new SearchRequest(this.defaultPageNumber, this.defaultPageSize);
     }
 
     ngOnInit(): void {
+        this.myInfo = JSON.parse(localStorage.getItem('userInfo'));
+
         // tslint:disable-next-line: no-unused-expression
-        !this.outsizeData
-            ? this.homeClient.getItems(this.defaultReq).subscribe(
+        !this.donations
+            ? !this.registration
+                ? this.homeClient.getItems(this.defaultReq).subscribe(
+                      (response) => {
+                          this.items = response.data;
+                      },
+                      (error) => this.toastr.error(error)
+                  )
+                : this.itemClient.getMyRegistration(this.myInfo?.id).subscribe(
+                      (response) => {
+                          this.items = response.data;
+                          console.log(this.items);
+                      },
+                      (error) => console.log(error)
+                  )
+            : this.itemClient.getMyDonations(this.myInfo?.id).subscribe(
                   (response) => {
                       this.items = response.data;
+                      console.log(this.items);
                   },
-                  (error) => this.toastr.error(error)
-              )
-            : (this.items = this.data);
+                  (error) => console.log(error)
+              );
     }
 
     // tslint:disable: use-lifecycle-interface
@@ -67,7 +86,7 @@ export class ListItemsComponent implements OnInit, OnChanges {
     }
 
     onItemListScrollDown = () => {
-        if (!this.outsizeData) {
+        if (!this.donations) {
             this.defaultPageNumber += 1;
             const newReq = new SearchRequest(this.defaultPageNumber, this.defaultPageSize);
             this.homeClient.getItems(newReq).subscribe((response) => {

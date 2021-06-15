@@ -15,77 +15,17 @@ export class HomeRightSideComponent implements OnInit {
 
     topUserData = [
         {
-            name: 'User 11111111111111111111111',
-            times: 10,
+            name: 'Nguyễn Văn A',
+            times: 30,
             avatarURL: 'assets/image/default-avatar.png',
         },
         {
-            name: 'User 1',
-            times: 10,
+            name: 'Lê Đạt',
+            times: 15,
             avatarURL: 'assets/image/default-avatar.png',
         },
         {
-            name: 'User 2',
-            times: 10,
-            avatarURL: 'assets/image/default-avatar.png',
-        },
-        {
-            name: 'User 1141',
-            times: 10,
-            avatarURL: 'assets/image/default-avatar.png',
-        },
-        {
-            name: 'User 111112',
-            times: 10,
-            avatarURL: 'assets/image/default-avatar.png',
-        },
-        {
-            name: 'User 123123',
-            times: 10,
-            avatarURL: 'assets/image/default-avatar.png',
-        },
-        {
-            name: 'User 555',
-            times: 10,
-            avatarURL: 'assets/image/default-avatar.png',
-        },
-        {
-            name: 'User 123123',
-            times: 10,
-            avatarURL: 'assets/image/default-avatar.png',
-        },
-        {
-            name: 'User 555',
-            times: 10,
-            avatarURL: 'assets/image/default-avatar.png',
-        },
-        {
-            name: 'User 11111111',
-            times: 10,
-            avatarURL: 'assets/image/default-avatar.png',
-        },
-        {
-            name: 'User 22',
-            times: 10,
-            avatarURL: 'assets/image/default-avatar.png',
-        },
-        {
-            name: 'User 33',
-            times: 10,
-            avatarURL: 'assets/image/default-avatar.png',
-        },
-        {
-            name: 'User 44',
-            times: 10,
-            avatarURL: 'assets/image/default-avatar.png',
-        },
-        {
-            name: 'User 55',
-            times: 10,
-            avatarURL: 'assets/image/default-avatar.png',
-        },
-        {
-            name: 'User 151',
+            name: 'Tiến Nguyễn',
             times: 10,
             avatarURL: 'assets/image/default-avatar.png',
         },
@@ -109,7 +49,7 @@ export class HomeRightSideComponent implements OnInit {
         this.openMessageBox = true;
         this.modalChange.emit(this.openMessageBox);
         this.userInfo.emit(user);
-    };
+    }
 
     handleAccountName = (user: any) => {
         // tslint:disable-next-line: no-unused-expression
@@ -118,14 +58,14 @@ export class HomeRightSideComponent implements OnInit {
             ? (name = user.sendFromAccountName)
             : (name = user.sendToAccountName);
         return name;
-    };
+    }
 
     handleAvatar = (user: any) => {
         // tslint:disable-next-line: no-unused-expression
         let avatar = '';
         user.sendFromAccountId !== this.myInfo.id
-            ? (avatar = user.avatarUrlSendFromAccount)
-            : (avatar = user.avatarUrlSendToAccount);
+            ? (avatar = user.sendFromAccountAvatarUrl)
+            : (avatar = user.sendToAccountAvatarUrl);
         return avatar;
-    };
+    }
 }

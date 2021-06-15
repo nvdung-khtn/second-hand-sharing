@@ -1,0 +1,14 @@
+<div class="user-profile">
+  <div class="user-profile__container">
+    <span class="box-modal-close" (click)="onClose()">&times;</span>
+
+    <img class="user-profile__avatar" src={{profileData?.avatarUrl}} />
+
+    <div class="user-profile__name">{{profileData?.fullName}}</div>
+
+    <div class="user-profile__grid">
+        <div class="title">Tên tài khoản</div>
+        <div>{{profileData?.fullName}}</div>
+      </div>
+  </div>
+</div>

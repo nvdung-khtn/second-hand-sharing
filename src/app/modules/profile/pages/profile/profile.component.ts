@@ -42,7 +42,6 @@ export class ProfileComponent implements OnInit {
 
     handleAddress(event) {
         this.profile.address = event;
-        console.log(this.profile.address);
     }
 
     toggleStatus(key) {
@@ -50,10 +49,11 @@ export class ProfileComponent implements OnInit {
     }
 
     updateUserProfile(key) {
-        console.log(this.profile);
         this.authClient.patchUserProfile(this.profile).subscribe((response) => {
             this.toggleStatus(key);
             this.toastr.success('Cập nhập thành công.');
+            localStorage.setItem('userInfo', JSON.stringify(response.data));
+            window.location.reload();
         });
     }
 

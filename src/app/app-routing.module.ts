@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AnonymousGuard } from './core/guards/anonymous.guard';
 import { AuthGuard } from './core/guards/auth.guard';
+import { PageNotFoundComponent } from './shared/components/page-not-found/page-not-found.component';
 
 const routes: Routes = [
   {
@@ -57,8 +58,14 @@ const routes: Routes = [
       import('./modules/my-registration/my-registration.module').then(m => m.MyRegistrationModule),
     canActivate: [AuthGuard]
   },
+  {
+    path: 'chart',
+    loadChildren: () =>
+      import('./modules/chart/chart.module').then(m => m.ChartModule),
+    canActivate: [AuthGuard]
+  },
   // Fallback when no prior routes is matched
-  { path: '**', redirectTo: '/auth/login', pathMatch: 'full'}
+  {path: '**', component: PageNotFoundComponent, pathMatch: 'full'}
 ];
 
 @NgModule({

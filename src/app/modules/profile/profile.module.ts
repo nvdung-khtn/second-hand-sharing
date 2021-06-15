@@ -13,8 +13,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { UserProfileComponent } from './pages/user-profile/user-profile.component';
 @NgModule({
-    declarations: [ProfileComponent],
+    declarations: [ProfileComponent, UserProfileComponent],
     imports: [
         ProfileRoutingModule,
         CommonModule,

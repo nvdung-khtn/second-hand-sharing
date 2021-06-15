@@ -7,7 +7,8 @@
     margin-bottom: 2%;
     font-size: 15px;
     color: $primary-text-color;
-    overflow-y: scroll;
+    border-radius: 5px;
+    /* overflow-y: scroll; */
 
     &__heading {
         font-weight: 600;
@@ -83,6 +84,7 @@
         display: block;
         margin: 0 auto;
         margin-bottom: 2rem;
+        border: 1px solid $primary-lightest-text-color;
     }
 
     &__grid {

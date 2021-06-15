@@ -1,0 +1,57 @@
+@import "/src/styles/variables";
+
+.user-profile {
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 2;
+    background: rgba(0, 0, 0, 0.8);
+    color: $primary-text-color;
+
+    &__container {
+        box-sizing: border-box;
+        width: 80%;
+        position: relative;
+        top: 5%;
+        background-color: #fff;
+        margin: 0 auto;
+        padding: 1%;
+        border-radius: 5px;
+        color: #333333;
+        max-width: 960px;
+        height: 90%;
+        overflow-y: scroll;
+    }
+
+    &__avatar {
+        width: 100%;
+        max-width: 150px;
+        border-radius: 100%;
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 2rem;
+        border: 1px solid $primary-lightest-text-color;
+    }
+
+    &__name {
+        font-weight: $font-weight-bold;
+        font-size: $title-font-size;
+        text-align: center;
+    }
+
+    &__grid {
+        display: grid;
+        grid-template-columns: 30% 70%;
+        margin-bottom: 1rem;
+
+        .title {
+            display: flex;
+            align-items: center;
+            color: $primary-light-text-color;
+        }
+    }
+}
