@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { GroupClient } from 'src/app/core/api-clients/group.client';
 
 @Component({
     selector: 'app-group',
@@ -10,21 +12,14 @@ import { Component, OnInit } from '@angular/core';
     ],
 })
 export class GroupComponent implements OnInit {
-    groupData = {
-        id: 1,
-        groupName: 'test 2',
-        description: 'string',
-        createDate: '2021-05-20T15:02:03.842292',
-        rules: '12',
-    };
+    isOpenGroupModal = false;
+    groupForm: FormGroup;
 
-    isOpenModal = false;
-
-    constructor() {}
+    constructor(private readonly groupClient: GroupClient, private fb: FormBuilder) {}
 
     ngOnInit(): void {}
 
-    handleOpenModal = () => {
-      this.isOpenModal = true;
+    handleOpenModal() {
+        this.isOpenGroupModal = true;
     }
 }

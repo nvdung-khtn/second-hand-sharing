@@ -35,12 +35,12 @@ export class AddressModalComponent implements OnInit {
         this.citys = await this.addressService.getAllCity();
     }
 
-    onClose = () => {
+    onClose() {
         this.isOpenModal = false;
         this.modalChange.emit(this.isOpenModal);
-    };
+    }
 
-    onSubmit = () => {
+    onSubmit() {
         if (
             this.addressForm.cityId !== -1 &&
             this.addressForm.districtId !== -1 &&
@@ -54,7 +54,7 @@ export class AddressModalComponent implements OnInit {
         } else {
             this.displayError = true;
         }
-    };
+    }
 
     async handleSelectedAddress(event: AddressModel) {
         if (this.selectedType === EnumAddress.CITY) {
