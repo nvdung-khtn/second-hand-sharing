@@ -1,3 +1,4 @@
+import { SharedModule } from './../../shared/shared.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProfileRoutingModule } from './profile.routing';
@@ -7,17 +8,26 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { MatNativeDateModule } from '@angular/material/core';
+
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 @NgModule({
     declarations: [ProfileComponent],
     imports: [
-        CommonModule,
         ProfileRoutingModule,
+        CommonModule,
         HomePageModule,
+        SharedModule,
         FormsModule,
         MatFormFieldModule,
         ReactiveFormsModule,
         MatIconModule,
+        MatDatepickerModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatNativeDateModule,
         FontAwesomeModule,
     ],
 })

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AddressIdModel, AddressModel } from 'src/app/core/constants/address.constant';
+import { ToastrService } from 'ngx-toastr';
+import { AuthClient } from 'src/app/core/api-clients/auth.client';
+import { UserInfo } from 'src/app/core/constants/user.constant';
+import { UploadImageService } from 'src/app/shared/service/uploadImage.service';
 
 @Component({
     selector: 'app-profile',
@@ -10,95 +12,64 @@ import { AddressIdModel, AddressModel } from 'src/app/core/constants/address.con
 export class ProfileComponent implements OnInit {
     isOpenAddressModal = false;
     displayAddress = '';
-    receiveAddress: AddressIdModel;
-
-    canEdit = false;
-    messageAfterSave = '';
-    messageColor = 'red';
-    form: FormGroup;
-
+    profile: UserInfo;
+    status = {
+        fullName: false,
+        phoneNumber: false,
+        dob: false,
+    };
+    //phoneNumberPattern = /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/;
+    phoneNumberPattern = '[0-9]{10,11}';
     selectedFiles?: FileList = null;
-    myFiles: string[] = [];
-    url: any[] = [];
 
-    // data from API
-    myInfo = {
-        id: 3,
-        fullName: 'Lê Trường Vĩ',
-        dob: '2021-05-02T17:00:00',
-        phoneNumber: '904576164',
-        avatar: null,
-        address: null,
-        email: 'nhocpeter1999@gmail.com',
-    };
+    constructor(
+        private readonly authClient: AuthClient,
+        private readonly toastr: ToastrService,
+        private uploadImageService: UploadImageService
+    ) {}
 
-    constructor(private formBuilder: FormBuilder) {}
-
-    // tslint:disable-next-line: typedef
     ngOnInit() {
-        // anh call api và thêm các field khác như dob hay địa chỉ vào form và bên file HTML để xử lý
-        // do hiện tại em chỉ test flow UI thôi nên ko thêm
-        this.form = this.formBuilder.group({
-            fullName: [this.myInfo.fullName, Validators.required],
-            phoneNumber: [this.myInfo.phoneNumber, Validators.required],
-            address: [this.myInfo.address],
+        this.getUserProfile();
+    }
+
+    getUserProfile() {
+        this.authClient.getUserProfile().subscribe((response) => (this.profile = response.data));
+    }
+
+    toggleModalAddress() {
+        this.isOpenAddressModal = !this.isOpenAddressModal;
+    }
+
+    handleAddress(event) {
+        this.profile.address = event;
+        console.log(this.profile.address);
+    }
+
+    toggleStatus(key) {
+        this.status[`${key}`] = !this.status[`${key}`];
+    }
+
+    updateUserProfile(key) {
+        console.log(this.profile);
+        this.authClient.patchUserProfile(this.profile).subscribe((response) => {
+            this.toggleStatus(key);
+            this.toastr.success('Cập nhập thành công.');
         });
     }
 
-    onClickEdit = () => {
-        this.canEdit = true;
-    };
-    onClickCancel = () => {
-        // khong thay doi
-        this.form.setValue({
-            fullName: this.myInfo.fullName,
-            phoneNumber: this.myInfo.phoneNumber,
-            address: this.myInfo.address,
-        });
-        this.canEdit = false;
-    };
-    onClickSave = () => {
-        // gọi api xử lý tại đây và thay đổi thông tin messageAfterSave
-        this.messageAfterSave = 'Thay đổi thông tin cá nhân thành công'; // ví dụ
-        this.messageColor = 'green'; // màu của thông báo
-        this.canEdit = false;
-    };
-
-    openModalAddress = () => {
-        this.isOpenAddressModal = true;
-    };
-
-    handleAddress = (address: AddressModel) => {
-        // em chưa xử lý display address
-        console.log(
-            `${address.street} ${address.wardName} ${address.districtName} ${address.cityName}`
-        );
-        this.receiveAddress = new AddressIdModel(address);
-    };
-    showSelectedFile(event) {
-        // let event = originalEvent;
-        // tslint:disable-next-line: prefer-for-of
-        for (let i = 0; i < event.target.files.length; i++) {
-            this.myFiles.push(event.target.files[i]);
-            if (!event.target.files[i] || event.target.files[i].length === 0) {
-                return;
-            }
-
-            const mimeType = event.target.files[i].type;
-            if (mimeType.match(/image\/*/) == null) {
-                return;
-            }
-            const reader = new FileReader();
-            reader.readAsDataURL(event.target.files[i]);
-            // tslint:disable-next-line: variable-name
-            reader.onload = (_event) => {
-                this.url.push(reader.result);
-            };
-        }
-    }
-
+    // After submit form
     selectFile(event: any): void {
-        this.selectedFiles = event.target.files;
-        this.showSelectedFile(event);
+        const image: FileList = event.target.files;
+        if (image) {
+            this.authClient.updateAvatar().subscribe((response) => {
+                const presignUrl = response.data.imageUploads.presignUrl;
+                this.uploadImageService
+                    .uploadSingleImage(presignUrl, image[0])
+                    .subscribe(async (response) => {
+                        await this.getUserProfile();
+                        this.toastr.success('Cập nhập ảnh đại diện thành công.');
+                    });
+            });
+        }
     }
 }

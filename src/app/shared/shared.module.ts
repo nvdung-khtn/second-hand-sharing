@@ -14,6 +14,7 @@ import { TimePipe } from './pipes/time.pipe';
 import { AddressPipe } from './pipes/address.pipe';
 import { MessengerComponent } from './components/messenger/messenger.component';
 import { FormsModule } from '@angular/forms';
+import { PhoneNumberPipe } from './pipes/phone-number.pipe';
 
 @NgModule({
     declarations: [
@@ -24,6 +25,7 @@ import { FormsModule } from '@angular/forms';
         MessengerComponent,
         TimePipe,
         AddressPipe,
+        PhoneNumberPipe,
     ],
     imports: [CommonModule, RouterModule, MatIconModule, FontAwesomeModule, FormsModule],
     exports: [
@@ -33,6 +35,7 @@ import { FormsModule } from '@angular/forms';
         MessageModalComponent,
         TimePipe,
         AddressPipe,
+        PhoneNumberPipe,
         MessengerComponent,
     ],
     providers: [JwtHelperService, { provide: JWT_OPTIONS, useValue: JWT_OPTIONS }],

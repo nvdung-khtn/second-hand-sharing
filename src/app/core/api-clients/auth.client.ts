@@ -1,46 +1,62 @@
+import { environment } from 'src/environments/environment';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import {
     LoginRequest,
     Login,
     RegisterRequest,
-    URL_LOGIN,
-    URL_REGISTER,
-    URL_FORGOT_PW,
     ResetPwRequest,
-    URL_RESET_PW,
     ConfirmEmailRequest,
-    URL_CONFIRM_EMAIL,
 } from '../constants/auth.constant';
 import { Observable } from 'rxjs';
 import { ResponseModel } from '../constants/common.constant';
+import { UserInfo } from '../constants/user.constant';
 
 @Injectable({
     providedIn: 'root',
 })
 export class AuthClient {
     constructor(private http: HttpClient) {}
+    private baseUrl = environment.apiUrl;
 
     login(loginForm: LoginRequest): Observable<ResponseModel<Login>> {
-        return this.http.post<ResponseModel<Login>>(URL_LOGIN, loginForm);
+        const url = `${this.baseUrl}/Identity/authenticate`;
+        return this.http.post<ResponseModel<Login>>(url, loginForm);
     }
 
     register(registerForm: RegisterRequest): Observable<ResponseModel<string>> {
-        return this.http.post<ResponseModel<string>>(URL_REGISTER, registerForm);
+        const url = `${this.baseUrl}/Identity/register`;
+        return this.http.post<ResponseModel<string>>(url, registerForm);
     }
 
     sendEmail(email) {
-        // const headers = new HttpHeaders({
-        //   'Content-Type': 'application/json',
-        // })
-        return this.http.post(URL_FORGOT_PW, email);
+        const url = `${this.baseUrl}/Identity/forgot-password`;
+        return this.http.post(url, email);
     }
 
     resetPassword(resetForm: ResetPwRequest): Observable<ResponseModel<string>> {
-        return this.http.post<ResponseModel<string>>(URL_RESET_PW, resetForm);
+        const url = `${this.baseUrl}/Identity/reset-password`;
+        return this.http.post<ResponseModel<string>>(url, resetForm);
     }
 
-    confirmEmail = (form: ConfirmEmailRequest) => {
-        return this.http.post<ResponseModel<string>>(URL_CONFIRM_EMAIL, form);
+    confirmEmail(form: ConfirmEmailRequest) {
+        const url = `${this.baseUrl}/Identity/confirm-email`;
+        return this.http.post<ResponseModel<string>>(url, form);
+    }
+
+    patchUserProfile(formData: UserInfo): Observable<ResponseModel<UserInfo>> {
+        const url = `${this.baseUrl}/User`;
+
+        return this.http.put<ResponseModel<UserInfo>>(url, { ...formData });
+    }
+
+    getUserProfile(): Observable<ResponseModel<UserInfo>> {
+        const url = `${this.baseUrl}/User`;
+        return this.http.get<ResponseModel<UserInfo>>(url);
+    }
+
+    updateAvatar(): Observable<ResponseModel<any>> {
+        const url = `${this.baseUrl}/User/update-avatar`;
+        return this.http.put<ResponseModel<any>>(url, null);
     }
 }

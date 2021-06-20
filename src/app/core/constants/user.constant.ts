@@ -1,10 +1,10 @@
 import { AddressIdModel } from './address.constant';
 export class UserInfo {
     id: number;
-    fullname: string;
+    fullName: string;
     dob: Date;
     phoneNumber: string;
-    avatar: string | null;
+    avatarUrl: string | null;
     address: AddressIdModel;
     email: string;
 }

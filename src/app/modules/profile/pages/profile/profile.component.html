@@ -1,77 +1,117 @@
-<form [formGroup]="form">
-  <div class="profile">
-    <div class="profile__group-avatar">
-      <img class="profile__avatar" src="assets/image/default-avatar.png" />
-      <div class="profile__avatar-btn">
-        <label for="uploadImage">
-          <mat-icon class="profile__avatar-btn__icon">camera_alt</mat-icon>
-        </label>
-  
-        <input type="file" id="uploadImage" accept="image/png" multiple (change)="selectFile($event)">
-      </div>
-    </div>
+<div class="profile">
+  <!-- <img class="profile__avatar" src="assets/image/default-avatar.png" /> -->
+  <div class="profile__group-avatar">
+    <img class="profile__avatar" [src]="profile?.avatarUrl ? profile?.avatarUrl : 'assets/image/default-avatar.png'" />
+    <div class="profile__avatar-btn">
+      <label for="uploadImage">
+        <mat-icon class="profile__avatar-btn__icon">camera_alt</mat-icon>
+      </label>
 
-    <div class="profile__edit-btn" (click)="onClickEdit()" [style.visibility]="this.canEdit ? 'hidden' : 'unset'">
-      Chỉnh sửa
-    </div>
-
-    <div class="profile__grid">
-      <div class="title">Tên</div>
-      <input formControlName="fullName" required [disabled]="!this.canEdit"
-        [style.borderBottom]="this.canEdit ? '1px solid #0E88FA' : 'unset'" />
-    </div>
-
-    <div class="profile__grid">
-      <div class="title">Email</div>
-      <div>
-        {{ this.myInfo.email }}
-      </div>
-    </div>
-
-    <div class="profile__grid">
-      <div class="title">Số điện thoại</div>
-      <input formControlName="phoneNumber" [disabled]="!this.canEdit"
-        [style.borderBottom]="this.canEdit ? '1px solid #0E88FA' : 'unset'" />
-    </div>
-
-    <div class="profile__grid">
-      <div class="title">Ngày sinh</div>
-      <!-- anh tự handle chọn ngày sinh như lúc đkí -->
-      <div>
-        {{ this.myInfo.dob }}
-      </div>
-    </div>
-
-    <div class="profile__grid">
-      <div class="title">Địa chỉ</div>
-      <div class="profile__address">
-        <div class="profile__address__input">
-          {{ this.myInfo.address }}
-        </div>
-
-        <div class="profile__edit-btn" [style.display]="this.canEdit ? 'block' : 'none'" (click)="openModalAddress()">
-          Chọn địa chỉ
-        </div>
-      </div>
-    </div>
-
-    <div class="profile__group-btn">
-      <button class="profile__cancel-btn" (click)="onClickCancel()" [style.display]="this.canEdit ? 'block' : 'none'">
-        Hủy
-      </button>
-
-      <button class="profile__save-btn" (click)="onClickSave()" [style.display]="this.canEdit ? 'block' : 'none'">
-        Lưu lại
-      </button>
-    </div>
-
-    <div class="profile__noti" [style.display]="this.canEdit ? 'none' : 'block'" [style.color]="this.messageColor">
-      {{ this.messageAfterSave }}
+      <input type="file" id="uploadImage" accept="image/png" (change)="selectFile($event)">
     </div>
   </div>
-</form>
 
-<div class="address-modal" [style.display]="this.isOpenAddressModal ? 'block' : 'none'">
+  <h3 class="profile__heading">Thông tin cá nhân</h3>
+  <!-- Email -->
+  <div class="profile__grid">
+    <div class="row justify-content-between align-items-baseline">
+      <label class="col-4">Email</label>
+      <div class="col-8 d-flex justify-content-between align-items-baseline">
+        <span class="profile__grid__text">{{profile?.email}}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Name -->
+  <div class="profile__grid">
+    <div class="row justify-content-between align-items-baseline">
+      <label class="col-4">Tên tài khoản</label>
+      <div class="col-8 d-flex justify-content-between align-items-baseline" [class.hidden]="status.fullName">
+        <span class="profile__grid__text">{{profile?.fullName}}</span>
+        <a href="javascript:void(0)" class="profile__grid__edit" (click)="toggleStatus('fullName')">
+          <mat-icon class="icon">create</mat-icon>
+          Chỉnh sửa
+        </a>
+      </div>
+      <div class="col-8" [class.hidden]="!status.fullName">
+        <input type="text" class="profile__grid__form-control border-0 my-2" id="fullname"
+          placeholder="Nhập tên tài khoản" [(ngModel)]="profile.fullName">
+        <div class="my-2">
+          <span class="btn btn-sm btn-primary" (click)="updateUserProfile('fullName')">Lưu thay đổi</span>
+          <span class="btn btn-sm btn-cancel" (click)="toggleStatus('fullName')">Huỷ</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phone -->
+  <div class="profile__grid">
+    <div class="row justify-content-between align-items-baseline">
+      <label class="col-4">Số điện thoại</label>
+      <div class="col-8 d-flex justify-content-between align-items-baseline" [class.hidden]="status.phoneNumber">
+        <span class="profile__grid__text">{{profile?.phoneNumber | phoneNumber}}</span>
+        <a href="javascript:void(0);" class="profile__grid__edit" (click)="toggleStatus('phoneNumber')">
+          <mat-icon class="icon">create</mat-icon>
+          Chỉnh sửa
+        </a>
+      </div>
+      <div class="col-8" [class.hidden]="!status.phoneNumber">
+        <input type="text" class="profile__grid__form-control border-0 my-2" id="phone" placeholder="Nhập SĐT của bạn"
+          [(ngModel)]="profile.phoneNumber" required [pattern]="phoneNumberPattern" #phone="ngModel">
+        <!-- <span *ngIf="phone.errors.pattern">Số điện thoại không hợp lệ.</span> -->
+        <div class="my-2">
+          <span class="btn btn-sm btn-primary" (click)="updateUserProfile('phoneNumber')">Lưu thay đổi</span>
+          <span class="btn btn-sm btn-cancel" (click)="toggleStatus('phoneNumber')">Huỷ</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DOB -->
+  <div class="profile__grid">
+    <div class="row justify-content-between align-items-baseline">
+      <label class="col-4">Ngày sinh</label>
+      <div class="col-8 d-flex justify-content-between align-items-baseline" [class.hidden]="status.dob">
+        <span class="profile__grid__text">{{profile?.dob | date:"dd/MM/yyyy"}}</span>
+        <a href="javascript:void(0);" class="profile__grid__edit" (click)="toggleStatus('dob')">
+          <mat-icon class="icon">create</mat-icon>
+          Chỉnh sửa
+        </a>
+      </div>
+      <div class="col-8" [class.hidden]="!status.dob">
+        <mat-form-field appearance="fill" style="width: 100%; color: #0e88fa; height: 60px;" class="auth-input__date">
+          <input matInput [(ngModel)]="profile.dob" [matDatepicker]="picker" name="datepicker" ngModel
+            #dateCtrl="ngModel" required>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="dateCtrl.errors?.required && dateCtrl.touched">Choose a Date</mat-error>
+        </mat-form-field>
+        <div class="my-2">
+          <span class="btn btn-sm btn-primary" (click)="updateUserProfile('dob')">Lưu thay đổi</span>
+          <span class="btn btn-sm btn-cancel" (click)="toggleStatus('dob')">Huỷ</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Address -->
+  <div class="profile__grid">
+    <div class="row justify-content-between align-items-baseline">
+      <label class="col-4">Địa chỉ</label>
+
+      <div class="col-8 d-flex justify-content-between align-items-baseline">
+        <span class="profile__grid__text">{{profile?.address | address}}</span>
+        <a href="javascript:void(0);" (click)="toggleModalAddress()" class="profile__grid__edit">
+          <mat-icon class="icon">create</mat-icon>
+          Chỉnh sửa
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Address Modal -->
+<div class="address-modal" [style.display]="isOpenAddressModal ? 'block' : 'none'">
   <app-address-modal [isOpenModal]="this.isOpenAddressModal" (modalChange)="this.isOpenAddressModal=$event"
     (addressData)="handleAddress($event)">
   </app-address-modal>

@@ -1,4 +1,4 @@
-<div class="list-items" infiniteScroll [infiniteScrollDistance]="itemListScrollDistance"
+<div *ngIf="items else loadingTmpl" class="list-items" infiniteScroll [infiniteScrollDistance]="itemListScrollDistance"
   [infiniteScrollThrottle]="itemListScrollThrottle" (scrolled)="onItemListScrollDown()" [scrollWindow]="false"
   [alwaysCallback]="true">
   <div class="list-items__grid" [style.display]="items?.length === 0 ? 'none' : 'grid'">
@@ -30,3 +30,7 @@
     Không có dữ liệu trong danh mục này
   </div>
 </div>
+
+<ng-template #loadingTmpl>
+  Loading...
+</ng-template>
