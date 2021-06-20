@@ -4,7 +4,7 @@ export class UserInfo {
     fullName: string;
     dob: Date;
     phoneNumber: string;
-    avatar: string | null;
+    avatarUrl: string | null;
     address: AddressIdModel;
     email: string;
 }

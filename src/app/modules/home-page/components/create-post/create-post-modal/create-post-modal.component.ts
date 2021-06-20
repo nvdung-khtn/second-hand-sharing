@@ -105,7 +105,6 @@ export class CreatePostModalComponent implements OnInit, OnDestroy {
             const count = images.length;
             console.log(`count: ${count}`);
 
-            debugger;
             for (let index = 0; index < count; index++) {
                 this.uploadImageService.uploadSingleImage(urls[index], images[index]).subscribe();
             }
