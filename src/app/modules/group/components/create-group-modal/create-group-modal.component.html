@@ -1,8 +1,46 @@
-<div class="create-group">
-    <span class="box-modal-close create-group__close" (click)="onClose()">&times;</span>
-    <div class="create-group__title">Tạo nhóm</div>
-    <input class="input" placeholder="Tên nhóm" />
-    <textarea rows="4" class="input" placeholder="Mô tả"></textarea>
-    <textarea rows="4" class="input" placeholder="Luật nhóm"></textarea>
-    <div class="primary-button">Tạo nhóm</div>
+<div class="create-group" *ngIf="modal">
+  <span class="box-modal-close create-group__close" (click)="onCloseModal()">&times;</span>
+  <div class="create-group__title">Tạo nhóm</div>
+  <form [formGroup]="groupForm" (ngSubmit)="onSubmit()">
+    <div class="row-control">
+      <input formControlName="groupName" class="input" placeholder="Tên nhóm" />
+
+      <div *ngIf="groupName.invalid && (groupName.dirty || groupName.touched)" class="message-error">
+        <div *ngIf="groupName.errors?.required">
+          Vui lòng nhập trường này.
+        </div>
+        <div *ngIf="name.errors?.pattern">
+          Pattern
+        </div>
+      </div>
+    </div>
+
+    <div class="row-control">
+      <textarea formControlName="description" rows="4" class="input" placeholder="Mô tả"></textarea>
+
+      <div *ngIf="description.invalid && (description.dirty || description.touched)" class="message-error">
+        <div *ngIf="description.errors?.required">
+          Vui lòng nhập trường này.
+        </div>
+        <div *ngIf="description.errors?.pattern">
+          Pattern
+        </div>
+      </div>
+    </div>
+
+    <div class="row-control">
+      <textarea formControlName="rules" rows="4" class="input" placeholder="Luật nhóm"></textarea>
+
+      <div *ngIf="rules.invalid && (rules.dirty || rules.touched)" class="message-error">
+        <div *ngIf="rules.errors?.required">
+          Vui lòng nhập trường này.
+        </div>
+        <div *ngIf="rules.errors?.pattern">
+          Pattern
+        </div>
+      </div>
+    </div>
+
+    <button type="submit" class="primary-button create-group__create-btn">Tạo nhóm</button>
+  </form>
 </div>
