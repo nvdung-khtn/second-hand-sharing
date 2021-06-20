@@ -106,7 +106,6 @@ export class HomeRightSideComponent implements OnInit {
     }
 
     onOpenMessageModal = (user) => {
-        debugger;
         this.openMessageBox = true;
         this.modalChange.emit(this.openMessageBox);
         this.userInfo.emit(user);

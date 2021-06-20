@@ -11,6 +11,7 @@ import { filter } from 'rxjs/operators';
 export class HeaderComponent implements OnInit {
     selectedTab = 1;
     selectedMoreTab = false;
+    myInfo;
 
     headerContext = [
         {
@@ -67,11 +68,13 @@ export class HeaderComponent implements OnInit {
                 this.selectedTab = this.checkTabURL(this.router?.url);
             });
     }
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this.myInfo = JSON.parse(localStorage.getItem('userInfo'));
+    }
 
     isSelectedTab = (id: number) => {
         this.selectedTab = id;
-    };
+    }
     checkTabURL = (url: string) => {
         const checkArray = ['home', 'group', 'help', 'stars', 'notification'];
         // tslint:disable-next-line: prefer-for-of
@@ -80,11 +83,16 @@ export class HeaderComponent implements OnInit {
                 return i + 1;
             }
         }
-    };
+    }
     onLogOut = () => {
         localStorage.clear();
         this.router.navigateByUrl('/auth/login').then(() => {
             window.location.reload();
         });
-    };
+    }
+
+    getName = (name: string) => {
+        const temp = name.split(' ');
+        return temp[temp.length - 1];
+    }
 }

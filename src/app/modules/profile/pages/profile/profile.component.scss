@@ -14,6 +14,55 @@
         font-size: 24px;
     }
 
+    &__group-avatar {
+        position: relative;
+    }
+
+    &__avatar-btn {
+        position: absolute;
+        top: 70%;
+        left: 55%;
+        background: transparent;
+        text-align: center;
+        padding: 20px;
+        border-radius: 100%;
+        height: fit-content;
+        width: fit-content;
+        grid-column: 1;
+        grid-row: 1;
+        background-color: $primary-icon-background-color;
+        cursor: pointer;
+
+        &:hover {
+            background-color: $primary-border-otp-color;
+        }
+
+        & > input[type="file"] {
+            position: absolute;
+            display: none;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+
+        & > label {
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            border-radius: 10px;
+            line-height: 30px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        &__icon {
+            margin-top: 7px;
+        }
+    }
+
     &__edit-btn {
         width: fit-content;
         margin-left: auto;

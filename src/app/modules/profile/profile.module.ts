@@ -12,6 +12,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
 
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 @NgModule({
     declarations: [ProfileComponent],
     imports: [
@@ -27,6 +28,7 @@ import { MatNativeDateModule } from '@angular/material/core';
         MatFormFieldModule,
         MatInputModule,
         MatNativeDateModule,
+        FontAwesomeModule,
     ],
 })
 export class ProfileModule {}
