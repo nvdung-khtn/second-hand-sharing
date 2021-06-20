@@ -29,7 +29,6 @@ import { AsyncPipe } from '../../node_modules/@angular/common';
     imports: [
         // Modules of Angular
         BrowserModule,
-        AppRoutingModule,
         BrowserAnimationsModule,
         FormsModule,
         HttpClientModule,
@@ -53,6 +52,8 @@ import { AsyncPipe } from '../../node_modules/@angular/common';
         AngularFireAuthModule,
         AngularFireMessagingModule,
         AngularFireModule.initializeApp(environment.firebase),
+
+        AppRoutingModule,
     ],
     providers: [
         {

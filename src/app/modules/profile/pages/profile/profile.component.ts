@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AddressIdModel, AddressModel } from 'src/app/core/constants/address.constant';
+import { ToastrService } from 'ngx-toastr';
+import { AuthClient } from 'src/app/core/api-clients/auth.client';
+import { UserInfo } from 'src/app/core/constants/user.constant';
 
 @Component({
     selector: 'app-profile',
@@ -10,65 +11,39 @@ import { AddressIdModel, AddressModel } from 'src/app/core/constants/address.con
 export class ProfileComponent implements OnInit {
     isOpenAddressModal = false;
     displayAddress = '';
-    receiveAddress: AddressIdModel;
-
-    canEdit = false;
-    messageAfterSave = '';
-    messageColor = 'red';
-    form: FormGroup;
-
-    // data from API
-    myInfo = {
-        id: 3,
-        fullName: 'Lê Trường Vĩ',
-        dob: '2021-05-02T17:00:00',
-        phoneNumber: '904576164',
-        avatar: null,
-        address: null,
-        email: 'nhocpeter1999@gmail.com',
+    profile: UserInfo;
+    status = {
+        fullName: false,
+        phoneNumber: false,
+        dob: false,
     };
+    //phoneNumberPattern = /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/;
+    phoneNumberPattern = '[0-9]{10,11}';
 
-    constructor(private formBuilder: FormBuilder) {}
+    constructor(private readonly authClient: AuthClient, private readonly toastr: ToastrService) {}
 
-    // tslint:disable-next-line: typedef
     ngOnInit() {
-        // anh call api và thêm các field khác như dob hay địa chỉ vào form và bên file HTML để xử lý
-        // do hiện tại em chỉ test flow UI thôi nên ko thêm
-        this.form = this.formBuilder.group({
-            fullName: [this.myInfo.fullName, Validators.required],
-            phoneNumber: [this.myInfo.phoneNumber, Validators.required],
-            address: [this.myInfo.address],
-        });
+        this.authClient.getUserProfile().subscribe((response) => (this.profile = response.data));
     }
 
-    onClickEdit = () => {
-        this.canEdit = true;
-    };
-    onClickCancel = () => {
-        // khong thay doi
-        this.form.setValue({
-            fullName: this.myInfo.fullName,
-            phoneNumber: this.myInfo.phoneNumber,
-            address: this.myInfo.address,
+    toggleModalAddress() {
+        this.isOpenAddressModal = !this.isOpenAddressModal;
+    }
+
+    handleAddress(event) {
+        this.profile.address = event;
+        console.log(this.profile.address);
+    }
+
+    toggleStatus(key) {
+        this.status[`${key}`] = !this.status[`${key}`];
+    }
+
+    updateUserProfile(key) {
+        console.log(this.profile);
+        this.authClient.patchUserProfile(this.profile).subscribe((response) => {
+            this.toggleStatus(key);
+            this.toastr.success('Cập nhập thành công.');
         });
-        this.canEdit = false;
-    };
-    onClickSave = () => {
-        // gọi api xử lý tại đây và thay đổi thông tin messageAfterSave
-        this.messageAfterSave = 'Thay đổi thông tin cá nhân thành công'; // ví dụ
-        this.messageColor = 'green'; // màu của thông báo
-        this.canEdit = false;
-    };
-
-    openModalAddress = () => {
-        this.isOpenAddressModal = true;
-    };
-
-    handleAddress = (address: AddressModel) => {
-        // em chưa xử lý display address
-        console.log(
-            `${address.street} ${address.wardName} ${address.districtName} ${address.cityName}`
-        );
-        this.receiveAddress = new AddressIdModel(address);
-    };
+    }
 }

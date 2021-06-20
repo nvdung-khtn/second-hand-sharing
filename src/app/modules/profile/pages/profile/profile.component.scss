@@ -51,6 +51,7 @@
         &__edit {
             text-decoration: none;
             display: flex;
+            min-width: 90px;
         }
 
         &__edit .icon {
@@ -154,7 +155,7 @@
 //     color: red !important;
 // }
 
-.none {
+.hidden {
     display: none !important;
 }
 

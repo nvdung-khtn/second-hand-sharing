@@ -1,3 +1,4 @@
+import { SharedModule } from './../../shared/shared.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProfileRoutingModule } from './profile.routing';
@@ -14,9 +15,10 @@ import { MatNativeDateModule } from '@angular/material/core';
 @NgModule({
     declarations: [ProfileComponent],
     imports: [
-        CommonModule,
         ProfileRoutingModule,
+        CommonModule,
         HomePageModule,
+        SharedModule,
         FormsModule,
         MatFormFieldModule,
         ReactiveFormsModule,
