@@ -19,7 +19,6 @@ export class ItemClient {
     }
 
     getMyRegistration(userId: number): Observable<ResponseModel<Item[]>> {
-        console.log(userId)
         const url = `${this.baseUrl}/ReceiveItem/${userId}/requests`;
         return this.http.get<ResponseModel<Item[]>>(url);
     }

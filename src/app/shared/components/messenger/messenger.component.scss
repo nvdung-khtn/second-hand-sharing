@@ -12,12 +12,27 @@
   -webkit-box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.75);
   box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.75);
-
   width: 100%;
-  max-width: 23rem;
+  max-width: 20rem;
   height: 100%;
   max-height: 28rem;
   box-sizing: border-box;
+
+  &__group-name {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid $primary-border-otp-color;
+    padding: 0 1.5rem;
+    padding-bottom: 1rem;
+  }
+
+  &__avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    border: 1px solid $primary-icon-background-color;
+    cursor: pointer;
+  }
 
   &__close {
     position: absolute;
@@ -36,10 +51,8 @@
   }
 
   &__name {
-    border-bottom: 1px solid $primary-border-otp-color;
     font-weight: $font-weight-bold;
-    padding: 0 1.5rem;
-    padding-bottom: 1rem;
+    padding: 0 0.5rem;
   }
 
   &__message {
@@ -110,7 +123,7 @@
   &__input {
     border: none;
     width: 100%;
-    padding: 0.7rem 0.5rem;
+    padding: 0.5rem;
     background-color: $primary-icon-background-color;
 
     &:focus, &:hover{

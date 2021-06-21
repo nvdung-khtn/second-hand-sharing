@@ -8,6 +8,7 @@ import {
     ElementRef,
     ViewChild,
 } from '@angular/core';
+import { AuthClient } from 'src/app/core/api-clients/auth.client';
 import { MessageClient } from 'src/app/core/api-clients/message.client';
 import { MessagingService } from '../../service/message.service';
 @Component({
@@ -17,18 +18,25 @@ import { MessagingService } from '../../service/message.service';
 })
 export class MessengerComponent implements OnInit, AfterViewChecked {
     @Input() usersInfo;
+    @Input() userId;
     @Input() changeMessage;
     @Input() isOpenModal: boolean;
     @Output() modalChange = new EventEmitter<boolean>();
     @ViewChild('scrollMe') private myScrollContainer: ElementRef;
+    @Input() zIndex: number;
 
     myInfo;
+    profile;
     myInput = '';
     newMessage;
 
     messageData: any;
 
-    constructor(private messageClient: MessageClient, private messagingService: MessagingService) {}
+    constructor(
+        private messageClient: MessageClient,
+        private messagingService: MessagingService,
+        private authClient: AuthClient
+    ) {}
 
     ngOnInit(): void {
         this.scrollToBottom();
@@ -45,11 +53,20 @@ export class MessengerComponent implements OnInit, AfterViewChecked {
         this.usersInfo?.sendFromAccountId !== this.myInfo?.id
             ? (id = this.usersInfo?.sendFromAccountId)
             : (id = this.usersInfo?.sendToAccountId);
+        if (this.userId) {
+            id = this.userId;
+            this.authClient.getUserById(id).subscribe((response) => {
+                this.profile = response.data;
+                console.log(this.profile);
+            });
+        }
         this.messageClient.getMessageByUserId(id, 1, 100).subscribe(
             (response) => {
                 this.messageData = response;
             },
-            (error) => {/* console.log(error) */}
+            (error) => {
+                /* console.log(error) */
+            }
         );
     }
 
@@ -98,5 +115,31 @@ export class MessengerComponent implements OnInit, AfterViewChecked {
                 : (name = user.sendToAccountName);
         }
         return name;
+    };
+    handleAvatar = (user: any) => {
+        let avatar = '';
+        if (this.userId) {
+            avatar = this.profile?.avatarUrl;
+        } else {
+            if (user === undefined) {
+                avatar = 'assets/image/default-avatar.png';
+            } else {
+                user.sendFromAccountId !== this.myInfo.id
+                    ? (avatar = user.sendFromAccountAvatarUrl)
+                    : (avatar = user.sendToAccountAvatarUrl);
+            }
+        }
+        return avatar;
+    };
+    handleToProfile = (user: any) => {
+        let id;
+        if (user === undefined) {
+            id = -1;
+        } else {
+            user.sendFromAccountId !== this.myInfo.id
+                ? (id = user.sendFromAccountId)
+                : (id = user.sendToAccountId);
+        }
+        return id;
     };
 }

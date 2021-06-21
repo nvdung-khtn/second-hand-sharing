@@ -177,6 +177,9 @@
                 width: 40px;
                 height: 40px;
                 border-radius: 100%;
+                background-color: $lightest-grey;
+                border: 1px solid $primary-icon-background-color;
+
 
                 &:hover, &:focus {
                     background-color: $light-blue;
