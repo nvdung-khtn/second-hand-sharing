@@ -3,6 +3,7 @@
 .home-left-side {
     .selectedTab {
         background-color: $lightest-blue;
+        border-radius: $border-radius-light;
     }
 
     &__profile {
