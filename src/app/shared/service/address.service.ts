@@ -132,6 +132,6 @@ export class AddressService {
                     address.districtId === addr.districtId &&
                     address.wardId === addr.wardId
             );
-        return { ...result, street: addr.street } as AddressModel;
+        return { ...result, street: addr?.street } as AddressModel;
     }
 }

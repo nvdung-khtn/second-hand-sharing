@@ -14,6 +14,13 @@ import { GroupClient } from 'src/app/core/api-clients/group.client';
 export class GroupComponent implements OnInit {
     isOpenGroupModal = false;
     groupForm: FormGroup;
+    groupData = [/* {
+        id: 1,
+        groupName: 'test 2',
+        description: 'string',
+        createDate: '2021-05-20T15:02:03.842292',
+        rules: '12',
+    } */]
 
     constructor(private readonly groupClient: GroupClient, private fb: FormBuilder) {}
 

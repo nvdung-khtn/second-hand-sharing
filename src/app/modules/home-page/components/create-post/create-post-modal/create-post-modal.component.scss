@@ -34,7 +34,8 @@
         font-size: 30px;
         transition: 0.3s;
 
-        &:hover, &:focus {
+        &:hover,
+        &:focus {
             color: #bbb;
             text-decoration: none;
             cursor: pointer;
@@ -60,7 +61,7 @@
             display: flex;
             align-items: center;
 
-            &__avatar{
+            &__avatar {
                 margin-right: 1%;
                 width: 45px;
                 height: 45px;
@@ -83,10 +84,10 @@
                     white-space: nowrap;
 
                     &__location {
-                        color: #EB5757;
+                        color: #eb5757;
                     }
                 }
-            }    
+            }
         }
 
         &__address {
@@ -109,22 +110,26 @@
                 color: $primary-color;
                 background-color: $light-blue;
                 padding: 5px;
+                height: 35px;
+                width: 35px;
                 border-radius: 100%;
             }
         }
     }
 
-    &__input-title, &__phone, &__description {
+    &__input-title,
+    &__phone,
+    &__description {
         margin-top: 10px;
         padding: 10px;
-        background-color: $primary-icon-background-color;
+        background-color: rgb(242, 242, 242);
         border: none;
         border-radius: $border-radius-light;
         width: 100%;
         box-sizing: border-box;
         font-family: Roboto, "Helvetica Neue", sans-serif;
         resize: none;
-        
+
         &::placeholder {
             color: $primary-text-color;
         }
@@ -137,24 +142,24 @@
     &__add-image {
         margin-top: 10px;
         padding: 10px;
-        background-color: $primary-icon-background-color;
+        background-color: rgb(242, 242, 242);
         border: none;
         border-radius: $border-radius-light;
         width: 100%;
         box-sizing: border-box;
         display: grid;
-        grid-template-columns: repeat(4,1fr);
+        grid-template-columns: repeat(4, 1fr);
         text-align: center;
         align-items: center;
         height: 100px;
         overflow: scroll;
 
         @media (max-width: 480px) {
-            grid-template-columns: repeat(3,1fr);
+            grid-template-columns: repeat(3, 1fr);
         }
 
         @media (max-width: 350px) {
-            grid-template-columns: repeat(2,1fr);
+            grid-template-columns: repeat(2, 1fr);
         }
 
         &::-webkit-scrollbar {
@@ -168,21 +173,21 @@
             border-radius: $border-radius-default;
             border: 1px solid $primary-light-text-color;
             position: relative;
-            height: 50px;
-            width: 75px;
+            height: 75px;
+            width: 100px;
             grid-column: 1;
             grid-row: 1;
             margin-bottom: 10px;
 
-            & >  input[type="file"] {
+            & > input[type="file"] {
                 position: absolute;
                 display: none;
                 top: 0;
                 left: 0;
                 right: 0;
-                bottom: 0
-              }
-              
+                bottom: 0;
+            }
+
             & > label {
                 position: absolute;
                 top: 0;
@@ -192,7 +197,7 @@
                 border-radius: 10px;
                 line-height: 30px;
                 text-align: center;
-                cursor: pointer
+                cursor: pointer;
             }
 
             &__icon {
@@ -209,7 +214,7 @@
                 max-height: 80px;
                 object-fit: cover;
             }
-    
+
             &__close {
                 position: absolute;
                 right: 0;
@@ -247,9 +252,9 @@
         cursor: pointer;
         box-shadow: 0 10px 20px 0 $box-shadow-color;
         margin-bottom: 10px;
-    
+
         &:hover {
-          background-color: $btn-selected;
+            background-color: $btn-selected;
         }
     }
 
@@ -263,11 +268,10 @@
         width: 100%; /* Full width */
         height: 100%; /* Full height */
         overflow: auto; /* Enable scroll if needed */
-        background-color: rgba(0,0,0,0.5); /* Black w/ opacity */
+        background-color: rgba(0, 0, 0, 0.5); /* Black w/ opacity */
 
         @media (max-width: 1024px) {
             top: 10%;
         }
-    
     }
 }

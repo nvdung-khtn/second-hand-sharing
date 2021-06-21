@@ -7,7 +7,8 @@
     margin-bottom: 2%;
     font-size: 15px;
     color: $primary-text-color;
-    overflow-y: scroll;
+    border-radius: 5px;
+    /* overflow-y: scroll; */
 
     &__heading {
         font-weight: 600;
@@ -77,12 +78,13 @@
     }
 
     &__avatar {
-        width: 100%;
-        max-width: 130px;
         border-radius: 100%;
         display: block;
         margin: 0 auto;
         margin-bottom: 2rem;
+        border: 1px solid $primary-lightest-text-color;
+        width: 8rem;
+        height: 8rem;
     }
 
     &__grid {

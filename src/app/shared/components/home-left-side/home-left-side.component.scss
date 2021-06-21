@@ -3,6 +3,7 @@
 .home-left-side {
     .selectedTab {
         background-color: $lightest-blue;
+        border-radius: $border-radius-light;
     }
 
     &__profile {
@@ -19,8 +20,8 @@
         }
 
         &__avatar {
-            width: 100%;
-            max-width: 50px;
+            width: 50px;
+            height: 50px;
             margin-right: 2%;
             border-radius: 100%;
         }

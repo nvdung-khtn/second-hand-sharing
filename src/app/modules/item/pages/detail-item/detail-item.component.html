@@ -65,6 +65,8 @@
         <ng-template #noDone>
           <!-- FORM NGƯỜI NHẬN -->
           <ng-container *ngIf="userId != item?.donateAccountId; else isOwner">
+            <button class="btn-user-info" [routerLink]="['/profile', item?.donateAccountId]">Thông tin người cho</button>
+
             <div *ngIf="item?.userRequestId; else noReq">
               <button class="detail-item__grid__card__right__btn cancel" (click)="onUnsubscribe()">
                 Hủy đăng ký
@@ -80,16 +82,16 @@
 
           <!-- FORM NGƯỜI CHO -->
           <ng-template #isOwner>
-            <div class="title">Danh sách yêu cầu</div>
+            <div class="title margin-top">Danh sách yêu cầu</div>
             <div class="list">
               <span *ngIf="!receiveRequests?.length">Chưa có ai xin nhận vật phẩm này!</span>
               <div class="request-list" *ngFor="let request of receiveRequests">
-                <div class="request-list__info">
+                <div class="request-list__info"  [routerLink]="['/profile', request?.receiverId]">
                   <img class="avatar" src="assets/image/default-avatar.png" />
 
                   <div>
-                    <div>{{ request.receiverName }}</div>
-                    <div>{{request.createDate | time}}</div>
+                    <div class="name">{{ request.receiverName }}</div>
+                    <div class="time">{{request.createDate | time}}</div>
                     <div>{{ request.receiveReason }}</div>
                   </div>
                 </div>

@@ -19,6 +19,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthRoutingModule } from './auth.routing';
 import { ResetPasswordComponent } from './pages/forgot-password/reset-password/reset-password.component';
 import { ConfirmEmailComponent } from './pages/register/confirm-email/confirm-email.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,6 @@ import { ConfirmEmailComponent } from './pages/register/confirm-email/confirm-em
     ForgotPasswordComponent, AuthOtpFormComponent,
     ResetPasswordComponent,
     ConfirmEmailComponent,
-    //MatFormField
   ],
   imports: [
     CommonModule,
@@ -42,7 +42,8 @@ import { ConfirmEmailComponent } from './pages/register/confirm-email/confirm-em
     MatFormFieldModule,
     MatInputModule,
     MatNativeDateModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule
   ]
 })
 export class AuthModule { }
