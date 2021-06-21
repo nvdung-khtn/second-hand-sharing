@@ -23,6 +23,7 @@ import { MyDonationsModule } from './modules/my-donations/my-donations.module';
 
 import { MessagingService } from 'src/app/shared/service/message.service';
 import { AsyncPipe } from '../../node_modules/@angular/common';
+import { AuthModule } from './modules/auth/auth.module';
 
 @NgModule({
     declarations: [AppComponent],
@@ -43,16 +44,10 @@ import { AsyncPipe } from '../../node_modules/@angular/common';
 
         // Custom Modules
         SharedModule,
-        HomePageModule,
-        GroupModule,
-        ProfileModule,
-        NotificationModule,
-        MyDonationsModule,
         AngularFireDatabaseModule,
         AngularFireAuthModule,
         AngularFireMessagingModule,
         AngularFireModule.initializeApp(environment.firebase),
-
         AppRoutingModule,
     ],
     providers: [

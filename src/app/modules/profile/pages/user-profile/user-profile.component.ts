@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { AuthClient } from 'src/app/core/api-clients/auth.client';
+import { UserInfo } from 'src/app/core/constants/user.constant';
 import { Location } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'app-user-profile',
@@ -8,28 +10,42 @@ import { ActivatedRoute } from '@angular/router';
     styleUrls: ['./user-profile.component.scss', '../../../../../styles/_box.scss'],
 })
 export class UserProfileComponent implements OnInit {
-    userId;
-    profileData = {
-        id: 3,
-        fullName: 'Lê Trường Vĩ',
-        dob: '2021-05-02T17:00:00',
-        phoneNumber: '904576164',
-        avatarUrl: 'https://storage.googleapis.com/secondhandsharing.appspot.com/560ab35d-0254-4f1a-8555-6fbd5a946e01',
-        address: {
-            street: '147',
-            wardId: 25423,
-            districtId: 696,
-            cityId: 70,
-        },
-        email: 'nhocpeter1999@gmail.com',
-    };
+    userId: number;
+    sOpenAddressModal = false;
+    displayAddress = '';
+    profile: UserInfo;
+    phoneNumberPattern = '[0-9]{10,11}';
+    selectedFiles?: FileList = null;
+    loading = true;
 
-    constructor(private location: Location, private route: ActivatedRoute) {}
+    openMessageBox = false;
+    messageBoxByUser;
+    message;
 
-    ngOnInit(): void {
-        this.userId = this.route.snapshot.paramMap.get('id');
+    constructor(
+        private readonly authClient: AuthClient,
+        private location: Location,
+        private route: ActivatedRoute,
+        private router: Router
+    ) {}
+
+    // tslint:disable-next-line: typedef
+    ngOnInit() {
+        this.userId = Number(this.route.snapshot.paramMap.get('id'));
+        this.getUserProfile(this.userId);
     }
 
+    getUserProfile = (userId: number) => {
+        this.authClient.getUserById(userId).subscribe(
+            (response) => {
+                this.profile = response.data;
+                this.loading = false;
+            },
+            (error) => {
+                if (error?.error?.Data === null) { this.router.navigateByUrl('/404'); }
+            }
+        );
+    };
     onClose = () => {
         this.location.back();
     }

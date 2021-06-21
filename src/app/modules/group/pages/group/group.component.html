@@ -12,6 +12,8 @@
       Bạn chưa tham gia nhóm nào
     </div>
   </div>
+</div>
 
+<div class="create-group-modal" [style.display]="isOpenGroupModal ? 'block' : 'none'">
   <app-create-group-modal [(modal)]="isOpenGroupModal"></app-create-group-modal>
 </div>

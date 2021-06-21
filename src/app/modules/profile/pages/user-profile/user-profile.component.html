@@ -1,14 +1,82 @@
-<div class="user-profile">
-  <div class="user-profile__container">
-    <span class="box-modal-close" (click)="onClose()">&times;</span>
-
-    <img class="user-profile__avatar" src={{profileData?.avatarUrl}} />
-
-    <div class="user-profile__name">{{profileData?.fullName}}</div>
-
-    <div class="user-profile__grid">
-        <div class="title">Tên tài khoản</div>
-        <div>{{profileData?.fullName}}</div>
+<div class="user-profile-container">
+  <div class="user-profile row" *ngIf="!loading else loadingTmpl">
+    <div class="col-4">
+      <span class="box-modal-close" (click)="onClose()">&times;</span>
+      <!-- <img class="user-profile__avatar" src="assets/image/default-avatar.png" /> -->
+      <div class="user-profile__group-avatar">
+        <img
+          class="user-profile__avatar"
+          [src]="profile?.avatarUrl ? profile?.avatarUrl : 'assets/image/default-avatar.png'"
+        />
       </div>
+
+      <div class="user-profile__heading">Thông tin cá nhân</div>
+      <!-- Email -->
+      <div class="user-profile__grid">
+        <div class="row justify-content-between align-items-baseline">
+          <label class="col-4">Email</label>
+          <div class="col-8 d-flex justify-content-between align-items-baseline">
+            <span class="user-profile__grid__text">{{ profile?.email }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Name -->
+      <div class="user-profile__grid">
+        <div class="row justify-content-between align-items-baseline">
+          <label class="col-4">Tên tài khoản</label>
+          <div class="col-8 d-flex justify-content-between align-items-baseline">
+            <span class="user-profile__grid__text">{{ profile?.fullName }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phone -->
+      <div class="user-profile__grid">
+        <div class="row justify-content-between align-items-baseline">
+          <label class="col-4">Số điện thoại</label>
+          <div class="col-8 d-flex justify-content-between align-items-baseline">
+            <span class="user-profile__grid__text">{{ profile?.phoneNumber | phoneNumber }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- DOB -->
+      <div class="user-profile__grid">
+        <div class="row justify-content-between align-items-baseline">
+          <label class="col-4">Ngày sinh</label>
+          <div class="col-8 d-flex justify-content-between align-items-baseline">
+            <span class="user-profile__grid__text">{{ profile?.dob | date: "dd/MM/yyyy" }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Address -->
+      <div class="user-profile__grid">
+        <div class="row justify-content-between align-items-baseline">
+          <label class="col-4">Địa chỉ</label>
+
+          <div class="col-8 d-flex justify-content-between align-items-baseline">
+            <span class="user-profile__grid__text">{{ profile?.address | address }}</span>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-send-message" (click)="this.openMessageBox = true">Gửi tin nhắn</button>
+    </div>
+
+    <div class="col-8">
+      <div class="user-profile__heading">Bài đã đăng</div>
+      <app-list-items [donations]="true" [donationsId]="this.userId"></app-list-items>
+    </div>
   </div>
+
+  <ng-template #loadingTmpl>
+    Đang tải...
+  </ng-template>
+</div>
+
+<div class="detail-item__modal" [style.display]="this.openMessageBox ? 'block' : 'none'">
+  <app-messenger [usersInfo]="this.messageBoxByUser" [userId]="this.userId"
+    [isOpenModal]="this.openMessageBox" (modalChange)="this.openMessageBox = $event" [zIndex]="5"></app-messenger>
 </div>

@@ -1,7 +1,7 @@
 @import "../../../../../styles/variables";
 
 .address-modal {
-    width: 35%;
+    width: 45%;
     background-color: #fff;
     margin: 0 auto;
     position: relative;
@@ -9,7 +9,7 @@
     border-radius: 5px;
     color: #333333;
     max-width: 500px;
-    height: 60%;
+    height: 100%;
     max-height: 390px;
     overflow-y: scroll;
     transform: translateY(10%);
