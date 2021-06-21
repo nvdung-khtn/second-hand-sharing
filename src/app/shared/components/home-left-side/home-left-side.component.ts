@@ -32,6 +32,7 @@ export class HomeLeftSideComponent implements OnInit {
         },
     ];
     currentName: string;
+    avatarUrl: string;
     selectedCategory = -1;
 
     constructor(private router: Router) {
@@ -49,6 +50,7 @@ export class HomeLeftSideComponent implements OnInit {
 
     getCurrentName = () => {
         this.currentName = JSON.parse(localStorage.getItem('userInfo')).fullName;
+        this.avatarUrl = JSON.parse(localStorage.getItem('userInfo')).avatarUrl;
     }
 
     checkTabURL = (url: string) => {
