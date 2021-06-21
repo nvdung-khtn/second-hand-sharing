@@ -92,6 +92,9 @@ export class MessengerComponent implements OnInit, AfterViewChecked {
         this.usersInfo?.sendFromAccountId !== this.myInfo.id
             ? (id = this.usersInfo?.sendFromAccountId)
             : (id = this.usersInfo?.sendToAccountId);
+        if (this.userId) {
+            id = this.userId;
+        }
         const sendMessageForm = {
             content: this.myInput,
             sendToAccountId: id,

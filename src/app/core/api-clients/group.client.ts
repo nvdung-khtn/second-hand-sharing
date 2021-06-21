@@ -16,4 +16,9 @@ export class GroupClient {
         const url = `${this.baseUrl}/Group`;
         return this.http.post<ResponseModel<Group>>(url, formData);
     }
+
+    getJoinedGroup(): Observable<ResponseModel<Group>> {
+        const url = `${this.baseUrl}/Group/joined-group`;
+        return this.http.get<ResponseModel<Group>>(url);
+    }
 }
