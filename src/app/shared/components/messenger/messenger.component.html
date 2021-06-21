@@ -14,7 +14,7 @@
 
     <div #scrollMe class="messenger__message">
       <div
-        *ngFor="let message of messageData?.data.reverse()"
+        *ngFor="let message of messageData?.data"
         [ngClass]="this.message?.sendFromAccountId === myInfo?.id ? 'right' : 'left'"
       >
         <span [ngClass]="this.message?.sendFromAccountId === myInfo?.id ? 'my-message' : 'user-message'">{{

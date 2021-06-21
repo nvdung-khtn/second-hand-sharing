@@ -43,7 +43,7 @@ export class MessengerComponent implements OnInit, AfterViewChecked {
         this.myInfo = JSON.parse(localStorage.getItem('userInfo'));
         this.messagingService.receiveMessage().subscribe((payload) => {
             this.newMessage = JSON.parse(payload.data.message);
-            this.messageData?.data.unshift(this.newMessage);
+            this.messageData?.data.push(this.newMessage);
         });
     }
 
@@ -62,6 +62,7 @@ export class MessengerComponent implements OnInit, AfterViewChecked {
         }
         this.messageClient.getMessageByUserId(id, 1, 100).subscribe(
             (response) => {
+                Array.isArray(response.data) && response.data.reverse();
                 this.messageData = response;
             },
             (error) => {
@@ -101,7 +102,8 @@ export class MessengerComponent implements OnInit, AfterViewChecked {
         };
         this.messageClient.sendMessage(sendMessageForm).subscribe(
             (response) => {
-                this.messageData?.data.unshift(response?.data);
+                console.log(response)
+                this.messageData?.data.push(response?.data);
                 this.myInput = '';
             },
             (error) => console.log(error)
