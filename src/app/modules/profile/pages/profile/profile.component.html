@@ -1,4 +1,4 @@
-<div class="profile">
+<div class="profile" *ngIf="!loading else loadingTmpl">
   <!-- <img class="profile__avatar" src="assets/image/default-avatar.png" /> -->
   <div class="profile__group-avatar">
     <img class="profile__avatar" [src]="profile?.avatarUrl ? profile?.avatarUrl : 'assets/image/default-avatar.png'" />
@@ -116,3 +116,7 @@
     (addressData)="handleAddress($event)">
   </app-address-modal>
 </div>
+
+<ng-template #loadingTmpl>
+  Đang tải...
+</ng-template>

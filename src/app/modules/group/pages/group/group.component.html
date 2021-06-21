@@ -8,8 +8,12 @@
   </div>
 
   <div class="group__container box-container">
-    <div class="group__no-group" [style.display]="groupData.length === 0 ? 'flex' : 'none'">
+    <div class="group__no-group" [style.display]="joinedGroup?.length === 0 ? 'flex' : 'none'">
       Bạn chưa tham gia nhóm nào
+    </div>
+
+    <div class="group__joined-group" [style.display]="joinedGroup?.length === 0 ? 'none' : 'inline-block'">
+      <div class="group__group-element" *ngFor="let group of joinedGroup" (click)="onNavigateToGroup(group?.id)">{{group?.groupName}}</div>
     </div>
   </div>
 </div>

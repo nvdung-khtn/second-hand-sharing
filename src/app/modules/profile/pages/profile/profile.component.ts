@@ -18,7 +18,8 @@ export class ProfileComponent implements OnInit {
         phoneNumber: false,
         dob: false,
     };
-    //phoneNumberPattern = /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/;
+    loading = true;
+    // phoneNumberPattern = /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/;
     phoneNumberPattern = '[0-9]{10,11}';
     selectedFiles?: FileList = null;
 
@@ -33,7 +34,10 @@ export class ProfileComponent implements OnInit {
     }
 
     getUserProfile() {
-        this.authClient.getUserProfile().subscribe((response) => (this.profile = response.data));
+        this.authClient.getUserProfile().subscribe((response) => {
+            this.profile = response.data;
+            this.loading = false;
+        });
     }
 
     toggleModalAddress() {
