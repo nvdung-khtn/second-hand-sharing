@@ -2,14 +2,8 @@
   <div class="header__first-group">
     <img [routerLink]="['/home']" class="header__first-group__logo" src="assets/image/2hand-sharing.png" />
 
-    <!-- <div class="header__first-group__search">
-      <div class="header__first-group__search__inside">
-        <mat-icon class="header__first-group__search__inside__icon" aria-hidden="false" aria-label="search">search
-        </mat-icon>
-
-        <input class="header__first-group__search__inside__text" placeholder="Tìm kiếm" />
-      </div>
-    </div> -->
+    <img [routerLink]="['/profile']" class="mobile-profile"
+      src="{{myInfo?.avatarUrl || 'assets/image/default-avatar.png'}}" />
   </div>
 
   <div class="header__second-group">
