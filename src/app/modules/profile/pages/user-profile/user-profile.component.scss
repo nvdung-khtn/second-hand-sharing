@@ -21,6 +21,10 @@
     &__heading {
         font-weight: 600;
         font-size: $title-font-size;
+
+        @media (max-width: 1024px) {
+            margin-top: 1rem;
+        }
     }
 
     &__group-avatar {

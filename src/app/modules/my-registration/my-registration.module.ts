@@ -12,6 +12,9 @@ import { HomePageModule } from '../home-page/home-page.module';
     CommonModule,
     MyRegistrationRouting,
     HomePageModule
+  ],
+  exports: [
+    MyRegistrationComponent
   ]
 })
 export class MyRegistrationModule { }
