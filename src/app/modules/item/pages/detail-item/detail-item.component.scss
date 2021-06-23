@@ -116,6 +116,11 @@
             grid-template-columns: 70% 30%;
         }
 
+        @media (max-width: 767px) {
+            display: flex;
+            flex-direction: column;
+        }        
+
         .flex {
             display: flex;
             margin-bottom: 2%;
@@ -140,6 +145,11 @@
         }
 
         &__card {
+            @media (max-width: 767px) {
+                width: 100%;
+                height: 100%;
+            }        
+
             &__left {
                 padding: 60px 0;
                 height: 100%;
@@ -185,6 +195,11 @@
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
+
+                @media (max-width: 767px) {
+                    min-height: unset;
+                    padding: 1rem;
+                }                
 
                 .text {
                     font-size: $default-font-size;
@@ -232,6 +247,12 @@
                     font-weight: $font-weight-bold;
                 }
             }
+        }
+
+        .text-tab-height {
+            @media (max-width: 767px) {
+                height: 20%;
+            }    
         }
     }
 

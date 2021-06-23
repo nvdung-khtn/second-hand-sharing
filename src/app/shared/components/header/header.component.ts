@@ -32,7 +32,7 @@ export class HeaderComponent implements OnInit {
             title: 'Chiến dịch gây quỹ',
             icon: faHandsHelping,
             type: 'fas',
-            link: 'help',
+            link: 'campaign',
             id: 3,
         },
         /* {
@@ -77,7 +77,7 @@ export class HeaderComponent implements OnInit {
         this.selectedTab = id;
     }
     checkTabURL = (url: string) => {
-        const checkArray = ['home', 'group', 'help', 'chart', 'notification'];
+        const checkArray = ['home', 'group', 'campaign', 'chart', 'notification'];
         // tslint:disable-next-line: prefer-for-of
         for (let i = 0; i < checkArray.length; i++) {
             if (url.indexOf(checkArray[i]) !== -1) {
