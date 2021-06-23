@@ -85,18 +85,6 @@ export class AddressService {
         return wards;
     }
 
-    // getAddressString(address: AddressModel): string {
-    //     const wardName = this.removeWordFromString(address.wardName, ['Phường', 'Xã']);
-    //     const districtName = this.removeWordFromString(address.districtName, [
-    //         'Thành phố',
-    //         'Huyện',
-    //         'Quận',
-    //         'Thị xã',
-    //         'Thị trấn',
-    //     ]);
-    //     const cityName = this.removeWordFromString(address.cityName, ['Thành phố', 'Tỉnh']);
-    //     return `${address.street}, P.${wardName}, Q.${districtName}, ${cityName}`;
-    // }
     getAddressString(addressId: AddressIdModel): string {
         const address = this.getAddressVMById(addressId);
         const wardName = this.removeWordFromString(address.wardName, ['Phường', 'Xã']);
@@ -115,7 +103,9 @@ export class AddressService {
     removeWordFromString(sourceString: string, removeWord: string[]) {
         if (removeWord.length) {
             removeWord.forEach((word) => {
-                if (sourceString) { sourceString = sourceString.replace(word, ''); }
+                if (sourceString) {
+                    sourceString = sourceString.replace(word, '');
+                }
             });
         }
         if (sourceString) {
@@ -123,6 +113,7 @@ export class AddressService {
         }
     }
 
+    // tips: Cần check sự tồn tại bằng && operator.
     getAddressVMById(addr: AddressIdModel): AddressModel {
         const result =
             this._address &&
