@@ -24,6 +24,10 @@
 
         @media (max-width: 1024px) {
             width: 100%;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2%;
+            box-sizing: border-box;
         }
 
         &__logo {
@@ -40,7 +44,6 @@
             @media (max-width: 1024px) {
                 max-width: 85px;
                 display: inline-flex;
-                margin: 0 2%;
             }
         }
 
@@ -364,5 +367,24 @@
             outline: none;
             background-color: $light-blue !important; 
         }
+    }
+}
+
+.mobile-profile {
+    display: none;
+    vertical-align: middle;
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    background-color: $lightest-grey;
+    border: 1px solid $primary-icon-background-color;
+
+
+    &:hover, &:focus {
+        background-color: $light-blue;
+    }
+
+    @media (max-width: 1024px) {
+        display: inline-block;
     }
 }

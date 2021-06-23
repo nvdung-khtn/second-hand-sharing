@@ -2,19 +2,29 @@
 
 .user-profile {
     box-sizing: border-box;
-        width: 80%;
-        position: relative;
-        top: 5%;
-        background-color: #fff;
-        margin: 0 auto;
-        padding: 2% 3%;
-        border-radius: 5px;
-        color: #333333;
-        max-width: 960px;
+    width: 80%;
+    position: relative;
+    top: 5%;
+    background-color: #fff;
+    margin: 0 auto;
+    padding: 2% 3%;
+    border-radius: 5px;
+    color: #333333;
+    max-width: 960px;
+
+    @media (max-width: 1024px) {
+        display: block;
+        height: 90%;
+        overflow: scroll;
+    }
 
     &__heading {
         font-weight: 600;
         font-size: $title-font-size;
+
+        @media (max-width: 1024px) {
+            margin-top: 1rem;
+        }
     }
 
     &__group-avatar {
@@ -259,4 +269,8 @@
         border: 1px solid $light-blue;
         color: white;
     }
+}
+
+.mobile-col {
+    width: 100%;
 }

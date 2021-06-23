@@ -10,6 +10,7 @@ import { UploadImageService } from 'src/app/shared/service/uploadImage.service';
     styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit {
+    selectedTab = 1;
     isOpenAddressModal = false;
     displayAddress = '';
     profile: UserInfo;
@@ -18,6 +19,18 @@ export class ProfileComponent implements OnInit {
         phoneNumber: false,
         dob: false,
     };
+    mobileContext = [
+        {
+            title: 'Đã đăng ký nhận',
+            link: 'my-registration',
+            id: 1,
+        },
+        {
+            title: 'Bài đẵ đăng',
+            link: 'my-donations',
+            id: 2,
+        },
+    ];
     loading = true;
     // phoneNumberPattern = /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/;
     phoneNumberPattern = '[0-9]{10,11}';
@@ -75,5 +88,8 @@ export class ProfileComponent implements OnInit {
                     });
             });
         }
+    }
+    isSelectedTab = (id: number) => {
+        this.selectedTab = id;
     }
 }

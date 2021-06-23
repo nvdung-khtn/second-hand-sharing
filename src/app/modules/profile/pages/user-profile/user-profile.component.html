@@ -1,6 +1,6 @@
 <div class="user-profile-container">
   <div class="user-profile row" *ngIf="!loading else loadingTmpl">
-    <div class="col-4">
+    <div class="col-4 mobile-col">
       <span class="box-modal-close" (click)="onClose()">&times;</span>
       <!-- <img class="user-profile__avatar" src="assets/image/default-avatar.png" /> -->
       <div class="user-profile__group-avatar">
@@ -65,7 +65,7 @@
       <button class="btn-send-message" (click)="this.openMessageBox = true">Gửi tin nhắn</button>
     </div>
 
-    <div class="col-8">
+    <div class="col-8 mobile-col">
       <div class="user-profile__heading">Bài đã đăng</div>
       <app-list-items [donations]="true" [donationsId]="this.userId"></app-list-items>
     </div>

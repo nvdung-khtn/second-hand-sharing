@@ -17,6 +17,7 @@
         width: 100%;
         left: 0;
         margin-top: 65px;
+        overflow-y: scroll;
     }
     p {
         margin: 0;
@@ -35,6 +36,7 @@
     margin-top: 70px;
     bottom: 0px;
     border-radius: $border-radius-light;
+    max-width: 340px;
 
     @media (max-width: 1024px) {
         display: none !important;

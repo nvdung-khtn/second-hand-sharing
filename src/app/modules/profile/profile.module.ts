@@ -14,6 +14,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { UserProfileComponent } from './pages/user-profile/user-profile.component';
+import { MyDonationsModule } from '../my-donations/my-donations.module';
+import { MyRegistrationModule } from '../my-registration/my-registration.module';
 @NgModule({
     declarations: [ProfileComponent, UserProfileComponent],
     imports: [
@@ -30,6 +32,8 @@ import { UserProfileComponent } from './pages/user-profile/user-profile.componen
         MatInputModule,
         MatNativeDateModule,
         FontAwesomeModule,
+        MyDonationsModule,
+        MyRegistrationModule
     ],
 })
 export class ProfileModule {}

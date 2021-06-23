@@ -64,6 +64,12 @@ const routes: Routes = [
       import('./modules/chart/chart.module').then(m => m.ChartModule),
     canActivate: [AuthGuard]
   },
+  {
+    path: 'campaign',
+    loadChildren: () =>
+      import('./modules/campaign/campaign.module').then(m => m.CampaignModule),
+    canActivate: [AuthGuard]
+  },
   // Fallback when no prior routes is matched
   {path: '**', component: PageNotFoundComponent, pathMatch: 'full'}
 ];
