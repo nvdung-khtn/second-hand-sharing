@@ -1,0 +1,66 @@
+@import "/src/styles/variables";
+
+.chart {
+  padding: 10px 4%;
+  background-color: #fff;
+  border-radius: $border-radius-light;
+
+  &__title {
+    color: $primary-icon-color;
+    padding: 5px 2%;
+    margin-bottom: 10px;
+    padding-bottom: 15px;
+    font-weight: $font-weight-medium;
+    font-style: italic;
+    border-bottom: 1px solid $primary-icon-background-color;
+  }
+
+  &__list {
+    height: 100vh;
+    overflow-y: scroll;
+
+    @media (max-width: 1024px) {
+        height: calc(100vh - 14rem);
+    }
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    &__profile {
+      display: flex;
+      align-items: center;
+      padding: 5px 2%;
+      margin-top: 5px;
+      cursor: pointer;
+
+      &:hover {
+        cursor: pointer;
+        background-color: $primary-icon-background-color;
+        border-radius: 5px;
+      }
+
+      &__avatar {
+        width: 45px;
+        height: 45px;
+        margin-right: 2%;
+        border-radius: 100%;
+      }
+
+      &__info {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+
+        &__name {
+          font-weight: $font-weight-medium;
+          color: $primary-text-color;
+        }
+
+        &__times {
+          font-style: italic;
+        }
+      }
+    }
+  }
+}

@@ -142,3 +142,5 @@
 <div class="detail-item__modal" [style.display]="modal.status === ModalStatus.OPEN ? 'block' : 'none'">
   <app-request-modal [modalData]="modal" (modalChange)="handleModalChange($event)"></app-request-modal>
 </div>
+
+<app-loader [style.display]="this.isProcessing ? 'block' : 'none'"></app-loader>

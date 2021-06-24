@@ -6,13 +6,17 @@
   (scrolled)="onNotificationScrollDown()"
   [scrollWindow]="false"
 >
-  <div class="notification__container" *ngFor="let noti of notifications; index as index">
+  <div
+    class="notification__container"
+    *ngFor="let noti of notifications; index as index"
+    (click)="handleNotiType(noti?.type, index)"
+  >
     <!-- avatar thông báo -->
     <div>
       <!-- Receive request -->
       <div>
-        <div (click)="handleNotiType(noti?.type, index)" *ngIf="noti?.type === NotifyType.RECEIVE_REQUEST" class="flex">
-          <img class="notification__avatar" src="assets/image/registration.png" />
+        <div *ngIf="noti?.type === NotifyType.RECEIVE_REQUEST" class="flex">
+          <img class="notification__avatar" src="assets/image/user-request.png" />
 
           <div class="noti-info">
             <div class="notification__title">{{ noti?.data?.itemName }}</div>
@@ -22,12 +26,7 @@
         </div>
 
         <!-- Cancel Receive -->
-        <div
-          (click)="handleNotiType(noti?.type, index)"
-          #CANCEL_RECEIVE_REQUEST
-          *ngIf="noti?.type === NotifyType.CANCEL_RECEIVE_REQUEST"
-          class="flex"
-        >
+        <div #CANCEL_RECEIVE_REQUEST *ngIf="noti?.type === NotifyType.CANCEL_RECEIVE_REQUEST" class="flex">
           <img class="notification__avatar" src="assets/image/registration.png" />
 
           <div class="noti-info">
@@ -38,7 +37,6 @@
 
         <!-- Request status -->
         <div
-          (click)="handleNotiType(noti?.type, index)"
           #REQUEST_STATUS
           *ngIf="noti?.type === NotifyType.REQUEST_STATUS"
           class="flex"
@@ -53,7 +51,6 @@
 
         <!-- Send thanks -->
         <div
-          (click)="handleNotiType(noti?.type, index)"
           class="notification__thanks flex"
           #SEND_THANKS
           *ngIf="noti?.type === NotifyType.SEND_THANKS"
@@ -67,12 +64,16 @@
         </div>
 
         <!-- Confirm send -->
-        <div (click)="handleNotiType(noti?.type, index)" #CONFIRM_SENT *ngIf="noti?.type === NotifyType.CONFIRM_SENT" class="flex">
+        <div
+          #CONFIRM_SENT
+          *ngIf="noti?.type === NotifyType.CONFIRM_SENT"
+          class="flex"
+        >
           <img class="notification__avatar" src="assets/image/done.png" />
 
           <div class="noti-info">
             <div class="notification__title">{{ noti?.data?.itemName }}</div>
-            Chủ sở hữu đã xác nhận tặng vật phẩm cho <b>{{ handleReceiverName(noti?.data?.receiverId) }}</b>
+            Chủ sở hữu đã xác nhận tặng vật phẩm cho <b>{{ handleReceiverName(noti?.data) }}</b>
           </div>
         </div>
       </div>
@@ -84,3 +85,5 @@
 
   <div class="no-noti" *ngIf="notifications?.length === 0">Bạn không có bất kì thông báo</div>
 </div>
+
+<app-loader [style.display]="this.loading ? 'block' : 'none'"></app-loader>

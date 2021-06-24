@@ -40,8 +40,8 @@
     Không có dữ liệu trong danh mục này
   </div>
 
-  <div [style.display]="isEnd && items?.length !== 0 ? 'flex' : 'none'" class="endData">Không còn bài đăng để xem</div>
+  <div [style.display]="(isEnd && items?.length !== 0)? 'flex' : 'none'" class="endData">Không còn bài đăng để xem</div>
 </div>
-<ng-template #loadingTmpl> Đang tải... </ng-template>
+<ng-template #loadingTmpl> <app-loader></app-loader> </ng-template>
 
 <app-loader [style.display]="this.loading ? 'block' : 'none'"></app-loader>

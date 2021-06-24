@@ -15,11 +15,11 @@ export class AddressIdModel {
 
 export class AddressModel {
     wardId: number;
-    wardName: string;
+    wardName?: string;
     districtId: number;
-    districtName: string;
+    districtName?: string;
     cityId: number;
-    cityName: string;
+    cityName?: string;
     street: string;
 }
 

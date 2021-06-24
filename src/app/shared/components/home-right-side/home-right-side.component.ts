@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AuthClient } from 'src/app/core/api-clients/auth.client';
 import { MessageClient } from 'src/app/core/api-clients/message.client';
+import { UserAward } from 'src/app/core/constants/user.constant';
 
 @Component({
     selector: 'app-home-right-side',
@@ -11,26 +13,9 @@ export class HomeRightSideComponent implements OnInit {
     @Output() modalChange = new EventEmitter<boolean>();
     @Output() userInfo = new EventEmitter<any>();
 
-    constructor(private messageClient: MessageClient) {}
+    constructor(private messageClient: MessageClient, private authClient: AuthClient) {}
 
-    topUserData = [
-        {
-            name: 'Nguyễn Văn A',
-            times: 30,
-            avatarURL: 'assets/image/default-avatar.png',
-        },
-        {
-            name: 'Lê Đạt',
-            times: 15,
-            avatarURL: 'assets/image/default-avatar.png',
-        },
-        {
-            name: 'Tiến Nguyễn',
-            times: 10,
-            avatarURL: 'assets/image/default-avatar.png',
-        },
-    ];
-
+    topUserData: UserAward;
     userMessageData: any;
     myInfo;
 
@@ -40,6 +25,13 @@ export class HomeRightSideComponent implements OnInit {
         this.messageClient.getRecentMessage(1, 100).subscribe(
             (response) => {
                 this.userMessageData = response;
+            },
+            (error) => console.log(error)
+        );
+
+        this.authClient.getTopAward().subscribe(
+            (response) => {
+                this.topUserData = response.data;
             },
             (error) => console.log(error)
         );

@@ -20,6 +20,7 @@ import { Location } from '@angular/common';
     styleUrls: ['./detail-item.component.scss'],
 })
 export class DetailItemComponent implements OnInit {
+    isProcessing: boolean = false;
     approvedRequestId: number = -1;
     nomineeName: string;
     userId: number;
@@ -48,6 +49,7 @@ export class DetailItemComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.isProcessing = true;
         // Get user id
         this.userId = this.authService.getUserId();
 
@@ -66,7 +68,9 @@ export class DetailItemComponent implements OnInit {
                         const nominee = this.receiveRequests.find(
                             (receiver) => receiver.receiveStatus === ReceiveStatus.APPROVED
                         );
-                        this.approvedRequestId = nominee?.id;
+                        if (nominee?.id !== undefined) {
+                            this.approvedRequestId = nominee?.id;
+                        }
                         this.nomineeName = nominee?.receiverName;
                     });
                 }
@@ -74,11 +78,12 @@ export class DetailItemComponent implements OnInit {
                 this.addressVM = await this.addressService.getAddressVMById(
                     response.data.receiveAddress
                 );
-                this.addressString = this.addressService.getAddressString(this.addressVM);
+                this.addressString = await this.addressService.getAddressString(this.addressVM);
+                this.isProcessing = false;
             },
             (error) => {
                 console.log('Error in Item detail: ', error);
-                if (error?.error?.Data === null) this.router.navigateByUrl('/404')
+                if (error?.error?.Data === null) this.router.navigateByUrl('/404');
             }
         );
 
@@ -91,7 +96,7 @@ export class DetailItemComponent implements OnInit {
     // Turn off item detail page
     onClose() {
         /* this.router.navigateByUrl('/home'); */
-        this.location.back()
+        this.location.back();
     }
 
     // Open receive register modal
@@ -155,10 +160,10 @@ export class DetailItemComponent implements OnInit {
     }
 
     async handleProcess(requestId, receiverName) {
+        this.isProcessing = true;
         if (this.approvedRequestId === -1) {
             this.onApprove(requestId, receiverName);
         } else {
-            console.log(this.approvedRequestId)
             const flag = this.approvedRequestId;
             await this.onReject(this.approvedRequestId);
 
@@ -171,16 +176,11 @@ export class DetailItemComponent implements OnInit {
     // Xác nhận cho.
     onApprove(requestId: number, receiverName: string) {
         this.processClient.approveReceiver(requestId).subscribe((response) => {
+            this.isProcessing = false;
             this.approvedRequestId = requestId;
             this.nomineeName = receiverName;
             this.toastr.success('Đã phê duyệt người nhận.');
         });
-
-        /** Test success */
-        // setTimeout(() => {
-        //     console.log('setTimeout func!');
-        //     this.onReject(requestId);
-        // }, 3000);
     }
 
     // Hủy yêu cầu.
@@ -198,6 +198,7 @@ export class DetailItemComponent implements OnInit {
 
         if (result.isConfirmed) {
             await this.processClient.rejectReceiver(requestId).toPromise();
+            this.isProcessing = false;
             this.toastr.success(`Đã hủy lệnh phê duyệt đăng ký cho ${this.nomineeName}`);
             this.approvedRequestId = -1;
             this.nomineeName = '';
@@ -205,8 +206,10 @@ export class DetailItemComponent implements OnInit {
     }
 
     confirmGiven() {
+        this.isProcessing = true;
         this.homeClient.confirmGiven(this.itemId).subscribe(
             (response) => {
+                this.isProcessing = false;
                 this.item.status = ItemStatus.COMPLETED;
                 this.toastr.success('Xác nhận đã cho vật phẩm thành công!');
             },

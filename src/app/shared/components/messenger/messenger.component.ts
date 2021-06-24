@@ -57,7 +57,6 @@ export class MessengerComponent implements OnInit, AfterViewChecked {
             id = this.userId;
             this.authClient.getUserById(id).subscribe((response) => {
                 this.profile = response.data;
-                console.log(this.profile);
             });
         }
         this.messageClient.getMessageByUserId(id, 1, 100).subscribe(
