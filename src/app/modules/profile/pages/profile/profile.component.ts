@@ -33,7 +33,10 @@ export class ProfileComponent implements OnInit {
     }
 
     getUserProfile() {
-        this.authClient.getUserProfile().subscribe((response) => (this.profile = response.data));
+        this.authClient.getUserProfile().subscribe((response) => {
+            this.profile = response.data;
+            localStorage.setItem('userInfo', JSON.stringify(response.data));
+        });
     }
 
     toggleModalAddress() {
@@ -53,10 +56,8 @@ export class ProfileComponent implements OnInit {
         console.log(this.profile);
         this.authClient.patchUserProfile(this.profile).subscribe((response) => {
             this.toggleStatus(key);
-            localStorage.setItem('userInfo', JSON.stringify(response.data));
             this.getUserProfile();
             this.toastr.success('Cập nhập thành công.');
-            //window.location.reload();
         });
     }
 

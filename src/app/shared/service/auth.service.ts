@@ -25,4 +25,8 @@ export class AuthService {
     getUserId() {
         return this.userInfo.id;
     }
+
+    getCurrentUser() {
+        return this.userInfo;
+    }
 }

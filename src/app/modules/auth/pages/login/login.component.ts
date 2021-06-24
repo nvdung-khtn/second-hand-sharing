@@ -50,23 +50,19 @@ export class LoginComponent implements OnInit {
     onSubmit() {
         this.authClient.login(this.loginForm.value).subscribe(
             async (response) => {
-                console.log('data: ', response);
                 this.isError = false;
-                let addressString = '';
                 if (response.data.userInfo.address) {
                     const addressVM = await this.addressService.getAddressVMById(
                         response.data.userInfo.address
                     );
-                    addressString = this.addressService.getAddressString(addressVM);
                 }
 
                 localStorage.setItem('access_token', response.data.jwToken);
                 localStorage.setItem('expiration', response.data.expiration.toString());
                 localStorage.setItem('userInfo', JSON.stringify(response.data.userInfo));
-                localStorage.setItem('addressString', addressString);
                 this.router.navigate(['/home']).then(() => {
                     window.location.reload();
-                  });;
+                });
             },
             (err) => {
                 this.isError = true;
