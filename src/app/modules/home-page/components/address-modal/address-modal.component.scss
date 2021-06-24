@@ -5,23 +5,28 @@
     background-color: #fff;
     margin: 0 auto;
     position: relative;
-    padding: 1% 2%;
+    padding: 1rem 2rem;
     border-radius: 5px;
     color: #333333;
     max-width: 500px;
     height: 100%;
-    max-height: 390px;
+    max-height: 35rem;
     overflow-y: scroll;
     transform: translateY(10%);
     color: $primary-text-color;
+    @include box-shadow();
 
     @media (max-width: 1024px) {
         width: 80%;
         max-width: none;
     }
 
+    @media (max-height: 768px) {
+        height: 80%;
+    }
+
     @media (max-height: 600px) {
-        height: 50%;
+        height: 70%;
     }
 
     &::-webkit-scrollbar {
@@ -81,7 +86,6 @@
             max-width: 100px;
             border: none;
             text-align: center;
-            margin-top: 10px;
             padding: 6px 0;
             background-color: $btn-color;
             color: white;
@@ -127,7 +131,22 @@
             margin: 0;
         }
     }
-}
 
-.address-modal__btn button {
+    .my-address {
+        padding: 0.75rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 12px 28px 0 $shadow-2,0 2px 4px 0 $shadow-1,inset 0 0 0 1px $shadow-inset;
+        border-radius: $border-radius-light;
+        background-color: white;
+        cursor: pointer;
+
+        &__text {
+            color: $primary-light-text-color;
+        }
+    }
+
+    .title {
+        font-weight: $font-weight-bold;
+        margin-bottom: 0.25rem;
+    }
 }

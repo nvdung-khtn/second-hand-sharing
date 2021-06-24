@@ -4,12 +4,30 @@
       <div class="detail-item__grid__card__left">
         <span class="detail-item__grid__card__left__close" (click)="onClose()">&times;</span>
 
-        <mat-carousel class="detail-item__grid__card__left__image" timings="250ms ease-in" [autoplay]="true"
-          interval="5000" color="arrow" maxWidth="800px" proportion="25" slides="5" [loop]="true" [hideArrows]="false"
-          [hideIndicators]="false" [useKeyboard]="true" [useMouseWheel]="false" orientation="ltr"
-          [maintainAspectRatio]="false">
-          <mat-carousel-slide #matCarouselSlide *ngFor="let slide of item?.imageUrl; let i = index"
-            [image]="item?.imageUrl[i]" overlayColor="#00000040" [hideOverlay]="false"></mat-carousel-slide>
+        <mat-carousel
+          class="detail-item__grid__card__left__image"
+          timings="250ms ease-in"
+          [autoplay]="true"
+          interval="5000"
+          color="arrow"
+          maxWidth="800px"
+          proportion="25"
+          slides="5"
+          [loop]="true"
+          [hideArrows]="false"
+          [hideIndicators]="false"
+          [useKeyboard]="true"
+          [useMouseWheel]="false"
+          orientation="ltr"
+          [maintainAspectRatio]="false"
+        >
+          <mat-carousel-slide
+            #matCarouselSlide
+            *ngFor="let slide of item?.imageUrl; let i = index"
+            [image]="item?.imageUrl[i]"
+            overlayColor="#00000040"
+            [hideOverlay]="false"
+          ></mat-carousel-slide>
         </mat-carousel>
       </div>
     </div>
@@ -22,7 +40,7 @@
           </div>
 
           <div class="detail-item__grid__card__right__time">
-            {{ item?.postTime | date:"dd/MM/yyyy HH:mm:ss" }}
+            {{ item?.postTime | date: "dd/MM/yyyy HH:mm:ss" }}
           </div>
 
           <div class="detail-item__grid__card__right__address">
@@ -46,8 +64,9 @@
 
           <div class="detail-item__grid__card__right__description">
             Trạng thái:
-            <span class="text"> {{item?.status === ItemStatus.COMPLETED
-              ? 'Đã có người nhận' : 'Chưa có người nhận'}}</span>
+            <span class="text">
+              {{ item?.status === ItemStatus.COMPLETED ? "Đã có người nhận" : "Chưa có người nhận" }}</span
+            >
           </div>
 
           <div class="detail-item__grid__card__right__description" *ngIf="receivedUser; else noDone">
@@ -56,21 +75,23 @@
           </div>
         </div>
 
-        <button *ngIf="receivedUser?.id===userId" class="detail-item__grid__card__right__btn thanks"
-          (click)="openInputModal(ModalType.THANKS)">
+        <button
+          *ngIf="receivedUser?.id === userId"
+          class="detail-item__grid__card__right__btn thanks"
+          (click)="openInputModal(ModalType.THANKS)"
+        >
           Gửi lời cảm ơn
         </button>
-
 
         <ng-template #noDone>
           <!-- FORM NGƯỜI NHẬN -->
           <ng-container *ngIf="userId != item?.donateAccountId; else isOwner">
-            <button class="btn-user-info" [routerLink]="['/profile', item?.donateAccountId]">Thông tin người cho</button>
+            <button class="btn-user-info" [routerLink]="['/profile', item?.donateAccountId]">
+              Thông tin người cho
+            </button>
 
             <div *ngIf="item?.userRequestId; else noReq">
-              <button class="detail-item__grid__card__right__btn cancel" (click)="onUnsubscribe()">
-                Hủy đăng ký
-              </button>
+              <button class="detail-item__grid__card__right__btn cancel" (click)="onUnsubscribe()">Hủy đăng ký</button>
             </div>
 
             <ng-template #noReq>
@@ -86,22 +107,31 @@
             <div class="list">
               <span *ngIf="!receiveRequests?.length">Chưa có ai xin nhận vật phẩm này!</span>
               <div class="request-list" *ngFor="let request of receiveRequests">
-                <div class="request-list__info"  [routerLink]="['/profile', request?.receiverId]">
+                <div class="request-list__info" [routerLink]="['/profile', request?.receiverId]">
                   <img class="avatar" src="assets/image/default-avatar.png" />
 
                   <div>
                     <div class="name">{{ request.receiverName }}</div>
-                    <div class="time">{{request.createDate | time}}</div>
+                    <div class="time">{{ request.createDate | time }}</div>
                     <div>{{ request.receiveReason }}</div>
                   </div>
                 </div>
-                <div class="button approve-request" (click)="handleProcess(request.id, request.receiverName)">
-                  {{this.approvedRequestId != request.id
-                  ? 'Chấp nhận' : 'Hủy'}} </div>
+                <div
+                  class="button approve-request"
+                  (click)="handleProcess(request.id, request.receiverName)"
+                  [ngClass]="{ cancelRequest: this.approvedRequestId === request?.id }"
+                >
+                  {{ this.approvedRequestId != request.id ? "Chấp nhận" : "Hủy" }}
+                </div>
               </div>
             </div>
-            <button (click)="confirmGiven()" class="detail-item__grid__card__right__btn"
-              [disabled]="approvedRequestId === -1">Xác nhận đã cho</button>
+            <button
+              (click)="confirmGiven()"
+              class="detail-item__grid__card__right__btn"
+              [disabled]="approvedRequestId === -1"
+            >
+              Xác nhận đã cho
+            </button>
           </ng-template>
         </ng-template>
       </div>
@@ -109,6 +139,6 @@
   </div>
 </div>
 
-<div class="detail-item__modal" [style.display]="modal.status===ModalStatus.OPEN ? 'block' : 'none'">
+<div class="detail-item__modal" [style.display]="modal.status === ModalStatus.OPEN ? 'block' : 'none'">
   <app-request-modal [modalData]="modal" (modalChange)="handleModalChange($event)"></app-request-modal>
 </div>

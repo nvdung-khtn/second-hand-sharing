@@ -17,6 +17,8 @@ export class ListItemsComponent implements OnInit, OnChanges {
     @Input() donationsId: number;
     @Input() registration: boolean;
 
+    loading = false;
+    isEnd = false;
     myInfo;
     itemListScrollDistance = 3;
     itemListScrollThrottle = 50;
@@ -41,7 +43,7 @@ export class ListItemsComponent implements OnInit, OnChanges {
 
     ngOnInit(): void {
         this.myInfo = JSON.parse(localStorage.getItem('userInfo'));
-        const donationsUserId = this.donationsId ? this.donationsId : this.myInfo?.id
+        const donationsUserId = this.donationsId ? this.donationsId : this.myInfo?.id;
         // tslint:disable-next-line: no-unused-expression
         !this.donations
             ? !this.registration
@@ -69,9 +71,14 @@ export class ListItemsComponent implements OnInit, OnChanges {
     // tslint:disable-next-line: typedef
     ngOnChanges(changes: SimpleChanges) {
         this.defaultPageNumber = 1;
+        this.isEnd = false;
+        if (!this.donations && !this.registration) {
+            this.loading = true;
+        }
         if (this.category === 0) {
             this.homeClient.getItems(this.defaultReq).subscribe((response) => {
                 this.items = response.data;
+                this.loading = false;
             });
         }
 
@@ -80,17 +87,36 @@ export class ListItemsComponent implements OnInit, OnChanges {
                 .getItemByCategory(this.category, this.defaultReq)
                 .subscribe((response) => {
                     this.items = response.data;
+                    this.loading = false;
                 });
         }
     }
 
     onItemListScrollDown = () => {
-        if (!this.donations) {
+        if (!this.donations && !this.registration) {
             this.defaultPageNumber += 1;
             const newReq = new SearchRequest(this.defaultPageNumber, this.defaultPageSize);
-            this.homeClient.getItems(newReq).subscribe((response) => {
-                this.items = [...this.items, ...response.data];
-            });
+            this.loading = true;
+            if (this.category === 0) {
+                this.homeClient.getItems(newReq).subscribe((response) => {
+                    this.items = [...this.items, ...response.data];
+                    this.loading = false;
+                    if (response.data?.length !== 0) {
+                        this.isEnd = true;
+                    }
+                });
+            }
+            if (this.category !== 0) {
+                this.categoryClient
+                    .getItemByCategory(this.category, newReq)
+                    .subscribe((response) => {
+                        this.items = [...this.items, ...response.data];
+                        this.loading = false;
+                        if (response.data?.length !== 0) {
+                            this.isEnd = true;
+                        }
+                    });
+            }
         }
     };
 }

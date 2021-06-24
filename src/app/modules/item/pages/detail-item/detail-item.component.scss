@@ -311,4 +311,12 @@
     .time {
         color: $primary-light-text-color;
     }
+
+    .cancelRequest {
+        background-color: $btn-cancel-color !important;
+        
+        &:hover {
+            background-color: $btn-cancel-color-hover !important;
+        }
+    }
 }

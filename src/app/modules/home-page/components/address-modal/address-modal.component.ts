@@ -15,6 +15,8 @@ export class AddressModalComponent implements OnInit {
     districts: any[] = [];
     wards: any[] = [];
     selectedType: EnumAddress;
+    myAddressArray: any;
+    myAddressString = '';
 
     constructor(private addressService: AddressService) {}
 
@@ -33,6 +35,9 @@ export class AddressModalComponent implements OnInit {
     async ngOnInit() {
         // get all city
         this.citys = await this.addressService.getAllCity();
+        const user: any = JSON.parse(localStorage.getItem('userInfo'));
+        this.myAddressArray = user.address;
+        this.myAddressString = localStorage.getItem('addressString');
     }
 
     onClose() {
@@ -77,4 +82,11 @@ export class AddressModalComponent implements OnInit {
             this.addressForm.wardName = event.wardName;
         }
     }
+
+    onClickMyAddress = () => {
+        this.isOpenModal = false;
+        this.displayError = false;
+        this.addressData.emit(this.myAddressArray);
+        this.modalChange.emit(this.isOpenModal);
+    };
 }

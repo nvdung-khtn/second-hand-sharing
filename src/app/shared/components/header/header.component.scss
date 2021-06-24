@@ -20,7 +20,7 @@
 
     &__first-group {
         display: flex;
-        width: 30%;
+        width: 20%;
 
         @media (max-width: 1024px) {
             width: 100%;
@@ -96,7 +96,7 @@
 
     &__second-group {
         display: flex;
-        width: -webkit-fill-available;
+        width: 80%;
 
         &__category {
             color: $primary-icon-color;
@@ -104,7 +104,7 @@
             align-items: center;
             justify-content: center;
             color: $primary-icon-color;
-            width: 70%; //75%
+            width: 80%; //75%
 
             @media (max-width: 1024px) {
                 display: grid;
