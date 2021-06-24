@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { AuthClient } from 'src/app/core/api-clients/auth.client';
 import { UserInfo } from 'src/app/core/constants/user.constant';
+import { AuthService } from 'src/app/shared/service/auth.service';
 import { UploadImageService } from 'src/app/shared/service/uploadImage.service';
 
 @Component({
@@ -9,7 +12,7 @@ import { UploadImageService } from 'src/app/shared/service/uploadImage.service';
     templateUrl: './profile.component.html',
     styleUrls: ['./profile.component.scss'],
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, OnDestroy {
     selectedTab = 1;
     isOpenAddressModal = false;
     displayAddress = '';
@@ -35,9 +38,11 @@ export class ProfileComponent implements OnInit {
     // phoneNumberPattern = /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/;
     phoneNumberPattern = '[0-9]{10,11}';
     selectedFiles?: FileList = null;
+    destroy$ = new Subject<void>();
 
     constructor(
         private readonly authClient: AuthClient,
+        private authService: AuthService,
         private readonly toastr: ToastrService,
         private uploadImageService: UploadImageService
     ) {}
@@ -49,7 +54,7 @@ export class ProfileComponent implements OnInit {
     getUserProfile() {
         this.authClient.getUserProfile().subscribe((response) => {
             this.profile = response.data;
-            localStorage.setItem('userInfo', JSON.stringify(response.data));
+            this.authService.updateCurrentUser(this.profile);
             this.loading = false;
         });
     }
@@ -73,8 +78,6 @@ export class ProfileComponent implements OnInit {
             this.toggleStatus(key);
             this.getUserProfile();
             this.toastr.success('Cập nhập thành công.');
-            localStorage.setItem('userInfo', JSON.stringify(response.data));
-            window.location.reload();
         });
     }
 
@@ -96,5 +99,10 @@ export class ProfileComponent implements OnInit {
 
     isSelectedTab(id: number) {
         this.selectedTab = id;
+    }
+
+    ngOnDestroy() {
+        this.destroy$.next();
+        this.destroy$.complete();
     }
 }

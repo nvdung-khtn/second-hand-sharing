@@ -1,13 +1,18 @@
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { BehaviorSubject } from 'rxjs';
 import { AddressModel } from 'src/app/core/constants/address.constant';
+import { UserInfo } from 'src/app/core/constants/user.constant';
 
 @Injectable({
     providedIn: 'root',
 })
 export class AuthService {
     constructor(public jwtHelper: JwtHelperService) {}
-    private userInfo = JSON.parse(localStorage.getItem('userInfo') || '[]');
+
+    private userInfo: UserInfo = JSON.parse(localStorage.getItem('userInfo') || '[]');
+    private _userInfoSubject = new BehaviorSubject<UserInfo>(this.userInfo);
+    currentUser$ = this._userInfoSubject.asObservable();
 
     isAuthenticated(): boolean {
         const token = localStorage.getItem('access_token');
@@ -19,24 +24,13 @@ export class AuthService {
         return localStorage.getItem('access_token');
     }
 
-    getCurrentName() {
-        return this.userInfo.fullName;
-    }
-
     getUserId() {
         return this.userInfo.id;
     }
 
-    getCurrentUser() {
-        return this.userInfo;
-    }
-
-    getCurrentAddress() {
-        return this.userInfo.address;
-    }
-
-    updateCurrentAddress(newAddress: AddressModel) {
-        this.userInfo.address = newAddress;
+    updateCurrentUser(user: UserInfo): void {
+        this.userInfo = user;
+        this._userInfoSubject.next(this.userInfo);
         localStorage.setItem('userInfo', JSON.stringify(this.userInfo));
     }
 }
