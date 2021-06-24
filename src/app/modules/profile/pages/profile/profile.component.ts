@@ -60,9 +60,11 @@ export class ProfileComponent implements OnInit {
 
     handleAddress(event) {
         this.profile.address = event;
+        this.updateUserProfile(true);
     }
 
     toggleStatus(key) {
+        if (key === true) return;
         this.status[`${key}`] = !this.status[`${key}`];
     }
 
@@ -91,7 +93,8 @@ export class ProfileComponent implements OnInit {
             });
         }
     }
-    isSelectedTab = (id: number) => {
+
+    isSelectedTab(id: number) {
         this.selectedTab = id;
     }
 }

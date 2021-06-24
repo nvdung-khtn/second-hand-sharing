@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { UserInfo } from 'src/app/core/constants/user.constant';
+import { AuthService } from '../../service/auth.service';
 
 @Component({
     selector: 'app-home-left-side',
@@ -31,11 +33,10 @@ export class HomeLeftSideComponent implements OnInit {
             image: 'assets/image/default-avatar.png',
         },
     ];
-    currentName: string;
-    avatarUrl: string;
+    currentUser: UserInfo;
     selectedCategory = -1;
 
-    constructor(private router: Router) {
+    constructor(private router: Router, private authService: AuthService) {
         this.router.events
             .pipe(filter((event) => event instanceof NavigationEnd))
             // tslint:disable-next-line: deprecation
@@ -48,9 +49,8 @@ export class HomeLeftSideComponent implements OnInit {
         this.getCurrentName();
     }
 
-    getCurrentName = () => {
-        this.currentName = JSON.parse(localStorage.getItem('userInfo')).fullName;
-        this.avatarUrl = JSON.parse(localStorage.getItem('userInfo')).avatarUrl;
+    getCurrentName() {
+        this.currentUser = this.authService.getCurrentUser();
     }
 
     checkTabURL = (url: string) => {
@@ -60,9 +60,9 @@ export class HomeLeftSideComponent implements OnInit {
                 return i + 1;
             }
         }
-    }
+    };
 
     onClick = (id: number) => {
         this.selectedCategory = id;
-    }
+    };
 }
