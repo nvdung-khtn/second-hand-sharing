@@ -4,7 +4,8 @@ import { AddressIdModel } from './address.constant';
 export class Item {
     id: number;
     itemName: string;
-    receiveAddress: AddressIdModel;
+    receiveAddress?: AddressIdModel;
+    address?: AddressIdModel;
     postTime: string;
     description: string;
     imageUrl: string[];
@@ -12,8 +13,8 @@ export class Item {
     donateAccountName: string;
     userRequestId: number;
     status: ItemStatus;
+    avatarUrl?: string | null;
 }
-
 export class CreateItemRequest {
     itemName: string;
     receiveAddress: AddressIdModel;

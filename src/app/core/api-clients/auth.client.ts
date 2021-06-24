@@ -55,6 +55,11 @@ export class AuthClient {
         return this.http.get<ResponseModel<UserInfo>>(url);
     }
 
+    getUserById(userId: number): Observable<ResponseModel<UserInfo>> {
+        const url = `${this.baseUrl}/User/${userId}`;
+        return this.http.get<ResponseModel<UserInfo>>(url);
+    }
+
     updateAvatar(): Observable<ResponseModel<any>> {
         const url = `${this.baseUrl}/User/update-avatar`;
         return this.http.put<ResponseModel<any>>(url, null);

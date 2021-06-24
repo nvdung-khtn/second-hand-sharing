@@ -47,7 +47,6 @@ function initializeApp(addressService: AddressService) {
         AngularFireAuthModule,
         AngularFireMessagingModule,
         AngularFireModule.initializeApp(environment.firebase),
-
         AppRoutingModule,
     ],
     providers: [

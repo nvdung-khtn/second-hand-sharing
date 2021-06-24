@@ -1,15 +1,23 @@
 <div class="group">
-  <div class="group__joined box-container">
+  <div class="group__container box-container">
     <div class="group__heading">
-      <div class="group__title">
-        Nhóm
-      </div>
+      <div class="group__title">Nhóm</div>
 
-      <div class="group__create-btn primary-button" (click)="handleOpenModal()">
-        + Tạo nhóm
-      </div>
+      <div class="group__create-btn primary-button" (click)="handleOpenModal()">+ Tạo nhóm</div>
+    </div>
+  </div>
+
+  <div class="group__container box-container">
+    <div class="group__no-group" [style.display]="joinedGroup?.length === 0 ? 'flex' : 'none'">
+      Bạn chưa tham gia nhóm nào
+    </div>
+
+    <div class="group__joined-group" [style.display]="joinedGroup?.length === 0 ? 'none' : 'inline-block'">
+      <div class="group__group-element" *ngFor="let group of joinedGroup" (click)="onNavigateToGroup(group?.id)">{{group?.groupName}}</div>
     </div>
   </div>
 </div>
 
-<app-create-group-modal [(modal)]="isOpenGroupModal"></app-create-group-modal>
+<div class="create-group-modal" [style.display]="isOpenGroupModal ? 'block' : 'none'">
+  <app-create-group-modal [(modal)]="isOpenGroupModal"></app-create-group-modal>
+</div>

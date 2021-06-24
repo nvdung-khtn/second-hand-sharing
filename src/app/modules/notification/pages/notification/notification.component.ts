@@ -34,7 +34,6 @@ export class NotificationComponent implements OnInit {
             this.notifications[i].data = JSON.parse(this.notifications[i].data);
         }
         this.myInfo = JSON.parse(localStorage.getItem('userInfo'));
-        console.log(this.notifications);
     }
 
     handleReceiverName(id: number) {

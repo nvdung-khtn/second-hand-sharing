@@ -1,51 +1,86 @@
-<div class="notification" infiniteScroll [infiniteScrollDistance]="notificationScrollDistance"
-  [infiniteScrollThrottle]="notificationScrollThrottle" (scrolled)="onNotificationScrollDown()" [scrollWindow]="false">
-  <div class="notification__container" *ngFor="let noti of notifications index as index">
+<div
+  class="notification"
+  infiniteScroll
+  [infiniteScrollDistance]="notificationScrollDistance"
+  [infiniteScrollThrottle]="notificationScrollThrottle"
+  (scrolled)="onNotificationScrollDown()"
+  [scrollWindow]="false"
+>
+  <div class="notification__container" *ngFor="let noti of notifications; index as index">
     <!-- avatar thông báo -->
-    <img class="notification__avatar" src="assets/image/default-avatar.png" />
     <div>
       <!-- Receive request -->
       <div>
-        <div (click)="handleNotiType(noti?.type, index)" class="noti-info"
-          *ngIf="noti?.type === NotifyType.RECEIVE_REQUEST">
-          <div class="notification__title">{{ noti?.data?.itemName }}</div>
-          <b>{{ noti?.data.receiverName }}</b> đã đăng ký nhận vật phẩm với nội dung:
-          <i>"{{ noti?.data?.receiveReason }}"</i>
+        <div (click)="handleNotiType(noti?.type, index)" *ngIf="noti?.type === NotifyType.RECEIVE_REQUEST" class="flex">
+          <img class="notification__avatar" src="assets/image/registration.png" />
+
+          <div class="noti-info">
+            <div class="notification__title">{{ noti?.data?.itemName }}</div>
+            <b>{{ noti?.data.receiverName }}</b> đã đăng ký nhận vật phẩm với nội dung:
+            <i>"{{ noti?.data?.receiveReason }}"</i>
+          </div>
         </div>
 
         <!-- Cancel Receive -->
-        <div (click)="handleNotiType(noti?.type, index)" class="noti-info" #CANCEL_RECEIVE_REQUEST
-          *ngIf="noti?.type === NotifyType.CANCEL_RECEIVE_REQUEST">
-          <div class="notification__title">{{ noti?.data?.itemName }}</div>
-          Bạn đã <b>hủy chọn</b> đăng ký nhận của bạn
+        <div
+          (click)="handleNotiType(noti?.type, index)"
+          #CANCEL_RECEIVE_REQUEST
+          *ngIf="noti?.type === NotifyType.CANCEL_RECEIVE_REQUEST"
+          class="flex"
+        >
+          <img class="notification__avatar" src="assets/image/registration.png" />
+
+          <div class="noti-info">
+            <div class="notification__title">{{ noti?.data?.itemName }}</div>
+            Bạn đã <b>hủy chọn</b> đăng ký nhận của bạn
+          </div>
         </div>
 
         <!-- Request status -->
-        <div (click)="handleNotiType(noti?.type, index)" class="noti-info" #REQUEST_STATUS
-          *ngIf="noti?.type === NotifyType.REQUEST_STATUS">
-          <div class="notification__title">{{ noti?.data?.itemName }}</div>
-          Yêu cầu đăng ký nhận của bạn đã <b>{{ handleRequestStatus(noti?.data?.requestStatus) }}</b>
+        <div
+          (click)="handleNotiType(noti?.type, index)"
+          #REQUEST_STATUS
+          *ngIf="noti?.type === NotifyType.REQUEST_STATUS"
+          class="flex"
+        >
+          <img class="notification__avatar" src="assets/image/registration.png" />
+
+          <div class="noti-info">
+            <div class="notification__title">{{ noti?.data?.itemName }}</div>
+            Yêu cầu đăng ký nhận của bạn đã <b>{{ handleRequestStatus(noti?.data?.requestStatus) }}</b>
+          </div>
         </div>
 
         <!-- Send thanks -->
-        <div (click)="handleNotiType(noti?.type, index)" class="notification__thanks noti-info" #SEND_THANKS
-          *ngIf="noti?.type === NotifyType.SEND_THANKS">
-          <b>{{ noti?.data?.sendFromAccountName }}</b> đã gửi lời cảm ơn đến bạn với nội dung:
-          <i>"{{ noti?.data?.content }}"</i>
+        <div
+          (click)="handleNotiType(noti?.type, index)"
+          class="notification__thanks flex"
+          #SEND_THANKS
+          *ngIf="noti?.type === NotifyType.SEND_THANKS"
+        >
+          <img class="notification__avatar" src="assets/image/thanks.png" />
+
+          <div class="noti-info">
+            <b>{{ noti?.data?.sendFromAccountName }}</b> đã gửi lời cảm ơn đến bạn với nội dung:
+            <i>"{{ noti?.data?.content }}"</i>
+          </div>
         </div>
 
         <!-- Confirm send -->
-        <div (click)="handleNotiType(noti?.type, index)" class="noti-info" #CONFIRM_SENT
-          *ngIf="noti?.type === NotifyType.CONFIRM_SENT">
-          <div class="notification__title">{{ noti?.data?.itemName }}</div>
-          Chủ sở hữu đã xác nhận tặng vật phẩm cho <b>{{ handleReceiverName(noti?.data?.receiverId) }}</b>
+        <div (click)="handleNotiType(noti?.type, index)" #CONFIRM_SENT *ngIf="noti?.type === NotifyType.CONFIRM_SENT" class="flex">
+          <img class="notification__avatar" src="assets/image/done.png" />
+
+          <div class="noti-info">
+            <div class="notification__title">{{ noti?.data?.itemName }}</div>
+            Chủ sở hữu đã xác nhận tặng vật phẩm cho <b>{{ handleReceiverName(noti?.data?.receiverId) }}</b>
+          </div>
         </div>
       </div>
-      <div><i>{{ noti?.createTime | time }}</i></div>
+      <div class="time">
+        <i>{{ noti?.createTime | time }}</i>
+      </div>
     </div>
   </div>
 
-  <div class="no-noti" *ngIf="notifications?.length === 0">
-    Bạn không có bất kì thông báo
-  </div>
+  <div class="no-noti" *ngIf="notifications?.length === 0">Bạn không có bất kì thông báo</div>
 </div>

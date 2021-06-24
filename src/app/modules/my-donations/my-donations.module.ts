@@ -12,6 +12,9 @@ import { HomePageModule } from '../home-page/home-page.module';
     CommonModule,
     MyDonationsRouting,
     HomePageModule
+  ],
+  exports: [
+    MyDonationsComponent
   ]
 })
 export class MyDonationsModule { }

@@ -14,12 +14,21 @@ import { GroupClient } from 'src/app/core/api-clients/group.client';
 export class GroupComponent implements OnInit {
     isOpenGroupModal = false;
     groupForm: FormGroup;
+    joinedGroup;
 
     constructor(private readonly groupClient: GroupClient, private fb: FormBuilder) {}
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this.groupClient.getJoinedGroup().subscribe((response) => {
+            this.joinedGroup = response.data;
+        });
+    }
 
     handleOpenModal() {
         this.isOpenGroupModal = true;
     }
+
+    onNavigateToGroup = (id: number) => {
+        console.log(id);
+    };
 }

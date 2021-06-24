@@ -76,7 +76,10 @@ export class DetailItemComponent implements OnInit {
                 );
                 this.addressString = this.addressService.getAddressString(this.addressVM);
             },
-            (error) => console.log('Error in Item detail: ', error)
+            (error) => {
+                console.log('Error in Item detail: ', error);
+                if (error?.error?.Data === null) this.router.navigateByUrl('/404')
+            }
         );
 
         // Get received user
@@ -155,6 +158,7 @@ export class DetailItemComponent implements OnInit {
         if (this.approvedRequestId === -1) {
             this.onApprove(requestId, receiverName);
         } else {
+            console.log(this.approvedRequestId)
             const flag = this.approvedRequestId;
             await this.onReject(this.approvedRequestId);
 

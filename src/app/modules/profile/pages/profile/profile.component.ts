@@ -10,6 +10,7 @@ import { UploadImageService } from 'src/app/shared/service/uploadImage.service';
     styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit {
+    selectedTab = 1;
     isOpenAddressModal = false;
     displayAddress = '';
     profile: UserInfo;
@@ -18,7 +19,20 @@ export class ProfileComponent implements OnInit {
         phoneNumber: false,
         dob: false,
     };
-    //phoneNumberPattern = /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/;
+    mobileContext = [
+        {
+            title: 'Đã đăng ký nhận',
+            link: 'my-registration',
+            id: 1,
+        },
+        {
+            title: 'Bài đẵ đăng',
+            link: 'my-donations',
+            id: 2,
+        },
+    ];
+    loading = true;
+    // phoneNumberPattern = /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/;
     phoneNumberPattern = '[0-9]{10,11}';
     selectedFiles?: FileList = null;
 
@@ -36,6 +50,7 @@ export class ProfileComponent implements OnInit {
         this.authClient.getUserProfile().subscribe((response) => {
             this.profile = response.data;
             localStorage.setItem('userInfo', JSON.stringify(response.data));
+            this.loading = false;
         });
     }
 
@@ -45,7 +60,6 @@ export class ProfileComponent implements OnInit {
 
     handleAddress(event) {
         this.profile.address = event;
-        console.log(this.profile.address);
     }
 
     toggleStatus(key) {
@@ -53,11 +67,12 @@ export class ProfileComponent implements OnInit {
     }
 
     updateUserProfile(key) {
-        console.log(this.profile);
         this.authClient.patchUserProfile(this.profile).subscribe((response) => {
             this.toggleStatus(key);
             this.getUserProfile();
             this.toastr.success('Cập nhập thành công.');
+            localStorage.setItem('userInfo', JSON.stringify(response.data));
+            window.location.reload();
         });
     }
 
@@ -75,5 +90,8 @@ export class ProfileComponent implements OnInit {
                     });
             });
         }
+    }
+    isSelectedTab = (id: number) => {
+        this.selectedTab = id;
     }
 }

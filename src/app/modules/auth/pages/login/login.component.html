@@ -1,7 +1,7 @@
 <div class="login-container">
   <div class="login-container__left">
     <div class="login-container__left__heading">
-      <img class="login-container__left__heading__logo" src="assets/image/2hand-sharing.png" />
+      <img [routerLink]="['/auth/login']" class="login-container__left__heading__logo" src="assets/image/2hand-sharing.png" />
 
       <div class="login-container__left__heading__category">
         <div class="login-container__left__heading__category__text__selected">
@@ -67,24 +67,6 @@
         <div type="button" (click)="onSubmit">Đăng nhập</div>
       </div>
 
-      <div class="login-container__left__form__other">
-        <span>Hoặc</span>
-      </div>
-
-      <div class="login-container__left__form__other">
-        Đăng nhập với
-      </div>
-
-      <div class="login-container__left__form__image">
-        <span>
-          <img class="login-container__left__form__image__logo" src="assets/image/google.png" />
-        </span>
-
-        <span>
-          <img class="login-container__left__form__image__logo" src="assets/image/facebook.png" />
-        </span>
-      </div>
-
     </div>
   </div>
 
@@ -93,3 +75,5 @@
     </div>
   </div>
 </div>
+
+<app-loader [style.display]="this.loading ? 'block' : 'none'"></app-loader>

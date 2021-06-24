@@ -10,6 +10,7 @@ import { AddressService } from 'src/app/shared/service/address.service';
     styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
+    loading = false;
     isError = false;
     message: string;
     loginForm: FormGroup;
@@ -48,6 +49,7 @@ export class LoginComponent implements OnInit {
     }
 
     onSubmit() {
+        this.loading = true;
         this.authClient.login(this.loginForm.value).subscribe(
             async (response) => {
                 this.isError = false;
@@ -56,7 +58,7 @@ export class LoginComponent implements OnInit {
                         response.data.userInfo.address
                     );
                 }
-
+                this.loading = false;
                 localStorage.setItem('access_token', response.data.jwToken);
                 localStorage.setItem('expiration', response.data.expiration.toString());
                 localStorage.setItem('userInfo', JSON.stringify(response.data.userInfo));
@@ -65,6 +67,7 @@ export class LoginComponent implements OnInit {
                 });
             },
             (err) => {
+                this.loading = false;
                 this.isError = true;
                 this.message = err.message;
                 // Ném Error ra interceptor handling error.

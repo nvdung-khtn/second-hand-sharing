@@ -29,34 +29,35 @@ export class HeaderComponent implements OnInit {
             id: 2,
         },
         {
-            title: 'Giúp đỡ',
+            title: 'Chiến dịch gây quỹ',
             icon: faHandsHelping,
             type: 'fas',
+            link: 'campaign',
             id: 3,
         },
-        {
+        /* {
             title: 'Chiến dịch gây quỹ',
             icon: faHands,
             type: 'fas',
             id: 4,
-        },
+        }, */
     ];
 
     otherContext = [
+        {
+            title: 'Vinh danh',
+            icon: 'stars',
+            id: 4,
+        },
         {
             title: 'Thông báo',
             icon: 'notifications',
             id: 5,
         },
         {
-            title: 'Thêm',
-            icon: 'menu',
-            id: 6,
-        },
-        {
             title: 'Đăng xuất',
             icon: 'exit_to_app',
-            id: 7,
+            id: 6,
         },
     ];
 
@@ -76,7 +77,7 @@ export class HeaderComponent implements OnInit {
         this.selectedTab = id;
     }
     checkTabURL = (url: string) => {
-        const checkArray = ['home', 'group', 'help', 'stars', 'notification'];
+        const checkArray = ['home', 'group', 'campaign', 'chart', 'notification'];
         // tslint:disable-next-line: prefer-for-of
         for (let i = 0; i < checkArray.length; i++) {
             if (url.indexOf(checkArray[i]) !== -1) {
@@ -92,7 +93,7 @@ export class HeaderComponent implements OnInit {
     }
 
     getName = (name: string) => {
-        const temp = name.split(' ');
-        return temp[temp.length - 1];
+        const temp = name && name.split(' ');
+        return Array.isArray(temp) && temp[temp?.length - 1];
     }
 }

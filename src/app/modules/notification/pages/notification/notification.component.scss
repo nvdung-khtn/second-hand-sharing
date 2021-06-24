@@ -16,9 +16,10 @@
         display: flex;
         align-items: center;
         cursor: pointer;
+        border-radius: $border-radius-light;
 
         &:hover {
-            background-color: rgb(224, 224, 224);
+            background-color: $lightest-grey;
         }
     }
 
@@ -28,6 +29,7 @@
         max-width: 40px;
         max-height: 40px;
         margin-right: 0.5rem;
+        border-radius: 100%;
     }
 
     &__title {
@@ -50,5 +52,13 @@
         justify-content: center;
         background-color: white;
         height: 100%;
+    }
+
+    .flex {
+        display: flex;
+    }
+
+    .time {
+        margin-left: 2.75rem;
     }
 }

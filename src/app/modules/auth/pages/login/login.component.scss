@@ -1,4 +1,4 @@
-@import '../../../../../styles/variables';
+@import "../../../../../styles/variables";
 
 .login-container {
     display: grid;
@@ -8,17 +8,29 @@
 
     @media (min-width: 768px) and (max-width: 1024px) {
         display: block;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: white;
     }
 
     @media (max-width: 767px) {
         display: block;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: white;
     }
 
     .text-danger {
         color: red;
     }
 
-    &__left{
+    &__left {
         margin: 3% 13%;
 
         &__heading {
@@ -29,27 +41,27 @@
                 width: 60%;
                 max-width: 180px;
             }
-            
+
             &__category {
                 display: flex;
                 justify-content: flex-end;
                 align-items: center;
                 flex-basis: 100%;
 
-                @media (min-width: 768px) and (max-width: 1024px) {
+                /* @media (min-width: 768px) and (max-width: 1024px) {
                     display: none;
                 }
 
                 @media (max-width: 767px) {
                     display: none;
-                }
+                } */
 
                 &__text {
                     margin-left: 10%;
                     font-weight: $font-weight-medium;
                     color: $primary-light-text-color;
                     cursor: pointer;
-                    
+
                     &__selected {
                         font-weight: $font-weight-bold;
                         color: $selected-text-color;
@@ -58,11 +70,9 @@
                     }
                 }
             }
-        };
-
+        }
 
         &__form {
-
             @media (min-width: 1281px) {
                 margin-top: 20px;
             }
@@ -70,7 +80,7 @@
             @media (min-width: 1025px) and (max-width: 1280px) {
                 margin-top: 50px;
             }
-            
+
             &__title {
                 font-weight: $font-weight-bold;
                 font-size: $largest-font-size;
@@ -94,7 +104,7 @@
                         width: 100%;
                         color: $primary-color;
                         font-size: $default-font-size;
-                        
+
                         &:focus {
                             outline: none;
                         }
@@ -112,7 +122,7 @@
                 @media (min-width: 1281px) {
                     display: none;
                 }
-    
+
                 @media (min-width: 1025px) and (max-width: 1280px) {
                     display: none;
                 }
@@ -134,7 +144,7 @@
                     display: block;
                     float: none;
                 }
-    
+
                 @media (min-width: 1025px) and (max-width: 1280px) {
                     display: block;
                     float: none;
@@ -179,15 +189,16 @@
                 color: $primary-lightest-text-color;
                 margin: 2% 0;
 
-                span { 
-                    display: flex; 
+                span {
+                    display: flex;
                     flex-direction: row;
 
-                    &::before, &::after {
-                        content: ""; 
-                        flex: 1 1; 
-                        border-bottom: 1px solid $primary-color; 
-                        margin: auto; 
+                    &::before,
+                    &::after {
+                        content: "";
+                        flex: 1 1;
+                        border-bottom: 1px solid $primary-color;
+                        margin: auto;
                     }
 
                     &::before {
@@ -197,15 +208,14 @@
                     &::after {
                         margin-left: 2%;
                     }
-                } 
-                
+                }
             }
 
             &__image {
                 text-align: center;
 
                 span {
-                    margin: 0 1%
+                    margin: 0 1%;
                 }
 
                 &__logo {
@@ -242,7 +252,7 @@
             position: relative;
 
             &::after {
-                content: '';
+                content: "";
                 position: absolute;
                 top: 50%;
                 left: 50%;

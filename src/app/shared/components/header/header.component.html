@@ -2,14 +2,8 @@
   <div class="header__first-group">
     <img [routerLink]="['/home']" class="header__first-group__logo" src="assets/image/2hand-sharing.png" />
 
-    <!-- <div class="header__first-group__search">
-      <div class="header__first-group__search__inside">
-        <mat-icon class="header__first-group__search__inside__icon" aria-hidden="false" aria-label="search">search
-        </mat-icon>
-
-        <input class="header__first-group__search__inside__text" placeholder="Tìm kiếm" />
-      </div>
-    </div> -->
+    <img [routerLink]="['/profile']" class="mobile-profile"
+      src="{{myInfo?.avatarUrl || 'assets/image/default-avatar.png'}}" />
   </div>
 
   <div class="header__second-group">
@@ -33,25 +27,25 @@
 
     <div class="header__second-group__profile"  [routerLink]="['/profile']">
       <img class="header__second-group__profile__avatar"
-        src="assets/image/default-avatar.png" />
+      src="{{myInfo?.avatarUrl || 'assets/image/default-avatar.png'}}" />
 
       <div class="header__second-group__profile__name">{{getName(myInfo?.fullName)}}</div>
     </div>
 
     <div class="header__second-group__other">
-      <div aria-hidden="false" aria-label="icon" *ngFor="let cate of this.otherContext" [routerLink]="['notification']"
+      <div aria-hidden="false" aria-label="icon" *ngFor="let cate of this.otherContext"
         (click)="isSelectedTab(cate?.id)" [ngClass]="{ selectedOtherTabStyle: this.selectedTab === cate?.id }">
-        <div *ngIf="cate?.id === 5">
+        <div *ngIf="cate?.id === 5" [routerLink]="['notification']">
           <mat-icon class="header__second-group__other__icon" aria-hidden="false" aria-label="icon">{{ cate?.icon }}
           </mat-icon>
         </div>
 
-        <div *ngIf="cate?.id === 7">
+        <div *ngIf="cate?.id === 6">
           <mat-icon (click)="onLogOut()" class="header__second-group__other__exit" aria-hidden="false"
             aria-label="icon">{{ cate?.icon }}</mat-icon>
         </div>
 
-        <div *ngIf="cate?.id === 6">
+        <div *ngIf="cate?.id === 4" [routerLink]="['chart']">
           <mat-icon class="header__second-group__other__icon--menu" aria-hidden="false" aria-label="icon">{{ cate?.icon
             }}</mat-icon>
         </div>

@@ -1,27 +1,37 @@
-<div *ngIf="items else loadingTmpl" class="list-items" infiniteScroll [infiniteScrollDistance]="itemListScrollDistance"
-  [infiniteScrollThrottle]="itemListScrollThrottle" (scrolled)="onItemListScrollDown()" [scrollWindow]="false"
-  [alwaysCallback]="true">
+<div
+  *ngIf="items; else loadingTmpl"
+  class="list-items"
+  infiniteScroll
+  [infiniteScrollDistance]="itemListScrollDistance"
+  [infiniteScrollThrottle]="itemListScrollThrottle"
+  (scrolled)="onItemListScrollDown()"
+  [scrollWindow]="false"
+  [alwaysCallback]="true"
+  [style.display]="items?.length === 0 ? 'flex' : 'block'"
+>
   <div class="list-items__grid" [style.display]="items?.length === 0 ? 'none' : 'grid'">
-    <div class="list-items__grid__card" routerLink="/item/{{item?.id}}" *ngFor="let item of items">
+    <div class="list-items__grid__card" routerLink="/item/{{ item?.id }}" *ngFor="let item of items">
       <div class="list-items__grid__card__image">
-        <img class="list-items__grid__card__image__inside"
-          [src]="item?.imageUrl ? item.imageUrl : 'assets/image/default-image.png'">
+        <img
+          class="list-items__grid__card__image__inside"
+          [src]="item?.imageUrl ? item.imageUrl : 'assets/image/default-image.png'"
+        />
       </div>
 
       <div class="list-items__grid__card__name">
-        {{item?.itemName}}
+        {{ item?.itemName }}
       </div>
 
       <div class="list-items__grid__card__post-info">
         <div class="list-items__grid__card__post-info__time">
-          {{item?.postTime | time}} - {{item?.address | address}}
+          {{ item?.postTime | time }} - {{ item?.address | address }}
         </div>
       </div>
 
       <div class="list-items__grid__card__line"></div>
 
       <div class="list-items__grid__card__description">
-        {{item?.description}}
+        {{ item?.description }}
       </div>
     </div>
   </div>
@@ -29,8 +39,9 @@
     <!-- Them hình ảnh | icon -->
     Không có dữ liệu trong danh mục này
   </div>
-</div>
 
-<ng-template #loadingTmpl>
-  Loading...
-</ng-template>
+  <div [style.display]="isEnd && items?.length !== 0 ? 'flex' : 'none'" class="endData">Không còn bài đăng để xem</div>
+</div>
+<ng-template #loadingTmpl> Đang tải... </ng-template>
+
+<app-loader [style.display]="this.loading ? 'block' : 'none'"></app-loader>

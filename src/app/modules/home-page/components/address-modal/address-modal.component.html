@@ -1,35 +1,50 @@
-<div class="address-modal" [style.maxHeight]="this.displayError ? '435px' : '390px'">
+<div class="address-modal">
   <span class="address-modal__close" (click)="onClose()">&times;</span>
 
   <div class="address-modal__title">
     Chọn địa chỉ
   </div>
 
-  <div class="address-modal__dropdown">
-    <app-dropdown-form [inputData]="citys" [property]="'cityName'" [dropdownLabel]="'Tỉnh/Thành phố'"
+  <div class="my-address" (click)="onClickMyAddress()">
+    <div class="title">
+      Địa chỉ nhà
+    </div>
+
+    <div class="my-address__text">
+      {{myAddressString}}
+    </div>
+  </div>
+
+  <div class="my-address">
+    <div class="title">
+      Chọn địa chỉ mới
+    </div>
+    <div class="address-modal__dropdown">
+      <app-dropdown-form [inputData]="citys" [property]="'cityName'" [dropdownLabel]="'Tỉnh/Thành phố'"
+        (selectedType)="this.selectedType=$event"
+        (selectedValue)="handleSelectedAddress($event)">
+      </app-dropdown-form>
+    </div>
+  
+    <div class="address-modal__dropdown">
+      <app-dropdown-form [inputData]="districts" [property]="'districtName'" [dropdownLabel]="'Quận/Huyện'"
       (selectedType)="this.selectedType=$event"
       (selectedValue)="handleSelectedAddress($event)">
-    </app-dropdown-form>
-  </div>
-
-  <div class="address-modal__dropdown">
-    <app-dropdown-form [inputData]="districts" [property]="'districtName'" [dropdownLabel]="'Quận/Huyện'"
-    (selectedType)="this.selectedType=$event"
-    (selectedValue)="handleSelectedAddress($event)">
-    </app-dropdown-form>
-  </div>
-
-  <div class="address-modal__dropdown">
-    <app-dropdown-form [inputData]="wards" [property]="'wardName'" [dropdownLabel]="'Phường/Xã'"
-    (selectedType)="this.selectedType=$event"
-    (selectedValue)="handleSelectedAddress($event)">
-    </app-dropdown-form>
-  </div>
-
-  <input class="address-modal__street" type="text" placeholder="Tòa nhà/Tên đường" [(ngModel)]="this.addressForm.street">
-
-  <div class="address-modal__error" [style.display]="this.displayError ? 'block' : 'none'">
-    Vui lòng chọn và điền đầy đủ tất cả thông tin để hoàn thành địa chỉ hoặc sử dụng địa chỉ mặc định
+      </app-dropdown-form>
+    </div>
+  
+    <div class="address-modal__dropdown">
+      <app-dropdown-form [inputData]="wards" [property]="'wardName'" [dropdownLabel]="'Phường/Xã'"
+      (selectedType)="this.selectedType=$event"
+      (selectedValue)="handleSelectedAddress($event)">
+      </app-dropdown-form>
+    </div>
+  
+    <input class="address-modal__street" type="text" placeholder="Tòa nhà/Tên đường" [(ngModel)]="this.addressForm.street">
+  
+    <div class="address-modal__error" [style.display]="this.displayError ? 'block' : 'none'">
+      Vui lòng chọn và điền đầy đủ tất cả thông tin để hoàn thành địa chỉ hoặc sử dụng địa chỉ mặc định
+    </div>
   </div>
 
   <div class="address-modal__btn">

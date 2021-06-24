@@ -1,4 +1,4 @@
-<div class="profile">
+<div class="profile" *ngIf="!loading else loadingTmpl">
   <!-- <img class="profile__avatar" src="assets/image/default-avatar.png" /> -->
   <div class="profile__group-avatar">
     <img class="profile__avatar" [src]="profile?.avatarUrl ? profile?.avatarUrl : 'assets/image/default-avatar.png'" />
@@ -108,6 +108,15 @@
       </div>
     </div>
   </div>
+
+  <div class="mobile-context">
+    <div class="mobile-context__category__inside"  (click)="isSelectedTab(cate?.id)"
+      [ngClass]="{ selectedTabStyle: this.selectedTab === cate?.id }" *ngFor="let cate of this.mobileContext">
+      <div class="mobile-context__category__inside__title">
+        {{ cate?.title }}
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- Address Modal -->
@@ -116,3 +125,10 @@
     (addressData)="handleAddress($event)">
   </app-address-modal>
 </div>
+
+<ng-template #loadingTmpl>
+  Đang tải...
+</ng-template>
+
+<app-my-registration class="mobile-tab" *ngIf="this.selectedTab === 1"></app-my-registration>
+<app-my-donations class="mobile-tab"  *ngIf="this.selectedTab === 2"></app-my-donations>
