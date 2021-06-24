@@ -1,37 +1,23 @@
 <div class="home-left-side">
   <div class="home-left-side__profile" [routerLink]="['/profile']">
-    <img
-      class="home-left-side__profile__avatar"
-      src="{{ this.avatarUrl || 'assets/image/default-avatar.png' }}"
-      />
+    <img class="home-left-side__profile__avatar"
+      src="{{ currentUser.avatarUrl || 'assets/image/default-avatar.png' }}" />
 
     <div class="home-left-side__profile__name">
-      {{ currentName }}
+      {{ currentUser.fullName }}
     </div>
   </div>
 
   <div class="home-left-side__category">
-    <div
-      class="home-left-side__category__list"
-      *ngFor="let cate of this.categoryContext"
-      [routerLink]="cate?.url"
-      [ngClass]="{selectedTab: (this.selectedCategory === cate?.id)}"
-      (click)="onClick(cate?.id)"
-    >
+    <div class="home-left-side__category__list" *ngFor="let cate of this.categoryContext" [routerLink]="cate?.url"
+      [ngClass]="{selectedTab: (this.selectedCategory === cate?.id)}" (click)="onClick(cate?.id)">
       <div *ngIf="cate?.type == 'fas'; else elseBlock">
-        <fa-icon
-          class="home-left-side__category__list__icon"
-          [icon]="cate?.icon"
-        ></fa-icon>
+        <fa-icon class="home-left-side__category__list__icon" [icon]="cate?.icon"></fa-icon>
       </div>
 
       <ng-template #elseBlock>
-        <mat-icon
-          class="home-left-side__category__list__icon"
-          aria-hidden="false"
-          aria-label="icon"
-          >{{ cate?.icon }}</mat-icon
-        >
+        <mat-icon class="home-left-side__category__list__icon" aria-hidden="false" aria-label="icon">{{ cate?.icon }}
+        </mat-icon>
       </ng-template>
 
       <div class="home-left-side__category__list__title">

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { AddressModel } from 'src/app/core/constants/address.constant';
 
 @Injectable({
     providedIn: 'root',
@@ -24,5 +25,18 @@ export class AuthService {
 
     getUserId() {
         return this.userInfo.id;
+    }
+
+    getCurrentUser() {
+        return this.userInfo;
+    }
+
+    getCurrentAddress() {
+        return this.userInfo.address;
+    }
+
+    updateCurrentAddress(newAddress: AddressModel) {
+        this.userInfo.address = newAddress;
+        localStorage.setItem('userInfo', JSON.stringify(this.userInfo));
     }
 }

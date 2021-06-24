@@ -1,5 +1,5 @@
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -14,16 +14,15 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
 import { SharedModule } from './shared/shared.module';
-import { HomePageModule } from './modules/home-page/home-page.module';
-import { GroupModule } from './modules/group/group.module';
-import { NotificationModule } from './modules/notification/notification.module';
 import { TokenInterceptor } from './core/interceptors/token.interceptor';
-import { ProfileModule } from './modules/profile/profile.module';
-import { MyDonationsModule } from './modules/my-donations/my-donations.module';
 
 import { MessagingService } from 'src/app/shared/service/message.service';
 import { AsyncPipe } from '../../node_modules/@angular/common';
-import { AuthModule } from './modules/auth/auth.module';
+import { AddressService } from './shared/service/address.service';
+
+function initializeApp(addressService: AddressService) {
+    return () => addressService.loadData();
+}
 
 @NgModule({
     declarations: [AppComponent],
@@ -58,6 +57,13 @@ import { AuthModule } from './modules/auth/auth.module';
         },
         MessagingService,
         AsyncPipe,
+        AddressService,
+        {
+            provide: APP_INITIALIZER,
+            useFactory: initializeApp,
+            deps: [AddressService],
+            multi: true,
+        },
     ],
     bootstrap: [AppComponent],
 })

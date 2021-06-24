@@ -9,40 +9,39 @@ import { MessagingService } from './shared/service/message.service';
     styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'second-hand-sharing';
-  isLogin = false;
-  openMessageBox = false;
-  messageBoxByUser;
-  message;
-  changeMessage = false;
+    title = 'second-hand-sharing';
+    isLogin = false;
+    openMessageBox = false;
+    messageBoxByUser;
+    message;
+    changeMessage = false;
 
-  constructor(
-    private router: Router,
-    private authService: AuthService,
-    private addressService: AddressService,
-    private messagingService: MessagingService
-  ) {
-    this.router.events.forEach((event) => {
-      if (event instanceof NavigationStart) {
-        this.checkLogin();
-      }
-    });
-  }
-
-  checkLogin = () => {
-    if (this.authService.isAuthenticated()) {
-      this.isLogin = true;
+    constructor(
+        private router: Router,
+        private authService: AuthService,
+        private addressService: AddressService,
+        private messagingService: MessagingService
+    ) {
+        this.router.events.forEach((event) => {
+            if (event instanceof NavigationStart) {
+                this.checkLogin();
+            }
+        });
     }
-  }
 
-  // tslint:disable: use-lifecycle-interface
-  // tslint:disable-next-line: typedef
-  async ngOnInit() {
-    this.checkLogin();
-    this.messagingService.receiveMessage().subscribe((payload) => {
-      console.log(payload.data);
-    });
-    this.message = this.messagingService.currentMessage;
-    await this.addressService.loadData();
-  }
+    checkLogin = () => {
+        if (this.authService.isAuthenticated()) {
+            this.isLogin = true;
+        }
+    };
+
+    // tslint:disable: use-lifecycle-interface
+    // tslint:disable-next-line: typedef
+    ngOnInit() {
+        this.checkLogin();
+        this.messagingService.receiveMessage().subscribe((payload) => {
+            console.log(payload.data);
+        });
+        this.message = this.messagingService.currentMessage;
+    }
 }

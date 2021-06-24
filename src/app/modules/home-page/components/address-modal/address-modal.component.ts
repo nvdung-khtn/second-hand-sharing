@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AddressModel, EnumAddress } from 'src/app/core/constants/address.constant';
+import { AddressIdModel, AddressModel, EnumAddress } from 'src/app/core/constants/address.constant';
 import { AddressService } from 'src/app/shared/service/address.service';
+import { AuthService } from 'src/app/shared/service/auth.service';
 
 @Component({
     selector: 'app-address-modal',
@@ -16,9 +17,9 @@ export class AddressModalComponent implements OnInit {
     wards: any[] = [];
     selectedType: EnumAddress;
     myAddressArray: any;
-    myAddressString = '';
+    currentAdress: AddressIdModel;
 
-    constructor(private addressService: AddressService) {}
+    constructor(private addressService: AddressService, private authService: AuthService) {}
 
     addressForm: AddressModel = {
         cityId: -1,
@@ -37,7 +38,7 @@ export class AddressModalComponent implements OnInit {
         this.citys = await this.addressService.getAllCity();
         const user: any = JSON.parse(localStorage.getItem('userInfo'));
         this.myAddressArray = user.address;
-        this.myAddressString = localStorage.getItem('addressString');
+        this.currentAdress = this.authService.getCurrentAddress();
     }
 
     onClose() {
@@ -56,6 +57,9 @@ export class AddressModalComponent implements OnInit {
             this.displayError = false;
             this.addressData.emit(this.addressForm);
             this.modalChange.emit(this.isOpenModal);
+            debugger;
+            this.authService.updateCurrentAddress(this.addressForm);
+            this.currentAdress = this.addressForm;
         } else {
             this.displayError = true;
         }

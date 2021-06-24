@@ -49,6 +49,7 @@ export class ProfileComponent implements OnInit {
     getUserProfile() {
         this.authClient.getUserProfile().subscribe((response) => {
             this.profile = response.data;
+            localStorage.setItem('userInfo', JSON.stringify(response.data));
             this.loading = false;
         });
     }
@@ -59,15 +60,18 @@ export class ProfileComponent implements OnInit {
 
     handleAddress(event) {
         this.profile.address = event;
+        this.updateUserProfile(true);
     }
 
     toggleStatus(key) {
+        if (key === true) return;
         this.status[`${key}`] = !this.status[`${key}`];
     }
 
     updateUserProfile(key) {
         this.authClient.patchUserProfile(this.profile).subscribe((response) => {
             this.toggleStatus(key);
+            this.getUserProfile();
             this.toastr.success('Cập nhập thành công.');
             localStorage.setItem('userInfo', JSON.stringify(response.data));
             window.location.reload();
@@ -89,7 +93,8 @@ export class ProfileComponent implements OnInit {
             });
         }
     }
-    isSelectedTab = (id: number) => {
+
+    isSelectedTab(id: number) {
         this.selectedTab = id;
     }
 }

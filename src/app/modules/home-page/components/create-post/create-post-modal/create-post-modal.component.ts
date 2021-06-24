@@ -6,6 +6,7 @@ import { HomeClient } from 'src/app/core/api-clients/home.client';
 import { CreateItem } from 'src/app/core/constants/item.constant';
 import { AddressService } from 'src/app/shared/service/address.service';
 import { UserInfo } from 'src/app/core/constants/user.constant';
+import { AuthService } from 'src/app/shared/service/auth.service';
 
 @Component({
     selector: 'app-create-post-modal',
@@ -28,11 +29,7 @@ export class CreatePostModalComponent implements OnInit, OnDestroy {
     categoryTabBackground = '#f2f2f2';
     categoryIconBackground = '#ffffff';
 
-    currentUser = {
-        fullName: '',
-        addressString: '',
-        email: '',
-    };
+    currentUser: UserInfo;
     myFiles: string[] = [];
     ////////////////////////////////////////////////////////////////
     public postForm!: FormGroup;
@@ -44,7 +41,8 @@ export class CreatePostModalComponent implements OnInit, OnDestroy {
         private uploadImageService: UploadImageService,
         private fb: FormBuilder,
         private homeClient: HomeClient,
-        private addressService: AddressService
+        private addressService: AddressService,
+        private authService: AuthService
     ) {}
 
     ngOnInit(): void {
@@ -54,15 +52,7 @@ export class CreatePostModalComponent implements OnInit, OnDestroy {
             description: ['', [Validators.required]],
         });
 
-        this.getCurrentName();
-    }
-
-    // get information of CurrentUser
-    getCurrentName() {
-        const user: any = JSON.parse(localStorage.getItem('userInfo'));
-        this.currentUser.fullName = user.fullName;
-        this.currentUser.addressString = localStorage.getItem('addressString');
-        this.currentUser.email = user.email;
+        this.currentUser = this.authService.getCurrentUser();
     }
 
     onClose() {
@@ -152,9 +142,8 @@ export class CreatePostModalComponent implements OnInit, OnDestroy {
     }
 
     // trigger when app-address-modal component emit addressId
-    async handleAddress(address: AddressModel): Promise<void> {
-        this.receiveAddress = await this.addressService.getAddressVMById(address);
-        this.currentUser.addressString = this.addressService.getAddressString(this.receiveAddress);
+    handleAddress(address: AddressModel) {
+        this.currentUser.address = address;
     }
 
     handleCategoryId(catId: number) {
