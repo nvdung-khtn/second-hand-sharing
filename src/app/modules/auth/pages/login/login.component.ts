@@ -51,13 +51,8 @@ export class LoginComponent implements OnInit {
     onSubmit() {
         this.loading = true;
         this.authClient.login(this.loginForm.value).subscribe(
-            async (response) => {
+            (response) => {
                 this.isError = false;
-                if (response.data.userInfo.address) {
-                    const addressVM = await this.addressService.getAddressVMById(
-                        response.data.userInfo.address
-                    );
-                }
                 this.loading = false;
                 localStorage.setItem('access_token', response.data.jwToken);
                 localStorage.setItem('expiration', response.data.expiration.toString());

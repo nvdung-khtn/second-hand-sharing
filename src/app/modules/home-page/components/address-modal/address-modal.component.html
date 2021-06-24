@@ -11,7 +11,7 @@
     </div>
 
     <div class="my-address__text">
-      {{myAddressString}}
+      {{currentAdress | address}}
     </div>
   </div>
 
@@ -21,27 +21,25 @@
     </div>
     <div class="address-modal__dropdown">
       <app-dropdown-form [inputData]="citys" [property]="'cityName'" [dropdownLabel]="'Tỉnh/Thành phố'"
-        (selectedType)="this.selectedType=$event"
-        (selectedValue)="handleSelectedAddress($event)">
+        (selectedType)="this.selectedType=$event" (selectedValue)="handleSelectedAddress($event)">
       </app-dropdown-form>
     </div>
-  
+
     <div class="address-modal__dropdown">
       <app-dropdown-form [inputData]="districts" [property]="'districtName'" [dropdownLabel]="'Quận/Huyện'"
-      (selectedType)="this.selectedType=$event"
-      (selectedValue)="handleSelectedAddress($event)">
+        (selectedType)="this.selectedType=$event" (selectedValue)="handleSelectedAddress($event)">
       </app-dropdown-form>
     </div>
-  
+
     <div class="address-modal__dropdown">
       <app-dropdown-form [inputData]="wards" [property]="'wardName'" [dropdownLabel]="'Phường/Xã'"
-      (selectedType)="this.selectedType=$event"
-      (selectedValue)="handleSelectedAddress($event)">
+        (selectedType)="this.selectedType=$event" (selectedValue)="handleSelectedAddress($event)">
       </app-dropdown-form>
     </div>
-  
-    <input class="address-modal__street" type="text" placeholder="Tòa nhà/Tên đường" [(ngModel)]="this.addressForm.street">
-  
+
+    <input class="address-modal__street" type="text" placeholder="Tòa nhà/Tên đường"
+      [(ngModel)]="this.addressForm.street">
+
     <div class="address-modal__error" [style.display]="this.displayError ? 'block' : 'none'">
       Vui lòng chọn và điền đầy đủ tất cả thông tin để hoàn thành địa chỉ hoặc sử dụng địa chỉ mặc định
     </div>
