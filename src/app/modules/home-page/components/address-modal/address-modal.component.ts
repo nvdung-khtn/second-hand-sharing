@@ -1,5 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { AddressIdModel, AddressModel, EnumAddress } from 'src/app/core/constants/address.constant';
+import { UserInfo } from 'src/app/core/constants/user.constant';
 import { AddressService } from 'src/app/shared/service/address.service';
 import { AuthService } from 'src/app/shared/service/auth.service';
 
@@ -8,7 +11,7 @@ import { AuthService } from 'src/app/shared/service/auth.service';
     templateUrl: './address-modal.component.html',
     styleUrls: ['./address-modal.component.scss'],
 })
-export class AddressModalComponent implements OnInit {
+export class AddressModalComponent implements OnInit, OnDestroy {
     @Input() isOpenModal: boolean;
     @Output() modalChange = new EventEmitter<boolean>();
     @Output() addressData = new EventEmitter<AddressModel>();
@@ -17,7 +20,7 @@ export class AddressModalComponent implements OnInit {
     wards: any[] = [];
     selectedType: EnumAddress;
     myAddressArray: any;
-    currentAdress: AddressIdModel;
+    currentUser: UserInfo;
 
     constructor(private addressService: AddressService, private authService: AuthService) {}
 
@@ -32,13 +35,20 @@ export class AddressModalComponent implements OnInit {
     };
 
     displayError = false;
+    destroy$ = new Subject<void>();
 
     async ngOnInit() {
         // get all city
         this.citys = await this.addressService.getAllCity();
+        this.getCurrentUser();
         const user: any = JSON.parse(localStorage.getItem('userInfo'));
         this.myAddressArray = user.address;
-        this.currentAdress = this.authService.getCurrentAddress();
+    }
+
+    getCurrentUser() {
+        this.authService.currentUser$
+            .pipe(takeUntil(this.destroy$))
+            .subscribe((user) => (this.currentUser = user));
     }
 
     onClose() {
@@ -57,9 +67,8 @@ export class AddressModalComponent implements OnInit {
             this.displayError = false;
             this.addressData.emit(this.addressForm);
             this.modalChange.emit(this.isOpenModal);
-            debugger;
-            this.authService.updateCurrentAddress(this.addressForm);
-            this.currentAdress = this.addressForm;
+            this.currentUser = { ...this.currentUser, address: this.addressForm };
+            this.authService.updateCurrentUser(this.currentUser);
         } else {
             this.displayError = true;
         }
@@ -93,4 +102,9 @@ export class AddressModalComponent implements OnInit {
         this.addressData.emit(this.myAddressArray);
         this.modalChange.emit(this.isOpenModal);
     };
+
+    ngOnDestroy() {
+        this.destroy$.next();
+        this.destroy$.complete();
+    }
 }

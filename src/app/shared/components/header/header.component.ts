@@ -1,17 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 // tslint:disable-next-line: no-unused-expression
 import { faHands, faHandsHelping } from '@fortawesome/free-solid-svg-icons';
-import { filter } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { filter, takeUntil } from 'rxjs/operators';
+import { UserInfo } from 'src/app/core/constants/user.constant';
+import { AuthService } from '../../service/auth.service';
 @Component({
     selector: 'app-header',
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
     selectedTab = 1;
     selectedMoreTab = false;
-    myInfo;
+    currentUser: UserInfo;
 
     headerContext = [
         {
@@ -60,8 +63,9 @@ export class HeaderComponent implements OnInit {
             id: 6,
         },
     ];
+    destroy$ = new Subject<void>();
 
-    constructor(private router: Router) {
+    constructor(private router: Router, private authService: AuthService) {
         this.router.events
             .pipe(filter((event) => event instanceof NavigationEnd))
             // tslint:disable-next-line: deprecation
@@ -70,12 +74,18 @@ export class HeaderComponent implements OnInit {
             });
     }
     ngOnInit(): void {
-        this.myInfo = JSON.parse(localStorage.getItem('userInfo'));
+        this.getCurrentUser();
+    }
+
+    getCurrentUser() {
+        this.authService.currentUser$
+            .pipe(takeUntil(this.destroy$))
+            .subscribe((user) => (this.currentUser = user));
     }
 
     isSelectedTab = (id: number) => {
         this.selectedTab = id;
-    }
+    };
     checkTabURL = (url: string) => {
         const checkArray = ['home', 'group', 'campaign', 'chart', 'notification'];
         // tslint:disable-next-line: prefer-for-of
@@ -84,16 +94,21 @@ export class HeaderComponent implements OnInit {
                 return i + 1;
             }
         }
-    }
+    };
     onLogOut = () => {
         localStorage.clear();
         this.router.navigateByUrl('/auth/login').then(() => {
             window.location.reload();
         });
-    }
+    };
 
     getName = (name: string) => {
         const temp = name && name.split(' ');
         return Array.isArray(temp) && temp[temp?.length - 1];
+    };
+
+    ngOnDestroy() {
+        this.destroy$.next();
+        this.destroy$.complete();
     }
 }

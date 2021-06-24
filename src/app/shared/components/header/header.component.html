@@ -3,7 +3,7 @@
     <img [routerLink]="['/home']" class="header__first-group__logo" src="assets/image/2hand-sharing.png" />
 
     <img [routerLink]="['/profile']" class="mobile-profile"
-      src="{{myInfo?.avatarUrl || 'assets/image/default-avatar.png'}}" />
+      src="{{currentUser?.avatarUrl || 'assets/image/default-avatar.png'}}" />
   </div>
 
   <div class="header__second-group">
@@ -25,11 +25,11 @@
       </div>
     </div>
 
-    <div class="header__second-group__profile"  [routerLink]="['/profile']">
+    <div class="header__second-group__profile" [routerLink]="['/profile']">
       <img class="header__second-group__profile__avatar"
-      src="{{myInfo?.avatarUrl || 'assets/image/default-avatar.png'}}" />
+        src="{{currentUser?.avatarUrl || 'assets/image/default-avatar.png'}}" />
 
-      <div class="header__second-group__profile__name">{{getName(myInfo?.fullName)}}</div>
+      <div class="header__second-group__profile__name">{{getName(currentUser?.fullName)}}</div>
     </div>
 
     <div class="header__second-group__other">

@@ -7,6 +7,8 @@ import { CreateItem } from 'src/app/core/constants/item.constant';
 import { AddressService } from 'src/app/shared/service/address.service';
 import { UserInfo } from 'src/app/core/constants/user.constant';
 import { AuthService } from 'src/app/shared/service/auth.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'app-create-post-modal',
@@ -37,6 +39,7 @@ export class CreatePostModalComponent implements OnInit, OnDestroy {
     selectedCatId: number;
     preSignUrl: string[] = [];
     selectedFiles?: FileList = null;
+    destroy$ = new Subject<void>();
     constructor(
         private uploadImageService: UploadImageService,
         private fb: FormBuilder,
@@ -52,7 +55,13 @@ export class CreatePostModalComponent implements OnInit, OnDestroy {
             description: ['', [Validators.required]],
         });
 
-        this.currentUser = this.authService.getCurrentUser();
+        this.getCurrentUser();
+    }
+
+    getCurrentUser() {
+        this.authService.currentUser$
+            .pipe(takeUntil(this.destroy$))
+            .subscribe((user) => (this.currentUser = user));
     }
 
     onClose() {
@@ -151,5 +160,8 @@ export class CreatePostModalComponent implements OnInit, OnDestroy {
         this.selectedCatId = catId;
     }
 
-    ngOnDestroy() {}
+    ngOnDestroy() {
+        this.destroy$.next();
+        this.destroy$.complete();
+    }
 }
