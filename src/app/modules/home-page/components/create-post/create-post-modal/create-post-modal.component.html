@@ -12,18 +12,26 @@
           {{ currentUser.fullName }}
         </div>
 
-        <div class="create-post-modal__user-info__profile__info__address">
-          <mat-icon class="create-post-modal__user-info__profile__info__address__location"> location_on</mat-icon>
-
-          <div class="create-post-modal__user-info__profile__info__address__address">
-            {{ currentUser.addressString }}
-          </div>
+        <div class="create-post-modal__user-info__profile__info__email">
+          {{ currentUser.email }}
         </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="address-title">Địa chỉ liên hệ</div>
+
+  <div class="address-group">
+    <div class="create-post-modal__user-info__profile__info__address">
+      <mat-icon class="create-post-modal__user-info__profile__info__address__location"> location_on</mat-icon>
+
+      <div class="create-post-modal__user-info__profile__info__address__address">
+        {{ currentUser.addressString }}
       </div>
     </div>
 
     <div class="create-post-modal__user-info__address" (click)="onOpenAddressModal()">
-      <div class="create-post-modal__user-info__address__title">Địa chỉ liên hệ</div>
+      <div class="create-post-modal__user-info__address__title">Chọn địa chỉ</div>
 
       <mat-icon class="create-post-modal__user-info__address__icon">map</mat-icon>
     </div>

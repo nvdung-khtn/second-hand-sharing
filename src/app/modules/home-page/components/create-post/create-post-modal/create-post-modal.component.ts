@@ -31,6 +31,7 @@ export class CreatePostModalComponent implements OnInit, OnDestroy {
     currentUser = {
         fullName: '',
         addressString: '',
+        email: '',
     };
     myFiles: string[] = [];
     ////////////////////////////////////////////////////////////////
@@ -61,6 +62,7 @@ export class CreatePostModalComponent implements OnInit, OnDestroy {
         const user: any = JSON.parse(localStorage.getItem('userInfo'));
         this.currentUser.fullName = user.fullName;
         this.currentUser.addressString = localStorage.getItem('addressString');
+        this.currentUser.email = user.email;
     }
 
     onClose() {

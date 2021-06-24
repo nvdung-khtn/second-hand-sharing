@@ -45,6 +45,13 @@ $box-shadow-color: #55acfc;
 $border-radius-default: 10px;
 $border-radius-light: 5px;
 
+//shadow
+$shadow-1: rgba(0, 0, 0, 0.1);
+$shadow-2: rgba(0, 0, 0, 0.2);
+$shadow-5: rgba(0, 0, 0, 0.5);
+$shadow-8: rgba(0, 0, 0, 0.8);
+$shadow-inset: rgba(255, 255, 255, 0.5);
+
 //screen size
 
 @media (min-width: 1281px) {
@@ -65,4 +72,8 @@ $border-radius-light: 5px;
 }
 
 @media (min-width: 320px) and (max-width: 480px) {
+}
+
+@mixin box-shadow() {
+    box-shadow: 0 12px 28px 0 $shadow-2,0 2px 4px 0 $shadow-1,inset 0 0 0 1px $shadow-inset;
 }
