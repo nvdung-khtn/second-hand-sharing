@@ -55,7 +55,7 @@
           #SEND_THANKS
           *ngIf="noti?.type === NotifyType.SEND_THANKS"
         >
-          <img class="notification__avatar" src="assets/image/thanks.png" />
+          <img class="notification__avatar" src="{{noti?.data?.sendFromAccountAvatarUrl || 'assets/image/default-avatar.png'}}" />
 
           <div class="noti-info">
             <b>{{ noti?.data?.sendFromAccountName }}</b> đã gửi lời cảm ơn đến bạn với nội dung:

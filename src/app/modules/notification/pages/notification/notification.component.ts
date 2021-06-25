@@ -29,7 +29,9 @@ export class NotificationComponent implements OnInit {
     async ngOnInit() {
         this.loading = true;
         // tslint:disable-next-line: prefer-for-of
-        const response = await this.notificationClient.getNotifications(this.defaultReq).toPromise();
+        const response = await this.notificationClient
+            .getNotifications(this.defaultReq)
+            .toPromise();
         this.notifications = response.data;
         this.loading = false;
 
@@ -63,8 +65,12 @@ export class NotificationComponent implements OnInit {
     }
 
     handleNotiType(type: number, index) {
-        this.loading = true;
-        const data: any = this.notifications[index].data;
-        this.router.navigate(['/item', data.itemId]).then(() => {this.loading = false;});
+        if (type !== 5) {
+            this.loading = true;
+            const data: any = this.notifications[index].data;
+            this.router.navigate(['/item', data.itemId]).then(() => {
+                this.loading = false;
+            });
+        }
     }
 }
