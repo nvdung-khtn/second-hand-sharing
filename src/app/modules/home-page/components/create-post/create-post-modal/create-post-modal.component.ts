@@ -59,9 +59,10 @@ export class CreatePostModalComponent implements OnInit, OnDestroy {
     }
 
     getCurrentUser() {
-        this.authService.currentUser$
-            .pipe(takeUntil(this.destroy$))
-            .subscribe((user) => (this.currentUser = user));
+        this.authService.currentUser$.pipe(takeUntil(this.destroy$)).subscribe((user) => {
+            this.currentUser = user;
+            this.receiveAddress = user?.address;
+        });
     }
 
     onClose() {
@@ -99,13 +100,10 @@ export class CreatePostModalComponent implements OnInit, OnDestroy {
     uploadImages = (urls) => {
         // Reset selectedFiles
         const images = this.selectedFiles;
-        console.log(this.selectedFiles);
         this.selectedFiles = null;
-        /* debugger; */
         // Upload to cloude
         if (images) {
             const count = images.length;
-            console.log(`count: ${count}`);
 
             for (let index = 0; index < count; index++) {
                 this.uploadImageService.uploadSingleImage(urls[index], images[index]).subscribe();
@@ -156,7 +154,6 @@ export class CreatePostModalComponent implements OnInit, OnDestroy {
     }
 
     handleCategoryId(catId: number) {
-        console.log(`catId: ${catId}`);
         this.selectedCatId = catId;
     }
 

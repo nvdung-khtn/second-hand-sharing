@@ -53,7 +53,6 @@ export class ResetPasswordComponent implements OnInit {
     }
 
     async onSubmit() {
-        console.log('resetForm: ', this.resetForm.value);
         if (this.resetForm.invalid) {
             Swal.fire({
                 icon: 'error',
@@ -67,7 +66,6 @@ export class ResetPasswordComponent implements OnInit {
         this.authClient.resetPassword(this.resetForm.value).subscribe(
             async (data) => {
                 this.isSuccess = true;
-                console.log(data);
                 await Swal.fire({
                     icon: 'success',
                     title: 'Success...',

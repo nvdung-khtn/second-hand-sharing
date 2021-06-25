@@ -10,8 +10,8 @@
     border-radius: $border-radius-light;
     color: $primary-text-color;
     max-width: 750px;
-    height: 20%;
-    max-height: 150px;
+    height: 100%;
+    max-height: 11rem;
     overflow-y: scroll;
 
     &::-webkit-scrollbar {

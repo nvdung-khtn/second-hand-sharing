@@ -33,7 +33,8 @@ import { MyRegistrationModule } from '../my-registration/my-registration.module'
         MatNativeDateModule,
         FontAwesomeModule,
         MyDonationsModule,
-        MyRegistrationModule
+        MyRegistrationModule,
+        SharedModule
     ],
 })
 export class ProfileModule {}

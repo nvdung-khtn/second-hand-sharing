@@ -319,4 +319,11 @@
             background-color: $btn-cancel-color-hover !important;
         }
     }
+
+    ::ng-deep .carousel-indicators {
+        left: 0;
+        transform: unset;
+    }
 }
+
+

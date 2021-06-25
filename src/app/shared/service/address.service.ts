@@ -119,9 +119,9 @@ export class AddressService {
             this._address &&
             this._address.find(
                 (address) =>
-                    address.cityId === addr.cityId &&
-                    address.districtId === addr.districtId &&
-                    address.wardId === addr.wardId
+                    address?.cityId === addr?.cityId &&
+                    address?.districtId === addr?.districtId &&
+                    address?.wardId === addr?.wardId
             );
         return { ...result, street: addr?.street } as AddressModel;
     }

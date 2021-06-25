@@ -29,6 +29,6 @@ export class GroupComponent implements OnInit {
     }
 
     onNavigateToGroup = (id: number) => {
-        console.log(id);
+        // console.log(id);
     };
 }

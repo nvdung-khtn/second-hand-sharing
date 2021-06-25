@@ -28,7 +28,6 @@ export class ConfirmEmailComponent implements OnInit {
           }
           this.authClient.confirmEmail(form).subscribe(
             (response) => {
-              console.log(response);
               this.message = 'Xác nhận email thành công, vui lòng đăng nhập để bắt đầu sử dụng hệ thống';
             },
             (error) => {

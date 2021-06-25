@@ -56,12 +56,14 @@ export class ListItemsComponent implements OnInit, OnChanges {
                 : this.itemClient.getMyRegistration(this.myInfo?.id).subscribe(
                       (response) => {
                           this.items = response.data;
+                          this.isEnd = true;
                       },
                       (error) => console.log(error)
                   )
             : this.itemClient.getMyDonations(donationsUserId).subscribe(
                   (response) => {
                       this.items = response.data;
+                      this.isEnd = true;
                   },
                   (error) => console.log(error)
               );
@@ -88,6 +90,9 @@ export class ListItemsComponent implements OnInit, OnChanges {
                 .subscribe((response) => {
                     this.items = response.data;
                     this.loading = false;
+                    if (this.items.length <= 2 && this.items.length > 0) {
+                        this.isEnd = true;
+                    }
                 });
         }
     }
@@ -101,7 +106,7 @@ export class ListItemsComponent implements OnInit, OnChanges {
                 this.homeClient.getItems(newReq).subscribe((response) => {
                     this.items = [...this.items, ...response.data];
                     this.loading = false;
-                    if (response.data?.length !== 0) {
+                    if (response.data?.length === 0) {
                         this.isEnd = true;
                     }
                 });
@@ -112,7 +117,7 @@ export class ListItemsComponent implements OnInit, OnChanges {
                     .subscribe((response) => {
                         this.items = [...this.items, ...response.data];
                         this.loading = false;
-                        if (response.data?.length !== 0) {
+                        if (response.data?.length === 0) {
                             this.isEnd = true;
                         }
                     });

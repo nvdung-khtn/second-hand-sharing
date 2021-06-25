@@ -10,7 +10,7 @@ import {
 } from '../constants/auth.constant';
 import { Observable } from 'rxjs';
 import { ResponseModel } from '../constants/common.constant';
-import { UserInfo } from '../constants/user.constant';
+import { UserAward, UserInfo } from '../constants/user.constant';
 
 @Injectable({
     providedIn: 'root',
@@ -63,5 +63,10 @@ export class AuthClient {
     updateAvatar(): Observable<ResponseModel<any>> {
         const url = `${this.baseUrl}/User/update-avatar`;
         return this.http.put<ResponseModel<any>>(url, null);
+    }
+
+    getTopAward(): Observable<ResponseModel<UserAward>> {
+        const url = `${this.baseUrl}/topAward`;
+        return this.http.get<ResponseModel<UserAward>>(url);
     }
 }
