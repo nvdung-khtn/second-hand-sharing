@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AuthClient } from 'src/app/core/api-clients/auth.client';
 import { UserInfo } from 'src/app/core/constants/user.constant';
+import { AddressService } from 'src/app/shared/service/address.service';
 import { AuthService } from 'src/app/shared/service/auth.service';
 import { UploadImageService } from 'src/app/shared/service/uploadImage.service';
 
@@ -44,7 +45,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
         private readonly authClient: AuthClient,
         private authService: AuthService,
         private readonly toastr: ToastrService,
-        private uploadImageService: UploadImageService
+        private uploadImageService: UploadImageService,
+        private addressService: AddressService
     ) {}
 
     ngOnInit() {
@@ -65,6 +67,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
     handleAddress(event) {
         this.profile.address = event;
+        localStorage.setItem('addressString', this.addressService.getAddressString(this.profile.address));
         this.updateUserProfile(true);
     }
 

@@ -8,3 +8,11 @@ export class UserInfo {
     address: AddressIdModel;
     email: string;
 }
+
+export class UserAward {
+    id: number;
+    userId: number;
+    donateAccountName: string;
+    avatarUrl: string;
+    donateTime: number;
+}

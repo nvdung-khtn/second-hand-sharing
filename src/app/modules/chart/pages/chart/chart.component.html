@@ -1,1 +1,24 @@
-<p>Tính năng đang được phát triển</p>
+<div class="chart" >
+  <div class="chart__title">Top Vinh danh trong tháng</div>
+
+  <div class="chart__list">
+    <div class="chart__list__profile" *ngFor="let user of topUserData">
+      <img
+        class="chart__list__profile__avatar"
+        src="{{ user?.avatarUrl || 'assets/image/default-avatar.png' }}"
+      />
+
+      <div class="chart__list__profile__info">
+        <div class="chart__list__profile__info__name">
+          {{ user?.donateAccountName }}
+        </div>
+
+        <div class="chart__list__profile__info__times">
+          {{ user?.donateTime }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-loader [style.display]="this.loading ? 'block' : 'none'"></app-loader>

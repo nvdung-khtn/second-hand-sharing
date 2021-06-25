@@ -78,14 +78,11 @@ export class AuthRegisterFormComponent implements OnInit {
             });
             return;
         }
-        debugger;
-        console.log('data: ', this.registerForm.value);
 
         const response = await this.authClient.register(this.registerForm.value);
         this.authClient.register(this.registerForm.value).subscribe(
             (data) => {
                 this.isSuccess = true;
-                console.log(data);
                 Swal.fire({
                     icon: 'success',
                     title: 'Success...',

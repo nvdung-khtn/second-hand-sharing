@@ -9,11 +9,12 @@ import { NotifyType, Notification } from '../../../../core/constants/notificatio
     styleUrls: ['./notification.component.scss'],
 })
 export class NotificationComponent implements OnInit {
+    loading = false;
     NotifyType = NotifyType;
     private defaultPageNumber: number = 1;
-    private defaultPageSize: number = 3;
+    private defaultPageSize: number = 100;
     myInfo;
-    notificationScrollDistance = 2;
+    notificationScrollDistance = 99;
     notificationScrollThrottle = 50;
     defaultReq: SearchRequest;
     notifications: Notification[] = [];
@@ -26,18 +27,23 @@ export class NotificationComponent implements OnInit {
     }
 
     async ngOnInit() {
+        this.loading = true;
         // tslint:disable-next-line: prefer-for-of
-        let response = await this.notificationClient.getNotifications(this.defaultReq).toPromise();
+        const response = await this.notificationClient
+            .getNotifications(this.defaultReq)
+            .toPromise();
         this.notifications = response.data;
+        this.loading = false;
 
+        // tslint:disable-next-line: prefer-for-of
         for (let i = 0; i < this.notifications.length; i++) {
             this.notifications[i].data = JSON.parse(this.notifications[i].data);
         }
         this.myInfo = JSON.parse(localStorage.getItem('userInfo'));
     }
 
-    handleReceiverName(id: number) {
-        return id !== this.myInfo.id ? id : 'bạn';
+    handleReceiverName(data: any) {
+        return data?.receiverId !== this.myInfo.id ? data?.receiverName : 'bạn';
     }
 
     handleRequestStatus(id: number) {
@@ -45,32 +51,26 @@ export class NotificationComponent implements OnInit {
     }
 
     onNotificationScrollDown() {
+        this.loading = true;
         this.defaultPageNumber += 1;
         const newReq = new SearchRequest(this.defaultPageNumber, this.defaultPageSize);
         this.notificationClient.getNotifications(newReq).subscribe((response) => {
             let result: Notification[] = response.data;
-
             for (let i = 0; i < result.length; i++) {
                 result[i].data = JSON.parse(result[i].data);
             }
             this.notifications = [...this.notifications, ...result];
+            this.loading = false;
         });
     }
 
     handleNotiType(type: number, index) {
-        switch (type) {
-            case 2:
-            case 3:
-            case 4:
-            case 6:
-                const data: any = this.notifications[index].data;
-                this.router.navigate(['/item', data.itemId]);
-                return;
-            case 5:
-                // Tin nhan
-                // this.modalChange.emit(true);
-                // this.userInfo.emit(this.notifications[index].data);
-                return 'SEND_THANKS';
+        if (type !== 5) {
+            this.loading = true;
+            const data: any = this.notifications[index].data;
+            this.router.navigate(['/item', data.itemId]).then(() => {
+                this.loading = false;
+            });
         }
     }
 }
