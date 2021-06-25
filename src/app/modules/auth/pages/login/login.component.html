@@ -61,7 +61,8 @@
       </div>
 
       <div class="login-container__left__form__error" [style.display]="this.isError ? 'block' : 'none'">
-        Tên đăng nhập hoặc mật khẩu không đúng!
+        <!-- Tên đăng nhập hoặc mật khẩu không đúng! -->
+        {{message}}
       </div>
 
       <div class="login-container__left__form__btn" (click)="onSubmit()">

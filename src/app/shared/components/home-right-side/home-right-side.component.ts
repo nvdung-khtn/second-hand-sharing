@@ -15,7 +15,7 @@ export class HomeRightSideComponent implements OnInit {
 
     constructor(private messageClient: MessageClient, private authClient: AuthClient) {}
 
-    topUserData: UserAward;
+    topUserData: UserAward[];
     userMessageData: any;
     myInfo;
 
@@ -31,6 +31,7 @@ export class HomeRightSideComponent implements OnInit {
 
         this.authClient.getTopAward().subscribe(
             (response) => {
+                debugger;
                 this.topUserData = response.data;
             },
             (error) => console.log(error)
@@ -41,7 +42,7 @@ export class HomeRightSideComponent implements OnInit {
         this.openMessageBox = true;
         this.modalChange.emit(this.openMessageBox);
         this.userInfo.emit(user);
-    }
+    };
 
     handleAccountName = (user: any) => {
         // tslint:disable-next-line: no-unused-expression
@@ -50,7 +51,7 @@ export class HomeRightSideComponent implements OnInit {
             ? (name = user.sendFromAccountName)
             : (name = user.sendToAccountName);
         return name;
-    }
+    };
 
     handleAvatar = (user: any) => {
         // tslint:disable-next-line: no-unused-expression
@@ -59,5 +60,5 @@ export class HomeRightSideComponent implements OnInit {
             ? (avatar = user.sendFromAccountAvatarUrl)
             : (avatar = user.sendToAccountAvatarUrl);
         return avatar;
-    }
+    };
 }
