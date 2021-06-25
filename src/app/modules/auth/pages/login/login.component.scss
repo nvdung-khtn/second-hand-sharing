@@ -27,7 +27,7 @@
     }
 
     .text-danger {
-        color: red;
+        color: $error-color;
     }
 
     &__left {
@@ -164,7 +164,7 @@
 
             &__error {
                 display: none;
-                color: red;
+                color: $error-color;
             }
 
             &__btn {
@@ -269,4 +269,12 @@
             }
         }
     }
+}
+
+.text-danger {
+    color: $error-color !important;
+}
+
+.login-container__left__form__input__text__inside.ng-invalid.ng-touched {
+    border-color: $error-color !important;
 }

@@ -9,6 +9,7 @@ $light-pink: #f780a9;
 $pink: #f94885;
 $light-green: #50e156;
 $green: #13c61a;
+$error-color: rgb(235, 33, 33);
 
 $primary-color: #0e88fa;
 $selected-text-color: #0e88fa;
@@ -75,5 +76,5 @@ $shadow-inset: rgba(255, 255, 255, 0.5);
 }
 
 @mixin box-shadow() {
-    box-shadow: 0 12px 28px 0 $shadow-2,0 2px 4px 0 $shadow-1,inset 0 0 0 1px $shadow-inset;
+    box-shadow: 0 12px 28px 0 $shadow-2, 0 2px 4px 0 $shadow-1, inset 0 0 0 1px $shadow-inset;
 }

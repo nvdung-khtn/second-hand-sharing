@@ -70,6 +70,11 @@
       <mat-datepicker #picker></mat-datepicker>
       <mat-error *ngIf="dateCtrl.errors?.required && dateCtrl.touched">Choose a Date</mat-error>
     </mat-form-field>
+    <div *ngIf="dob.invalid && (dob.dirty || dob.touched)" class="message-error">
+      <div *ngIf="dob.errors?.required" class="text text-danger">
+        Vui lòng nhập trường này.
+      </div>
+    </div>
   </form>
 
   <button class="register-form__btn" (click)="onSubmit()">
@@ -77,3 +82,5 @@
   </button>
 
 </div>
+
+<app-loader *ngIf="loading"></app-loader>

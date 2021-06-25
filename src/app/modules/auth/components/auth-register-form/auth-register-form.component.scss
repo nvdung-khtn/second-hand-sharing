@@ -1,30 +1,69 @@
 @import "../../../../../styles/variables";
 .register-form {
-  @media (min-width: 1281px) {
-    margin-top: 20px;
-  }
+    @media (min-width: 1281px) {
+        margin-top: 20px;
+    }
 
-  @media (min-width: 1025px) and (max-width: 1280px) {
-    margin-top: 50px;
-  }
+    @media (min-width: 1025px) and (max-width: 1280px) {
+        margin-top: 50px;
+    }
 
-  &__title {
-    font-weight: $font-weight-bold;
-    font-size: $largest-font-size;
-    color: $primary-text-color;
-    margin-bottom: 5%;
-  }
+    &__title {
+        font-weight: $font-weight-bold;
+        font-size: $largest-font-size;
+        color: $primary-text-color;
+        margin-bottom: 5%;
+    }
 
-  &__describe {
-    color: $primary-light-text-color;
-    margin-bottom: 8%;
-  }
+    &__describe {
+        color: $primary-light-text-color;
+        margin-bottom: 8%;
+    }
 
-  &__input {
-    &__text {
-      margin-top: 4%;
+    &__input {
+        &__text {
+            margin-top: 4%;
 
-      &__inside {
+            &__inside {
+                border: none;
+                padding: 2% 0;
+                border-bottom: 1px solid $primary-color;
+                width: 100%;
+                color: $primary-color;
+                font-size: $default-font-size;
+
+                &:focus {
+                    outline: none;
+                }
+
+                &::placeholder {
+                    color: $primary-color;
+                }
+            }
+        }
+    }
+    &__btn {
+        width: 100%;
+        border: none;
+        text-align: center;
+        margin: 8% 0;
+        padding: 3% 0;
+        background-color: $btn-color;
+        color: white;
+        border-radius: 10px;
+        cursor: pointer;
+        box-shadow: 0 10px 20px 0 $box-shadow-color;
+
+        &:hover {
+            background-color: $btn-selected;
+        }
+    }
+}
+
+.auth-input__text {
+    margin-top: 4%;
+
+    &__inside {
         border: none;
         padding: 2% 0;
         border-bottom: 1px solid $primary-color;
@@ -33,76 +72,44 @@
         font-size: $default-font-size;
 
         &:focus {
-          outline: none;
+            outline: none;
         }
 
         &::placeholder {
-          color: $primary-color;
+            color: $primary-color;
         }
-      }
     }
-  }
-  &__btn {
-    width: 100%;
-    border: none;
-    text-align: center;
-    margin: 8% 0;
-    padding: 3% 0;
-    background-color: $btn-color;
-    color: white;
-    border-radius: 10px;
-    cursor: pointer;
-    box-shadow: 0 10px 20px 0 $box-shadow-color;
-
-    &:hover {
-      background-color: $btn-selected;
-  }
-  }
-}
-
-.auth-input__text {
-  margin-top: 4%;
-
-  &__inside {
-    border: none;
-    padding: 2% 0;
-    border-bottom: 1px solid $primary-color;
-    width: 100%;
-    color: $primary-color;
-    font-size: $default-font-size;
-
-    &:focus {
-      outline: none;
-    }
-
-    &::placeholder {
-      color: $primary-color;
-    }
-  }
 }
 
 .auth-input__date {
-  font-size: $default-font-size;
-  margin-top: 4%;
+    font-size: $default-font-size;
+    margin-top: 4%;
 }
 
 .auth-input__date ::ng-deep .mat-form-field-flex {
-  padding: 0;
-  background-color: #fff;
+    padding: 0;
+    background-color: #fff;
 }
 .auth-input__date ::ng-deep .mat-form-field-infix {
-  padding: 2% 0;
+    padding: 2% 0;
 }
 .auth-input__date ::ng-deep .mat-form-field-underline::before {
-  background-color: $primary-color;
+    background-color: $primary-color;
 }
 
 .message-error {
-  margin-top: 6px;
+    margin-top: 6px;
 }
 
 .text-danger {
-  font-size: 14px;
-  color: rgb(235, 33, 33);
+    font-size: 14px;
+    color: $error-color;
 }
 
+.auth-input__text__inside.ng-touched.ng-invalid {
+    border-color: $error-color;
+}
+
+.mat-form-field {
+    margin-bottom: -1.3rem !important;
+}

@@ -5,6 +5,7 @@ import { AppDateAdapter, APP_DATE_FORMATS } from 'src/app/shared/service/format-
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { passwordMatchValidator } from 'src/app/core/validators/password-match.validator';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-auth-register-form',
@@ -17,9 +18,10 @@ import Swal from 'sweetalert2';
 })
 export class AuthRegisterFormComponent implements OnInit {
     registerForm: FormGroup;
+    loading: boolean = false;
 
     private isSuccess: boolean;
-    constructor(private authClient: AuthClient, private fb: FormBuilder) {}
+    constructor(private authClient: AuthClient, private fb: FormBuilder, private router: Router) {}
     get fullName() {
         return this.registerForm.get('fullName');
     }
@@ -40,6 +42,10 @@ export class AuthRegisterFormComponent implements OnInit {
         return this.registerForm.get('phoneNumber');
     }
 
+    get dob() {
+        return this.registerForm.get('dob');
+    }
+
     ngOnInit(): void {
         this.registerForm = this.fb.group(
             {
@@ -55,7 +61,7 @@ export class AuthRegisterFormComponent implements OnInit {
                 ],
                 confirmPassword: ['', [Validators.required]],
                 phoneNumber: ['', [Validators.required]],
-                dob: [new Date()],
+                dob: [new Date(), [Validators.required]],
             },
             { validator: passwordMatchValidator }
         );
@@ -70,28 +76,33 @@ export class AuthRegisterFormComponent implements OnInit {
     // }
 
     async onSubmit() {
+        this.registerForm.markAllAsTouched();
         if (this.registerForm.invalid) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error...',
-                text: 'Dữ liệu đã nhập còn thiếu hoặc chưa hợp lệ.',
-            });
             return;
         }
 
+        this.loading = true;
         const response = await this.authClient.register(this.registerForm.value);
         this.authClient.register(this.registerForm.value).subscribe(
-            (data) => {
+            async (data) => {
+                this.loading = false;
                 this.isSuccess = true;
-                Swal.fire({
+                await Swal.fire({
                     icon: 'success',
                     title: 'Success...',
-                    text: 'Đăng ký tài khoản thành công.',
+                    text: 'Đăng ký tài khoản thành công. Vui lòng kiểm tra email của bạn.',
+                }).then((res) => {
+                    this.router.navigate(['/auth/login']);
                 });
             },
             (err) => {
+                this.loading = false;
                 this.isSuccess = false;
-                console.log(err);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error...',
+                    text: `${err.error.Message}`,
+                });
             }
         );
     }
