@@ -13,5 +13,4 @@ export class UserAward {
     accountId: number;
     donateAccountName: string;
     avatarUrl: string;
-    donateTime: number;
 }

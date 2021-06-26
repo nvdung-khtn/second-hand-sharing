@@ -5,48 +5,57 @@ import { AuthClient } from 'src/app/core/api-clients/auth.client';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-auth-forgot-password',
-  templateUrl: './auth-forgot-password.component.html',
-  styleUrls: ['./auth-forgot-password.component.scss'],
+    selector: 'app-auth-forgot-password',
+    templateUrl: './auth-forgot-password.component.html',
+    styleUrls: ['./auth-forgot-password.component.scss'],
 })
 export class AuthForgotPasswordComponent implements OnInit {
-  emailValue: string = '';
-  displayError = false;
+    isLoading: boolean = false;
+    emailValue: string = '';
+    displayError = false;
 
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private authClient: AuthClient
-  ) {}
-  ngOnInit(): void {}
+    constructor(
+        private router: Router,
+        private route: ActivatedRoute,
+        private authClient: AuthClient
+    ) {}
+    ngOnInit(): void {}
 
-  isValidEmail(email) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  }
-
-  onSubmit(email) {
-    // this.isValidEmail(email) &&
-    //   this.router.navigate(['/auth/forgot-password/otp-verification'], {
-    //     relativeTo: this.route,
-    //     queryParams: { emailAddress: this.emailValue },
-    //     queryParamsHandling: 'merge',
-    //   });
-    // !this.isValidEmail(email) && (this.displayError = true);
-
-    if (this.isValidEmail(email)) {
-      // Submit action
-      this.authClient.sendEmail({ email }).subscribe(async (response) => {
-        await Swal.fire({
-          icon: 'success',
-          title: 'Success...',
-          text: 'Đã gửi Gmail, vui lòng kiểm tra hộp thư đến.',
-        });
-
-        this.emailValue = '';
-      });
-    } else {
-      this.displayError = true;
-      this.emailValue = '';
+    isValidEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     }
-  }
+
+    onSubmit(email) {
+        this.isLoading = true;
+
+        if (this.isValidEmail(email)) {
+            // Submit action
+            this.authClient.sendEmail({ email }).subscribe({
+                next: (response) => {
+                    this.isLoading = false;
+                    this.emailValue = '';
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success...',
+                        text: 'Đã gửi Gmail, vui lòng kiểm tra hộp thư đến.',
+                    });
+                },
+                error: (error) => {
+                    this.isLoading = false;
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error...',
+                        text: 'Email không tồn tại trong hệ thống.',
+                    });
+                },
+            });
+        } else {
+            this.isLoading = false;
+            this.displayError = true;
+        }
+    }
+
+    handleOnInput() {
+        this.displayError = false;
+    }
 }

@@ -1,5 +1,5 @@
 <div class="home-right-side">
-  <div class="home-right-side__title">Top Vinh danh trong tháng</div>
+  <div class="home-right-side__title">Danh sách người dùng có đóng góp trong tháng {{currentMonth}}</div>
 
   <div class="home-right-side__list">
     <div class="home-right-side__list__profile" *ngFor="let user of topUserData">
@@ -9,10 +9,6 @@
       <div class="home-right-side__list__profile__info">
         <div class="home-right-side__list__profile__info__name">
           {{ user?.donateAccountName }}
-        </div>
-
-        <div class="home-right-side__list__profile__info__times">
-          {{ user?.donateTime }} vật phẩm
         </div>
       </div>
     </div>

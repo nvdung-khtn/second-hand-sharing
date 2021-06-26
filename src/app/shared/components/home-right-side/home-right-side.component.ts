@@ -18,6 +18,7 @@ export class HomeRightSideComponent implements OnInit {
     topUserData: UserAward[];
     userMessageData: any;
     myInfo;
+    currentMonth = new Date().getMonth();
 
     ngOnInit(): void {
         this.myInfo = JSON.parse(localStorage.getItem('userInfo'));

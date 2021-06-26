@@ -22,7 +22,7 @@ export class RegisterRequest {
 }
 
 export class ResetPwRequest {
-    email: string;
+    userId: string;
     token: string;
     password: string;
     confirmPassword: string;
