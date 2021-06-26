@@ -65,8 +65,8 @@ export class AuthClient {
         return this.http.put<ResponseModel<any>>(url, null);
     }
 
-    getTopAward(): Observable<ResponseModel<UserAward>> {
-        const url = `${this.baseUrl}/topAward`;
-        return this.http.get<ResponseModel<UserAward>>(url);
+    getTopAward(): Observable<ResponseModel<UserAward[]>> {
+        const url = `${this.baseUrl}/User/Award`;
+        return this.http.get<ResponseModel<UserAward[]>>(url);
     }
 }

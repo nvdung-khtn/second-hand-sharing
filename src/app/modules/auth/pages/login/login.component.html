@@ -1,7 +1,8 @@
 <div class="login-container">
   <div class="login-container__left">
     <div class="login-container__left__heading">
-      <img [routerLink]="['/auth/login']" class="login-container__left__heading__logo" src="assets/image/2hand-sharing.png" />
+      <img [routerLink]="['/auth/login']" class="login-container__left__heading__logo"
+        src="assets/image/2hand-sharing.png" />
 
       <div class="login-container__left__heading__category">
         <div class="login-container__left__heading__category__text__selected">
@@ -28,7 +29,7 @@
           <div class="login-container__left__form__input__text">
             <input type="email" class="login-container__left__form__input__text__inside" placeholder="Tên đăng nhập"
               formControlName="email">
-            <div *ngIf="email.invalid && (email.dirty || email.touched)" class="message-error">
+            <div *ngIf="email.invalid && (email.dirty || email.touched)" class="message-error mt-1">
               <div *ngIf="email.errors?.required" class="text text-danger">
                 Vui lòng nhập trường này!
               </div>
@@ -41,7 +42,7 @@
           <div class="login-container__left__form__input__text">
             <input type="password" class="login-container__left__form__input__text__inside" placeholder="Mật khẩu"
               formControlName="password">
-            <div *ngIf="password.invalid && (password.dirty || password.touched)" class="message-error">
+            <div *ngIf="password.invalid && (password.dirty || password.touched)" class="message-error mt-1">
               <div *ngIf="password.errors?.required" class="text text-danger">
                 Vui lòng nhập trường này!
               </div>
@@ -60,7 +61,8 @@
       </div>
 
       <div class="login-container__left__form__error" [style.display]="this.isError ? 'block' : 'none'">
-        Tên đăng nhập hoặc mật khẩu không đúng!
+        <!-- Tên đăng nhập hoặc mật khẩu không đúng! -->
+        {{message}}
       </div>
 
       <div class="login-container__left__form__btn" (click)="onSubmit()">

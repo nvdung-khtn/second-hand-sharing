@@ -8,7 +8,7 @@ import { UserAward } from 'src/app/core/constants/user.constant';
     styleUrls: ['./chart.component.scss'],
 })
 export class ChartComponent implements OnInit {
-    topUserData: UserAward;
+    topUserData: UserAward[];
     loading: boolean = false;
 
     constructor(private authClient: AuthClient) {}

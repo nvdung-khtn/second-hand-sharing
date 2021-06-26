@@ -49,6 +49,11 @@ export class LoginComponent implements OnInit {
     }
 
     onSubmit() {
+        this.loginForm.markAllAsTouched();
+        if (this.loginForm.invalid) {
+            return;
+        }
+
         this.loading = true;
         this.authClient.login(this.loginForm.value).subscribe(
             (response) => {
@@ -64,7 +69,12 @@ export class LoginComponent implements OnInit {
             (err) => {
                 this.loading = false;
                 this.isError = true;
-                this.message = err.message;
+
+                if (err.error.Message.startsWith('Account Not Confirmed')) {
+                    this.message = 'Tài khoản chưa xác thực, vui lòng kiểm tra email.';
+                } else {
+                    this.message = 'Tên đăng nhập hoặc mật khẩu không đúng!';
+                }
                 // Ném Error ra interceptor handling error.
             }
         );

@@ -1,23 +1,14 @@
 <div class="home-right-side">
-  <div class="home-right-side__title">Top Vinh danh trong tháng</div>
+  <div class="home-right-side__title">Danh sách người dùng có đóng góp trong tháng {{currentMonth}}</div>
 
   <div class="home-right-side__list">
-    <div
-      class="home-right-side__list__profile"
-      *ngFor="let user of topUserData"
-    >
-      <img
-        class="home-right-side__list__profile__avatar"
-        src="{{ user?.avatarUrl || 'assets/image/default-avatar.png' }}"
-      />
+    <div class="home-right-side__list__profile" *ngFor="let user of topUserData">
+      <img class="home-right-side__list__profile__avatar"
+        src="{{ user?.avatarUrl || 'assets/image/default-avatar.png' }}" />
 
       <div class="home-right-side__list__profile__info">
         <div class="home-right-side__list__profile__info__name">
           {{ user?.donateAccountName }}
-        </div>
-
-        <div class="home-right-side__list__profile__info__times">
-          {{ user?.donateTime }}
         </div>
       </div>
     </div>
@@ -25,19 +16,12 @@
   <div class="home-right-side__title margin">Tin nhắn</div>
 
   <div class="home-right-side__list">
-    <div
-      class="home-right-side__list__profile"
-      *ngFor="let user of userMessageData?.data"
-      (click)="onOpenMessageModal(user)"
-    >
-      <img
-        class="home-right-side__list__profile__avatar"
-        src="{{handleAvatar(user) || 'assets/image/default-avatar.png'}}"
-      />
+    <div class="home-right-side__list__profile" *ngFor="let user of userMessageData?.data"
+      (click)="onOpenMessageModal(user)">
+      <img class="home-right-side__list__profile__avatar"
+        src="{{handleAvatar(user) || 'assets/image/default-avatar.png'}}" />
 
-      <div
-        class="home-right-side__list__profile__info"
-      >
+      <div class="home-right-side__list__profile__info">
         <div class="home-right-side__list__profile__info__name">
           {{ handleAccountName(user) }}
         </div>

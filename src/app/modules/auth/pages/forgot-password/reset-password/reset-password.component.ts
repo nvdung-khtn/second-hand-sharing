@@ -5,6 +5,7 @@ import { passwordMatchValidator } from 'src/app/core/validators/password-match.v
 import Swal from 'sweetalert2';
 import { AuthClient } from 'src/app/core/api-clients/auth.client';
 import { ThrowStmt } from '@angular/compiler';
+import { AuthService } from 'src/app/shared/service/auth.service';
 
 @Component({
     selector: 'app-reset-password',
@@ -14,9 +15,16 @@ import { ThrowStmt } from '@angular/compiler';
 export class ResetPasswordComponent implements OnInit {
     resetForm: FormGroup;
     code: string;
+    userId: string;
+    isLoading: boolean = false;
 
     private isSuccess: boolean;
-    constructor(private authClient: AuthClient, private fb: FormBuilder, private router: Router) {}
+    constructor(
+        private authClient: AuthClient,
+        private fb: FormBuilder,
+        private router: Router,
+        private authService: AuthService
+    ) {}
 
     get email() {
         return this.resetForm.get('email');
@@ -31,12 +39,13 @@ export class ResetPasswordComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.getCodeFromURL();
+        this.code = this.getCodeFromURL();
+        this.userId = this.getUserId();
 
         // Initialize reset form
         this.resetForm = this.fb.group(
             {
-                email: ['', [Validators.required, Validators.email]],
+                //email: ['', [Validators.required, Validators.email]],
                 password: [
                     '',
                     Validators.compose([
@@ -47,24 +56,20 @@ export class ResetPasswordComponent implements OnInit {
                 ],
                 confirmPassword: ['', [Validators.required]],
                 token: this.code,
+                userId: this.userId,
             },
             { validator: passwordMatchValidator }
         );
     }
 
     async onSubmit() {
-        if (this.resetForm.invalid) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error...',
-                text: 'Dữ liệu đã nhập còn thiếu hoặc chưa hợp lệ.',
-            });
-            return;
-        }
+        this.resetForm.markAllAsTouched();
+        if (this.resetForm.invalid) return;
 
-        const response = await this.authClient.resetPassword(this.resetForm.value);
+        this.isLoading = true;
         this.authClient.resetPassword(this.resetForm.value).subscribe(
             async (data) => {
+                this.isLoading = false;
                 this.isSuccess = true;
                 await Swal.fire({
                     icon: 'success',
@@ -75,6 +80,7 @@ export class ResetPasswordComponent implements OnInit {
                 this.router.navigate(['/auth/login']);
             },
             (err) => {
+                this.isLoading = false;
                 this.isSuccess = false;
                 console.log(err);
             }
@@ -99,6 +105,28 @@ export class ResetPasswordComponent implements OnInit {
             }
         }
 
-        this.code = code;
+        return code;
+    }
+
+    getUserId() {
+        const URL = this.router.url;
+        const index = URL.indexOf('userid=');
+        const endIndex = URL.indexOf('&code=');
+        let code = URL.slice(index + 7, endIndex);
+
+        // Handle code
+        for (let i = 0; i < code.length; i++) {
+            if (code[i] === '%' && code[i + 2]) {
+                if (code[i + 2] === 'F') {
+                    code = code.slice(0, i) + '/' + code.slice(i + 3, code.length);
+                }
+
+                if (code[i + 2] === '0') {
+                    code = code.slice(0, i) + '+' + code.slice(i + 3, code.length);
+                }
+            }
+        }
+
+        return code;
     }
 }
