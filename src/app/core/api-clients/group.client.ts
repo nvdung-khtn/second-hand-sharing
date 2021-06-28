@@ -21,4 +21,9 @@ export class GroupClient {
         const url = `${this.baseUrl}/Group/joined-group`;
         return this.http.get<ResponseModel<Group>>(url);
     }
+
+    getRoleByUserId(groupId: number, userId: number): Observable<ResponseModel<any>> {
+        const url = `${this.baseUrl}/Group/${groupId}/get-role?userId=${userId}`;
+        return this.http.get<ResponseModel<any>>(url);
+    }
 }

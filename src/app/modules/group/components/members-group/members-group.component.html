@@ -1,0 +1,48 @@
+<div class="members-group">
+  <div>
+    <div class="members-group__title">Yêu cầu tham gia</div>
+
+    <div class="members-group__list">
+      <div class="members-group__list__profile" *ngFor="let request of requestList">
+        <img
+          class="members-group__list__profile__avatar"
+          src="{{ request?.avatarUrl || 'assets/image/default-avatar.png' }}"
+        />
+
+        <div class="members-group__list__profile__info">
+          <div class="members-group__list__profile__info__name">
+            {{ request?.fullName }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="members-group__title">
+      Thành viên <span class="num-member">{{ memberList?.length }}</span>
+    </div>
+
+    <div class="members-group__list">
+      <div *ngFor="let user of memberList">
+        <div class="flex">
+          <div class="members-group__list__profile"> 
+            <img
+              class="members-group__list__profile__avatar"
+              src="{{ user?.avatarUrl || 'assets/image/default-avatar.png' }}"
+            />
+
+            <div class="members-group__list__profile__info">
+              <div class="members-group__list__profile__info__name">
+                {{ user?.fullName }}
+              </div>
+            </div>
+          </div>
+
+          <div class="more-btn">...</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

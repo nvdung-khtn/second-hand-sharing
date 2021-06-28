@@ -1,0 +1,44 @@
+<div class="detail-group-container">
+  <div class="detail-group">
+    <div class="detail-group__header">
+      <div class="max-width">
+        <div class="detail-group__group-avatar">
+          <img
+            class="detail-group__avatar"
+            [src]="groupDetail?.avatarURL ? groupDetail?.avatarURL : 'assets/image/group-default-cover.png'"
+          />
+          <div class="detail-group__avatar-btn">
+            <label for="uploadImage">
+              <mat-icon class="detail-group__avatar-btn__icon">camera_alt</mat-icon>
+            </label>
+
+            <input type="file" id="uploadImage" accept="image/png" (change)="selectFile($event)" />
+          </div>
+          <div class="detail-group__info">
+            <div class="detail-group__info__name">
+              {{ groupDetail?.groupName }}
+            </div>
+            <div class="primary-button invite-btn">+ Mời</div>
+          </div>
+        </div>
+
+        <div class="row detail-group__group-tabs">
+          <div
+            class="col-4 detail-group__tab"
+            [ngClass]="{ selectedTabStyle: this.selectedTab === tab?.id }"
+            *ngFor="let tab of tabContext"
+            (click)="onSelectTab(tab?.id)"
+          >
+            {{ tab?.name }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-group__body max-width">
+      <app-about-group *ngIf="this.selectedTab === 1" [groupDetail]="groupDetail"></app-about-group>
+      <app-items-group *ngIf="this.selectedTab === 2"></app-items-group>
+      <app-members-group *ngIf="this.selectedTab === 3"></app-members-group>
+    </div>
+  </div>
+</div>
