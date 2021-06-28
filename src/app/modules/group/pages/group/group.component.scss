@@ -1,23 +1,45 @@
 @import "/src/styles/variables";
 
 .group {
-    &__joined-group {
+    &__groups {
         display: inline-block;
         width: 100%;
         overflow: auto;
         white-space: nowrap;
+        padding: 1rem 0;
     }
 
     &__group-element {
         display: inline-flex;
         align-items: flex-end;
         justify-content: center;
-        width: 6rem;
-        height: 5rem;
+        width: 10rem;
+        height: 8rem;
         border-radius: 5px;
         border: 1px solid $primary-icon-background-color;
         cursor: pointer;
         margin: 0 0.5rem;
+        position: relative;
+        text-align: center;
+    }
+
+    &__avatar {
+        width: 10rem;
+        height: 8rem;
+        object-fit: cover;
+    }
+
+    &__name {
+        position: absolute;
+        left: 50%;
+        height: 35%;
+        transform: translate(-50%, 0%);
+        color: white;
+        background-color: rgba(0,0,0,0.6);
+        width: 100%;
+        display: flex;
+        align-items: center;
+        padding: 0 0.5rem;
     }
 
     &__no-group {
@@ -43,6 +65,10 @@
     &__create-btn {
         max-width: 7rem;
         box-shadow: unset !important;
+    }
+
+    .all-group {
+        margin-bottom: 0;
     }
 }
 

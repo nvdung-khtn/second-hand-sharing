@@ -1,0 +1,152 @@
+@import "/src/styles/variables";
+
+.detail-group-container {
+    position: absolute;
+    top: 0;
+    /* bottom: 0; */
+    left: 0;
+    right: 0;
+    margin-top: 60px;
+    z-index: 90;
+    background-color: $primary-icon-background-color;
+    font-size: $default-font-size;
+    height: fit-content;
+    min-height: 100%;
+
+    @media (max-width: 1024px) {
+        margin-top: 125px;
+    }
+}
+
+.detail-group {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+
+    @media (max-width: 1024px) {
+        width: 100%;
+    }
+
+    &__header {
+        padding: 0 20%;
+        background-color: #fff;
+
+        @media (max-width: 1024px) {
+            padding: 0;
+        }
+    }
+
+    &__group-avatar {
+        position: relative;
+    }
+
+    &__body {
+        width: 60%;
+        margin: 0 auto;
+        margin-top: 1rem !important;
+
+        @media (max-width: 1024px) {
+            width: 100%;
+        }
+    }
+
+    &__avatar {
+        width: 100%;
+        height: 22rem;
+        max-width: 1280px;
+        border-bottom-left-radius: $border-radius-default;
+        border-bottom-right-radius: $border-radius-default;
+        object-fit: cover;
+    }
+
+    &__avatar-btn {
+        position: absolute;
+        top: 70%;
+        transform: translateX(50%);
+        right: 6%;
+        background: transparent;
+        text-align: center;
+        padding: 20px;
+        border-radius: 100%;
+        height: fit-content;
+        width: fit-content;
+        grid-column: 1;
+        grid-row: 1;
+        background-color: $primary-icon-background-color;
+        cursor: pointer;
+
+        &:hover {
+            background-color: $primary-border-otp-color;
+        }
+
+        & > input[type="file"] {
+            position: absolute;
+            display: none;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+
+        & > label {
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            border-radius: 10px;
+            line-height: 30px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        &__icon {
+            margin-top: 7px;
+        }
+    }
+
+    &__info {
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1px solid $primary-border-otp-color;
+
+        &__name {
+            font-size: $largest-font-size;
+            font-weight: $font-weight-bold;
+        }
+    }
+
+    &__group-tabs {
+        color: $primary-icon-color;
+        margin-top: 1rem;
+    }
+
+    &__tab {
+        text-align: center;
+        padding: 0.5rem 0;
+        font-weight: $font-weight-medium;
+        cursor: pointer;
+    }
+
+    .invite-btn {
+        width: 4rem;
+        padding: 5px 10px;
+        cursor: pointer;
+    }
+
+    .selectedTabStyle {
+        font-weight: $font-weight-bold;
+        color: $primary-color !important;
+        border-bottom: 2px solid $primary-color;
+    }
+
+    .max-width {
+        max-width: 1280px;
+        margin: 0 auto;
+
+        @media (max-width: 1024px) {
+            max-width: unset;
+        }
+    }
+}

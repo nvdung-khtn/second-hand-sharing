@@ -84,7 +84,7 @@ export class ListItemsComponent implements OnInit, OnChanges {
             });
         }
 
-        if (this.category !== 0) {
+        if (this.category !== 0 && this.category !== undefined) {
             this.categoryClient
                 .getItemByCategory(this.category, this.defaultReq)
                 .subscribe((response) => {

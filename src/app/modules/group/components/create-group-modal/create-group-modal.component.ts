@@ -61,6 +61,7 @@ export class CreateGroupModalComponent implements OnInit {
         this.groupClient.createGroup(this.groupForm.getRawValue()).subscribe((response) => {
             this.toastr.success('Tạo group thành công.');
             this.onCloseModal();
+            window.location.reload();
         });
     }
 }

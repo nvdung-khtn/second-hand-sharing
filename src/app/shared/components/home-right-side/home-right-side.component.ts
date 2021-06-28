@@ -32,7 +32,6 @@ export class HomeRightSideComponent implements OnInit {
 
         this.authClient.getTopAward().subscribe(
             (response) => {
-                debugger;
                 this.topUserData = response.data;
             },
             (error) => console.log(error)
