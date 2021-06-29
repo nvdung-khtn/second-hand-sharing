@@ -43,16 +43,14 @@ export class EventComponent implements OnInit {
         this.groupClient.getRoleByUserId(groupId, userId).subscribe(
             (response) => {
                 this.myRole = response.message;
-                if (this.myRole !== '') {
+                if (this.myRole !== ''  && this.myRole !== 'member') {
                     this.isMember = true;
                 }
-                if (this.myRole !== '') {
+                if (this.myRole !== ''  && this.myRole !== 'member') {
                     this.selectedTab = 2;
                 } else {
                     this.selectedTab = 1;
                 }
-                // tslint:disable-next-line: no-unused-expression
-                this.isMember === false && this.router.navigateByUrl('/404');
             },
             (error) => {
                 console.log(error);
