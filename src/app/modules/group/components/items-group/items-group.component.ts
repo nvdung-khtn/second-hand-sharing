@@ -13,7 +13,6 @@ export class ItemsGroupComponent implements OnInit {
 
     userAvatar = '';
     isOpenModal = false;
-    isJoined = false;
     isAdmin = false;
 
     constructor() {}
@@ -26,7 +25,6 @@ export class ItemsGroupComponent implements OnInit {
     // tslint:disable-next-line: use-lifecycle-interface
     ngOnChanges(): void {
         if (this.myRole !== '' && this.myRole !== 'member') {
-            this.isJoined = true;
             if (this.myRole === 'admin') {
                 this.isAdmin = true;
             }
