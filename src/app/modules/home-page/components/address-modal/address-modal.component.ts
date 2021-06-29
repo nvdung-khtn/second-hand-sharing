@@ -84,6 +84,7 @@ export class AddressModalComponent implements OnInit, OnChanges {
     async onSelected(fieldName, event) {
         if (fieldName === this.selectedType.CITY) {
             this.wards = [];
+            this.addressData.street = '';
             this.districts = await this.addressService.getAllDistrict(event.value);
             return (this.addressData.cityId = event.value);
         }

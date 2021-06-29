@@ -18,6 +18,7 @@ import { UserInfo } from 'src/app/core/constants/user.constant';
 import { AuthService } from 'src/app/shared/service/auth.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'app-create-post-modal',
@@ -46,7 +47,7 @@ export class CreatePostModalComponent implements OnInit, OnDestroy {
     ////////////////////////////////////////////////////////////////
     public postForm!: FormGroup;
     receiveAddress: AddressModel;
-    selectedCatId: number;
+    selectedCatId: number = 1;
     preSignUrl: string[] = [];
     selectedFiles?: FileList = null;
     destroy$ = new Subject<void>();
@@ -131,6 +132,14 @@ export class CreatePostModalComponent implements OnInit, OnDestroy {
     }
 
     onSubmitPost() {
+        if (this.postForm.invalid) {
+            return Swal.fire({
+                icon: 'error',
+                title: 'Error...',
+                text: 'Vui lòng điền đầy đủ thông tin trước khi đăng bài.',
+            });
+        }
+
         this.loading = true;
         const formData = {
             ...this.postForm.value,
@@ -147,15 +156,19 @@ export class CreatePostModalComponent implements OnInit, OnDestroy {
                 );
                 // Upload image to cloud
                 this.uploadImages(this.preSignUrl);
-                this.isOpenMessageModal = true;
                 this.isSuccess = true;
-                this.messageModalMessage = 'Đăng bài thành công';
+                // this.isOpenMessageModal = true;
+                // this.messageModalMessage = 'Đăng bài thành công';
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success...',
+                    text: 'Đăng bài thành công.',
+                }).then(() => this.onClose());
 
                 // Reset Data in post
                 this.postForm.reset();
-                this.selectedCatId = 1;
-                // this.myFiles = [];
-                // this.showSelectedFile(null);
+                this.loading = false;
             },
             (error) => {
                 this.loading = false;

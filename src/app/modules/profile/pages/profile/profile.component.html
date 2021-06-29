@@ -120,11 +120,11 @@
 </div>
 
 <!-- Address Modal -->
-<!-- <div class="address-modal" [style.display]="isOpenAddressModal ? 'block' : 'none'">
-  <app-address-modal [isOpenModal]="this.isOpenAddressModal" (modalChange)="this.isOpenAddressModal=$event"
-    (addressData)="handleAddress($event)">
+<div class="address-modal" [style.display]="isOpenAddressModal ? 'block' : 'none'">
+  <app-address-modal [(openAddressModal)]="isOpenAddressModal" [addressData]="profile?.address"
+    (addressDataChange)="updateUserAddress($event)">
   </app-address-modal>
-</div> -->
+</div>
 
 <ng-template #loadingTmpl>
   <app-loader></app-loader>

@@ -67,7 +67,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
     handleAddress(event) {
         this.profile.address = event;
-        localStorage.setItem('addressString', this.addressService.getAddressString(this.profile.address));
+        localStorage.setItem(
+            'addressString',
+            this.addressService.getAddressString(this.profile.address)
+        );
         this.updateUserProfile(true);
     }
 
@@ -77,6 +80,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
     }
 
     updateUserProfile(key) {
+        if (key === 'dob') {
+            const tmp = new Date(this.profile.dob).getTime() + 86400000;
+            this.profile.dob = new Date(tmp);
+        }
+
         this.authClient.patchUserProfile(this.profile).subscribe((response) => {
             this.toggleStatus(key);
             this.getUserProfile();
@@ -102,6 +110,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
     isSelectedTab(id: number) {
         this.selectedTab = id;
+    }
+
+    updateUserAddress(event) {
+        this.profile.address = event;
+        this.updateUserProfile(true);
     }
 
     ngOnDestroy() {

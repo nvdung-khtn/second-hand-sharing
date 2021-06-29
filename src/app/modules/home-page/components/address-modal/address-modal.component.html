@@ -22,7 +22,7 @@
     <div class="address-modal__dropdown">
       <mat-form-field appearance="fill">
         <mat-label>Tỉnh/Thành phố</mat-label>
-        <mat-select [(value)]="addressData.cityId" disableOptionCentering
+        <mat-select [(value)]="addressData!.cityId" disableOptionCentering
           (selectionChange)="onSelected(selectedType.CITY, $event)">>
           <mat-option *ngFor="let city of citys" [value]="city.cityId">
             {{city.cityName}}
@@ -34,7 +34,7 @@
     <div class="address-modal__dropdown">
       <mat-form-field appearance="fill">
         <mat-label>Quận/Huyện</mat-label>
-        <mat-select [(value)]="addressData.districtId" disableOptionCentering
+        <mat-select [(value)]="addressData!.districtId" disableOptionCentering
           (selectionChange)="onSelected(selectedType.DISTRICT, $event)">
           <mat-option *ngFor="let district of districts" [value]="district.districtId">
             {{district.districtName}}
@@ -46,7 +46,7 @@
     <div class="address-modal__dropdown">
       <mat-form-field appearance="fill">
         <mat-label>Phường/Xã</mat-label>
-        <mat-select [(value)]="addressData.wardId" disableOptionCentering>
+        <mat-select [(value)]="addressData!.wardId" disableOptionCentering>
           <mat-option *ngFor="let ward of wards" [value]="ward.wardId">
             {{ward.wardName}}
           </mat-option>
