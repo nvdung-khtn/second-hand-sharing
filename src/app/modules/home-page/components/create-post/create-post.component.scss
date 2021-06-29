@@ -9,8 +9,8 @@
 
     &__avatar {
         display: flex;
-        width: 100%;
-        max-width: 40px;
+        width: 40px;
+        height: 40px;
         margin-right: 2%;
         border-radius: 100%;
     }
@@ -41,7 +41,7 @@
     &__modal {
         display: none;
         position: fixed; /* Stay in place */
-        z-index: 3; /* Sit on top */
+        z-index: 4; /* Sit on top */
         padding-top: 3%; /* Location of the box */
         left: 0;
         top: -20px;

@@ -1,0 +1,21 @@
+<div class="list-events">
+    <div class="event flex" *ngFor="let event of groupEvents" [routerLink]="['/group/event', event?.id]">
+        <img class="event__avatar" [src]="'assets/image/event.png'" />
+
+        <div class="event__info">
+            <div>
+                {{event?.startDate}}
+            </div>
+            <!-- <div>
+                {{event?.endDate}}
+            </div> -->
+            <div class="event__name">
+                {{event?.eventName}}
+            </div>
+            <div class="event__content">
+                {{event?.content}}
+            </div>
+        </div>
+    </div>
+
+</div>

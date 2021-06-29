@@ -1,1 +1,23 @@
-<p>items-group works!</p>
+<div class="items-group" *ngIf="isJoined">
+    <div class="create-event">
+        <img class="create-event__avatar" [src]="userAvatar ? userAvatar : 'assets/image/default-avatar.png'" />
+    
+        <div class="create-event__btn" (click)="onCreateEvent()">
+            <div class="create-event__btn__inside">
+                Tạo sự kiện
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="not-member" *ngIf="!isJoined">
+    Vui lòng tham gia nhóm để thấy thông tin sự kiện của nhóm
+</div>
+
+<div id="create-event-modal" class="create-event-modal" [style.display]="this.isOpenModal ? 'block' : 'none'">
+    <app-create-event-modal [groupId]="this.groupId" [isOpenModal]="this.isOpenModal" (modalChange)="this.isOpenModal=$event"></app-create-event-modal>
+</div>
+
+<div class="list-events" *ngIf="isJoined">
+    <app-list-events [groupId]="this.groupId"></app-list-events>
+</div>

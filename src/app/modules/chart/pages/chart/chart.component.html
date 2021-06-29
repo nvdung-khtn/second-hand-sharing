@@ -1,8 +1,8 @@
 <div class="chart" >
-  <div class="chart__title">Top Vinh danh trong tháng</div>
+  <div class="chart__title">Top đóng góp của tháng</div>
 
   <div class="chart__list">
-    <div class="chart__list__profile" *ngFor="let user of topUserData">
+    <div class="chart__list__profile" *ngFor="let user of topUserData" [routerLink]="['/profile', user?.accountId]">
       <img
         class="chart__list__profile__avatar"
         src="{{ user?.avatarUrl || 'assets/image/default-avatar.png' }}"

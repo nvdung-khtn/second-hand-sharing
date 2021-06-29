@@ -2,7 +2,7 @@
   <div class="home-right-side__title">Danh sách người dùng có đóng góp trong tháng {{currentMonth}}</div>
 
   <div class="home-right-side__list">
-    <div class="home-right-side__list__profile" *ngFor="let user of topUserData">
+    <div class="home-right-side__list__profile" *ngFor="let user of topUserData" [routerLink]="['/profile', user?.accountId]">
       <img class="home-right-side__list__profile__avatar"
         src="{{ user?.avatarUrl || 'assets/image/default-avatar.png' }}" />
 

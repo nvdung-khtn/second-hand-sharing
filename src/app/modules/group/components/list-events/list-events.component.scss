@@ -1,0 +1,53 @@
+@import "/src/styles/variables";
+
+.list-events {
+    padding: 1rem 2rem;
+    background-color: white;
+    border-radius: $border-radius-light;
+    margin-bottom: 1rem;
+
+    .event {
+        margin-bottom: 1rem;
+        cursor: pointer;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+
+        &:hover {
+            background-color: $lightest-grey;
+        }
+
+        &__avatar {
+            width: 15rem;
+            height: 10rem;
+            margin-right: 1rem;
+        }
+
+        &__name {
+            font-weight: $font-weight-medium;
+            font-size: $default-font-size;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-height: 3rem;
+            line-height: 1.5rem;
+        }
+
+        &__content {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-height: 3rem;
+            line-height: 1.5rem;
+            color: $primary-lightest-text-color;
+        }
+
+        &__info {
+            width: 100%;
+        }
+    }
+}
+
+.flex {
+    display: flex;
+    width: 100%;
+}

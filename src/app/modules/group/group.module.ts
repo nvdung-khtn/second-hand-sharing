@@ -12,9 +12,12 @@ import { ItemsGroupComponent } from './components/items-group/items-group.compon
 import { MembersGroupComponent } from './components/members-group/members-group.component';
 import { MatIconModule } from '@angular/material/icon';
 import { InviteModalComponent } from './components/invite-modal/invite-modal.component';
+import { CreateEventModalComponent } from './components/create-event-modal/create-event-modal.component';
+import { ListEventsComponent } from './components/list-events/list-events.component';
+import { EventComponent } from './pages/event/event.component';
 
 @NgModule({
-    declarations: [GroupComponent, CreateGroupModalComponent, DetailGroupComponent, AboutGroupComponent, ItemsGroupComponent, MembersGroupComponent, InviteModalComponent],
+    declarations: [GroupComponent, CreateGroupModalComponent, DetailGroupComponent, AboutGroupComponent, ItemsGroupComponent, MembersGroupComponent, InviteModalComponent, CreateEventModalComponent, ListEventsComponent, EventComponent],
     imports: [CommonModule, FormsModule, ReactiveFormsModule, GroupRoutingModule, SharedModule, MatIconModule],
 })
 export class GroupModule {}
