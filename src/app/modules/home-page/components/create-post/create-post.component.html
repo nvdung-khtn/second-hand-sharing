@@ -1,5 +1,5 @@
 <div class="create-post">
-    <img class="create-post__avatar" src="assets/image/default-avatar.png" />
+    <img class="create-post__avatar" [src]="avatarUrl ? avatarUrl : 'assets/image/default-avatar.png'" />
 
     <div class="create-post__btn" (click)="onClick()">
         <div class="create-post__btn__inside">

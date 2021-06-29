@@ -15,7 +15,7 @@ export class DetailGroupComponent implements OnInit {
         },
         {
             id: 2,
-            name: 'Bài viết',
+            name: 'Sự kiện',
         },
         {
             id: 3,
@@ -50,9 +50,9 @@ export class DetailGroupComponent implements OnInit {
                 if (this.myRole !== '' && this.myRole !== 'member') {
                     this.isMember = true;
                 }
-                /* if (this.myRole !== '') {
+                if (this.myRole !== ''  && this.myRole !== 'member') {
                     this.selectedTab = 2;
-                } else { this.selectedTab = 1; } */
+                } else { this.selectedTab = 1; }
             },
             (error) => {
                 console.log(error);

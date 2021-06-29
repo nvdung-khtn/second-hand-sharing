@@ -7,7 +7,7 @@
     left: 0;
     right: 0;
     margin-top: 60px;
-    z-index: 50;
+    z-index: 2;
     background-color: $primary-icon-background-color;
     font-size: $default-font-size;
     height: fit-content;
@@ -160,7 +160,7 @@
 .invite-modal {
     display: none;
     position: fixed; /* Stay in place */
-    z-index: 60; /* Sit on top */
+    z-index: 4; /* Sit on top */
     padding-top: 4%; /* Location of the box */
     left: 0;
     top: 0;
