@@ -41,6 +41,6 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
         InfiniteScrollModule,
         MatCarouselModule.forRoot(),
     ],
-    exports: [AddressModalComponent, ListItemsComponent],
+    exports: [AddressModalComponent, ListItemsComponent, CreatePostComponent, CreatePostModalComponent],
 })
 export class HomePageModule {}

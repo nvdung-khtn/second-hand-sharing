@@ -23,7 +23,7 @@ export class DetailGroupComponent implements OnInit {
         },
     ];
 
-    selectedTab = 3;
+    selectedTab = 1;
     groupId: number;
     isMember = false;
     myRole = '';
@@ -47,10 +47,10 @@ export class DetailGroupComponent implements OnInit {
         this.groupClient.getRoleByUserId(groupId, userId).subscribe(
             (response) => {
                 this.myRole = response.message;
-                if (this.myRole !== '' && this.myRole !== 'member') {
+                if (this.myRole !== '') {
                     this.isMember = true;
                 }
-                if (this.myRole !== ''  && this.myRole !== 'member') {
+                if (this.myRole !== '') {
                     this.selectedTab = 2;
                 } else { this.selectedTab = 1; }
             },

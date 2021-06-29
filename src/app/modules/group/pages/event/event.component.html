@@ -1,3 +1,44 @@
-<div class="event">
-    <p>event works!</p>
+<div class="event-container" *ngIf="isMember">
+  <div class="event">
+    <div class="event__header">
+      <div class="max-width">
+        <div class="event__group-avatar">
+          <img
+            class="event__avatar"
+            [src]="eventDetail?.avatarUrl ? eventDetail?.avatarUrl : 'assets/image/group-default-cover.png'"
+          />
+          <div class="event__avatar-btn">
+            <label for="uploadImage">
+              <mat-icon class="event__avatar-btn__icon">camera_alt</mat-icon>
+            </label>
+
+            <input type="file" id="uploadImage" accept="image/png" (change)="selectFile($event)" />
+          </div>
+
+          <div class="event__date">{{ eventDetail?.startDate }} - {{ eventDetail?.endDate }}</div>
+          <div class="event__info">
+            <div class="event__info__name">
+              {{ eventDetail?.eventName }}
+            </div>
+          </div>
+        </div>
+
+        <div class="row event__group-tabs">
+          <div
+            class="col-6 event__tab"
+            [ngClass]="{ selectedTabStyle: this.selectedTab === tab?.id }"
+            *ngFor="let tab of tabContext"
+            (click)="onSelectTab(tab?.id)"
+          >
+            {{ tab?.name }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="event__body max-width">
+      <app-about-event *ngIf="this.selectedTab === 1" [eventDetail]="eventDetail"></app-about-event>
+      <app-list-items-event *ngIf="this.selectedTab === 2" [eventDetail]="eventDetail"></app-list-items-event>
+    </div>
+  </div>
 </div>
