@@ -26,6 +26,7 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class CreatePostModalComponent implements OnInit, OnDestroy {
     @Input() isOpenModal;
+    @Input() isPostItemEvent = false;
     @Output() modalChange = new EventEmitter<boolean>();
 
     // biến cho message modal khi gọi xong api đăng bài

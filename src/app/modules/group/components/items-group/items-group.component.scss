@@ -1,0 +1,87 @@
+@import "/src/styles/variables";
+
+.items-group {
+    margin-bottom: 1rem;
+
+    .create-event {
+        background-color: #ffffff;
+        padding: 15px 2%;
+        display: flex;
+        border-radius: $border-radius-light;
+
+        &__avatar {
+            display: flex;
+            width: 100%;
+            max-width: 40px;
+            margin-right: 2%;
+            border-radius: 100%;
+        }
+
+        &__btn {
+            display: flex;
+            width: 100%;
+            border-radius: 5px;
+            color: $primary-color;
+            background-color: $lightest-blue;
+
+            font-weight: $font-weight-medium;
+            font-size: $default-font-size;
+            align-items: center;
+            text-align: center;
+
+            &:hover {
+                color: #ffffff;
+                background-color: $light-blue;
+                cursor: pointer;
+            }
+
+            &__inside {
+                width: 100%;
+            }
+        }
+
+        &__modal {
+            display: none;
+            position: fixed; /* Stay in place */
+            z-index: 10; /* Sit on top */
+            padding-top: 3%; /* Location of the box */
+            left: 0;
+            top: -20px;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0, 0, 0, 0.8); /* Black w/ opacity */
+
+            @media (max-width: 1024px) {
+                top: 0;
+            }
+        }
+    }
+}
+
+.not-member {
+    padding: 1rem 2rem;
+    background-color: #fff;
+    border-radius: $border-radius-light;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    @include box-shadow();
+}
+
+.create-event-modal {
+    display: none;
+    position: fixed; /* Stay in place */
+    z-index: 10; /* Sit on top */
+    padding-top: 3%; /* Location of the box */
+    left: 0;
+    top: -20px;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.8); /* Black w/ opacity */
+
+    @media (max-width: 1024px) {
+        top: 0;
+    }
+}

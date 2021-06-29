@@ -59,7 +59,7 @@ export class MessengerComponent implements OnInit, AfterViewChecked {
                 this.profile = response.data;
             });
         }
-        this.userId && this.messageClient.getMessageByUserId(id, 1, 100).subscribe(
+        this.messageClient.getMessageByUserId(id, 1, 100).subscribe(
             (response) => {
                 this.messageData = response;
             },

@@ -1,6 +1,9 @@
 @import "/src/styles/variables";
 
 .group {
+    overflow-y: scroll;
+    height: 100%;
+    
     &__groups {
         display: inline-block;
         width: 100%;
@@ -70,12 +73,22 @@
     .all-group {
         margin-bottom: 0;
     }
+
+    .event-box {
+        padding: 0;
+    }
+
+    .event-title {
+        font-weight: $font-weight-bold;
+        padding: 0 2rem;
+        padding-top: 1rem;
+    }
 }
 
 .create-group-modal {
     display: none;
     position: fixed; /* Stay in place */
-    z-index: 3; /* Sit on top */
+    z-index: 10; /* Sit on top */
     padding-top: 100px; /* Location of the box */
     left: 0;
     top: -20px;

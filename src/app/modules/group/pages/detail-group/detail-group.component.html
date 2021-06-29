@@ -1,11 +1,11 @@
-<div class="detail-group-container">
+<div class="detail-group-container" [style.zIndex]="this.selectedTab === 2 ? '4' :'2'">
   <div class="detail-group">
     <div class="detail-group__header">
       <div class="max-width">
         <div class="detail-group__group-avatar">
           <img
             class="detail-group__avatar"
-            [src]="groupDetail?.avatarURL ? groupDetail?.avatarURL : 'assets/image/group-default-cover.png'"
+            [src]="groupDetail?.avatarUrl ? groupDetail?.avatarUrl : 'assets/image/group-default-cover.png'"
           />
           <div class="detail-group__avatar-btn">
             <label for="uploadImage">
@@ -18,7 +18,20 @@
             <div class="detail-group__info__name">
               {{ groupDetail?.groupName }}
             </div>
-            <div class="primary-button invite-btn">+ Mời</div>
+            <div
+              class="primary-button join-btn"
+              [style.display]="!this.isMember ? 'block' : 'none'"
+              (click)="onClickJoin()"
+            >
+              Tham gia
+            </div>
+            <div
+              class="primary-button invite-btn"
+              [style.display]="this.isMember ? 'block' : 'none'"
+              (click)="onInvite()"
+            >
+              + Mời
+            </div>
           </div>
         </div>
 
@@ -37,8 +50,15 @@
 
     <div class="detail-group__body max-width">
       <app-about-group *ngIf="this.selectedTab === 1" [groupDetail]="groupDetail"></app-about-group>
-      <app-items-group *ngIf="this.selectedTab === 2"></app-items-group>
-      <app-members-group *ngIf="this.selectedTab === 3"></app-members-group>
+      <app-items-group *ngIf="this.selectedTab === 2" [myRole]="myRole" [groupId]="groupId"></app-items-group>
+      <app-members-group *ngIf="this.selectedTab === 3" [myRole]="myRole" [groupId]="groupId"></app-members-group>
     </div>
   </div>
+</div>
+
+<div id="invite-modal" class="invite-modal" [style.display]="this.openInviteModal ? 'block' : 'none'">
+  <app-invite-modal
+    [isOpenModal]="this.openInviteModal"
+    (modalChange)="this.openInviteModal = $event"
+  ></app-invite-modal>
 </div>

@@ -1,0 +1,24 @@
+<div class="create-event" *ngIf="isOpenModal">
+    <span class="box-modal-close create-event__close" (click)="onCloseModal()">&times;</span>
+    <div class="create-event__title">Tạo sự kiện</div>
+    <form [formGroup]="groupForm" (ngSubmit)="onSubmit()">
+      <div class="row-control">
+        <input formControlName="eventName" class="input" placeholder="Tên sự kiện" />
+      </div>
+  
+      <div class="row-control">
+        <input formControlName="startDate" rows="4" class="input" placeholder="Ngày bắt đầu" />
+      </div>
+
+      <div class="row-control">
+        <input formControlName="endDate" rows="4" class="input" placeholder="Ngày kết thúc" />
+      </div>
+  
+      <div class="row-control">
+        <textarea formControlName="content" rows="4" class="input" placeholder="Mục tiêu của sự kiện"></textarea>
+      </div>
+  
+      <button type="submit" class="primary-button create-event__create-btn">Tạo sự kiện</button>
+    </form>
+  </div>
+  

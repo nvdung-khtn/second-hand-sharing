@@ -15,7 +15,7 @@ export class DetailGroupComponent implements OnInit {
         },
         {
             id: 2,
-            name: 'Bài viết',
+            name: 'Sự kiện',
         },
         {
             id: 3,
@@ -23,11 +23,12 @@ export class DetailGroupComponent implements OnInit {
         },
     ];
 
-    selectedTab = 3;
+    selectedTab = 1;
     groupId: number;
     isMember = false;
     myRole = '';
     groupDetail: any;
+    openInviteModal = false;
 
     constructor(
         private route: ActivatedRoute,
@@ -46,16 +47,18 @@ export class DetailGroupComponent implements OnInit {
         this.groupClient.getRoleByUserId(groupId, userId).subscribe(
             (response) => {
                 this.myRole = response.message;
-                /* if (this.myRole !== '') {
+                if (this.myRole !== '') {
+                    this.isMember = true;
+                }
+                if (this.myRole !== '') {
                     this.selectedTab = 2;
-                } else { this.selectedTab = 1; } */
+                } else { this.selectedTab = 1; }
             },
             (error) => {
                 console.log(error);
-                this.router.navigateByUrl('/404');
             }
         );
-    }
+    };
 
     getGroupInfo = (groupId: number) => {
         // call api get group detail
@@ -65,17 +68,28 @@ export class DetailGroupComponent implements OnInit {
             description: 'string',
             createDate: '2021-05-20T15:02:03.842292',
             rules: '12',
+            avatarUrl:
+                'https://storage.googleapis.com/secondhandsharing.appspot.com/4ad9e526-64d9-4942-a8ff-8aa2ac12d1a9',
         };
-    }
+    };
 
     onSelectTab = (id: number) => {
         this.selectedTab = id;
-    }
+    };
 
     selectFile(event: any): void {
         const image: FileList = event.target.files;
         if (image) {
             // api update group avatar
         }
+    }
+
+    onInvite = () => {
+        this.openInviteModal = true;
+    };
+
+    onClickJoin = () => {
+        // gọi api join group
+        console.log('click join');
     }
 }

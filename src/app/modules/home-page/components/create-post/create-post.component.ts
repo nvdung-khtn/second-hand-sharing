@@ -7,10 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CreatePostComponent implements OnInit {
   isOpenModal = false;
+  avatarUrl = '';
 
   constructor() { }
 
   ngOnInit(): void {
+    const user: any = JSON.parse(localStorage.getItem('userInfo'));
+    this.avatarUrl = user?.avatarUrl;
   }
 
   onClick = () => {

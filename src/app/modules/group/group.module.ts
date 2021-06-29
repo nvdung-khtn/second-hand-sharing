@@ -11,9 +11,37 @@ import { AboutGroupComponent } from './components/about-group/about-group.compon
 import { ItemsGroupComponent } from './components/items-group/items-group.component';
 import { MembersGroupComponent } from './components/members-group/members-group.component';
 import { MatIconModule } from '@angular/material/icon';
+import { InviteModalComponent } from './components/invite-modal/invite-modal.component';
+import { ListEventsComponent } from './components/list-events/list-events.component';
+import { EventComponent } from './pages/event/event.component';
+import { AboutEventComponent } from './components/about-event/about-event.component';
+import { ListItemsEventComponent } from './components/list-items-event/list-items-event.component';
+import { HomePageModule } from '../home-page/home-page.module';
+import { CreateEventModalComponent } from './components/create-event-modal/create-event-modal.component';
 
 @NgModule({
-    declarations: [GroupComponent, CreateGroupModalComponent, DetailGroupComponent, AboutGroupComponent, ItemsGroupComponent, MembersGroupComponent],
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, GroupRoutingModule, SharedModule, MatIconModule],
+    declarations: [
+        GroupComponent,
+        CreateGroupModalComponent,
+        DetailGroupComponent,
+        AboutGroupComponent,
+        ItemsGroupComponent,
+        MembersGroupComponent,
+        InviteModalComponent,
+        CreateEventModalComponent,
+        ListEventsComponent,
+        EventComponent,
+        AboutEventComponent,
+        ListItemsEventComponent,
+    ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        GroupRoutingModule,
+        SharedModule,
+        MatIconModule,
+        HomePageModule,
+    ],
 })
 export class GroupModule {}

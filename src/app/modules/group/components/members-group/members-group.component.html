@@ -1,17 +1,33 @@
 <div class="members-group">
-  <div>
+  <div *ngIf="this.isAdmin === true">
     <div class="members-group__title">Yêu cầu tham gia</div>
 
-    <div class="members-group__list">
-      <div class="members-group__list__profile" *ngFor="let request of requestList">
-        <img
-          class="members-group__list__profile__avatar"
-          src="{{ request?.avatarUrl || 'assets/image/default-avatar.png' }}"
-        />
+    <div class="no-request" [style.display]="this.requestList?.length === 0 ? 'flex' : 'none'">Không có yêu cầu tham gia</div>
 
-        <div class="members-group__list__profile__info">
-          <div class="members-group__list__profile__info__name">
-            {{ request?.fullName }}
+    <div class="members-group__list request-list">
+      <div *ngFor="let request of requestList">
+        <div class="flex">
+          <div class="members-group__list__profile" [routerLink]="['/profile', request?.requesterId]">
+            <img
+              class="members-group__list__profile__avatar"
+              src="{{ request?.avatarUrl || 'assets/image/default-avatar.png' }}"
+            />
+
+            <div class="members-group__list__profile__info">
+              <div class="members-group__list__profile__info__name">
+                {{ request?.requesterName }}
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <button type="button" class="accept-btn" (click)="onAcceptToJoin(request)">
+              <mat-icon>done</mat-icon>
+            </button>
+
+            <button type="button" class="cancel-btn" (click)="onDeclineToJoin(request)">
+              <mat-icon>close</mat-icon>
+            </button>
           </div>
         </div>
       </div>
@@ -23,10 +39,11 @@
       Thành viên <span class="num-member">{{ memberList?.length }}</span>
     </div>
 
+    <!-- ADMIN LIST -->
     <div class="members-group__list">
-      <div *ngFor="let user of memberList">
+      <div *ngFor="let user of adminList">
         <div class="flex">
-          <div class="members-group__list__profile"> 
+          <div class="members-group__list__profile" [routerLink]="['/profile', user?.userId]">
             <img
               class="members-group__list__profile__avatar"
               src="{{ user?.avatarUrl || 'assets/image/default-avatar.png' }}"
@@ -39,9 +56,48 @@
             </div>
           </div>
 
-          <div class="more-btn">...</div>
+          <div class="dropdown" *ngIf="isAdmin">
+            <mat-icon #toggleButton class="more-btn" (click)="onDisplayMenu(user)">more_vert</mat-icon>
+            <div
+              #menu
+              class="dropdown-content"
+              [ngClass]="this.selectedUser === user?.userId ? 'displayMore' : 'hideMore'"
+            >
+              <div class="dropdown-option" (click)="onDownToMember(user)">Giáng cấp xuống thành viên</div>
+              <div class="dropdown-option" (click)="onKickMember(user)">Trục xuất khỏi nhóm</div>
+            </div>
+          </div>
         </div>
+      </div>
 
+      <!-- MEMBER LIST -->
+      <div *ngFor="let user of memberList">
+        <div class="flex">
+          <div class="members-group__list__profile" [routerLink]="['/profile', user?.userId]">
+            <img
+              class="members-group__list__profile__avatar"
+              src="{{ user?.avatarUrl || 'assets/image/default-avatar.png' }}"
+            />
+
+            <div class="members-group__list__profile__info">
+              <div class="members-group__list__profile__info__name">
+                {{ user?.fullName }}
+              </div>
+            </div>
+          </div>
+
+          <div class="dropdown" *ngIf="isAdmin">
+            <mat-icon #toggleButton class="more-btn" (click)="onDisplayMenu(user)">more_vert</mat-icon>
+            <div
+              #menu
+              class="dropdown-content"
+              [ngClass]="this.selectedUser === user?.userId ? 'displayMore' : 'hideMore'"
+            >
+              <div class="dropdown-option" (click)="onUpToAdmin(user)">Thăng chức lên quản trị viên</div>
+              <div class="dropdown-option" (click)="onKickMember(user)">Trục xuất khỏi nhóm</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
