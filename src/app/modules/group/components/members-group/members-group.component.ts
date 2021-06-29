@@ -10,7 +10,6 @@ import { Component, Input, OnInit } from '@angular/core';
 export class MembersGroupComponent implements OnInit {
     @Input() myRole: string = '';
     @Input() groupId: number = -1;
-    isJoined: boolean = false;
     isAdmin: boolean = false;
     selectedUser: number = -1;
     requestList = [
@@ -89,7 +88,6 @@ export class MembersGroupComponent implements OnInit {
     ngOnInit(): void {
         // gọi api get member list và get admin
         if (this.myRole !== '') {
-            this.isJoined = true;
             if (this.myRole === 'admin') {
                 this.isAdmin = true;
             }
@@ -99,7 +97,6 @@ export class MembersGroupComponent implements OnInit {
     // tslint:disable-next-line: use-lifecycle-interface
     ngOnChanges(): void {
         if (this.myRole !== '') {
-            this.isJoined = true;
             if (this.myRole === 'admin') {
                 this.isAdmin = true;
             }

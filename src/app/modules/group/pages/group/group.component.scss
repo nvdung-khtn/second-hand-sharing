@@ -73,6 +73,16 @@
     .all-group {
         margin-bottom: 0;
     }
+
+    .event-box {
+        padding: 0;
+    }
+
+    .event-title {
+        font-weight: $font-weight-bold;
+        padding: 0 2rem;
+        padding-top: 1rem;
+    }
 }
 
 .create-group-modal {
