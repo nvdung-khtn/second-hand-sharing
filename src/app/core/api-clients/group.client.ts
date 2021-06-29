@@ -17,9 +17,14 @@ export class GroupClient {
         return this.http.post<ResponseModel<Group>>(url, formData);
     }
 
-    getJoinedGroup(): Observable<ResponseModel<Group>> {
+    getAllJoinedGroup(req: SearchRequest): Observable<ResponseModel<Group[]>> {
         const url = `${this.baseUrl}/Group/joined-group`;
-        return this.http.get<ResponseModel<Group>>(url);
+        const params = {
+            PageNumber: `${req.pageNumber}`,
+            PageSize: `${req.pageSize}`,
+        };
+
+        return this.http.get<ResponseModel<Group[]>>(url, { params });
     }
 
     getRoleByUserId(groupId: number, userId: number): Observable<ResponseModel<any>> {

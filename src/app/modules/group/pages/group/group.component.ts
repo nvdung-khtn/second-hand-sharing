@@ -16,11 +16,10 @@ import { Group } from 'src/app/core/constants/group.constant';
 export class GroupComponent implements OnInit {
     isOpenGroupModal = false;
     groupForm: FormGroup;
-    joinedGroup;
+    availableGroups: Group[] = [];
+    joinedGroups: Group[] = [];
     isLoading = false;
     getAllGroupRequest: SearchRequest;
-
-    availableGroups: Group[] = [];
 
     constructor(private readonly groupClient: GroupClient, private fb: FormBuilder) {
         this.getAllGroupRequest = new SearchRequest(1, 100);
@@ -28,14 +27,15 @@ export class GroupComponent implements OnInit {
 
     ngOnInit(): void {
         this.isLoading = true;
-        this.groupClient.getJoinedGroup().subscribe((response) => {
-            this.joinedGroup = response.data;
-            this.isLoading = false;
+        this.groupClient.getAllJoinedGroup(this.getAllGroupRequest).subscribe((response) => {
+            this.joinedGroups = response.data;
         });
 
         this.groupClient.getAllAvailableGroup(this.getAllGroupRequest).subscribe((response) => {
             this.availableGroups = response.data;
         });
+
+        this.isLoading = false;
     }
 
     handleOpenModal = () => {
