@@ -26,7 +26,7 @@
       <mat-icon class="create-post-modal__user-info__profile__info__address__location"> location_on</mat-icon>
 
       <div class="create-post-modal__user-info__profile__info__address__address">
-        {{ currentUser.address | address }}
+        {{ receiveAddress | address }}
       </div>
     </div>
 
@@ -74,8 +74,7 @@
   </form>
 
   <div class="address-modal" [style.display]="this.isOpenAddressModal ? 'block' : 'none'">
-    <app-address-modal [isOpenModal]="this.isOpenAddressModal" (modalChange)="this.isOpenAddressModal = $event"
-      (addressData)="handleAddress($event)">
+    <app-address-modal [(openAddressModal)]="isOpenAddressModal" [(addressData)]="receiveAddress">
     </app-address-modal>
   </div>
 </div>

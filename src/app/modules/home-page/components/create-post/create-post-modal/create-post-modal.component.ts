@@ -1,5 +1,14 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import {
+    Component,
+    EventEmitter,
+    Input,
+    OnChanges,
+    OnDestroy,
+    OnInit,
+    Output,
+    SimpleChanges,
+} from '@angular/core';
 import { UploadImageService } from 'src/app/shared/service/uploadImage.service';
 import { AddressIdModel, AddressModel } from 'src/app/core/constants/address.constant';
 import { HomeClient } from 'src/app/core/api-clients/home.client';
@@ -48,7 +57,7 @@ export class CreatePostModalComponent implements OnInit, OnDestroy {
         private authService: AuthService
     ) {}
 
-    ngOnInit(): void {
+    ngOnInit() {
         this.postForm = this.fb.group({
             itemName: ['', [Validators.required]],
             phoneNumber: ['', [Validators.required]], // sao ko co thong tin nay
@@ -61,7 +70,7 @@ export class CreatePostModalComponent implements OnInit, OnDestroy {
     getCurrentUser() {
         this.authService.currentUser$.pipe(takeUntil(this.destroy$)).subscribe((user) => {
             this.currentUser = user;
-            this.receiveAddress = user?.address;
+            this.receiveAddress = this.currentUser.address;
         });
     }
 
@@ -73,7 +82,7 @@ export class CreatePostModalComponent implements OnInit, OnDestroy {
     showSelectedFile(event) {
         // let event = originalEvent;
         // tslint:disable-next-line: prefer-for-of
-        for (let i = 0; i < event.target.files.length; i++) {
+        for (let i = 0; i < event?.target?.files?.length; i++) {
             this.myFiles.push(event.target.files[i]);
             if (!event.target.files[i] || event.target.files[i].length === 0) {
                 return;
@@ -140,17 +149,18 @@ export class CreatePostModalComponent implements OnInit, OnDestroy {
                 this.isOpenMessageModal = true;
                 this.isSuccess = true;
                 this.messageModalMessage = 'Đăng bài thành công';
+
+                // Reset Data in post
+                this.postForm.reset();
+                this.selectedCatId = 1;
+                // this.myFiles = [];
+                // this.showSelectedFile(null);
             },
             (error) => {
                 this.loading = false;
                 console.log(error);
             }
         );
-    }
-
-    // trigger when app-address-modal component emit addressId
-    handleAddress(address: AddressModel) {
-        this.currentUser.address = address;
     }
 
     handleCategoryId(catId: number) {

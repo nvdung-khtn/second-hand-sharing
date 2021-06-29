@@ -18,7 +18,7 @@ import { Router } from '@angular/router';
 })
 export class AuthRegisterFormComponent implements OnInit {
     registerForm: FormGroup;
-    loading: boolean = false;
+    isLoading: boolean = false;
 
     private isSuccess: boolean;
     constructor(private authClient: AuthClient, private fb: FormBuilder, private router: Router) {}
@@ -77,15 +77,13 @@ export class AuthRegisterFormComponent implements OnInit {
 
     async onSubmit() {
         this.registerForm.markAllAsTouched();
-        if (this.registerForm.invalid) {
-            return;
-        }
+        if (this.registerForm.invalid) return;
+        this.isLoading = true;
 
-        this.loading = true;
         const response = await this.authClient.register(this.registerForm.value);
         this.authClient.register(this.registerForm.value).subscribe(
             async (data) => {
-                this.loading = false;
+                this.isLoading = false;
                 this.isSuccess = true;
                 await Swal.fire({
                     icon: 'success',
@@ -96,12 +94,13 @@ export class AuthRegisterFormComponent implements OnInit {
                 });
             },
             (err) => {
-                this.loading = false;
+                this.isLoading = false;
                 this.isSuccess = false;
                 Swal.fire({
                     icon: 'error',
                     title: 'Error...',
-                    text: `${err.error.Message}`,
+                    //text: `${err.error.Message}`,
+                    text: `Email đã tồn tại trong hệ thống.`,
                 });
             }
         );

@@ -110,7 +110,7 @@
   </div>
 
   <div class="mobile-context">
-    <div class="mobile-context__category__inside"  (click)="isSelectedTab(cate?.id)"
+    <div class="mobile-context__category__inside" (click)="isSelectedTab(cate?.id)"
       [ngClass]="{ selectedTabStyle: this.selectedTab === cate?.id }" *ngFor="let cate of this.mobileContext">
       <div class="mobile-context__category__inside__title">
         {{ cate?.title }}
@@ -120,15 +120,15 @@
 </div>
 
 <!-- Address Modal -->
-<div class="address-modal" [style.display]="isOpenAddressModal ? 'block' : 'none'">
+<!-- <div class="address-modal" [style.display]="isOpenAddressModal ? 'block' : 'none'">
   <app-address-modal [isOpenModal]="this.isOpenAddressModal" (modalChange)="this.isOpenAddressModal=$event"
     (addressData)="handleAddress($event)">
   </app-address-modal>
-</div>
+</div> -->
 
 <ng-template #loadingTmpl>
   <app-loader></app-loader>
 </ng-template>
 
 <app-my-registration class="mobile-tab" *ngIf="this.selectedTab === 1"></app-my-registration>
-<app-my-donations class="mobile-tab"  *ngIf="this.selectedTab === 2"></app-my-donations>
+<app-my-donations class="mobile-tab" *ngIf="this.selectedTab === 2"></app-my-donations>
