@@ -1,6 +1,9 @@
 @import "/src/styles/variables";
 
 .group {
+    overflow-y: scroll;
+    height: 100%;
+    
     &__groups {
         display: inline-block;
         width: 100%;

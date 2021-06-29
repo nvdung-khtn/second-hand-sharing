@@ -1,5 +1,5 @@
 <div class="list-events">
-    <div class="event flex" *ngFor="let event of groupEvents" [routerLink]="['/group/event', event?.id]">
+    <div class="event flex" *ngFor="let event of events" [routerLink]="['/group/event', event?.id]">
         <img class="event__avatar" [src]="'assets/image/event.png'" />
 
         <div class="event__info">
@@ -18,4 +18,7 @@
         </div>
     </div>
 
+    <div class="noData" *ngIf="events?.length === 0">
+        Không có sự kiện diễn ra
+    </div>
 </div>

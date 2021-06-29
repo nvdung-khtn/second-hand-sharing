@@ -7,8 +7,10 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class ListEventsComponent implements OnInit {
     @Input() groupId: number;
+    @Input() allEvent: boolean = false;
 
-    groupEvents = [
+
+    events = [
         {
             id: 1,
             eventName: 'Event quyên góp cho đồng bào lũ lụt',
@@ -22,7 +24,8 @@ export class ListEventsComponent implements OnInit {
             eventName: 'Event quyên góp cho trẻ em nghèo khó',
             startDate: '2021-06-24T15:11:10.912',
             endDate: '2021-07-30T15:11:10.912',
-            content: 'Event tạo ra nhằm kêu gọi các thành viên trong nhóm quyên góp cho trẻ em có hoàn cảnh khó khăn',
+            content:
+                'Event tạo ra nhằm kêu gọi các thành viên trong nhóm quyên góp cho trẻ em có hoàn cảnh khó khăn',
             groupId: 1,
         },
     ];
@@ -30,6 +33,10 @@ export class ListEventsComponent implements OnInit {
     constructor() {}
 
     ngOnInit(): void {
-        console.log(this.groupId)
+        if (this.allEvent === true) {
+            console.log('get all event')
+        } else {
+            console.log('get event by group id', this.groupId);
+        }
     }
 }
