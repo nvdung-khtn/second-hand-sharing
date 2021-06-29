@@ -7,7 +7,7 @@
     <div class="members-group__list request-list">
       <div *ngFor="let request of requestList">
         <div class="flex">
-          <div class="members-group__list__profile">
+          <div class="members-group__list__profile" [routerLink]="['/profile', request?.requesterId]">
             <img
               class="members-group__list__profile__avatar"
               src="{{ request?.avatarUrl || 'assets/image/default-avatar.png' }}"
@@ -43,7 +43,7 @@
     <div class="members-group__list">
       <div *ngFor="let user of adminList">
         <div class="flex">
-          <div class="members-group__list__profile">
+          <div class="members-group__list__profile" [routerLink]="['/profile', user?.userId]">
             <img
               class="members-group__list__profile__avatar"
               src="{{ user?.avatarUrl || 'assets/image/default-avatar.png' }}"
@@ -73,7 +73,7 @@
       <!-- MEMBER LIST -->
       <div *ngFor="let user of memberList">
         <div class="flex">
-          <div class="members-group__list__profile">
+          <div class="members-group__list__profile" [routerLink]="['/profile', user?.userId]">
             <img
               class="members-group__list__profile__avatar"
               src="{{ user?.avatarUrl || 'assets/image/default-avatar.png' }}"

@@ -17,6 +17,7 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class CreatePostModalComponent implements OnInit, OnDestroy {
     @Input() isOpenModal;
+    @Input() isPostItemEvent = false;
     @Output() modalChange = new EventEmitter<boolean>();
 
     // biến cho message modal khi gọi xong api đăng bài
@@ -129,23 +130,29 @@ export class CreatePostModalComponent implements OnInit, OnDestroy {
             categoryId: this.selectedCatId,
         };
 
-        this.homeClient.createItem(formData).subscribe(
-            (response) => {
-                this.loading = false;
-                response.data.imageUploads.forEach((image) =>
-                    this.preSignUrl.push(image.presignUrl)
-                );
-                // Upload image to cloud
-                this.uploadImages(this.preSignUrl);
-                this.isOpenMessageModal = true;
-                this.isSuccess = true;
-                this.messageModalMessage = 'Đăng bài thành công';
-            },
-            (error) => {
-                this.loading = false;
-                console.log(error);
-            }
-        );
+        if (!this.isPostItemEvent) {
+            this.homeClient.createItem(formData).subscribe(
+                (response) => {
+                    this.loading = false;
+                    response.data.imageUploads.forEach((image) =>
+                        this.preSignUrl.push(image.presignUrl)
+                    );
+                    // Upload image to cloud
+                    this.uploadImages(this.preSignUrl);
+                    this.isOpenMessageModal = true;
+                    this.isSuccess = true;
+                    this.messageModalMessage = 'Đăng bài thành công';
+                },
+                (error) => {
+                    this.loading = false;
+                    console.log(error);
+                }
+            );
+        }
+        else {
+            this.loading = false;
+            console.log('gọi api post item trong event')
+        }
     }
 
     // trigger when app-address-modal component emit addressId

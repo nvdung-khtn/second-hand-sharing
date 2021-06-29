@@ -1,0 +1,66 @@
+<div class="create-post">
+  <div class="create-post__btn">
+    <div class="create-post__btn__inside" (click)="onClickPost()">Quyên góp vật phẩm</div>
+  </div>
+</div>
+
+<div
+  *ngIf="listItemEvent; else loadingTmpl"
+  class="list-event-items"
+  infiniteScroll
+  [infiniteScrollDistance]="itemListScrollDistance"
+  [infiniteScrollThrottle]="itemListScrollThrottle"
+  (scrolled)="onItemListScrollDown()"
+  [scrollWindow]="false"
+  [alwaysCallback]="true"
+  [style.display]="listItemEvent?.length === 0 ? 'flex' : 'block'"
+>
+  <div class="list-event-items__grid" [style.display]="listItemEvent?.length === 0 ? 'none' : 'grid'">
+    <div class="list-event-items__grid__card" *ngFor="let item of listItemEvent">
+      <div class="list-event-items__grid__card__image">
+        <img
+          class="list-event-items__grid__card__image__inside"
+          [src]="item?.imageUrl ? item.imageUrl : 'assets/image/default-image.png'"
+        />
+      </div>
+
+      <div class="list-event-items__grid__card__name">
+        {{ item?.itemName }}
+      </div>
+
+      <div class="list-event-items__grid__card__userName">
+        {{ item?.donateAccountName }}
+      </div>
+
+      <div class="list-event-items__grid__card__post-info">
+        <div class="list-event-items__grid__card__post-info__time">
+          {{ item?.postTime | time }} - {{ item?.address | address }}
+        </div>
+      </div>
+
+      <div class="list-event-items__grid__card__line"></div>
+
+      <div class="list-event-items__grid__card__description">
+        {{ item?.description }}
+      </div>
+    </div>
+  </div>
+  <div [style.display]="listItemEvent?.length === 0 ? 'flex' : 'none'" class="noData">
+    <!-- Them hình ảnh | icon -->
+    Chưa có vật phẩm quyên góp
+  </div>
+
+  <div [style.display]="isEnd && listItemEvent?.length !== 0 ? 'flex' : 'none'" class="endData">
+    Không còn bài đăng để xem
+  </div>
+</div>
+
+<div id="create-post-modal" class="create-post__modal" [style.display]="this.isOpenModal ? 'block' : 'none'">
+  <app-create-post-modal
+    [isPostItemEvent] = "true"
+    [isOpenModal]="this.isOpenModal"
+    (modalChange)="this.isOpenModal = $event"
+  ></app-create-post-modal>
+</div>
+
+<ng-template #loadingTmpl> <app-></app-> </ng-template>
