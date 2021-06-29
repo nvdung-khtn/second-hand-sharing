@@ -9,9 +9,8 @@ export class AddressPipe implements PipeTransform {
     constructor(private addressService: AddressService) {}
 
     transform(address: AddressIdModel): string {
-        if (address !== null) {
+        if (address !== null && address.cityId && address.districtId & address.wardId) {
             return this.addressService.getAddressString(address);
-        }
-        else return 'Chưa cập nhật địa chỉ'
+        } else return 'Chưa cập nhật địa chỉ';
     }
 }

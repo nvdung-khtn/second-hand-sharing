@@ -35,7 +35,11 @@ export class AddressModalComponent implements OnInit, OnChanges {
 
     constructor(private addressService: AddressService, private authService: AuthService) {}
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        if (this.addressData === null) {
+            this.addressData = new AddressIdModel(0, 0, 0, '');
+        }
+    }
 
     async ngOnChanges(changes: SimpleChanges): Promise<void> {
         await this.initializeAddress();

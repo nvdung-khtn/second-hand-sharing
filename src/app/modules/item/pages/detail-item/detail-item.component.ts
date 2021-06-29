@@ -212,6 +212,7 @@ export class DetailItemComponent implements OnInit {
                 this.isProcessing = false;
                 this.item.status = ItemStatus.COMPLETED;
                 this.toastr.success('Xác nhận đã cho vật phẩm thành công!');
+                setTimeout(() => window.location.reload(), 1500);
             },
             (error) => console.error(error)
         );
