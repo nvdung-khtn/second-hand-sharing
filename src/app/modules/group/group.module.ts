@@ -11,9 +11,10 @@ import { AboutGroupComponent } from './components/about-group/about-group.compon
 import { ItemsGroupComponent } from './components/items-group/items-group.component';
 import { MembersGroupComponent } from './components/members-group/members-group.component';
 import { MatIconModule } from '@angular/material/icon';
+import { InviteModalComponent } from './components/invite-modal/invite-modal.component';
 
 @NgModule({
-    declarations: [GroupComponent, CreateGroupModalComponent, DetailGroupComponent, AboutGroupComponent, ItemsGroupComponent, MembersGroupComponent],
+    declarations: [GroupComponent, CreateGroupModalComponent, DetailGroupComponent, AboutGroupComponent, ItemsGroupComponent, MembersGroupComponent, InviteModalComponent],
     imports: [CommonModule, FormsModule, ReactiveFormsModule, GroupRoutingModule, SharedModule, MatIconModule],
 })
 export class GroupModule {}

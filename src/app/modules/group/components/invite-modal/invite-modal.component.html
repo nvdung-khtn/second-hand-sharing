@@ -1,0 +1,12 @@
+<div class="invite-modal">
+    <span class="invite-modal__close" (click)="onClose()">&times;</span>
+  
+    <div class="invite-modal__title">
+      Mời người dùng
+    </div>
+  
+    <input class="invite-modal__text" type="text" placeholder="Email người dùng" [(ngModel)]="this.messageValue">
+  
+    <div class="invite-modal__confirm" (click)="onSubmit()">Mời</div>
+  </div>
+  

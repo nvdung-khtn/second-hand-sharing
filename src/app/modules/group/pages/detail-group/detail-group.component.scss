@@ -7,7 +7,7 @@
     left: 0;
     right: 0;
     margin-top: 60px;
-    z-index: 90;
+    z-index: 50;
     background-color: $primary-icon-background-color;
     font-size: $default-font-size;
     height: fit-content;
@@ -135,6 +135,12 @@
         cursor: pointer;
     }
 
+    .join-btn {
+        width: 7rem;
+        padding: 5px 10px;
+        cursor: pointer;
+    }
+
     .selectedTabStyle {
         font-weight: $font-weight-bold;
         color: $primary-color !important;
@@ -148,5 +154,22 @@
         @media (max-width: 1024px) {
             max-width: unset;
         }
+    }
+}
+
+.invite-modal {
+    display: none;
+    position: fixed; /* Stay in place */
+    z-index: 60; /* Sit on top */
+    padding-top: 4%; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.8); /* Black w/ opacity */
+
+    @media (max-width: 1024px) {
+        top: 0;
     }
 }

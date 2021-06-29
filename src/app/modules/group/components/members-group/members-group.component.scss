@@ -1,5 +1,4 @@
-
-@import '/src/styles/variables';
+@import "/src/styles/variables";
 
 .members-group {
     width: 100%;
@@ -7,7 +6,6 @@
     background-color: white;
     padding: 1rem 2rem;
     margin-bottom: 1rem;
-
     @include box-shadow();
 
     &__title {
@@ -19,53 +17,52 @@
 
     &__list {
         margin-top: 1rem;
-        overflow-y: scroll;
-    
+        overflow-y: visible;
+
         @media (max-width: 1024px) {
             height: calc(100vh - 14rem);
         }
-    
+
         &::-webkit-scrollbar {
-          display: none;
+            display: none;
         }
-    
+
         &__profile {
-          display: flex;
-          align-items: center;
-          padding: 5px 2%;
-          margin-top: 5px;
-          cursor: pointer;
-          width: 100%;
-    
-          &:hover {
+            display: flex;
+            align-items: center;
+            padding: 5px 2%;
+            margin-top: 5px;
             cursor: pointer;
-            background-color: $primary-icon-background-color;
-            border-radius: 5px;
-          }
-    
-          &__avatar {
-            width: 45px;
-            height: 45px;
-            margin-right: 2%;
-            border-radius: 100%;
-          }
-    
-          &__info {
-            text-overflow: ellipsis;
-            overflow: hidden;
-            white-space: nowrap;
-    
-            &__name {
-              font-weight: $font-weight-medium;
-              color: $primary-text-color;
+
+            &:hover {
+                cursor: pointer;
+                background-color: $primary-icon-background-color;
+                border-radius: 5px;
             }
-    
-            &__times {
-              font-style: italic;
+
+            &__avatar {
+                width: 45px;
+                height: 45px;
+                margin-right: 1rem;
+                border-radius: 100%;
             }
-          }
+
+            &__info {
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+
+                &__name {
+                    font-weight: $font-weight-medium;
+                    color: $primary-text-color;
+                }
+
+                &__times {
+                    font-style: italic;
+                }
+            }
         }
-      }
+    }
 
     .num-member {
         color: $primary-icon-color;
@@ -73,22 +70,92 @@
     }
 
     .flex {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
     }
 
     .more-btn {
-      padding: 10px;
-      background-color: $primary-lightest-text-color;
-      font-weight: bold;
-      color: white;
-      width: 3rem;
-      border-radius: $border-radius-light;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
+        cursor: pointer;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #fff;
+        min-width: 15rem;
+        overflow: auto;
+        z-index: 1;
+        right: 100%;
+        bottom: 0;
+        width: 100%;
+        padding: 0.5rem;
+        box-sizing: border-box;
+        @include box-shadow();
+    }
+
+    .dropdown-option {
+        cursor: pointer;
+        padding: 1rem;
+
+        &:hover {
+            background-color: $primary-icon-background-color;
+        }
+    }
+
+    .displayMore {
+        display: block;
+    }
+
+    .hideMore {
+        display: none;
+    }
+
+    .request-list {
+        margin-bottom: 2rem;
+    }
+
+    .accept-btn {
+        display: inline-flex;
+        align-items: center;
+        border: none;
+        border-radius: 100%;
+        width: 2.25rem;
+        height: 2.25rem;
+        color: white;
+        background-color: $light-green;
+
+        &:hover {
+            background-color: $green;
+        }
+    }
+
+    .cancel-btn {
+        display: inline-flex;
+        align-items: center;
+        border: none;
+        border-radius: 100%;
+        width: 2.25rem;
+        height: 2.25rem;
+        color: $primary-icon-color;
+        background-color: $btn-cancel-color;
+        margin-left: 0.5rem;
+
+        &:hover {
+            background-color: $btn-cancel-color-hover;
+        }
+    }
+
+    .no-request {
+        padding-top: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 }
