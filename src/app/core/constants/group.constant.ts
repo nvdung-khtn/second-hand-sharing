@@ -6,3 +6,11 @@ export class Group {
     createDate: string;
     rules: string;
 }
+
+export class Member {
+    userId: number;
+    fullName: string;
+    joinStatus: number;
+    joinDate: string;
+    avatarUrl: string;
+}

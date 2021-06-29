@@ -38,9 +38,9 @@ export class GroupComponent implements OnInit {
         this.isLoading = false;
     }
 
-    handleOpenModal = () => {
+    handleOpenModal() {
         this.isOpenGroupModal = true;
-    };
+    }
 
-    onSelectGroupModal = (id: number) => {};
+    onSelectGroupModal(id: number) {}
 }
