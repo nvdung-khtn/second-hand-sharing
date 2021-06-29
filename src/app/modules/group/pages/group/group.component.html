@@ -7,12 +7,12 @@
     </div>
 
     <div class="group__container all-group">
-      <div class="group__no-group" [style.display]="allGroupData?.length === 0 ? 'flex' : 'none'">
+      <div class="group__no-group" [style.display]="availableGroups?.length === 0 ? 'flex' : 'none'">
         Hệ thống chưa có bất kỳ nhóm nào
       </div>
 
-      <div class="group__groups" [style.display]="allGroupData?.length === 0 ? 'none' : 'inline-block'">
-        <div class="group__group-element" *ngFor="let group of allGroupData" [routerLink]="['/group', group?.id]">
+      <div class="group__groups" [style.display]="availableGroups?.length === 0 ? 'none' : 'inline-block'">
+        <div class="group__group-element" *ngFor="let group of availableGroups" [routerLink]="['/group', group?.id]">
           <img class="group__avatar" [src]="group?.avatarURL ? group?.avatarURL : 'assets/image/group.png'" />
           <div class="group__name">{{ group?.groupName }}</div>
         </div>

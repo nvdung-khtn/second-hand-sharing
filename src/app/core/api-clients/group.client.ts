@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { ResponseModel } from '../constants/common.constant';
+import { ResponseModel, SearchRequest } from '../constants/common.constant';
 import { Group } from '../constants/group.constant';
 import { Observable } from 'rxjs';
 
@@ -25,5 +25,15 @@ export class GroupClient {
     getRoleByUserId(groupId: number, userId: number): Observable<ResponseModel<any>> {
         const url = `${this.baseUrl}/Group/${groupId}/get-role?userId=${userId}`;
         return this.http.get<ResponseModel<any>>(url);
+    }
+
+    getAllAvailableGroup(req: SearchRequest): Observable<ResponseModel<Group[]>> {
+        const url = `${this.baseUrl}/Group`;
+        const params = {
+            PageNumber: `${req.pageNumber}`,
+            PageSize: `${req.pageSize}`,
+        };
+
+        return this.http.get<ResponseModel<Group[]>>(url, { params });
     }
 }
