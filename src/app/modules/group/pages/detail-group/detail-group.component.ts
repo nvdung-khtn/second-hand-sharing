@@ -65,7 +65,8 @@ export class DetailGroupComponent implements OnInit, OnDestroy {
                 if (response.succeeded) {
                     this.myRole = response.message;
                     this.isMember = true;
-                    this.selectedTab = 2;
+                    //this.selectedTab = 2;
+                    this.selectedTab = 3;
                 }
             },
             (error) => {

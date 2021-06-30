@@ -101,4 +101,16 @@ export class GroupClient {
 
         return this.http.put<ResponseModel<any>>(url, { groupId, memberId });
     }
+
+    kickOutMember(groupId: number, memberId: number): Observable<ResponseModel<any>> {
+        const url = `${this.baseUrl}/Group/${groupId}/member/${memberId}/`;
+
+        return this.http.delete<ResponseModel<any>>(url);
+    }
+
+    promoteMember(groupId: number, memberId: number): Observable<ResponseModel<any>> {
+        const url = `${this.baseUrl}/Group/${groupId}/appoint-admin/${memberId}/`;
+
+        return this.http.put<ResponseModel<any>>(url, { groupId, memberId });
+    }
 }

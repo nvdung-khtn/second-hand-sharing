@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { GroupClient } from 'src/app/core/api-clients/group.client';
 import { SearchRequest } from 'src/app/core/constants/common.constant';
 import { Member } from 'src/app/core/constants/group.constant';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'app-members-group',
@@ -65,15 +66,49 @@ export class MembersGroupComponent implements OnInit {
         }
     };
 
-    onKickMember = (user: any) => {
-        // gọi api kick member
-        console.log('kick: ', user);
-    };
+    async kickOutMember(memberId: number) {
+        let result = await Swal.fire({
+            title: 'Xác nhận thao tác',
+            text: `Bạn thực sự muốn xóa thành viên này khỏi nhóm`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Đúng vậy',
+            cancelButtonText: 'Hủy bỏ',
+        });
 
-    onUpToAdmin = (user: any) => {
-        // gọi api thăng quyền admin
-        console.log('up to admin:', user);
-    };
+        if (result.isConfirmed) {
+            this.groupClient.kickOutMember(this.groupId, memberId).subscribe((response) => {
+                this.toastr.success('Xóa bỏ thành viên thành công');
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+            });
+        }
+    }
+
+    async onUpToAdmin(memberId: number) {
+        let result = await Swal.fire({
+            title: 'Xác nhận thao tác',
+            text: `Bạn chắc chắn muốn thăng cấp cho người này`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Đúng vậy',
+            cancelButtonText: 'Hủy bỏ',
+        });
+
+        if (result.isConfirmed) {
+            this.groupClient.promoteMember(this.groupId, memberId).subscribe((response) => {
+                this.toastr.success('Thăng cấp thành công');
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+            });
+        }
+    }
 
     onDownToMember = (user: any) => {
         // gọi api xuống quyền thành member

@@ -10,7 +10,14 @@ export class Group {
 export class Member {
     requesterId: number;
     requesterName: string;
-    joinStatus: number;
+    joinStatus: MemberJoinStatus;
     createDate: string;
     avatarUrl: string;
+}
+
+export enum MemberJoinStatus {
+    JOIN_REQUEST,
+    ADMIN_INVITE,
+    REJECTED,
+    ACCEPTED,
 }
