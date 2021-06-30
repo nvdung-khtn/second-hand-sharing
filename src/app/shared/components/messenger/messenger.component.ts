@@ -22,29 +22,26 @@ export class MessengerComponent implements OnInit, AfterViewChecked {
     @Input() changeMessage;
     @Input() isOpenModal: boolean;
     @Output() modalChange = new EventEmitter<boolean>();
+    @Output() emitChangeMessage = new EventEmitter<boolean>();
     @ViewChild('scrollMe') private myScrollContainer: ElementRef;
     @Input() zIndex: number;
+    @Input() newMessage;
 
     myInfo;
     profile;
     myInput = '';
-    newMessage;
+    /* newMessage; */
 
     messageData: any;
 
     constructor(
         private messageClient: MessageClient,
-        private messagingService: MessagingService,
         private authClient: AuthClient
     ) {}
 
     ngOnInit(): void {
         this.scrollToBottom();
         this.myInfo = JSON.parse(localStorage.getItem('userInfo'));
-        this.messagingService.receiveMessage().subscribe((payload) => {
-            this.newMessage = JSON.parse(payload.data.message);
-            this.messageData?.data.unshift(this.newMessage);
-        });
     }
 
     // tslint:disable-next-line: use-lifecycle-interface
@@ -59,14 +56,16 @@ export class MessengerComponent implements OnInit, AfterViewChecked {
                 this.profile = response.data;
             });
         }
-        this.messageClient.getMessageByUserId(id, 1, 100).subscribe(
-            (response) => {
-                this.messageData = response;
-            },
-            (error) => {
-                /* console.log(error) */
-            }
-        );
+        // tslint:disable-next-line: no-unused-expression
+        id !== undefined &&
+            this.messageClient.getMessageByUserId(id, 1, 100).subscribe(
+                (response) => {
+                    this.messageData = response;
+                },
+                (error) => {
+                    /* console.log(error) */
+                }
+            );
     }
 
     // tslint:disable-next-line: typedef

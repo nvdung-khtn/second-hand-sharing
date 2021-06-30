@@ -4,7 +4,7 @@
   <app-home-left-side></app-home-left-side>
 </div>
 <div class="home-aside-right" [style.display]="this.isLogin ? 'block' : 'none'">
-  <app-home-right-side [openMessageBox]="this.openMessageBox" (modalChange)="this.openMessageBox = $event"
+  <app-home-right-side [openMessageBox]="this.openMessageBox" [message]="this.newMessage" (modalChange)="this.openMessageBox = $event"
     (userInfo)="this.messageBoxByUser = $event"></app-home-right-side>
 </div>
 <div [ngClass]="{
@@ -15,7 +15,7 @@
 </div>
 
 <div class="detail-item__modal" [style.display]="this.openMessageBox ? 'block' : 'none'">
-  <app-messenger [changeMessage]="this.changeMessage" [usersInfo]="this.messageBoxByUser"
+  <app-messenger [changeMessage]="this.changeMessage" [newMessage]="this.newMessage" (emitChangeMessage)="this.changeMessage = $event" [usersInfo]="this.messageBoxByUser"
     [isOpenModal]="this.openMessageBox" (modalChange)="this.openMessageBox = $event"></app-messenger>
 </div>
 
