@@ -6,7 +6,7 @@
     </div>
 
     <div class="members-group__list request-list">
-      <div *ngFor="let request of requestList">
+      <div *ngFor="let request of requestJoins">
         <div class="flex">
           <div class="members-group__list__profile" [routerLink]="['/profile', request?.requesterId]">
             <img class="members-group__list__profile__avatar"
@@ -20,11 +20,11 @@
           </div>
 
           <div>
-            <button type="button" class="accept-btn" (click)="onAcceptToJoin(request)">
+            <button type="button" class="accept-btn" (click)="approveToJoin(request.requesterId)">
               <mat-icon>done</mat-icon>
             </button>
 
-            <button type="button" class="cancel-btn" (click)="onDeclineToJoin(request)">
+            <button type="button" class="cancel-btn" (click)="rejectToJoin(request.requesterId)">
               <mat-icon>close</mat-icon>
             </button>
           </div>

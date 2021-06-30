@@ -1,6 +1,7 @@
 // tslint:disable: no-inferrable-types
 // tslint:disable: prefer-for-of
 import { Component, Input, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { GroupClient } from 'src/app/core/api-clients/group.client';
 import { SearchRequest } from 'src/app/core/constants/common.constant';
 import { Member } from 'src/app/core/constants/group.constant';
@@ -22,7 +23,7 @@ export class MembersGroupComponent implements OnInit {
     members: Member[] = [];
     requestJoins: Member[] = [];
 
-    constructor(private groupClient: GroupClient) {
+    constructor(private groupClient: GroupClient, private toastr: ToastrService) {
         this.memberRequest = new SearchRequest(1, 100);
     }
 
@@ -79,13 +80,21 @@ export class MembersGroupComponent implements OnInit {
         console.log('down to member:', user);
     };
 
-    onAcceptToJoin = (request: any) => {
-        // gọi api chấp nhận cho người dùng tham gia group
-        console.log('accept:', request);
-    };
+    approveToJoin(memberId: number) {
+        this.groupClient.approveToJoin(this.groupId, memberId).subscribe((response) => {
+            this.toastr.success('Phê duyệt yêu cầu thành công');
+            setTimeout(() => {
+                window.location.reload();
+            }, 1500);
+        });
+    }
 
-    onDeclineToJoin = (request: any) => {
-        // gọi api từ chối người dùng tham gia group
-        console.log('decline:', request);
-    };
+    rejectToJoin(memberId: number) {
+        this.groupClient.rejectToJoin(this.groupId, memberId).subscribe((response) => {
+            this.toastr.success('Từ chối yêu cầu thành công');
+            setTimeout(() => {
+                window.location.reload();
+            }, 1500);
+        });
+    }
 }

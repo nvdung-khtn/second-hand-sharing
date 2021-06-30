@@ -17,10 +17,10 @@ export class InviteModalComponent implements OnInit {
     onClose = () => {
         this.isOpenModal = false;
         this.modalChange.emit(this.isOpenModal);
-    }
+    };
 
-    onSubmit = () => {
-      // gọi api mời
-      console.log('submit: ', this.messageValue)
+    onSubmit() {
+        // gọi api mời
+        console.log('submit: ', this.messageValue);
     }
 }

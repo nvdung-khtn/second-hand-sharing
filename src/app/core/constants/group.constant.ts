@@ -8,9 +8,9 @@ export class Group {
 }
 
 export class Member {
-    userId: number;
-    fullName: string;
+    requesterId: number;
+    requesterName: string;
     joinStatus: number;
-    joinDate: string;
+    createDate: string;
     avatarUrl: string;
 }

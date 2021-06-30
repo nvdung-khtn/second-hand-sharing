@@ -75,12 +75,30 @@ export class GroupClient {
     }
 
     getAllRequestJoin(req: SearchRequest, groupId: number): Observable<ResponseModel<Member[]>> {
-        const url = `${this.baseUrl}/Group/${groupId}/admin`;
+        const url = `${this.baseUrl}/Group/${groupId}/request-join`;
         const params = {
             PageNumber: `${req.pageNumber}`,
             PageSize: `${req.pageSize}`,
         };
 
         return this.http.get<ResponseModel<Member[]>>(url, { params });
+    }
+
+    joinGroup(groupId: number): Observable<ResponseModel<string>> {
+        const url = `${this.baseUrl}/Group/${groupId}/join`;
+
+        return this.http.post<ResponseModel<string>>(url, groupId);
+    }
+
+    approveToJoin(groupId: number, memberId: number): Observable<ResponseModel<any>> {
+        const url = `${this.baseUrl}/Group/${groupId}/join-request/${memberId}/accept`;
+
+        return this.http.put<ResponseModel<any>>(url, { groupId, memberId });
+    }
+
+    rejectToJoin(groupId: number, memberId: number): Observable<ResponseModel<any>> {
+        const url = `${this.baseUrl}/Group/${groupId}/join-request/${memberId}/reject`;
+
+        return this.http.put<ResponseModel<any>>(url, { groupId, memberId });
     }
 }
