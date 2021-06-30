@@ -27,7 +27,6 @@
         max-height: 44rem;
     }
 
-    
     @media (max-height: 768px) {
         height: 85%;
     }
@@ -291,5 +290,12 @@
     .address-title {
         padding: 0.25rem 0;
         font-weight: $font-weight-bold;
+    }
+}
+
+.dropdown-form {
+    .mat-form-field {
+        width: 100%;
+        border-radius: $border-radius-light;
     }
 }

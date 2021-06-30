@@ -5,11 +5,11 @@ export class AddressIdModel {
     districtId: number;
     cityId: number;
 
-    constructor(address) {
-        this.street = address.street;
-        this.wardId = address.wardId;
-        this.districtId = address.districtId;
-        this.cityId = address.cityId;
+    constructor(cityId, districtId, wardId, street) {
+        this.street = street;
+        this.wardId = wardId;
+        this.districtId = districtId;
+        this.cityId = cityId;
     }
 }
 

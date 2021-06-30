@@ -1,4 +1,13 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import {
+    Component,
+    EventEmitter,
+    Input,
+    OnChanges,
+    OnDestroy,
+    OnInit,
+    Output,
+    SimpleChanges,
+} from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AddressIdModel, AddressModel, EnumAddress } from 'src/app/core/constants/address.constant';
@@ -11,100 +20,86 @@ import { AuthService } from 'src/app/shared/service/auth.service';
     templateUrl: './address-modal.component.html',
     styleUrls: ['./address-modal.component.scss'],
 })
-export class AddressModalComponent implements OnInit, OnDestroy {
-    @Input() isOpenModal: boolean;
-    @Output() modalChange = new EventEmitter<boolean>();
-    @Output() addressData = new EventEmitter<AddressModel>();
+export class AddressModalComponent implements OnInit, OnChanges {
+    @Input() openAddressModal: boolean;
+    @Output() openAddressModalChange = new EventEmitter<boolean>();
+    @Input() addressData: AddressIdModel;
+    @Output() addressDataChange = new EventEmitter<AddressIdModel>();
+
     citys: any[] = [];
     districts: any[] = [];
     wards: any[] = [];
-    selectedType: EnumAddress;
-    myAddressArray: any;
+    selectedType = EnumAddress;
     currentUser: UserInfo;
+    displayError = false;
 
     constructor(private addressService: AddressService, private authService: AuthService) {}
 
-    addressForm: AddressModel = {
-        cityId: -1,
-        cityName: '',
-        districtId: -1,
-        districtName: '',
-        wardId: -1,
-        wardName: '',
-        street: '',
-    };
-
-    displayError = false;
-    destroy$ = new Subject<void>();
-
-    async ngOnInit() {
-        // get all city
-        this.citys = await this.addressService.getAllCity();
-        this.getCurrentUser();
-        const user: any = JSON.parse(localStorage.getItem('userInfo'));
-        this.myAddressArray = user.address;
+    ngOnInit(): void {
+        if (this.addressData === null) {
+            this.addressData = new AddressIdModel(0, 0, 0, '');
+        }
     }
 
-    getCurrentUser() {
-        this.authService.currentUser$
-            .pipe(takeUntil(this.destroy$))
-            .subscribe((user) => (this.currentUser = user));
+    async ngOnChanges(changes: SimpleChanges): Promise<void> {
+        await this.initializeAddress();
     }
 
-    onClose() {
-        this.isOpenModal = false;
-        this.modalChange.emit(this.isOpenModal);
+    async initializeAddress() {
+        if (this.addressData) {
+            Promise.all([
+                this.addressService.getAllCity(),
+                this.addressService.getAllDistrict(this.addressData.cityId),
+                this.addressService.getAllWard(
+                    this.addressData.cityId,
+                    this.addressData.districtId
+                ),
+            ]).then((value) => {
+                this.citys = value[0];
+                this.districts = value[1];
+                this.wards = value[2];
+            });
+        } else {
+            this.citys = await this.addressService.getAllCity();
+        }
+    }
+
+    closeAddressModal() {
+        this.openAddressModal = false;
+        this.openAddressModalChange.emit(this.openAddressModal);
     }
 
     onSubmit() {
         if (
-            this.addressForm.cityId !== -1 &&
-            this.addressForm.districtId !== -1 &&
-            this.addressForm.wardId !== -1 &&
-            this.addressForm.street
+            this.addressData.cityId &&
+            this.addressData.districtId &&
+            this.addressData.wardId &&
+            this.addressData.street
         ) {
-            this.isOpenModal = false;
             this.displayError = false;
-            this.addressData.emit(this.addressForm);
-            this.modalChange.emit(this.isOpenModal);
-            this.currentUser = { ...this.currentUser, address: this.addressForm };
-            this.authService.updateCurrentUser(this.currentUser);
+            this.addressData = { ...this.addressData };
+            this.addressDataChange.emit(this.addressData);
+            this.closeAddressModal();
         } else {
             this.displayError = true;
         }
     }
 
-    async handleSelectedAddress(event: AddressModel) {
-        if (this.selectedType === EnumAddress.CITY) {
-            this.addressForm.cityId = event.cityId;
-            this.addressForm.cityName = event.cityName;
-
-            // When have cityId => get district
-            this.districts = await this.addressService.getAllDistrict(event.cityId);
-        }
-        if (this.selectedType === EnumAddress.DISTRICT) {
-            this.addressForm.districtId = event.districtId;
-            this.addressForm.districtName = event.districtName;
-
-            // When have districtId => get ward
-            this.wards = await this.addressService.getAllWard(event.cityId, event.districtId);
+    async onSelected(fieldName, event) {
+        if (fieldName === this.selectedType.CITY) {
+            this.wards = [];
+            this.addressData.street = '';
+            this.districts = await this.addressService.getAllDistrict(event.value);
+            return (this.addressData.cityId = event.value);
         }
 
-        if (this.selectedType === EnumAddress.WARD) {
-            this.addressForm.wardId = event.wardId;
-            this.addressForm.wardName = event.wardName;
+        if (fieldName === this.selectedType.DISTRICT) {
+            this.wards = await this.addressService.getAllWard(this.addressData.cityId, event.value);
+            return (this.addressData.districtId = event.value);
         }
-    }
 
-    onClickMyAddress = () => {
-        this.isOpenModal = false;
-        this.displayError = false;
-        this.addressData.emit(this.myAddressArray);
-        this.modalChange.emit(this.isOpenModal);
-    };
-
-    ngOnDestroy() {
-        this.destroy$.next();
-        this.destroy$.complete();
+        if (fieldName === this.selectedType.WARD) {
+            return (this.addressData.wardId = event.value);
+        }
     }
 }

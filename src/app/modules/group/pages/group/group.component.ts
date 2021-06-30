@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { GroupClient } from 'src/app/core/api-clients/group.client';
+import { SearchRequest } from 'src/app/core/constants/common.constant';
+import { Group } from 'src/app/core/constants/group.constant';
 
 @Component({
     selector: 'app-group',
@@ -14,52 +16,31 @@ import { GroupClient } from 'src/app/core/api-clients/group.client';
 export class GroupComponent implements OnInit {
     isOpenGroupModal = false;
     groupForm: FormGroup;
-    joinedGroup;
+    availableGroups: Group[] = [];
+    joinedGroups: Group[] = [];
     isLoading = false;
+    getAllGroupRequest: SearchRequest;
 
-    allGroupData = [
-        {
-            id: 1,
-            groupName: 'test 2',
-            avatarURL:
-                'https://storage.googleapis.com/secondhandsharing.appspot.com/182519e8-836e-439e-9053-9fd3c2caacf0',
-        },
-        {
-            id: 3,
-            groupName: 'test Group',
-            avatarURL: null,
-        },
-        {
-            id: 4,
-            groupName: 'test Group',
-            avatarURL: null,
-        },
-        {
-            id: 5,
-            groupName: 'test Group',
-            avatarURL:
-                'https://storage.googleapis.com/secondhandsharing.appspot.com/769c16aa-ede8-4865-937f-c8df23c91bca',
-        },
-        {
-            id: 54,
-            groupName: 'test',
-            avatarURL: null,
-        },
-    ];
-
-    constructor(private readonly groupClient: GroupClient, private fb: FormBuilder) {}
+    constructor(private readonly groupClient: GroupClient, private fb: FormBuilder) {
+        this.getAllGroupRequest = new SearchRequest(1, 100);
+    }
 
     ngOnInit(): void {
         this.isLoading = true;
-        this.groupClient.getJoinedGroup().subscribe((response) => {
-            this.joinedGroup = response.data;
-            this.isLoading = false;
+        this.groupClient.getAllJoinedGroup(this.getAllGroupRequest).subscribe((response) => {
+            this.joinedGroups = response.data;
         });
+
+        this.groupClient.getAllAvailableGroup(this.getAllGroupRequest).subscribe((response) => {
+            this.availableGroups = response.data;
+        });
+
+        this.isLoading = false;
     }
 
-    handleOpenModal = () => {
+    handleOpenModal() {
         this.isOpenGroupModal = true;
-    };
+    }
 
-    onSelectGroupModal = (id: number) => {};
+    onSelectGroupModal(id: number) {}
 }
