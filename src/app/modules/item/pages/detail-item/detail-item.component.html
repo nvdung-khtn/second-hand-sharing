@@ -83,8 +83,8 @@
           <ng-template #isOwner>
             <div class="title margin-top">Danh sách yêu cầu</div>
             <div class="list">
-              <span *ngIf="!receiveRequests?.length">Chưa có ai xin nhận vật phẩm này!</span>
-              <div class="request-list" *ngFor="let request of receiveRequests">
+              <span [style.display]="!receiveRequests?.length ? 'block' : 'none'">Chưa có ai xin nhận vật phẩm này!</span>
+              <div [style.display]="receiveRequests?.length ? 'flex' : 'none'" class="request-list" *ngFor="let request of receiveRequests">
                 <div class="request-list__info" [routerLink]="['/profile', request?.receiverId]">
                   <img class="avatar" src="assets/image/default-avatar.png" />
 

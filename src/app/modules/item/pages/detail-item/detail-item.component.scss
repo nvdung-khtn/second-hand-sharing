@@ -328,3 +328,14 @@
 .detail-item__grid__card__right__btn.cancel {
     background-color: $cancel-button;
 }
+
+.owner-notification {
+    padding: 0.5rem 1rem;
+    position: absolute;
+    background-color: $primary-color;
+    color: white;
+    z-index: 4;
+    top: 0;
+    right: 0;
+    width: 25%;
+}
