@@ -79,6 +79,7 @@ export class CreatePostModalComponent implements OnInit, OnDestroy {
     onClose() {
         this.isOpenModal = false;
         this.modalChange.emit(this.isOpenModal);
+        window.location.reload()
     }
 
     showSelectedFile(event) {

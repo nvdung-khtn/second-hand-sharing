@@ -29,6 +29,9 @@ export class DetailItemComponent implements OnInit {
     notification: any;
     notiType: string;
 
+    // display accepted by owner
+    isSelectedByOwner: boolean = false;
+
     isProcessing: boolean = false;
     approvedRequestId: number = -1;
     nomineeName: string;
@@ -83,6 +86,14 @@ export class DetailItemComponent implements OnInit {
                         }
                         this.nomineeName = nominee?.receiverName;
                     });
+                } else {
+                    this.processClient
+                        .requestStatus(this.item?.userRequestId)
+                        .subscribe((response: any) => {
+                            if (response.data.receiveStatus === 1) {
+                                this.isSelectedByOwner = true;
+                            }
+                        });
                 }
                 // Get address string
                 this.addressVM = await this.addressService.getAddressVMById(
@@ -138,11 +149,16 @@ export class DetailItemComponent implements OnInit {
                     this.nomineeName = nominee?.receiverName;
                 });
                 this.toastr.success(`${userCancel?.receiverName} đã hủy nhận vật phẩm`);
+                this.isProcessing = false;
+                this.approvedRequestId = -1;
+                this.nomineeName = '';
             }
             if (this.notiType === NotifyType.REQUEST_STATUS + '') {
                 if (this.notification?.requestStatus === 1) {
+                    this.isSelectedByOwner = true;
                     this.toastr.success(`Yêu cầu của bạn đã được chấp nhận bởi chủ sở hữu`);
                 } else {
+                    this.isSelectedByOwner = false;
                     this.toastr.success(`Yêu cầu  của bạn đã bị hủy bởi chủ sở hữu`);
                 }
             }
@@ -229,6 +245,7 @@ export class DetailItemComponent implements OnInit {
             if (result.isConfirmed) {
                 this.processClient.unsubscribeItem(requestId).subscribe((response) => {
                     this.item.userRequestId = 0;
+                    this.isSelectedByOwner = false;
                     this.toastr.success('Đã Hủy đăng ký nhận vật phẩm!');
                 });
             }

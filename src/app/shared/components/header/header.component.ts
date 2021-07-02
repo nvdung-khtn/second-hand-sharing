@@ -90,10 +90,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.getCurrentUser();
 
         this.subscriptionNoti = this.notificationService.currentNoti.subscribe((message: any) => {
-            if (message?.type !== '1') {
+            if (message?.type !== '1' && message?.type !== '3') {
                 this.notiTimes++;
             }
-            if ((this.selectedTab = 5)) {
+            if (this.selectedTab === 5) {
                 this.notiTimes = 0;
             }
         });

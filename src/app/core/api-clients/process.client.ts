@@ -9,6 +9,11 @@ export class ProcessClient {
     constructor(private http: HttpClient) {}
     private baseUrl = environment.apiUrl;
 
+    requestStatus(requestId: number) {
+        const url = `${this.baseUrl}/ReceiveItem/${requestId}`;
+        return this.http.get(url);
+    }
+
     subscribeItem(formData) {
         const url = `${this.baseUrl}/ReceiveItem`;
         return this.http.post(url, formData);
