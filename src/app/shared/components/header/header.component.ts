@@ -4,6 +4,7 @@ import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 import { faHands, faHandsHelping } from '@fortawesome/free-solid-svg-icons';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
+import { FirebaseClient } from 'src/app/core/api-clients/firebase.client';
 import { UserInfo } from 'src/app/core/constants/user.constant';
 import { AuthService } from '../../service/auth.service';
 @Component({
@@ -38,12 +39,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
             link: 'campaign',
             id: 3,
         },
-        /* {
-            title: 'Chiến dịch gây quỹ',
-            icon: faHands,
-            type: 'fas',
-            id: 4,
-        }, */
     ];
 
     otherContext = [
@@ -65,7 +60,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     ];
     destroy$ = new Subject<void>();
 
-    constructor(private router: Router, private authService: AuthService) {
+    constructor(private router: Router, private authService: AuthService, private firebaseClient: FirebaseClient) {
         this.router.events
             .pipe(filter((event) => event instanceof NavigationEnd))
             // tslint:disable-next-line: deprecation
@@ -96,6 +91,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
         }
     };
     onLogOut = () => {
+        const firebaseToken = localStorage.getItem('firebaseToken');
+        this.firebaseClient.removeFirebase(firebaseToken).subscribe(
+            (response) => {
+                console.log(response);
+            },
+            (error) => console.log(error)
+        );
         localStorage.clear();
         this.router.navigateByUrl('/auth/login').then(() => {
             window.location.reload();
