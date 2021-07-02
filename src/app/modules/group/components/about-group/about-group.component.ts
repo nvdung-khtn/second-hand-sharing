@@ -11,7 +11,7 @@ export class AboutGroupComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.groupDetail)
+    /* console.log(this.groupDetail) */
   }
 
 }

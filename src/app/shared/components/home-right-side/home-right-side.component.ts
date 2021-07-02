@@ -19,7 +19,7 @@ export class HomeRightSideComponent implements OnInit {
     topUserData: UserAward[];
     userMessageData: any;
     myInfo;
-    currentMonth = new Date().getMonth();
+    currentMonth = new Date().getMonth() + 1;
     isNewMessage = false;
 
     ngOnInit(): void {
