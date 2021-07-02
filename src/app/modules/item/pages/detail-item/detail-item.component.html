@@ -61,7 +61,7 @@
           Gửi lời cảm ơn
         </button>
 
-        <div [style.display]="this.isSelectedByOwner === true ? 'flex' : 'none'">
+        <div [style.display]="(this.isSelectedByOwner === true && receivedUser?.id !== userId) ? 'flex' : 'none'">
           <img class="tick-image" src="assets/image/done.png" />
           <div class="accepted-by-owner">Chủ sở hữu đã chấp nhận lời yêu cầu của bạn</div>
         </div>
