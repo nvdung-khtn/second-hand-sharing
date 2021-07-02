@@ -113,4 +113,9 @@ export class GroupClient {
 
         return this.http.put<ResponseModel<any>>(url, { groupId, memberId });
     }
+
+    getJoinStatus(groupId: number): Observable<ResponseModel<any>> {
+        const url = `${this.baseUrl}/Group/${groupId}/join-status`;
+        return this.http.get<ResponseModel<any>>(url);
+    }
 }

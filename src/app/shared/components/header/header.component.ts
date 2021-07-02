@@ -2,11 +2,12 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 // tslint:disable-next-line: no-unused-expression
 import { faHands, faHandsHelping } from '@fortawesome/free-solid-svg-icons';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { FirebaseClient } from 'src/app/core/api-clients/firebase.client';
 import { UserInfo } from 'src/app/core/constants/user.constant';
 import { AuthService } from '../../service/auth.service';
+import { NotificationService } from '../../service/notification.service';
 @Component({
     selector: 'app-header',
     templateUrl: './header.component.html',
@@ -16,6 +17,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     selectedTab = 1;
     selectedMoreTab = false;
     currentUser: UserInfo;
+    notiTimes = 0;
+
+    // subscribe noti variable
+    subscriptionNoti: Subscription;
 
     headerContext = [
         {
@@ -32,19 +37,24 @@ export class HeaderComponent implements OnInit, OnDestroy {
             link: 'group',
             id: 2,
         },
-        {
+        /* {
             title: 'Chiến dịch gây quỹ',
             icon: faHandsHelping,
             type: 'fas',
             link: 'campaign',
             id: 3,
-        },
+        }, */
     ];
 
     otherContext = [
         {
             title: 'Vinh danh',
             icon: 'stars',
+            id: 3,
+        },
+        {
+            title: 'Messenger',
+            icon: 'messages',
             id: 4,
         },
         {
@@ -60,16 +70,39 @@ export class HeaderComponent implements OnInit, OnDestroy {
     ];
     destroy$ = new Subject<void>();
 
-    constructor(private router: Router, private authService: AuthService, private firebaseClient: FirebaseClient) {
+    constructor(
+        private router: Router,
+        private authService: AuthService,
+        private firebaseClient: FirebaseClient,
+        private notificationService: NotificationService
+    ) {
         this.router.events
             .pipe(filter((event) => event instanceof NavigationEnd))
             // tslint:disable-next-line: deprecation
             .subscribe(() => {
                 this.selectedTab = this.checkTabURL(this.router?.url);
+                if (this.selectedTab === 5) {
+                    this.notiTimes = 0;
+                }
             });
     }
     ngOnInit(): void {
         this.getCurrentUser();
+
+        this.subscriptionNoti = this.notificationService.currentNoti.subscribe((message: any) => {
+            if (message?.type !== '1') {
+                this.notiTimes++;
+            }
+            if ((this.selectedTab = 5)) {
+                this.notiTimes = 0;
+            }
+        });
+    }
+
+    ngOnDestroy() {
+        this.destroy$.next();
+        this.destroy$.complete();
+        this.subscriptionNoti.unsubscribe();
     }
 
     getCurrentUser() {
@@ -82,7 +115,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.selectedTab = id;
     };
     checkTabURL = (url: string) => {
-        const checkArray = ['home', 'group', 'campaign', 'chart', 'notification'];
+        const checkArray = ['home', 'group', 'chart', 'messages', 'notification'];
         // tslint:disable-next-line: prefer-for-of
         for (let i = 0; i < checkArray.length; i++) {
             if (url.indexOf(checkArray[i]) !== -1) {
@@ -109,8 +142,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         return Array.isArray(temp) && temp[temp?.length - 1];
     };
 
-    ngOnDestroy() {
-        this.destroy$.next();
-        this.destroy$.complete();
-    }
+    onClickNotification = () => {
+        this.notiTimes = 0;
+    };
 }

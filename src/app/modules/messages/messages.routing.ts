@@ -1,13 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { CampaignComponent } from './pages/campaign/campaign.component';
+import { MessagesComponent } from './pages/messages/messages.component';
 
-const routes: Routes = [
-    { path: '', component: CampaignComponent },
-];
+const routes: Routes = [{ path: '', component: MessagesComponent }];
 
 @NgModule({
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule],
 })
-export class CampaignRoutingModule {}
+export class MessagesRouting {}

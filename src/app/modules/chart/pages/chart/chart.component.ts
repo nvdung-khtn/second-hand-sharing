@@ -10,6 +10,7 @@ import { UserAward } from 'src/app/core/constants/user.constant';
 export class ChartComponent implements OnInit {
     topUserData: UserAward[];
     loading: boolean = false;
+    currentMonth = new Date().getMonth() + 1;
 
     constructor(private authClient: AuthClient) {}
 

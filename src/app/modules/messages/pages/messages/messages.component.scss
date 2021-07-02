@@ -1,11 +1,9 @@
-@import "../../../../styles/variables";
+@import "/src/styles/variables";
 
-.home-right-side {
+.messages {
   padding: 10px 4%;
-
-  .margin {
-      margin-top: 10%;
-  }
+  background-color: #fff;
+  border-radius: $border-radius-light;
 
   &__title {
     color: $primary-icon-color;
@@ -18,8 +16,12 @@
   }
 
   &__list {
-    height: calc(50vh - 8rem);
+    height: 100vh;
     overflow-y: scroll;
+
+    @media (max-width: 1024px) {
+        height: calc(100vh - 14rem);
+    }
 
     &::-webkit-scrollbar {
       display: none;
