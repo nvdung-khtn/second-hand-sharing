@@ -339,3 +339,16 @@
     right: 0;
     width: 25%;
 }
+
+.accepted-by-owner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-style: italic;
+}
+
+.tick-image {
+    width: 32x;
+    height: 32px;
+}

@@ -61,6 +61,11 @@
           Gửi lời cảm ơn
         </button>
 
+        <div [style.display]="this.isSelectedByOwner === true ? 'flex' : 'none'">
+          <img class="tick-image" src="assets/image/done.png" />
+          <div class="accepted-by-owner">Chủ sở hữu đã chấp nhận lời yêu cầu của bạn</div>
+        </div>
+
         <ng-template #noDone>
           <!-- FORM NGƯỜI NHẬN -->
           <ng-container *ngIf="userId != item?.donateAccountId; else isOwner">
