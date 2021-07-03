@@ -37,6 +37,9 @@ export class DetailGroupComponent implements OnInit, OnDestroy {
     openInviteModal = false;
     currentUser: UserInfo;
 
+    // join status
+    joinStatus = 0;
+
     destroy$ = new Subject<void>();
     constructor(
         private route: ActivatedRoute,
@@ -51,6 +54,9 @@ export class DetailGroupComponent implements OnInit, OnDestroy {
         this.groupId = Number(this.route.snapshot.paramMap.get('id'));
         this.getMyRole(this.groupId, this.currentUser.id);
         this.getGroupInfo(this.groupId);
+        this.groupClient.getJoinStatus(this.groupId).subscribe((response) => {
+            this.joinStatus = response.data;
+        });
     }
 
     getCurrentUser() {
@@ -78,6 +84,9 @@ export class DetailGroupComponent implements OnInit, OnDestroy {
     getGroupInfo(groupId: number) {
         this.groupClient.getGroupDetailById(this.groupId).subscribe((response) => {
             this.groupDetail = response.data;
+        },
+        (error) => {
+            this.router.navigateByUrl('/404');
         });
     }
 
@@ -119,7 +128,22 @@ export class DetailGroupComponent implements OnInit, OnDestroy {
             this.groupClient.joinGroup(this.groupId).subscribe((response) => {
                 this.toastr.success(`Đã gửi yêu cầu tới quản trị viên.`);
             });
+            this.groupClient.getJoinStatus(this.groupId).subscribe((response) => {
+                this.joinStatus = response.data;
+            });
         }
+    }
+
+    onClickCancelJoin() {
+        console.log('cancel join')
+    }
+
+    onAcceptInvite() {
+        console.log('accpet invite')
+    }
+
+    onDeclineInvite() {
+        console.log('decline invite')
     }
 
     ngOnDestroy() {

@@ -3,6 +3,7 @@ import { NavigationStart, Router } from '@angular/router';
 import { AddressService } from './shared/service/address.service';
 import { AuthService } from './shared/service/auth.service';
 import { MessagingService } from './shared/service/message.service';
+import { NotificationService } from './shared/service/notification.service';
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
@@ -15,12 +16,14 @@ export class AppComponent {
     messageBoxByUser;
     message;
     changeMessage = false;
+    newMessage;
 
     constructor(
         private router: Router,
         private authService: AuthService,
         private addressService: AddressService,
-        private messagingService: MessagingService
+        private messagingService: MessagingService,
+        private notificationService: NotificationService
     ) {
         this.router.events.forEach((event) => {
             if (event instanceof NavigationStart) {
@@ -40,7 +43,9 @@ export class AppComponent {
     ngOnInit() {
         this.checkLogin();
         this.messagingService.receiveMessage().subscribe((payload) => {
-            console.log(payload.data);
+            this.changeMessage = true;
+            this.newMessage = JSON.parse(payload.data.message)
+            this.notificationService.changeMessage(payload.data)
         });
         this.message = this.messagingService.currentMessage;
     }

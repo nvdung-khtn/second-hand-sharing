@@ -10,6 +10,7 @@ import { UserAward } from 'src/app/core/constants/user.constant';
 })
 export class HomeRightSideComponent implements OnInit {
     @Input() openMessageBox;
+    @Input() message;
     @Output() modalChange = new EventEmitter<boolean>();
     @Output() userInfo = new EventEmitter<any>();
 
@@ -18,7 +19,8 @@ export class HomeRightSideComponent implements OnInit {
     topUserData: UserAward[];
     userMessageData: any;
     myInfo;
-    currentMonth = new Date().getMonth();
+    currentMonth = new Date().getMonth() + 1;
+    isNewMessage = false;
 
     ngOnInit(): void {
         this.myInfo = JSON.parse(localStorage.getItem('userInfo'));
@@ -36,6 +38,20 @@ export class HomeRightSideComponent implements OnInit {
             },
             (error) => console.log(error)
         );
+    }
+
+    ngOnChanges(): void {
+        if (this.userMessageData && this.message) {
+            const temp = this.isOldMessageUser(this.userMessageData, this.message)
+            if (temp === false) {
+                this.messageClient.getRecentMessage(1, 100).subscribe(
+                    (response) => {
+                        this.userMessageData = response;
+                    },
+                    (error) => console.log(error)
+                );
+            }
+        }
     }
 
     onOpenMessageModal = (user) => {
@@ -60,5 +76,22 @@ export class HomeRightSideComponent implements OnInit {
             ? (avatar = user.sendFromAccountAvatarUrl)
             : (avatar = user.sendToAccountAvatarUrl);
         return avatar;
+    };
+
+    isOldMessageUser = (user, messsage): boolean => {
+        let isOld = false;
+        // tslint:disable-next-line: prefer-for-of
+        for (let i = 0; i < user?.data?.length; i++) {
+            if (user?.data[i].sendFromAccountId !== this.myInfo.id) {
+                if (user?.data[i].sendFromAccountId === messsage.sendFromAccountId) {
+                    isOld = true;
+                }
+            } else {
+                if (user?.data[i].sendToAccountId === messsage.sendFromAccountId) {
+                    isOld = true;
+                }
+            }
+        }
+        return isOld;
     };
 }

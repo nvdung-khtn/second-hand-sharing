@@ -113,10 +113,10 @@
 
             @media (max-width: 1024px) {
                 display: grid;
-                grid-template-columns: repeat(3, 1fr);
+                grid-template-columns: repeat(2, 1fr);
                 margin: 0;
                 text-align: center;
-                width: 50%;
+                width: calc(100% / 3);
             }
 
             &__inside {
@@ -169,7 +169,6 @@
             margin-left: auto;
             padding: 0 2%;
 
-            
             &:hover {
                 cursor: pointer;
                 background-color: $lightest-grey;
@@ -202,7 +201,7 @@
 
             @media (max-width: 1024px) {
                 display: grid;
-                grid-template-columns: repeat(3, 1fr);
+                grid-template-columns: repeat(4, 1fr);
                 flex-grow: 1;
                 text-align: center;
             }
@@ -351,9 +350,19 @@
             font-weight: bold;
             background-color: $light-blue;
 
-            &:focus, &:hover {
+            &:focus,
+            &:hover {
                 outline: none;
-                background-color: $light-blue !important; 
+                background-color: $light-blue !important;
+            }
+
+            @media (max-width: 1024px) {
+                background-color: unset !important;
+
+                &:hover,
+                &:focus {
+                    background-color: unset !important;
+                }
             }
         }
 
@@ -362,11 +371,17 @@
             font-weight: bold;
         }
 
-        
         &:focus {
             outline: none;
-            background-color: $light-blue !important; 
+            background-color: $light-blue !important;
         }
+    }
+
+    .messenger-icon {
+        width: 23px;
+        height: 23px;
+        margin-bottom: 0.5rem;
+        cursor: pointer;
     }
 }
 
@@ -380,11 +395,32 @@
     border: 1px solid $primary-icon-background-color;
     cursor: pointer;
 
-    &:hover, &:focus {
+    &:hover,
+    &:focus {
         background-color: $light-blue;
     }
 
     @media (max-width: 1024px) {
         display: inline-block;
     }
+}
+
+.noti-container {
+    position: relative;
+}
+
+.noti-times {
+    position: absolute;
+    display: none;
+    width: 1rem;
+    height: 1rem;
+    align-items: center;
+    justify-content: center;
+    top: 50%;
+    right: 15%;
+    padding: 0.5rem;
+    border-radius: 100%;
+    background-color: red;
+    color: white;
+    font-weight: $font-weight-bold;
 }

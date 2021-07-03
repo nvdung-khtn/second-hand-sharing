@@ -21,4 +21,15 @@ export class FirebaseClient {
     const url = `${this.baseUrl}/FirebaseToken`;
     return this.http.post<any>(url, { firebaseToken: token }, {headers});
   }
+
+  removeFirebase(
+    token: string
+  ): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+    });
+    const url = `${this.baseUrl}/FirebaseToken`;
+    return this.http.request<any>('delete', url, { headers, body: {firebaseToken: token} });
+  }
 }

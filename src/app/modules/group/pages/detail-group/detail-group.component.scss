@@ -141,6 +141,38 @@
         cursor: pointer;
     }
 
+    .cancel-btn,
+    .decline-btn {
+        width: 9rem;
+        padding: 5px 10px;
+        cursor: pointer;
+        background-color: $btn-cancel-color;
+        color: $primary-text-color;
+        box-shadow: 0 10px 20px 0 $btn-cancel-color;
+
+        &:hover {
+            background-color: $btn-cancel-color-hover;
+        }
+    }
+
+    .accept-btn {
+        width: 7rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .decline-btn {
+        margin-left: 0.5rem;
+        width: 7rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .accept-and-cancel {
+    }
+
     .selectedTabStyle {
         font-weight: $font-weight-bold;
         color: $primary-color !important;
@@ -154,6 +186,13 @@
         @media (max-width: 1024px) {
             max-width: unset;
         }
+    }
+
+    .seft-request {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding-top: 1rem;
     }
 }
 

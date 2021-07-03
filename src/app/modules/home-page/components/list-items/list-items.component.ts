@@ -16,6 +16,7 @@ export class ListItemsComponent implements OnInit, OnChanges {
     @Input() donations: boolean;
     @Input() donationsId: number;
     @Input() registration: boolean;
+    @Input() registrationId: number;
 
     loading = false;
     isEnd = false;
@@ -44,6 +45,7 @@ export class ListItemsComponent implements OnInit, OnChanges {
     ngOnInit(): void {
         this.myInfo = JSON.parse(localStorage.getItem('userInfo'));
         const donationsUserId = this.donationsId ? this.donationsId : this.myInfo?.id;
+        const registrationUserId = this.registrationId ? this.registrationId : this.myInfo?.id;
         // tslint:disable-next-line: no-unused-expression
         !this.donations
             ? !this.registration
@@ -53,7 +55,7 @@ export class ListItemsComponent implements OnInit, OnChanges {
                       },
                       (error) => this.toastr.error(error)
                   )
-                : this.itemClient.getMyRegistration(this.myInfo?.id).subscribe(
+                : this.itemClient.getMyRegistration(registrationUserId).subscribe(
                       (response) => {
                           this.items = response.data;
                           this.isEnd = true;

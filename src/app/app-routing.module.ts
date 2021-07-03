@@ -65,9 +65,9 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'campaign',
+    path: 'messages',
     loadChildren: () =>
-      import('./modules/campaign/campaign.module').then(m => m.CampaignModule),
+      import('./modules/messages/messages.module').then(m => m.MessagesModule),
     canActivate: [AuthGuard]
   },
   // Fallback when no prior routes is matched

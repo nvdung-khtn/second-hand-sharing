@@ -1,5 +1,5 @@
 <div class="list-events">
-    <div class="event flex" *ngFor="let event of events" [routerLink]="['/group/event', event?.id]">
+    <div class="event flex" *ngFor="let event of events" [routerLink]="['/group', event?.groupId , 'event', event?.id]">
         <img class="event__avatar" [src]="'assets/image/event.png'" />
 
         <div class="event__info">

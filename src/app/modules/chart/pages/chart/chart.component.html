@@ -1,5 +1,5 @@
 <div class="chart" >
-  <div class="chart__title">Top đóng góp của tháng</div>
+  <div class="chart__title">Danh sách người dùng có đóng góp trong tháng {{currentMonth}}</div>
 
   <div class="chart__list">
     <div class="chart__list__profile" *ngFor="let user of topUserData" [routerLink]="['/profile', user?.accountId]">

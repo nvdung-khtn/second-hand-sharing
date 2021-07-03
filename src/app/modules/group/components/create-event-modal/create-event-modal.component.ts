@@ -33,7 +33,7 @@ export class CreateEventModalComponent implements OnInit {
         });
     }
 
-    ngOnInit(): void {console.log(this.groupId)}
+    ngOnInit(): void {/* console.log(this.groupId) */}
 
     get eventName() {
         return this.groupForm.get('eventName');

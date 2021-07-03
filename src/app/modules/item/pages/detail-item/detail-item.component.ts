@@ -13,6 +13,9 @@ import Swal from 'sweetalert2';
 import { Modal, ModalType, ModalStatus } from 'src/app/core/constants/modal.constant';
 import { UserInfo } from 'src/app/core/constants/user.constant';
 import { Location } from '@angular/common';
+import { NotificationService } from 'src/app/shared/service/notification.service';
+import { Subscription } from 'rxjs';
+import { NotifyType } from 'src/app/core/constants/notification.constant';
 
 @Component({
     selector: 'app-detail-item',
@@ -20,6 +23,15 @@ import { Location } from '@angular/common';
     styleUrls: ['./detail-item.component.scss'],
 })
 export class DetailItemComponent implements OnInit {
+    // real time noti message variable
+    realTimeNoti: any;
+    subscriptionNoti: Subscription;
+    notification: any;
+    notiType: string;
+
+    // display accepted by owner
+    isSelectedByOwner: boolean = false;
+
     isProcessing: boolean = false;
     approvedRequestId: number = -1;
     nomineeName: string;
@@ -43,7 +55,8 @@ export class DetailItemComponent implements OnInit {
         private authService: AuthService,
         private processClient: ProcessClient,
         private toastr: ToastrService,
-        private location: Location
+        private location: Location,
+        private notificationService: NotificationService
     ) {
         this.itemId = this._route.snapshot.paramMap.get('itemId');
     }
@@ -73,6 +86,14 @@ export class DetailItemComponent implements OnInit {
                         }
                         this.nomineeName = nominee?.receiverName;
                     });
+                } else {
+                    this.processClient
+                        .requestStatus(this.item?.userRequestId)
+                        .subscribe((response: any) => {
+                            if (response.data.receiveStatus === 1) {
+                                this.isSelectedByOwner = true;
+                            }
+                        });
                 }
                 // Get address string
                 this.addressVM = await this.addressService.getAddressVMById(
@@ -91,12 +112,86 @@ export class DetailItemComponent implements OnInit {
         this.homeClient.getReceivedUser(this.itemId).subscribe((response) => {
             this.receivedUser = response.data;
         });
+
+        // Get real time noti
+        this.subscriptionNoti = this.notificationService.currentNoti.subscribe((message) => {
+            this.realTimeNoti = message;
+            this.notification = this.parseNoti(this.realTimeNoti);
+            this.notiType = this.parseType(this.realTimeNoti);
+            if (this.notiType === NotifyType.RECEIVE_REQUEST + '') {
+                this.homeClient.getAllReceiveRequest(this.itemId).subscribe((response) => {
+                    this.receiveRequests = response.data;
+                    // find nominee in the past
+                    const nominee = this.receiveRequests.find(
+                        (receiver) => receiver.receiveStatus === ReceiveStatus.APPROVED
+                    );
+                    if (nominee?.id !== undefined) {
+                        this.approvedRequestId = nominee?.id;
+                    }
+                    this.nomineeName = nominee?.receiverName;
+                });
+                this.toastr.success(`${this.notification?.receiverName} đã đăng ký nhận vật phẩm`);
+            }
+            if (this.notiType === NotifyType.CANCEL_RECEIVE_REQUEST + '') {
+                const userCancel = this.receiveRequests.find(
+                    (receiver) => receiver.id === this.notification?.requestId
+                );
+
+                this.homeClient.getAllReceiveRequest(this.itemId).subscribe((response) => {
+                    this.receiveRequests = response.data;
+                    // find nominee in the past
+                    const nominee = this.receiveRequests.find(
+                        (receiver) => receiver.receiveStatus === ReceiveStatus.APPROVED
+                    );
+                    if (nominee?.id !== undefined) {
+                        this.approvedRequestId = nominee?.id;
+                    }
+                    this.nomineeName = nominee?.receiverName;
+                });
+                this.toastr.success(`${userCancel?.receiverName} đã hủy nhận vật phẩm`);
+                this.isProcessing = false;
+                this.approvedRequestId = -1;
+                this.nomineeName = '';
+            }
+            if (this.notiType === NotifyType.REQUEST_STATUS + '') {
+                if (this.notification?.requestStatus === 1) {
+                    this.isSelectedByOwner = true;
+                    this.toastr.success(`Yêu cầu của bạn đã được chấp nhận bởi chủ sở hữu`);
+                } else {
+                    this.isSelectedByOwner = false;
+                    this.toastr.success(`Yêu cầu  của bạn đã bị hủy bởi chủ sở hữu`);
+                }
+            }
+            if (this.notiType === NotifyType.CONFIRM_SENT + '') {
+                if (this.userId === this.notification?.receiverId) {
+                    this.toastr.success(`Chủ sở hữu đã xác nhận tặng vật phẩm cho bạn`);
+                } else {
+                    this.toastr.success(
+                        `Chủ sở hữu đã xác nhận tặng vật phẩm cho ${this.notification?.receiverName}`
+                    );
+                }
+                this.item.status = ItemStatus.COMPLETED;
+                setTimeout(() => window.location.reload(), 1500);
+            }
+            if (this.notiType === NotifyType.SEND_THANKS + '') {
+                this.toastr.success(
+                    `${this.notification?.sendFromAccountName} đã gửi lời cảm ơn đến bạn với nội dung: "${this.notification?.content}"`
+                );
+            }
+        });
+    }
+
+    ngOnDestroy() {
+        this.subscriptionNoti.unsubscribe();
     }
 
     // Turn off item detail page
     onClose() {
         /* this.router.navigateByUrl('/home'); */
-        this.location.back();
+        const history: any = this.location.getState();
+        if (history.navigationId > 1) {
+            this.location.back();
+        } else this.router.navigateByUrl('/home');
     }
 
     // Open receive register modal
@@ -153,6 +248,7 @@ export class DetailItemComponent implements OnInit {
             if (result.isConfirmed) {
                 this.processClient.unsubscribeItem(requestId).subscribe((response) => {
                     this.item.userRequestId = 0;
+                    this.isSelectedByOwner = false;
                     this.toastr.success('Đã Hủy đăng ký nhận vật phẩm!');
                 });
             }
@@ -226,4 +322,16 @@ export class DetailItemComponent implements OnInit {
                 this.modal.status = ModalStatus.CLOSE;
             });
     }
+
+    parseNoti = (message) => {
+        if (message.hasOwnProperty('message')) {
+            return JSON.parse(message?.message);
+        }
+    };
+
+    parseType = (message) => {
+        if (message.hasOwnProperty('type')) {
+            return message?.type;
+        }
+    };
 }
