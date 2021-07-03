@@ -84,6 +84,9 @@ export class DetailGroupComponent implements OnInit, OnDestroy {
     getGroupInfo(groupId: number) {
         this.groupClient.getGroupDetailById(this.groupId).subscribe((response) => {
             this.groupDetail = response.data;
+        },
+        (error) => {
+            this.router.navigateByUrl('/404');
         });
     }
 

@@ -83,6 +83,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
                 this.selectedTab = this.checkTabURL(this.router?.url);
                 if (this.selectedTab === 5) {
                     this.notiTimes = 0;
+                    this.notificationService.changeMessage({})
                 }
             });
     }
@@ -90,7 +91,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.getCurrentUser();
 
         this.subscriptionNoti = this.notificationService.currentNoti.subscribe((message: any) => {
-            if (message?.type !== '1' && message?.type !== '3') {
+            if (message?.type !== '1' && message?.type !== '3' && message?.type !== undefined) {
                 this.notiTimes++;
             }
             if (this.selectedTab === 5) {

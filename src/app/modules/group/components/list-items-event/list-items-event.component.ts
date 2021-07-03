@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CategoryClient } from 'src/app/core/api-clients/category.client';
 import { HomeClient } from 'src/app/core/api-clients/home.client';
@@ -12,6 +13,7 @@ import { Item } from 'src/app/core/constants/item.constant';
     styleUrls: ['./list-items-event.component.scss'],
 })
 export class ListItemsEventComponent implements OnInit {
+    
     listItemEvent = [
         {
             id: 88,
@@ -84,6 +86,9 @@ export class ListItemsEventComponent implements OnInit {
         },
     ];
 
+    eventId: number;
+    groupId: number;
+
     loading = false;
     isEnd = false;
     myInfo;
@@ -102,14 +107,17 @@ export class ListItemsEventComponent implements OnInit {
         private homeClient: HomeClient,
         private categoryClient: CategoryClient,
         private toastr: ToastrService,
-        private itemClient: ItemClient
+        private itemClient: ItemClient,
+        private route: ActivatedRoute,
     ) {
         this.defaultReq = new SearchRequest(this.defaultPageNumber, this.defaultPageSize);
     }
 
     ngOnInit(): void {
         this.myInfo = JSON.parse(localStorage.getItem('userInfo'));
-        // tslint:disable-next-line: no-unused-expression
+        this.eventId = Number(this.route.snapshot.paramMap.get('eventId'));
+        this.groupId = Number(this.route.snapshot.paramMap.get('groupId'));
+
         // gọi api get list event items
     }
 
