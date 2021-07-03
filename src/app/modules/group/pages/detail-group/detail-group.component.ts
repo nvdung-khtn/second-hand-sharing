@@ -96,6 +96,13 @@ export class DetailGroupComponent implements OnInit, OnDestroy {
         this.openInviteModal = true;
     }
 
+    inviteMember(email) {
+        this.groupClient.inviteMember(this.groupId, email).subscribe((response) => {
+            this.toastr.success('Gửi lời mời thành công!');
+            this.openInviteModal = false;
+        });
+    }
+
     async onClickJoin() {
         let result = await Swal.fire({
             title: 'Xác Nhận',

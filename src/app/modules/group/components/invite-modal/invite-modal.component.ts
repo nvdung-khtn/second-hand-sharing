@@ -8,8 +8,9 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 export class InviteModalComponent implements OnInit {
     @Input() isOpenModal;
     @Output() modalChange = new EventEmitter<boolean>();
+    @Output() emailChange = new EventEmitter<string>();
 
-    messageValue: string = '';
+    email: string = '';
     errorMessage: string = '';
 
     ngOnInit(): void {}
@@ -20,7 +21,6 @@ export class InviteModalComponent implements OnInit {
     };
 
     onSubmit() {
-        // gọi api mời
-        console.log('submit: ', this.messageValue);
+        this.emailChange.emit(this.email);
     }
 }

@@ -113,4 +113,22 @@ export class GroupClient {
 
         return this.http.put<ResponseModel<any>>(url, { groupId, memberId });
     }
+
+    inviteMember(groupId: number, email: string): Observable<ResponseModel<any>> {
+        const url = `${this.baseUrl}/Group/${groupId}/member`;
+
+        return this.http.post<ResponseModel<any>>(url, { email: email });
+    }
+
+    acceptInvitation(groupId: number): Observable<ResponseModel<any>> {
+        const url = `${this.baseUrl}/Group/${groupId}/member`;
+
+        return this.http.put<ResponseModel<any>>(url, { groupId });
+    }
+
+    rejectInvitation(groupId: number): Observable<ResponseModel<any>> {
+        const url = `${this.baseUrl}/Group/${groupId}/member`;
+
+        return this.http.put<ResponseModel<any>>(url, { groupId });
+    }
 }
