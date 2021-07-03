@@ -18,6 +18,10 @@ import { AboutEventComponent } from './components/about-event/about-event.compon
 import { ListItemsEventComponent } from './components/list-items-event/list-items-event.component';
 import { HomePageModule } from '../home-page/home-page.module';
 import { CreateEventModalComponent } from './components/create-event-modal/create-event-modal.component';
+import { DetailItemsEventComponent } from './pages/detail-items-event/detail-items-event.component';
+import { MatCarouselModule } from '@ngbmodule/material-carousel';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
     declarations: [
@@ -33,15 +37,20 @@ import { CreateEventModalComponent } from './components/create-event-modal/creat
         EventComponent,
         AboutEventComponent,
         ListItemsEventComponent,
+        DetailItemsEventComponent,
     ],
     imports: [
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
         GroupRoutingModule,
+        MatCarouselModule.forRoot(),
+        FormsModule,
         SharedModule,
         MatIconModule,
-        HomePageModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        HomePageModule
     ],
 })
 export class GroupModule {}

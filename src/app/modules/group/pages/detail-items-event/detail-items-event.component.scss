@@ -1,0 +1,374 @@
+@import "../../../../../styles/variables";
+
+.item-event {
+    display: none;
+    box-sizing: border-box;
+    display: flex;
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 4;
+    background: rgba(0, 0, 0, 0.8);
+    color: $primary-text-color;
+
+    .mat-form-field {
+        width: 100%;
+        border-radius: $border-radius-light;
+    }
+
+    .mat-form-field ::ng-deep .mat-form-field-flex {
+        background-color: white;
+        border: 1px solid $primary-color;
+        border-radius: $border-radius-light;
+        color: $primary-color;
+    }
+
+    .mat-form-field ::ng-deep label {
+        color: $primary-color;
+    }
+
+    .mat-form-field ::ng-deep .mat-form-field-underline {
+        display: none;
+    }
+
+    .title {
+        font-size: $default-font-size;
+        font-weight: bold;
+        margin: 2% 0;
+    }
+
+    .list {
+        margin-bottom: 6%;
+        padding: 1% 4%;
+        box-sizing: border-box;
+        max-height: 250px;
+        height: 100%;
+        overflow-y: scroll;
+        border: 1px solid $primary-border-otp-color;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+
+        .avatar {
+            display: flex;
+            width: 100%;
+            max-width: 40px;
+            margin-right: 2%;
+            border-radius: 100%;
+        }
+
+        .request-list {
+            display: flex;
+            align-items: center;
+            margin: 4% 0;
+            justify-content: space-between;
+
+            @media (max-width: 1024px) {
+                display: block;
+            }
+
+            &__info {
+                cursor: pointer;
+                width: 100%;
+                display: flex;
+                align-items: center;
+
+                &:hover {
+                    background-color: $primary-icon-background-color;
+                }
+            }
+        }
+
+        .button {
+            width: 100%;
+            max-width: 6rem;
+            padding: 2% 2%;
+            text-align: center;
+            cursor: pointer;
+            background-color: $btn-color;
+            color: white;
+            border-radius: $border-radius-light;
+            cursor: pointer;
+
+            &:hover {
+                background-color: $btn-selected;
+
+                @media (max-width: 1024px) {
+                    background-color: unset;
+                }
+            }
+
+            @media (min-width: 1025px) and (max-width: 1280px) {
+                width: 100%;
+                max-width: 5rem;
+            }
+
+            @media (max-width: 1024px) {
+                width: 100%;
+                max-width: unset;
+                text-align: right;
+                background-color: unset;
+                padding: 0 1rem;
+                box-sizing: border-box;
+                color: $primary-color;
+                margin-bottom: 1rem;
+            }
+        }
+
+        .cancel-request {
+            display: none;
+        }
+    }
+
+    &__grid {
+        display: grid;
+        grid-template-columns: 75% 25%;
+        height: 100%;
+        width: 100%;
+        box-sizing: border-box;
+        overflow-y: scroll;
+
+        @media (max-width: 1024px) {
+            grid-template-columns: 70% 30%;
+        }
+
+        @media (max-width: 767px) {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .flex {
+            display: flex;
+            margin-bottom: 2%;
+        }
+
+        .confirm {
+            margin-right: 1%;
+            background-color: $light-green;
+
+            &:hover {
+                background-color: $green;
+            }
+        }
+
+        .thanks {
+            margin-left: 1%;
+            background-color: $light-pink;
+
+            &:hover {
+                background-color: $pink;
+            }
+
+            @media (max-width: 1024px) {
+                margin-top: 1rem;
+            }
+        }
+
+        &__card {
+            @media (max-width: 767px) {
+                width: 100%;
+                height: 100%;
+            }
+
+            &__left {
+                padding: 60px 0;
+                height: 100%;
+                box-sizing: border-box;
+                align-items: center;
+                justify-content: center;
+                vertical-align: middle;
+                display: flex;
+
+                &__image {
+                    width: 100%;
+                    height: 100%;
+                    max-width: 800px;
+                    max-height: 640px;
+                    color: white;
+                }
+
+                &__close {
+                    position: absolute;
+                    top: 15px;
+                    left: 20px;
+                    color: white;
+                    font-size: 40px;
+                    padding: 12px 12px;
+                    background: #9a9a9a;
+                    border-radius: 100%;
+                    transition: 0.3s;
+
+                    &:hover,
+                    &:focus {
+                        background-color: #bbb;
+                        text-decoration: none;
+                        cursor: pointer;
+                    }
+                }
+            }
+
+            &__right {
+                background-color: #fff;
+                min-height: 100%;
+                box-sizing: border-box;
+                padding: 5%;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+
+                @media (max-width: 767px) {
+                    min-height: unset;
+                    padding: 1rem;
+                }
+
+                .text {
+                    font-size: $default-font-size;
+                    font-weight: normal;
+                }
+
+                &__btn {
+                    width: 100%;
+                    padding: 10px 0;
+                    text-align: center;
+                    cursor: pointer;
+                    background-color: $btn-color;
+                    color: white;
+                    border-radius: $border-radius-light;
+                    cursor: pointer;
+                    border: none;
+                    &:hover {
+                        background-color: $btn-selected;
+                    }
+                    &:disabled {
+                        background-color: $btn-disabled;
+                    }
+                }
+
+                &__title {
+                    font-size: $title-font-size;
+                    font-weight: $font-weight-bold;
+                }
+
+                &__time {
+                    margin-top: 8%;
+                    color: $primary-lightest-text-color;
+                }
+
+                &__user {
+                    margin-top: 8%;
+                    font-size: $default-font-size;
+                    font-weight: $font-weight-bold;
+                }
+
+                &__address,
+                &__description {
+                    margin-top: 8%;
+                    font-size: $default-font-size;
+                    font-weight: $font-weight-bold;
+                }
+            }
+        }
+
+        .text-tab-height {
+            @media (max-width: 767px) {
+                height: 20%;
+            }
+        }
+    }
+
+    &__modal {
+        display: none;
+        position: fixed; /* Stay in place */
+        z-index: 4; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgba(0, 0, 0, 0.8); /* Black w/ opacity */
+
+        @media (max-width: 1024px) {
+            top: 0;
+        }
+    }
+
+    .mat-icon-button.mat-primary {
+        color: white !important;
+    }
+
+    .btn-user-info {
+        width: 100%;
+        padding: 10px 0;
+        text-align: center;
+        cursor: pointer;
+        color: $primary-color;
+        background-color: white;
+        border: 1px solid $btn-color;
+        border-radius: $border-radius-light;
+        cursor: pointer;
+        margin-top: 1rem;
+        margin-bottom: 0.5rem;
+        &:hover {
+            background-color: $light-blue;
+            border: 1px solid $light-blue;
+            color: white;
+        }
+    }
+
+    .margin-top {
+        margin-top: 8%;
+    }
+
+    .name {
+        font-weight: $font-weight-bold;
+    }
+
+    .time {
+        color: $primary-light-text-color;
+    }
+
+    .cancelRequest {
+        background-color: $btn-cancel-color !important;
+
+        &:hover {
+            background-color: $btn-cancel-color-hover !important;
+        }
+    }
+
+    ::ng-deep .carousel-indicators {
+        left: 0;
+        transform: unset;
+    }
+}
+
+.item-event__grid__card__right__btn.cancel {
+    background-color: $cancel-button;
+}
+
+.owner-notification {
+    padding: 0.5rem 1rem;
+    position: absolute;
+    background-color: $primary-color;
+    color: white;
+    z-index: 4;
+    top: 0;
+    right: 0;
+    width: 25%;
+}
+
+.accepted-by-owner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-style: italic;
+}
+
+.tick-image {
+    width: 32x;
+    height: 32px;
+}

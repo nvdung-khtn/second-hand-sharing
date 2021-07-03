@@ -16,7 +16,7 @@
   [style.display]="listItemEvent?.length === 0 ? 'flex' : 'block'"
 >
   <div class="list-event-items__grid" [style.display]="listItemEvent?.length === 0 ? 'none' : 'grid'">
-    <div class="list-event-items__grid__card" *ngFor="let item of listItemEvent">
+    <div class="list-event-items__grid__card" *ngFor="let item of listItemEvent" [routerLink]="['/group',this.groupId, 'event', this.eventId, 'item', item?.id]">
       <div class="list-event-items__grid__card__image">
         <img
           class="list-event-items__grid__card__image__inside"

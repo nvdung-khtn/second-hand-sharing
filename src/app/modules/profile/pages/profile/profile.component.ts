@@ -30,7 +30,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
             id: 1,
         },
         {
-            title: 'Bài đẵ đăng',
+            title: 'Bài đã đăng',
             link: 'my-donations',
             id: 2,
         },

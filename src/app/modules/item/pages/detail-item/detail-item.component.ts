@@ -188,7 +188,10 @@ export class DetailItemComponent implements OnInit {
     // Turn off item detail page
     onClose() {
         /* this.router.navigateByUrl('/home'); */
-        this.location.back();
+        const history: any = this.location.getState();
+        if (history.navigationId > 1) {
+            this.location.back();
+        } else this.router.navigateByUrl('/home');
     }
 
     // Open receive register modal

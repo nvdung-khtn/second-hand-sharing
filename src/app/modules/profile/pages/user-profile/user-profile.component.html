@@ -66,8 +66,17 @@
     </div>
 
     <div class="col-8 mobile-col">
-      <div class="user-profile__heading">Bài đã đăng</div>
-      <app-list-items [donations]="true" [donationsId]="this.userId"></app-list-items>
+      <div class="mobile-context">
+        <div class="mobile-context__category__inside" (click)="isSelectedTab(cate?.id)"
+          [ngClass]="{ selectedTabStyle: this.selectedTab === cate?.id }" *ngFor="let cate of this.mobileContext">
+          <div class="mobile-context__category__inside__title">
+            {{ cate?.title }}
+          </div>
+        </div>
+      </div>
+      <!-- <div class="user-profile__heading">Bài đã đăng</div> -->
+      <app-list-items *ngIf="this.selectedTab === 1" [registration]="true" [registrationId]="this.userId"></app-list-items>
+      <app-list-items *ngIf="this.selectedTab === 2" [donations]="true" [donationsId]="this.userId"></app-list-items>
     </div>
   </div>
 

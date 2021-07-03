@@ -10,6 +10,8 @@ import { ActivatedRoute, Router } from '@angular/router';
     styleUrls: ['./user-profile.component.scss', '../../../../../styles/_box.scss'],
 })
 export class UserProfileComponent implements OnInit {
+    selectedTab = 1;
+
     userId: number;
     sOpenAddressModal = false;
     displayAddress = '';
@@ -21,6 +23,19 @@ export class UserProfileComponent implements OnInit {
     openMessageBox = false;
     messageBoxByUser;
     message;
+
+    mobileContext = [
+        {
+            title: 'Đã đăng ký nhận',
+            link: 'my-registration',
+            id: 1,
+        },
+        {
+            title: 'Bài đã đăng',
+            link: 'my-donations',
+            id: 2,
+        },
+    ];
 
     constructor(
         private readonly authClient: AuthClient,
@@ -42,11 +57,20 @@ export class UserProfileComponent implements OnInit {
                 this.loading = false;
             },
             (error) => {
-                if (error?.error?.Data === null) { this.router.navigateByUrl('/404'); }
+                if (error?.error?.Data === null) {
+                    this.router.navigateByUrl('/404');
+                }
             }
         );
     };
     onClose = () => {
-        this.location.back();
+        const history: any = this.location.getState();
+        if (history.navigationId > 1) {
+            this.location.back();
+        } else this.router.navigateByUrl('/home');
+    };
+
+    isSelectedTab(id: number) {
+        this.selectedTab = id;
     }
 }
