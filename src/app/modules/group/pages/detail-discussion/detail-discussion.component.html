@@ -15,7 +15,7 @@
       <div class="">{{ detailPost?.content }}</div>
     </div>
 
-    <div class="post-element">
+    <div class="post-element" [style.display]="detailPost?.imageUrl.length === 0 ? 'none' : 'block'">
       <div class="post-element__left">
         <span class="post-element__left__close" (click)="onClose()">&times;</span>
 
