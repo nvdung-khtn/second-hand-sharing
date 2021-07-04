@@ -22,6 +22,10 @@ import { DetailItemsEventComponent } from './pages/detail-items-event/detail-ite
 import { MatCarouselModule } from '@ngbmodule/material-carousel';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
+import { DiscussionGroupComponent } from './components/discussion-group/discussion-group.component';
+import { CreateGroupPostModalComponent } from './components/create-group-post-modal/create-group-post-modal.component';
+import { ListDiscussionComponent } from './components/list-discussion/list-discussion.component';
+import { DetailDiscussionComponent } from './pages/detail-discussion/detail-discussion.component';
 
 @NgModule({
     declarations: [
@@ -38,6 +42,10 @@ import { MatSelectModule } from '@angular/material/select';
         AboutEventComponent,
         ListItemsEventComponent,
         DetailItemsEventComponent,
+        DiscussionGroupComponent,
+        CreateGroupPostModalComponent,
+        ListDiscussionComponent,
+        DetailDiscussionComponent,
     ],
     imports: [
         CommonModule,

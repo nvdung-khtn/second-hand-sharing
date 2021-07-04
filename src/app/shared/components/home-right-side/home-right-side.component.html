@@ -30,6 +30,8 @@
           {{ user?.content }}
         </div> -->
       </div>
+
+      <div class="new-message" [style.display]="user?.newMessage === true ? 'block' : 'none'">(new)</div>
     </div>
   </div>
 </div>

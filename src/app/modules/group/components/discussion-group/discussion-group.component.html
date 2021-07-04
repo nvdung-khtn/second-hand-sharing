@@ -1,0 +1,24 @@
+<div class="discussion-group" [style.display]="myRole !== '' ? 'block' : 'none'">
+  <div class="create-post">
+    <img class="create-post__avatar" [src]="userAvatar ? userAvatar : 'assets/image/default-avatar.png'" />
+
+    <div class="create-post__btn" (click)="onCreatePost()">
+      <div class="create-post__btn__inside">Đăng bài viết</div>
+    </div>
+  </div>
+
+  <app-list-discussion></app-list-discussion>
+</div>
+
+<div id="create-post-modal" class="create-post-modal" [style.display]="this.isOpenModal ? 'block' : 'none'">
+  <app-create-group-post-modal
+    [groupId]="this.groupId"
+    [isOpenModal]="this.isOpenModal"
+    (modalChange)="this.isOpenModal = $event"
+  ></app-create-group-post-modal>
+</div>
+
+
+<div class="not-join" [style.display]="myRole === '' ? 'flex' : 'none'">
+  Vui lòng tham gia nhóm để thấy thảo luận trong nhóm
+</div>

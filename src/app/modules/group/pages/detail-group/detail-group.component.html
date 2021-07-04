@@ -1,4 +1,4 @@
-<div class="detail-group-container" [style.zIndex]="this.selectedTab === 2 ? '4' : '2'">
+<div class="detail-group-container" [style.zIndex]="this.selectedTab === 2 || this.selectedTab === 3 ? '4' : '2'">
   <div class="detail-group">
     <div class="detail-group__header">
       <div class="max-width">
@@ -72,7 +72,7 @@
 
         <div class="row detail-group__group-tabs">
           <div
-            class="col-4 detail-group__tab"
+            class="col-3 detail-group__tab"
             [ngClass]="{ selectedTabStyle: this.selectedTab === tab?.id }"
             *ngFor="let tab of tabContext"
             (click)="onSelectTab(tab?.id)"
@@ -85,8 +85,9 @@
 
     <div class="detail-group__body max-width">
       <app-about-group *ngIf="this.selectedTab === 1" [groupDetail]="groupDetail"></app-about-group>
-      <app-items-group *ngIf="this.selectedTab === 2" [myRole]="myRole" [groupId]="groupId"></app-items-group>
-      <app-members-group *ngIf="this.selectedTab === 3" [myRole]="myRole" [groupId]="groupId"></app-members-group>
+      <app-discussion-group *ngIf="this.selectedTab === 2" [myRole]="myRole" [groupId]="groupId"></app-discussion-group>
+      <app-items-group *ngIf="this.selectedTab === 3" [myRole]="myRole" [groupId]="groupId"></app-items-group>
+      <app-members-group *ngIf="this.selectedTab === 4" [myRole]="myRole" [groupId]="groupId"></app-members-group>
     </div>
   </div>
 </div>

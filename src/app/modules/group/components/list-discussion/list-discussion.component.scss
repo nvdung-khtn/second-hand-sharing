@@ -1,0 +1,50 @@
+@import "/src/styles/variables";
+
+.list-discusstion {
+    background-color: #ffffff;
+    padding: 1rem 1.5rem;
+    border-radius: $border-radius-light;
+    @include box-shadow();
+    margin-top: 1rem;
+
+    .post-owner {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+
+        &__avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 100%;
+        }
+
+        &__info {
+            margin-left: 1rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        &__name {
+            font-weight: $font-weight-bold;
+        }
+
+        &__time {
+            color: $primary-lightest-text-color;
+        }
+    }
+
+    .post-content {
+        margin-bottom: 1rem;
+    }
+
+    .post-image {
+        width: 100%;
+        max-width: 960px;
+        height: 100%;
+        max-height: 960px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}

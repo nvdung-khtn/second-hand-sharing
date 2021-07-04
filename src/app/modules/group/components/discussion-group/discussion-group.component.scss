@@ -1,0 +1,102 @@
+@import "/src/styles/variables";
+
+.discussion-group {
+    width: 100%;
+    border-radius: $border-radius-light;
+    margin-bottom: 1rem;
+
+    &__title {
+        font-weight: $font-weight-bold;
+        font-size: $default-font-size;
+        border-bottom: 1px solid $primary-border-otp-color;
+        padding-bottom: 1rem;
+    }
+
+    &__description {
+        margin-top: 1rem;
+    }
+
+    .create-post {
+        background-color: #ffffff;
+        display: flex;
+        padding: 1rem 1.5rem;
+        border-radius: $border-radius-light;
+        @include box-shadow();
+
+        &__avatar {
+            display: flex;
+            width: 100%;
+            max-width: 40px;
+            margin-right: 2%;
+            border-radius: 100%;
+        }
+
+        &__btn {
+            display: flex;
+            width: 100%;
+            border-radius: 5px;
+            color: $primary-color;
+            background-color: $lightest-blue;
+
+            font-weight: $font-weight-medium;
+            font-size: $default-font-size;
+            align-items: center;
+            text-align: center;
+
+            &:hover {
+                color: #ffffff;
+                background-color: $light-blue;
+                cursor: pointer;
+            }
+
+            &__inside {
+                width: 100%;
+            }
+        }
+
+        &__modal {
+            display: none;
+            position: fixed; /* Stay in place */
+            z-index: 10; /* Sit on top */
+            padding-top: 3%; /* Location of the box */
+            left: 0;
+            top: -20px;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0, 0, 0, 0.8); /* Black w/ opacity */
+
+            @media (max-width: 1024px) {
+                top: 0;
+            }
+        }
+    }
+}
+
+.create-post-modal {
+    display: none;
+    position: fixed; /* Stay in place */
+    z-index: 10; /* Sit on top */
+    padding-top: 3%; /* Location of the box */
+    left: 0;
+    top: -20px;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.8); /* Black w/ opacity */
+
+    @media (max-width: 1024px) {
+        top: 0;
+    }
+}
+
+.not-join {
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 1.5rem;
+    border-radius: $border-radius-light;
+    @include box-shadow();
+    margin-bottom: 1rem;
+}
