@@ -82,12 +82,14 @@ export class DetailGroupComponent implements OnInit, OnDestroy {
     }
 
     getGroupInfo(groupId: number) {
-        this.groupClient.getGroupDetailById(this.groupId).subscribe((response) => {
-            this.groupDetail = response.data;
-        },
-        (error) => {
-            this.router.navigateByUrl('/404');
-        });
+        this.groupClient.getGroupDetailById(this.groupId).subscribe(
+            (response) => {
+                this.groupDetail = response.data;
+            },
+            (error) => {
+                this.router.navigateByUrl('/404');
+            }
+        );
     }
 
     onSelectTab(id: number) {
@@ -103,6 +105,29 @@ export class DetailGroupComponent implements OnInit, OnDestroy {
 
     onInvite() {
         this.openInviteModal = true;
+    }
+
+    async onLeave() {
+        let result = await Swal.fire({
+            title: 'Bạn có chắc không?',
+            text: `Bạn có chắc chắn muốn rời khỏi nhóm không? Bạn sẽ không thể quản lý hoặc tương tác với nhóm nữa.`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Rời khỏi nhóm',
+            cancelButtonText: 'Hủy bỏ',
+        });
+
+        if (result.isConfirmed) {
+            this.groupClient.leaveGroup(this.groupId).subscribe(
+                (response) => {
+                    this.toastr.success(`Thao tác thành công.`);
+                    setTimeout(() => window.location.reload(), 1000);
+                },
+                (error) => console.log('Ban chi co the roi group khi co nhieu hon 1 admin') //Handle late
+            );
+        }
     }
 
     inviteMember(email) {
@@ -135,15 +160,15 @@ export class DetailGroupComponent implements OnInit, OnDestroy {
     }
 
     onClickCancelJoin() {
-        console.log('cancel join')
+        console.log('cancel join');
     }
 
     onAcceptInvite() {
-        console.log('accpet invite')
+        console.log('accpet invite');
     }
 
     onDeclineInvite() {
-        console.log('decline invite')
+        console.log('decline invite');
     }
 
     ngOnDestroy() {

@@ -31,7 +31,7 @@ export class ListItemsComponent implements OnInit, OnChanges {
     defaultReq: SearchRequest;
     // tslint:disable: no-inferrable-types
     private defaultPageNumber: number = 1;
-    private defaultPageSize: number = 4;
+    private defaultPageSize: number = 10;
 
     constructor(
         private homeClient: HomeClient,

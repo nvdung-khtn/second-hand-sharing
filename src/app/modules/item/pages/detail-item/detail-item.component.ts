@@ -181,10 +181,6 @@ export class DetailItemComponent implements OnInit {
         });
     }
 
-    ngOnDestroy() {
-        this.subscriptionNoti.unsubscribe();
-    }
-
     // Turn off item detail page
     onClose() {
         /* this.router.navigateByUrl('/home'); */
@@ -334,4 +330,8 @@ export class DetailItemComponent implements OnInit {
             return message?.type;
         }
     };
+
+    ngOnDestroy() {
+        this.subscriptionNoti.unsubscribe();
+    }
 }
