@@ -80,15 +80,7 @@ export class ListItemsComponent implements OnInit, OnChanges {
         }
 
         if (this.category !== 0 && this.category !== undefined) {
-            this.categoryClient
-                .getItemByCategory(this.category, this.defaultReq)
-                .subscribe((response) => {
-                    this.items = response.data;
-                    this.loading = false;
-                    if (this.items.length <= 2 && this.items.length > 0) {
-                        this.isEnd = true;
-                    }
-                });
+            this.handleDefaultGetItemByCategory()
         }
     }
 
@@ -99,18 +91,17 @@ export class ListItemsComponent implements OnInit, OnChanges {
                     this.items = response.data;
                 },
                 (error) => this.toastr.error(error)
-            )
-        }
-        else {
+            );
+        } else {
             this.homeClient.getItemsBySearch(this.defaultReq, this.searchString).subscribe(
                 (response) => {
                     this.items = response.data;
                 },
                 (error) => this.toastr.error(error)
-            )
+            );
         }
         this.loading = false;
-    }
+    };
 
     handleNewGetAllItems = (request) => {
         if (this.searchString === '') {
@@ -122,9 +113,8 @@ export class ListItemsComponent implements OnInit, OnChanges {
                     }
                 },
                 (error) => this.toastr.error(error)
-            )
-        }
-        else {
+            );
+        } else {
             this.homeClient.getItemsBySearch(request, this.searchString).subscribe(
                 (response) => {
                     this.items = [...this.items, ...response.data];
@@ -133,10 +123,64 @@ export class ListItemsComponent implements OnInit, OnChanges {
                     }
                 },
                 (error) => this.toastr.error(error)
-            )
+            );
         }
         this.loading = false;
-    }
+    };
+
+    handleDefaultGetItemByCategory = () => {
+        if (this.searchString === '') {
+            this.categoryClient
+                .getItemByCategory(this.category, this.defaultReq)
+                .subscribe((response) => {
+                    this.items = response.data;
+                    this.loading = false;
+                    if (this.items.length <= 2 && this.items.length > 0) {
+                        this.isEnd = true;
+                    }
+                });
+        } else {
+            this.homeClient
+                .getItemsBySearchAndCategory(this.defaultReq, this.searchString, this.category)
+                .subscribe(
+                    (response) => {
+                        this.items = response.data;
+                        this.loading = false;
+                        if (this.items.length <= 2 && this.items.length > 0) {
+                            this.isEnd = true;
+                        }
+                    },
+                    (error) => this.toastr.error(error)
+                );
+        }
+        this.loading = false;
+    };
+
+    handleNewGetItemByCategory = (request) => {
+        if (this.searchString === '') {
+            this.categoryClient.getItemByCategory(this.category, request).subscribe((response) => {
+                this.items = [...this.items, ...response.data];
+                this.loading = false;
+                if (response.data?.length === 0) {
+                    this.isEnd = true;
+                }
+            });
+        } else {
+            this.homeClient
+                .getItemsBySearchAndCategory(request, this.searchString, this.category)
+                .subscribe(
+                    (response) => {
+                        this.items = [...this.items, ...response.data];
+                        this.loading = false;
+                        if (response.data?.length === 0) {
+                            this.isEnd = true;
+                        }
+                    },
+                    (error) => this.toastr.error(error)
+                );
+        }
+        this.loading = false;
+    };
 
     onItemListScrollDown = () => {
         if (!this.donations && !this.registration) {
@@ -144,18 +188,10 @@ export class ListItemsComponent implements OnInit, OnChanges {
             const newReq = new SearchRequest(this.defaultPageNumber, this.defaultPageSize);
             this.loading = true;
             if (this.category === 0) {
-                this.handleNewGetAllItems(newReq)
+                this.handleNewGetAllItems(newReq);
             }
             if (this.category !== 0) {
-                this.categoryClient
-                    .getItemByCategory(this.category, newReq)
-                    .subscribe((response) => {
-                        this.items = [...this.items, ...response.data];
-                        this.loading = false;
-                        if (response.data?.length === 0) {
-                            this.isEnd = true;
-                        }
-                    });
+                this.handleNewGetItemByCategory(newReq)
             }
         }
     };
