@@ -9,9 +9,6 @@
         <div *ngIf="groupName.errors?.required">
           Vui lòng nhập trường này.
         </div>
-        <div *ngIf="name.errors?.pattern">
-          Pattern
-        </div>
       </div>
     </div>
 
@@ -22,9 +19,6 @@
         <div *ngIf="description.errors?.required">
           Vui lòng nhập trường này.
         </div>
-        <div *ngIf="description.errors?.pattern">
-          Pattern
-        </div>
       </div>
     </div>
 
@@ -34,9 +28,6 @@
       <div *ngIf="rules.invalid && (rules.dirty || rules.touched)" class="message-error">
         <div *ngIf="rules.errors?.required">
           Vui lòng nhập trường này.
-        </div>
-        <div *ngIf="rules.errors?.pattern">
-          Pattern
         </div>
       </div>
     </div>

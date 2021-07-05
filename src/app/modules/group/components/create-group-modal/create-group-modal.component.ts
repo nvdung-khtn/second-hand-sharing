@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { GroupClient } from 'src/app/core/api-clients/group.client';
 import { Group } from 'src/app/core/constants/group.constant';
+import { GroupService } from 'src/app/shared/service/group.service';
 
 @Component({
     selector: 'app-create-group-modal',
@@ -24,7 +25,8 @@ export class CreateGroupModalComponent implements OnInit {
     constructor(
         private fb: FormBuilder,
         private groupClient: GroupClient,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private groupService: GroupService
     ) {
         this.groupForm = this.fb.group({
             groupName: ['', [Validators.required]],
@@ -59,9 +61,9 @@ export class CreateGroupModalComponent implements OnInit {
         }
 
         this.groupClient.createGroup(this.groupForm.getRawValue()).subscribe((response) => {
-            this.toastr.success('Tạo group thành công.');
+            this.groupService.createGroup(response.data);
+            this.groupForm.reset();
             this.onCloseModal();
-            window.location.reload();
         });
     }
 }
