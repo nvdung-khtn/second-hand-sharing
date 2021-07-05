@@ -29,6 +29,7 @@
     "@fortawesome/free-regular-svg-icons": "^5.15.3",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
     "@ngbmodule/material-carousel": "^0.7.1",
+    "angular-ng-autocomplete": "^2.0.5",
     "bootstrap": "^5.0.1",
     "firebase": "^8.6.3",
     "jquery": "^3.6.0",

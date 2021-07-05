@@ -11,9 +11,7 @@
     color: $primary-text-color;
     max-width: 750px;
     height: 100%;
-    max-height: 11rem;
-    overflow-y: scroll;
-    top: 20%;
+    max-height: 13rem;
 
     &::-webkit-scrollbar {
         display: none;
@@ -79,4 +77,29 @@
 
 .error {
     display: inline-block;
+}
+
+.searcbox {
+    width: 100%;
+}
+
+.selected-user {
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+
+    &__avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 100%;
+    }
+
+    &__name {
+        margin-left: 1rem;
+        font-weight: $font-weight-bold;
+    }
+}
+
+.padding {
+    padding: 0.25rem 1rem;
 }

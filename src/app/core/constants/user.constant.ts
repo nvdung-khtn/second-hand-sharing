@@ -14,3 +14,9 @@ export class UserAward {
     donateAccountName: string;
     avatarUrl: string;
 }
+
+export class SearchUser {
+    id: number;
+    fullName: string;
+    avatarUrl: string;
+}

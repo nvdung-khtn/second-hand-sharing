@@ -10,7 +10,7 @@ import {
 } from '../constants/auth.constant';
 import { Observable } from 'rxjs';
 import { ResponseModel } from '../constants/common.constant';
-import { UserAward, UserInfo } from '../constants/user.constant';
+import { SearchUser, UserAward, UserInfo } from '../constants/user.constant';
 
 @Injectable({
     providedIn: 'root',
@@ -68,5 +68,10 @@ export class AuthClient {
     getTopAward(): Observable<ResponseModel<UserAward[]>> {
         const url = `${this.baseUrl}/User/Award`;
         return this.http.get<ResponseModel<UserAward[]>>(url);
+    }
+
+    searchUser(queryString: string): Observable<ResponseModel<SearchUser[]>> {
+        const url = `${this.baseUrl}/User/search?query=${queryString}`;
+        return this.http.get<ResponseModel<SearchUser[]>>(url);
     }
 }
