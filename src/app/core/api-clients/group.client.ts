@@ -118,4 +118,9 @@ export class GroupClient {
         const url = `${this.baseUrl}/Group/${groupId}/join-status`;
         return this.http.get<ResponseModel<any>>(url);
     }
+
+    inviteMember(groupId: number, userId: number): Observable<ResponseModel<any>> {
+        const url = `${this.baseUrl}/Group/${groupId}/member`;
+        return this.http.post<ResponseModel<any>>(url, { userId });
+    }
 }

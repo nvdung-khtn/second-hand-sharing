@@ -26,6 +26,26 @@ export class HomeClient {
         return this.http.get<PagingList<Item>>(url, { params });
     }
 
+    getItemsBySearch(req: SearchRequest, searchString: string): Observable<PagingList<Item>> {
+        const url = `${this.baseUrl}/Item?query=${searchString}`;
+        const params = {
+            PageNumber: `${req.pageNumber}`,
+            PageSize: `${req.pageSize}`,
+        };
+
+        return this.http.get<PagingList<Item>>(url, { params });
+    }
+
+    getItemsBySearchAndCategory(req: SearchRequest, searchString: string, categoryId: number): Observable<PagingList<Item>> {
+        const url = `${this.baseUrl}/Item?query=${searchString}&categoryId=${categoryId}`;
+        const params = {
+            PageNumber: `${req.pageNumber}`,
+            PageSize: `${req.pageSize}`,
+        };
+
+        return this.http.get<PagingList<Item>>(url, { params });
+    }
+
     createItem(item: CreateItemRequest): Observable<ResponseModel<CreateItem>> {
         const url = `${this.baseUrl}/Item`;
         return this.http.post<ResponseModel<CreateItem>>(url, item);

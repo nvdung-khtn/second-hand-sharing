@@ -26,6 +26,8 @@ import { DiscussionGroupComponent } from './components/discussion-group/discussi
 import { CreateGroupPostModalComponent } from './components/create-group-post-modal/create-group-post-modal.component';
 import { ListDiscussionComponent } from './components/list-discussion/list-discussion.component';
 import { DetailDiscussionComponent } from './pages/detail-discussion/detail-discussion.component';
+import { BrowserModule } from '@angular/platform-browser';
+import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 
 @NgModule({
     declarations: [
@@ -58,7 +60,9 @@ import { DetailDiscussionComponent } from './pages/detail-discussion/detail-disc
         MatIconModule,
         MatFormFieldModule,
         MatSelectModule,
-        HomePageModule
+        HomePageModule,
+        MatSelectModule,
+        AutocompleteLibModule,
     ],
 })
 export class GroupModule {}
