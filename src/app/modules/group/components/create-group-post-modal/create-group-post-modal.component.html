@@ -1,0 +1,42 @@
+<div class="create-group-post" *ngIf="isOpenModal">
+  <span class="box-modal-close create-group-post__close" (click)="onCloseModal()">&times;</span>
+  <div class="create-group-post__title">Đăng bài viết nhóm</div>
+  <form [formGroup]="groupForm" (ngSubmit)="onSubmit()">
+
+    <div class="row-control">
+      <textarea formControlName="content" rows="4" class="input" placeholder="Nội dung bài viết"></textarea>
+    </div>
+
+    <!-- add image -->
+    <div class="create-group-post__add-image">
+      <div *ngFor="let item of url; let index = index" class="create-group-post__add-image__container">
+        <img [src]="item" *ngIf="url" class="create-group-post__add-image__container__image" />
+
+        <span class="create-group-post__add-image__container__close"
+          (click)="onRemoveSelectedFile(index)">&times;</span>
+      </div>
+
+      <div class="create-group-post__add-image__btn">
+        <label for="upload">
+          <mat-icon class="create-group-post__add-image__btn__icon">add_photo_alternate</mat-icon>
+          <div class="create-group-post__add-image__btn__text">Thêm ảnh</div>
+        </label>
+
+        <input type="file" id="upload" accept="image/png" multiple (change)="selectFile($event)" />
+      </div>
+    </div>
+
+    <div class="privacy">
+      <mat-form-field appearance="fill">
+        <mat-label>Quyền riêng tư</mat-label>
+        <mat-select disableOptionCentering (selectionChange)="onSelectedPrivacy($event)">
+          <mat-option *ngFor="let privacy of privacyList" [value]="privacy">
+            {{ privacy.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <button type="submit" class="primary-button create-group-post__create-btn">Đăng bài</button>
+  </form>
+</div>

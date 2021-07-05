@@ -91,7 +91,7 @@
               <span [style.display]="!receiveRequests?.length ? 'block' : 'none'">Chưa có ai xin nhận vật phẩm này!</span>
               <div [style.display]="receiveRequests?.length ? 'flex' : 'none'" class="request-list" *ngFor="let request of receiveRequests">
                 <div class="request-list__info" [routerLink]="['/profile', request?.receiverId]">
-                  <img class="avatar" src="assets/image/default-avatar.png" />
+                  <img class="avatar" [src]="request?.avatarUrl ? request?.avatarUrl : 'assets/image/default-avatar.png'" />
 
                   <div>
                     <div class="name">{{ request.receiverName }}</div>

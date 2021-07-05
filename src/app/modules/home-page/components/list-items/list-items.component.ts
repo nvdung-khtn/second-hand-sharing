@@ -12,6 +12,7 @@ import { Item } from 'src/app/core/constants/item.constant';
     styleUrls: ['./list-items.component.scss'],
 })
 export class ListItemsComponent implements OnInit, OnChanges {
+    @Input() searchString: string = '';
     @Input() category: number;
     @Input() donations: boolean;
     @Input() donationsId: number;
@@ -49,12 +50,7 @@ export class ListItemsComponent implements OnInit, OnChanges {
         // tslint:disable-next-line: no-unused-expression
         !this.donations
             ? !this.registration
-                ? this.homeClient.getItems(this.defaultReq).subscribe(
-                      (response) => {
-                          this.items = response.data;
-                      },
-                      (error) => this.toastr.error(error)
-                  )
+                ? this.handleDefaultGetAllItems()
                 : this.itemClient.getMyRegistration(registrationUserId).subscribe(
                       (response) => {
                           this.items = response.data;
@@ -80,13 +76,60 @@ export class ListItemsComponent implements OnInit, OnChanges {
             this.loading = true;
         }
         if (this.category === 0) {
-            this.homeClient.getItems(this.defaultReq).subscribe((response) => {
-                this.items = response.data;
-                this.loading = false;
-            });
+            this.handleDefaultGetAllItems();
         }
 
         if (this.category !== 0 && this.category !== undefined) {
+            this.handleDefaultGetItemByCategory()
+        }
+    }
+
+    handleDefaultGetAllItems = () => {
+        if (this.searchString === '') {
+            this.homeClient.getItems(this.defaultReq).subscribe(
+                (response) => {
+                    this.items = response.data;
+                },
+                (error) => this.toastr.error(error)
+            );
+        } else {
+            this.homeClient.getItemsBySearch(this.defaultReq, this.searchString).subscribe(
+                (response) => {
+                    this.items = response.data;
+                },
+                (error) => this.toastr.error(error)
+            );
+        }
+        this.loading = false;
+    };
+
+    handleNewGetAllItems = (request) => {
+        if (this.searchString === '') {
+            this.homeClient.getItems(request).subscribe(
+                (response) => {
+                    this.items = [...this.items, ...response.data];
+                    if (response.data?.length === 0) {
+                        this.isEnd = true;
+                    }
+                },
+                (error) => this.toastr.error(error)
+            );
+        } else {
+            this.homeClient.getItemsBySearch(request, this.searchString).subscribe(
+                (response) => {
+                    this.items = [...this.items, ...response.data];
+                    if (response.data?.length === 0) {
+                        this.isEnd = true;
+                    }
+                },
+                (error) => this.toastr.error(error)
+            );
+        }
+        this.loading = false;
+    };
+
+    handleDefaultGetItemByCategory = () => {
+        if (this.searchString === '') {
             this.categoryClient
                 .getItemByCategory(this.category, this.defaultReq)
                 .subscribe((response) => {
@@ -96,8 +139,48 @@ export class ListItemsComponent implements OnInit, OnChanges {
                         this.isEnd = true;
                     }
                 });
+        } else {
+            this.homeClient
+                .getItemsBySearchAndCategory(this.defaultReq, this.searchString, this.category)
+                .subscribe(
+                    (response) => {
+                        this.items = response.data;
+                        this.loading = false;
+                        if (this.items.length <= 2 && this.items.length > 0) {
+                            this.isEnd = true;
+                        }
+                    },
+                    (error) => this.toastr.error(error)
+                );
         }
-    }
+        this.loading = false;
+    };
+
+    handleNewGetItemByCategory = (request) => {
+        if (this.searchString === '') {
+            this.categoryClient.getItemByCategory(this.category, request).subscribe((response) => {
+                this.items = [...this.items, ...response.data];
+                this.loading = false;
+                if (response.data?.length === 0) {
+                    this.isEnd = true;
+                }
+            });
+        } else {
+            this.homeClient
+                .getItemsBySearchAndCategory(request, this.searchString, this.category)
+                .subscribe(
+                    (response) => {
+                        this.items = [...this.items, ...response.data];
+                        this.loading = false;
+                        if (response.data?.length === 0) {
+                            this.isEnd = true;
+                        }
+                    },
+                    (error) => this.toastr.error(error)
+                );
+        }
+        this.loading = false;
+    };
 
     onItemListScrollDown = () => {
         if (!this.donations && !this.registration) {
@@ -105,24 +188,10 @@ export class ListItemsComponent implements OnInit, OnChanges {
             const newReq = new SearchRequest(this.defaultPageNumber, this.defaultPageSize);
             this.loading = true;
             if (this.category === 0) {
-                this.homeClient.getItems(newReq).subscribe((response) => {
-                    this.items = [...this.items, ...response.data];
-                    this.loading = false;
-                    if (response.data?.length === 0) {
-                        this.isEnd = true;
-                    }
-                });
+                this.handleNewGetAllItems(newReq);
             }
             if (this.category !== 0) {
-                this.categoryClient
-                    .getItemByCategory(this.category, newReq)
-                    .subscribe((response) => {
-                        this.items = [...this.items, ...response.data];
-                        this.loading = false;
-                        if (response.data?.length === 0) {
-                            this.isEnd = true;
-                        }
-                    });
+                this.handleNewGetItemByCategory(newReq)
             }
         }
     };

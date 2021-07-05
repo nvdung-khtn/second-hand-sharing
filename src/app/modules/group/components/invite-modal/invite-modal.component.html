@@ -1,11 +1,49 @@
 <div class="invite-modal">
   <span class="invite-modal__close" (click)="onClose()">&times;</span>
 
-  <div class="invite-modal__title">
-    Mời người dùng
+  <div class="invite-modal__title">Mời người dùng</div>
+
+  <div class="searchbox">
+    <ng-autocomplete
+      [placeholder]="placeholder"
+      [data]="searchResponse"
+      [searchKeyword]="keyword"
+      (selected)="selectEvent($event)"
+      (inputChanged)="onChangeSearch($event)"
+      (inputCleared)="onClearSearch()"
+      [itemTemplate]="itemTemplate"
+      [notFoundTemplate]="notFoundTemplate"
+      [isLoading]="isLoading"
+      debounceTime="1200"
+      [customFilter]="onCustomFilter"
+    >
+    </ng-autocomplete>
+
+    <!-- dropdown list -->
+    <ng-template #itemTemplate let-item>
+      <div class="selected-user padding">
+        <img
+          class="selected-user__avatar"
+          [src]="item?.avatarUrl ? item?.avatarUrl : 'assets/image/default-avatar.png'"
+        />
+        <div class="selected-user__name" [innerHTML]="item?.fullName"> </div>
+      </div>
+    </ng-template>
+
+    <ng-template #notFoundTemplate let-notFound>
+      <div [innerHTML]="this.notFoundUser"></div>
+    </ng-template>
   </div>
 
-  <input class="invite-modal__text" type="text" placeholder="Email người dùng" [(ngModel)]="email">
+  <div class="selected-user" [style.display]="this.selectedUser?.id !== -1 ? 'flex' : 'none'">
+    <img
+      class="selected-user__avatar"
+      [src]="this.selectedUser?.avatarUrl ? this.selectedUser?.avatarUrl : 'assets/image/default-avatar.png'"
+    />
+    <div class="selected-user__name">
+      {{ this.selectedUser?.fullName }}
+    </div>
+  </div>
 
   <div class="invite-modal__confirm" (click)="onSubmit()">Mời</div>
 </div>

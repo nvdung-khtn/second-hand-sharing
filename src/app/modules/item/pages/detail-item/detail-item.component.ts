@@ -133,7 +133,7 @@ export class DetailItemComponent implements OnInit {
                 this.toastr.success(`${this.notification?.receiverName} đã đăng ký nhận vật phẩm`);
             }
             if (this.notiType === NotifyType.CANCEL_RECEIVE_REQUEST + '') {
-                const userCancel = this.receiveRequests.find(
+                const userCancel = this.receiveRequests?.find(
                     (receiver) => receiver.id === this.notification?.requestId
                 );
 
@@ -148,7 +148,7 @@ export class DetailItemComponent implements OnInit {
                     }
                     this.nomineeName = nominee?.receiverName;
                 });
-                this.toastr.success(`${userCancel?.receiverName} đã hủy nhận vật phẩm`);
+                if (userCancel !== undefined) { this.toastr.success(`${userCancel?.receiverName} đã hủy nhận vật phẩm`); }
                 this.isProcessing = false;
                 this.approvedRequestId = -1;
                 this.nomineeName = '';

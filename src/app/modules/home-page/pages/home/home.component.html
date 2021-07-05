@@ -3,12 +3,26 @@
     <app-create-post></app-create-post>
   </div>
 
+  <div class="search">
+    <div class="search__input-container">
+      <mat-icon class="search__icon">search</mat-icon>
+      <input
+        class="search__input"
+        type="text"
+        placeholder="Tìm kiếm tên vật phẩm"
+        [(ngModel)]="this.searchInput"
+        (ngModelChange)="delayAutoSearch($event)"
+        (keyup.enter)="onSearch()"
+      />
+    </div>
+  </div>
+
   <div class="home__section">
     <app-category [selectedFromParent]="this.defaultSelectedCategory" (categoryIDChange)="onCategoryChange($event)">
     </app-category>
   </div>
 
   <div class="home__section">
-    <app-list-items [category]="this.selectedCategory"></app-list-items>
+    <app-list-items [category]="this.selectedCategory" [searchString]="this.searchStringToChild"></app-list-items>
   </div>
 </div>
