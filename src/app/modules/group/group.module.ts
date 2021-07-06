@@ -29,6 +29,9 @@ import { DetailDiscussionComponent } from './pages/detail-discussion/detail-disc
 import { BrowserModule } from '@angular/platform-browser';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
     declarations: [
@@ -59,12 +62,16 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
         FormsModule,
         SharedModule,
         MatIconModule,
-        MatFormFieldModule,
         MatSelectModule,
         HomePageModule,
         MatSelectModule,
         AutocompleteLibModule,
         FontAwesomeModule,
+        FormsModule,
+        MatDatepickerModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatNativeDateModule,
     ],
 })
 export class GroupModule {}

@@ -5,6 +5,7 @@ import { ResponseModel, SearchRequest } from '../constants/common.constant';
 import { Observable } from 'rxjs';
 import { Item } from '../constants/item.constant';
 import { Group } from '../constants/group.constant';
+import { CreateEvent, EventType } from '../constants/event.constant';
 
 @Injectable({
     providedIn: 'root',
@@ -12,6 +13,12 @@ import { Group } from '../constants/group.constant';
 export class EventClient {
     constructor(private http: HttpClient) {}
     private baseUrl = environment.apiUrl;
+
+    createEvent(eventForm: CreateEvent): Observable<ResponseModel<EventType>> {
+        const url = `${this.baseUrl}/Event`;
+
+        return this.http.post<ResponseModel<EventType>>(url, eventForm);
+    }
 
     getAllAvailableEvent(req: SearchRequest): Observable<ResponseModel<any>> {
         const url = `${this.baseUrl}/Event`;
