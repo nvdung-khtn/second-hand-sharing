@@ -4,10 +4,12 @@
   </div>
 </div>
 
-<div class="create-post" (click)="onToogleEventDonations()">
+<div class="create-post flex" *ngIf="this.myRole !== ''" (click)="onToogleEventDonations()">
   <div class="flex-text">
-    Danh sách vật phẩm quyên góp
+    Danh sách vật phẩm quyên góp <span class="number-donate">({{listItemEvent?.length}})</span>
   </div>
+
+  <mat-icon [style.transform]="this.toogleEventDonations === true ? 'rotate(180deg)' : 'unset'">keyboard_arrow_down</mat-icon>
 </div>
 
 <div
@@ -60,10 +62,13 @@
   </div>
 </div>
 
-<div class="create-post" (click)="onToogleMyDonations()">
+<div class="create-post flex" (click)="onToogleMyDonations()">
   <div class="flex-text">
-    Quyên góp của tôi
+    Quyên góp của tôi <span class="number-donate">({{myItemDonations?.length}})</span>
   </div>
+
+  <mat-icon [style.transform]="this.toogleMyDonations === true ? 'rotate(180deg)' : 'unset'">keyboard_arrow_down</mat-icon>
+
 </div>
 
 <div
