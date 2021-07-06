@@ -90,6 +90,12 @@ export class GroupClient {
         return this.http.post<ResponseModel<string>>(url, groupId);
     }
 
+    cancelJoin(groupId: number): Observable<ResponseModel<string>> {
+        const url = `${this.baseUrl}/Group/${groupId}/join`;
+
+        return this.http.post<ResponseModel<string>>(url, groupId);
+    }
+
     approveToJoin(groupId: number, memberId: number): Observable<ResponseModel<any>> {
         const url = `${this.baseUrl}/Group/${groupId}/join-request/${memberId}/accept`;
 
