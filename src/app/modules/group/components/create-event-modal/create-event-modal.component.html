@@ -1,24 +1,56 @@
 <div class="create-event" *ngIf="isOpenModal">
-    <span class="box-modal-close create-event__close" (click)="onCloseModal()">&times;</span>
-    <div class="create-event__title">Tạo sự kiện</div>
-    <form [formGroup]="groupForm" (ngSubmit)="onSubmit()">
-      <div class="row-control">
-        <input formControlName="eventName" class="input" placeholder="Tên sự kiện" />
+  <span class="box-modal-close create-event__close" (click)="onCloseModal()">&times;</span>
+  <div class="create-event__title">Tạo sự kiện</div>
+  <form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
+    <div class="row-control">
+      <input formControlName="eventName" class="input" placeholder="Tên sự kiện" />
+      <div *ngIf="eventName.invalid && (eventName.dirty || eventName.touched)" class="message-error">
+        <div *ngIf="eventName.errors?.required" class="text text-danger">
+          Vui lòng nhập trường này.
+        </div>
       </div>
-  
-      <div class="row-control">
-        <input formControlName="startDate" rows="4" class="input" placeholder="Ngày bắt đầu" />
-      </div>
+    </div>
 
-      <div class="row-control">
-        <input formControlName="endDate" rows="4" class="input" placeholder="Ngày kết thúc" />
+    <!-- <div class="row-control">
+      <mat-form-field appearance="fill" style="width: 100%; color: #0e88fa" class="auth-input__date">
+
+        <input formControlName="startDate" matInput [matDatepicker]="picker" name="datepicker" ngModel #dateCtrl
+          required>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="dateCtrl.errors?.required && dateCtrl.touched">Choose a Date</mat-error>
+      </mat-form-field>
+      <div *ngIf="startDate.invalid && (startDate.dirty || startDate.touched)" class="message-error">
+        <div *ngIf="startDate.errors?.required" class="text text-danger">
+          Vui lòng nhập trường này.
+        </div>
       </div>
-  
-      <div class="row-control">
-        <textarea formControlName="content" rows="4" class="input" placeholder="Mục tiêu của sự kiện"></textarea>
+    </div> -->
+
+    <div class="row-control mt-3">
+      <mat-form-field appearance="fill" style="width: 100%; color: #333" class="auth-input__date">
+        <mat-label style="color: #333">Ngày kết thúc</mat-label>
+        <input formControlName="endDate" matInput [matDatepicker]="picker" name="datepicker" ngModel #dateCtrl required>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="dateCtrl.errors?.required && dateCtrl.touched">Choose a Date</mat-error>
+      </mat-form-field>
+      <div *ngIf="endDate.invalid && (endDate.dirty || endDate.touched)" class="message-error">
+        <div *ngIf="endDate.errors?.required" class="text text-danger">
+          Vui lòng nhập trường này.
+        </div>
       </div>
-  
-      <button type="submit" class="primary-button create-event__create-btn">Tạo sự kiện</button>
-    </form>
-  </div>
-  
+    </div>
+
+    <div class="row-control">
+      <textarea formControlName="content" rows="4" class="input" placeholder="Mục tiêu của sự kiện"></textarea>
+      <div *ngIf="content.invalid && (content.dirty || content.touched)" class="message-error">
+        <div *ngIf="content.errors?.required" class="text text-danger">
+          Vui lòng nhập trường này.
+        </div>
+      </div>
+    </div>
+
+    <button type="submit" class="primary-button create-event__create-btn">Tạo sự kiện</button>
+  </form>
+</div>

@@ -24,12 +24,11 @@
   [style.display]="listItemEvent?.length === 0 ? 'flex' : 'block'"
 >
   <div class="list-event-items__grid" [style.display]="listItemEvent?.length === 0 ? 'none' : 'grid'">
-    <div class="list-event-items__grid__card" *ngFor="let item of listItemEvent" [routerLink]="['/group',this.groupId, 'event', this.eventId, 'item', item?.id]">
+    <div class="list-event-items__grid__card" *ngFor="let item of listItemEvent"
+      [routerLink]="['/group',this.groupId, 'event', this.eventId, 'item', item?.id]">
       <div class="list-event-items__grid__card__image">
-        <img
-          class="list-event-items__grid__card__image__inside"
-          [src]="item?.imageUrl ? item.imageUrl : 'assets/image/default-image.png'"
-        />
+        <img class="list-event-items__grid__card__image__inside"
+          [src]="item?.imageUrl ? item.imageUrl : 'assets/image/default-image.png'" />
       </div>
 
       <div class="list-event-items__grid__card__name">
@@ -123,11 +122,10 @@
 </div>
 
 <div id="create-post-modal" class="create-post__modal" [style.display]="this.isOpenModal ? 'block' : 'none'">
-  <app-create-post-modal
-    [isPostItemEvent] = "true"
-    [isOpenModal]="this.isOpenModal"
-    (modalChange)="this.isOpenModal = $event"
-  ></app-create-post-modal>
+  <app-create-post-modal [isPostItemEvent]="true" [eventId]="eventId" [isOpenModal]="this.isOpenModal"
+    (modalChange)="this.isOpenModal = $event"></app-create-post-modal>
 </div>
 
-<ng-template #loadingTmpl> <app-></app-> </ng-template>
+<ng-template #loadingTmpl>
+  <app-></app->
+</ng-template>

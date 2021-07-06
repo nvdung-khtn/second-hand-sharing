@@ -53,7 +53,7 @@ export class ListItemsEventComponent implements OnInit {
         private itemClient: ItemClient,
         private route: ActivatedRoute,
         private eventClient: EventClient,
-        private groupClient: GroupClient,
+        private groupClient: GroupClient
     ) {
         this.defaultReq = new SearchRequest(this.defaultPageNumber, this.defaultPageSize);
     }
@@ -64,7 +64,7 @@ export class ListItemsEventComponent implements OnInit {
         this.groupId = Number(this.route.snapshot.paramMap.get('groupId'));
         this.checkDate();
         // gọi api get list event items
-        this.getMyRole(this.groupId, this.myInfo?.id)
+        this.getMyRole(this.groupId, this.myInfo?.id);
     }
 
     // tslint:disable: use-lifecycle-interface
@@ -108,8 +108,8 @@ export class ListItemsEventComponent implements OnInit {
         // gọi api get list events items tương tự list items trên trang chủ
     };
 
-    onClickPost = () => {
-      this.isOpenModal = true;
+    onClickPost() {
+        this.isOpenModal = true;
     }
 
     checkDate = () => {
