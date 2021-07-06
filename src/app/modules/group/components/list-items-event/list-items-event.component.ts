@@ -48,7 +48,7 @@ export class ListItemsEventComponent implements OnInit {
         private itemClient: ItemClient,
         private route: ActivatedRoute,
         private eventClient: EventClient,
-        private groupClient: GroupClient,
+        private groupClient: GroupClient
     ) {
         this.defaultReq = new SearchRequest(this.defaultPageNumber, this.defaultPageSize);
     }
@@ -59,7 +59,7 @@ export class ListItemsEventComponent implements OnInit {
         this.groupId = Number(this.route.snapshot.paramMap.get('groupId'));
         this.checkDate();
         // gọi api get list event items
-        this.getMyRole(this.groupId, this.myInfo?.id)
+        this.getMyRole(this.groupId, this.myInfo?.id);
     }
 
     // tslint:disable: use-lifecycle-interface
@@ -76,22 +76,27 @@ export class ListItemsEventComponent implements OnInit {
                 if (response.succeeded) {
                     this.myRole = response.message;
                     if (this.myRole !== '') {
-                        this.eventClient.getAllItemsInEvent(this.defaultReq, this.eventId).subscribe((response) => {
-                            this.listItemEvent = response?.data;
-                        })
-                    }
-                    else {
-                        this.eventClient.getMyDonations(this.defaultReq, this.eventId).subscribe((response) => {
-                            this.listItemEvent = response?.data;
-                        })
+                        this.eventClient
+                            .getAllItemsInEvent(this.defaultReq, this.eventId)
+                            .subscribe((response) => {
+                                this.listItemEvent = response?.data;
+                            });
+                    } else {
+                        this.eventClient
+                            .getMyDonations(this.defaultReq, this.eventId)
+                            .subscribe((response) => {
+                                this.listItemEvent = response?.data;
+                            });
                     }
                 }
             },
             (error) => {
-                this.eventClient.getMyDonations(this.defaultReq, this.eventId).subscribe((response) => {
-                    this.listItemEvent = response?.data;
-                })
-                console.log(error)
+                this.eventClient
+                    .getMyDonations(this.defaultReq, this.eventId)
+                    .subscribe((response) => {
+                        this.listItemEvent = response?.data;
+                    });
+                console.log(error);
             }
         );
     };
@@ -100,8 +105,8 @@ export class ListItemsEventComponent implements OnInit {
         // gọi api get list events items tương tự list items trên trang chủ
     };
 
-    onClickPost = () => {
-      this.isOpenModal = true;
+    onClickPost() {
+        this.isOpenModal = true;
     }
 
     checkDate = () => {
@@ -111,5 +116,5 @@ export class ListItemsEventComponent implements OnInit {
         if (now >= end) {
             this.isEventEnded = true;
         }
-    }
+    };
 }

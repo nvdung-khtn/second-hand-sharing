@@ -47,10 +47,6 @@ export class CreateEventModalComponent implements OnInit {
         return this.eventForm.get('eventName');
     }
 
-    get startDate() {
-        return this.eventForm.get('startDate');
-    }
-
     get endDate() {
         return this.eventForm.get('endDate');
     }
@@ -71,9 +67,11 @@ export class CreateEventModalComponent implements OnInit {
             return;
         }
 
+        const tmp = new Date(this.eventForm.getRawValue().endDate).getTime() + 86400000;
         const formData = {
             ...this.eventForm.getRawValue(),
             groupId: this.groupId,
+            endDate: new Date(tmp),
         };
 
         this.eventClient.createEvent(formData).subscribe((response) => {

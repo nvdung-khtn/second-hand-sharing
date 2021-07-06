@@ -19,6 +19,7 @@ import { AuthService } from 'src/app/shared/service/auth.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import Swal from 'sweetalert2';
+import { EventClient } from 'src/app/core/api-clients/event.client';
 
 @Component({
     selector: 'app-create-post-modal',
@@ -27,7 +28,8 @@ import Swal from 'sweetalert2';
 })
 export class CreatePostModalComponent implements OnInit, OnDestroy {
     @Input() isOpenModal;
-    @Input() isPostItemEvent = false;
+    @Input() isPostItemEvent: boolean = false;
+    @Input() eventId: number;
     @Output() modalChange = new EventEmitter<boolean>();
 
     // biến cho message modal khi gọi xong api đăng bài
@@ -56,7 +58,8 @@ export class CreatePostModalComponent implements OnInit, OnDestroy {
         private fb: FormBuilder,
         private homeClient: HomeClient,
         private addressService: AddressService,
-        private authService: AuthService
+        private authService: AuthService,
+        private eventClient: EventClient
     ) {}
 
     ngOnInit() {
@@ -79,7 +82,6 @@ export class CreatePostModalComponent implements OnInit, OnDestroy {
     onClose() {
         this.isOpenModal = false;
         this.modalChange.emit(this.isOpenModal);
-        window.location.reload()
     }
 
     showSelectedFile(event) {
@@ -105,6 +107,7 @@ export class CreatePostModalComponent implements OnInit, OnDestroy {
     }
 
     selectFile(event: any): void {
+        debugger;
         this.selectedFiles = event.target.files;
         this.showSelectedFile(event);
     }
@@ -148,6 +151,35 @@ export class CreatePostModalComponent implements OnInit, OnDestroy {
             imageNumber: this.selectedFiles?.length,
             categoryId: this.selectedCatId,
         };
+
+        //Handle donate for events
+        if (this.isPostItemEvent) {
+            this.eventClient.donateItem(this.eventId, formData).subscribe(
+                (response) => {
+                    this.loading = false;
+                    response.data.imageUploads.forEach((image) =>
+                        this.preSignUrl.push(image.presignUrl)
+                    );
+                    // Upload image to cloud
+                    this.uploadImages(this.preSignUrl);
+                    this.isSuccess = true;
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success...',
+                        text: 'Quyên góp vật phẩm thành công.',
+                    }).then(() => this.onClose());
+
+                    // Reset Data in post
+                    this.postForm.reset();
+                    this.loading = false;
+                },
+                (error) => {
+                    this.loading = false;
+                    console.log(error);
+                }
+            );
+        }
 
         this.homeClient.createItem(formData).subscribe(
             (response) => {

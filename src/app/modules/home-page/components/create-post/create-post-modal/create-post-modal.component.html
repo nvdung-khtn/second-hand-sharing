@@ -5,7 +5,8 @@
 
   <div class="create-post-modal__user-info">
     <div class="create-post-modal__user-info__profile">
-      <img class="create-post-modal__user-info__profile__avatar" [src]="currentUser?.avatarUrl ? currentUser?.avatarUrl : 'assets/image/default-avatar.png'" />
+      <img class="create-post-modal__user-info__profile__avatar"
+        [src]="currentUser?.avatarUrl ? currentUser?.avatarUrl : 'assets/image/default-avatar.png'" />
 
       <div class="create-post-modal__user-info__profile__info">
         <div class="create-post-modal__user-info__profile__info__name">
@@ -54,7 +55,10 @@
           <div class="create-post-modal__add-image__btn__text">Thêm ảnh</div>
         </label>
 
-        <input type="file" id="uploadImage" accept="image/png" multiple (change)="selectFile($event)" />
+        <input *ngIf="isPostItemEvent;" type="file" id="uploadImage" accept="image/png" multiple
+          (change)="selectFile($event)" />
+        <input *ngIf="!isPostItemEvent;" type="file" id="uploadImage" accept="image/png" multiple
+          (change)="selectFile($event)" />
       </div>
     </div>
 

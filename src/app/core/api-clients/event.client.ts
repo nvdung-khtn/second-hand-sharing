@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { ResponseModel, SearchRequest } from '../constants/common.constant';
 import { Observable } from 'rxjs';
-import { Item } from '../constants/item.constant';
+import { CreateItemRequest, Item } from '../constants/item.constant';
 import { Group } from '../constants/group.constant';
 import { CreateEvent, EventType } from '../constants/event.constant';
 
@@ -76,5 +76,11 @@ export class EventClient {
             PageSize: `${req.pageSize}`,
         };
         return this.http.get<ResponseModel<Group[]>>(url, { params });
+    }
+
+    donateItem(eventId: number, item: CreateItemRequest): Observable<ResponseModel<any>> {
+        const url = `${this.baseUrl}/Event/${eventId}/item`;
+
+        return this.http.post<ResponseModel<Group[]>>(url, { ...item });
     }
 }

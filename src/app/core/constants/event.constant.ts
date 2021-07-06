@@ -11,7 +11,7 @@ export class EventType {
 
 export class CreateEvent {
     eventName: string;
-    startDate: string;
     endDate: string;
     content: string;
+    groupId: number;
 }
