@@ -55,9 +55,7 @@
           <div class="create-post-modal__add-image__btn__text">Thêm ảnh</div>
         </label>
 
-        <input *ngIf="isPostItemEvent;" type="file" id="uploadImage" accept="image/png" multiple
-          (change)="selectFile($event)" />
-        <input *ngIf="!isPostItemEvent;" type="file" id="uploadImage" accept="image/png" multiple
+        <input type="file" id="uploadImage" accept="image/png" multiple
           (change)="selectFile($event)" />
       </div>
     </div>

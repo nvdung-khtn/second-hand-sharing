@@ -156,7 +156,6 @@ export class CreatePostModalComponent implements OnInit, OnDestroy {
         if (this.isPostItemEvent) {
             this.eventClient.donateItem(this.eventId, formData).subscribe(
                 (response) => {
-                    debugger;
                     this.loading = false;
                     response.data.imageUploads.forEach((image) =>
                         this.preSignUrl.push(image.presignUrl)
@@ -174,17 +173,12 @@ export class CreatePostModalComponent implements OnInit, OnDestroy {
                     // Reset Data in post
                     this.postForm.reset();
                     this.loading = false;
-                    setTimeout(() => {
-                        window.location.reload();
-                    }, 1000);
                 },
                 (error) => {
                     this.loading = false;
                     console.log(error);
                 }
             );
-
-            return;
         }
 
         this.homeClient.createItem(formData).subscribe(
