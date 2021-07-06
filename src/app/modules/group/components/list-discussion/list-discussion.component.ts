@@ -1,7 +1,8 @@
+import { SearchPostRequest } from './../../../../core/constants/common.constant';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GroupPostClient } from 'src/app/core/api-clients/group-post.client';
-import { SearchRequest } from 'src/app/core/constants/common.constant';
+import { Group_Post } from 'src/app/core/constants/group-post.constant';
 
 @Component({
     selector: 'app-list-discussion',
@@ -9,20 +10,17 @@ import { SearchRequest } from 'src/app/core/constants/common.constant';
     styleUrls: ['./list-discussion.component.scss'],
 })
 export class ListDiscussionComponent implements OnInit {
-    // group
-    groupId = -1;
-    defaultReq: SearchRequest;
+    groupId: number;
+    listDiscussion: Group_Post[] = [];
 
-    listDiscussion = [];
-
-    constructor(private route: ActivatedRoute, private groupPostClient: GroupPostClient) {
-        this.defaultReq = new SearchRequest(1, 200);
-    }
+    constructor(private route: ActivatedRoute, private groupPostClient: GroupPostClient) {}
 
     ngOnInit(): void {
         this.groupId = Number(this.route.snapshot.paramMap.get('id'));
-        this.groupPostClient.getGroupPost(this.defaultReq, this.groupId).subscribe((response) => {
-            this.listDiscussion = response?.data;
-        })
+        this.groupPostClient
+            .getAllPost(new SearchPostRequest(this.groupId, 1, 100))
+            .subscribe((response) => {
+                this.listDiscussion = response.data;
+            });
     }
 }

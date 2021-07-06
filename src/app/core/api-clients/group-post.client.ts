@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { ResponseModel, SearchRequest } from '../constants/common.constant';
-import { Group, GroupPost } from '../constants/group.constant';
+import { ResponseModel, SearchPostRequest, SearchRequest } from '../constants/common.constant';
 import { Observable } from 'rxjs';
+import { CreateItem } from '../constants/item.constant';
+import { CreatePostRequest, Group_Post } from '../constants/group-post.constant';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Item } from '../constants/item.constant';
 import { RequestSendComment, ResponseSendComment } from '../constants/group-post.constant';
 
@@ -14,27 +15,37 @@ export class GroupPostClient {
     constructor(private http: HttpClient) {}
     private baseUrl = environment.apiUrl;
 
-    getGroupPost(req: SearchRequest, groupId: number): Observable<ResponseModel<GroupPost[]>> {
-        const url = `${this.baseUrl}/GroupPost?GroupId=${groupId}`;
+    // Post bai
+    createPost(postData: CreatePostRequest): Observable<ResponseModel<CreateItem>> {
+        const url = `${this.baseUrl}/GroupPost`;
+
+        return this.http.post<ResponseModel<CreateItem>>(url, postData);
+    }
+
+    // Get Post
+    getAllPost(req: SearchPostRequest): Observable<ResponseModel<Group_Post[]>> {
+        const url = `${this.baseUrl}/GroupPost`;
         const params = {
+            GroupId: `${req.groupId}`,
             PageNumber: `${req.pageNumber}`,
             PageSize: `${req.pageSize}`,
         };
-        return this.http.get<ResponseModel<GroupPost[]>>(url, { params });
+
+        return this.http.get<ResponseModel<Group_Post[]>>(url, { params });
     }
 
-    getDetailGroupPost(postId: number): Observable<ResponseModel<GroupPost[]>> {
+    getDetailGroupPost(postId: number): Observable<ResponseModel<Group_Post[]>> {
         const url = `${this.baseUrl}/GroupPost/${postId}`;
-        return this.http.get<ResponseModel<GroupPost[]>>(url);
+        return this.http.get<ResponseModel<Group_Post[]>>(url);
     }
 
-    getCommentByPostId(req: SearchRequest, postId: number): Observable<ResponseModel<GroupPost[]>> {
+    getCommentByPostId(req: SearchRequest, postId: number): Observable<ResponseModel<Group_Post[]>> {
         const url = `${this.baseUrl}/GroupPost/${postId}/comment`;
         const params = {
             PageNumber: `${req.pageNumber}`,
             PageSize: `${req.pageSize}`,
         };
-        return this.http.get<ResponseModel<GroupPost[]>>(url, { params });
+        return this.http.get<ResponseModel<Group_Post[]>>(url, { params });
     }
 
     sendComment(

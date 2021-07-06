@@ -22,3 +22,12 @@ export class SearchRequest {
         this.pageSize = pageSize;
     }
 }
+
+export class SearchPostRequest extends SearchRequest {
+    groupId: number;
+
+    constructor(groupId: number, pageNumber: number = 1, pageSize: number = 10) {
+        super(pageNumber, pageSize);
+        this.groupId = groupId;
+    }
+}

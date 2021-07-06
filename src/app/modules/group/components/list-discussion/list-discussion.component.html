@@ -1,13 +1,10 @@
-<div
-  class="list-discusstion"
-  *ngFor="let post of listDiscussion"
-  [routerLink]="['/group', this.groupId, 'discussion', post?.id]"
->
+<div class="list-discusstion" *ngFor="let post of listDiscussion"
+  [routerLink]="['/group', this.groupId, 'discussion', post?.id]">
   <div class="post-owner">
     <img class="post-owner__avatar" [src]="post?.avatarUrl ? post?.avatarUrl : 'assets/image/default-avatar.png'" />
     <div class="post-owner__info">
       <div class="post-owner__name">{{ post?.postByAccountName }}</div>
-      <div class="post-owner__time">{{ post?.postTime }}</div>
+      <div class="post-owner__time">{{ post?.postTime | time }}</div>
     </div>
   </div>
 
@@ -15,7 +12,7 @@
     {{ post?.content }}
   </div>
 
-  <img *ngIf="post?.imageUrl[0]" class="post-image" src="{{post?.imageUrl[0]}}" />
+  <img *ngIf="post?.imageUrl.length > 0" class="post-image" src="{{ post?.imageUrl }}" />
 </div>
 
 <div class="no-post" [style.display]="listDiscussion?.length === 0 ? 'flex' : 'none'">

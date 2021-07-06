@@ -39,11 +39,6 @@ export class CategoryComponent implements OnInit {
 
     // tslint:disable-next-line: typedef
     async ngOnInit() {
-        // tslint:disable-next-line: no-unused-expression
-        // !this.selectedFromParent &&
-        //   (this.selectedCategory = this.selectedFromParent);
-        // this.categoryContext = [...this.defaultContext, ...this.categories];
-        // this.assignIcon(this.categoryContext);
         await this.getCategories();
     }
 

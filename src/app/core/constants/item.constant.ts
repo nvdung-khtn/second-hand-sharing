@@ -28,7 +28,7 @@ export class CreateItem {
     imageUploads: imageUpload[];
 }
 
-class imageUpload {
+export class imageUpload {
     imageName: string;
     presignUrl: string;
 }

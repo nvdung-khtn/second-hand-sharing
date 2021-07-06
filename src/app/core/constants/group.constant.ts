@@ -33,12 +33,3 @@ export class Group_Member {
     ) {}
 }
 
-export class GroupPost {
-    id: number;
-    content: string;
-    postTime: string;
-    imageUrl: string[];
-    postByAccountId: number;
-    postByAccountName: string;
-    avatarUrl: string;
-}
