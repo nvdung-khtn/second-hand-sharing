@@ -2,8 +2,23 @@
   <div class="group__container box-container">
     <div class="group__heading">
       <div class="group__title">Nhóm</div>
-
-      <div class="group__create-btn primary-button" (click)="handleOpenModal()">+ Tạo nhóm</div>
+      
+      <div class="group-search-groups">
+        <div class="search">
+          <div class="search__input-container">
+            <mat-icon class="search__icon">search</mat-icon>
+            <input
+              class="search__input"
+              type="text"
+              placeholder="Tìm kiếm nhóm"
+              [(ngModel)]="this.searchGroup"
+              (ngModelChange)="delayAutoSearchGroup($event)"
+              (keyup.enter)="onSearchGroup()"
+            />
+          </div>
+        </div>
+        <div class="group__create-btn primary-button" (click)="handleOpenModal()">+ Tạo nhóm</div>
+      </div>
     </div>
 
     <div class="group__container all-group">
@@ -35,11 +50,30 @@
     </div>
   </div>
 
-  <div class="group__container box-container event-box">
-    <div class="event-title">Sự kiện đang diễn ra</div>
+  <div>
+    <div class="group-search-event">
+      <div class="event-title">
+        <fa-icon class="icon" [icon]="this.icon"></fa-icon>
+        Sự kiện đang diễn ra
+      </div>
+  
+      <div class="search">
+        <div class="search__input-container">
+          <mat-icon class="search__icon">search</mat-icon>
+          <input
+            class="search__input"
+            type="text"
+            placeholder="Tìm kiếm sự kiện"
+            [(ngModel)]="this.searchEvent"
+            (ngModelChange)="delayAutoSearchEvent($event)"
+            (keyup.enter)="onSearchEvent()"
+          />
+        </div>
+      </div>
+    </div>
 
     <div class="list-events">
-      <app-list-events [allEvent]="true"></app-list-events>
+      <app-list-events [allEvent]="true" [searchString]="this.searchEventToChild"></app-list-events>
     </div>
   </div>
 </div>

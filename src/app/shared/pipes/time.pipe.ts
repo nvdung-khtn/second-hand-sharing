@@ -15,6 +15,10 @@ export class TimePipe implements PipeTransform {
         const minutes = Math.floor(diff / (60 * 1000)) - (days * 24 * 60 + hours * 60);
         const seconds =
             Math.floor(diff / 1000) - (days * 24 * 60 * 60 + hours * 60 * 60 + minutes * 60);
+        if (years === -1 && days === -1 && hours === 23) {
+            return '1 giây trước';
+        }
+
         if (years > 0) {
             return years + ' năm trước';
         }

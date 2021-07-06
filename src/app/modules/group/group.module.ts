@@ -28,6 +28,7 @@ import { ListDiscussionComponent } from './components/list-discussion/list-discu
 import { DetailDiscussionComponent } from './pages/detail-discussion/detail-discussion.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
     declarations: [
@@ -63,6 +64,7 @@ import { AutocompleteLibModule } from 'angular-ng-autocomplete';
         HomePageModule,
         MatSelectModule,
         AutocompleteLibModule,
+        FontAwesomeModule,
     ],
 })
 export class GroupModule {}

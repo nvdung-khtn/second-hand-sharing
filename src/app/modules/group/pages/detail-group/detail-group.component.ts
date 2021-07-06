@@ -134,8 +134,24 @@ export class DetailGroupComponent implements OnInit, OnDestroy {
     }
 
     async onClickCancelJoin() {
-        // chehck lai sau
-        //await this.groupClient.cancelJoin(this.groupId).toPromise();
+        let result = await Swal.fire({
+            title: 'Xác Nhận',
+            text: `Bạn muốn hủy yêu cầu tham gia nhóm ${this.groupDetail.groupName}`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Đúng vậy',
+            cancelButtonText: 'Hủy bỏ',
+        });
+
+        if (result.isConfirmed) {
+            await this.groupClient.cancelJoinGroup(this.groupId).toPromise();
+            this.toastr.success(`Hủy yêu cầu tham gia nhóm thành công`);
+            this.groupClient.getJoinStatus(this.groupId).subscribe((response) => {
+                this.joinStatus = response.data;
+            });
+        }
     }
 
     onAcceptInvite() {
@@ -155,6 +171,29 @@ export class DetailGroupComponent implements OnInit, OnDestroy {
             });
             this.toastr.success('Đã từ chối lời mời.');
         });
+    }
+
+    async onLeave() {
+        let result = await Swal.fire({
+            title: 'Xác nhận thao tác',
+            text: `Bạn thật sự muốn thoát khỏi nhóm`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Đúng vậy',
+            cancelButtonText: 'Hủy bỏ',
+        });
+
+        if (result.isConfirmed) {
+            this.groupClient.leaveGroup(this.groupId).subscribe((response) => {
+                this.toastr.success(`Thoát khỏi nhóm thành công`);
+                setTimeout(() => window.location.reload(), 1500);
+            }, (error) => {
+                console.log(error);
+                this.toastr.error(`Thoát khỏi nhóm thất bại`);
+            })
+        }
     }
 
     ngOnDestroy() {

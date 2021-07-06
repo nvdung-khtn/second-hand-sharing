@@ -128,7 +128,7 @@
     }
 
     &__time {
-        color: $primary-lightest-text-color;
+        color: $primary-light-text-color;
     }
 }
 
@@ -162,6 +162,11 @@
 
     .comment-group {
         margin-left: 1rem;
+        width: fit-content;
+        padding: 0.75rem 1rem;
+        background: #eee;
+        border-radius: $border-radius-default;
+        word-break: break-word;
     }
 
     .comment-username {
@@ -216,4 +221,8 @@
     &:hover {
         outline: none;
     }
+}
+
+.comment-time {
+    margin-left: 0.5rem;
 }
