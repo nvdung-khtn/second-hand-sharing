@@ -6,6 +6,7 @@
     display: flex;
     border-radius: $border-radius-light;
     color: $primary-text-color;
+    margin-bottom: 1rem;
 
     .noData {
         display: flex;
@@ -147,4 +148,8 @@
         }
 
     }
+}
+
+.flex-text {
+    font-weight: $font-weight-bold;
 }
