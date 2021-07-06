@@ -139,11 +139,22 @@ export class DetailGroupComponent implements OnInit, OnDestroy {
     }
 
     onAcceptInvite() {
-        console.log('accpet invite');
+        this.groupClient.acceptInvitation(this.groupId).subscribe((response) => {
+            this.getMyRole(this.groupId, this.currentUser.id);
+            this.groupClient.getJoinStatus(this.groupId).subscribe((response) => {
+                this.joinStatus = response.data;
+            });
+            this.toastr.success('Đã chấp nhận lời mời.');
+        });
     }
 
     onDeclineInvite() {
-        console.log('decline invite');
+        this.groupClient.declineInvitation(this.groupId).subscribe((response) => {
+            this.groupClient.getJoinStatus(this.groupId).subscribe((response) => {
+                this.joinStatus = response.data;
+            });
+            this.toastr.success('Đã từ chối lời mời.');
+        });
     }
 
     ngOnDestroy() {
