@@ -8,6 +8,7 @@ import { GroupClient } from 'src/app/core/api-clients/group.client';
 import { Group, MemberJoinStatus } from 'src/app/core/constants/group.constant';
 import { UserInfo } from 'src/app/core/constants/user.constant';
 import { AuthService } from 'src/app/shared/service/auth.service';
+import { UploadImageService } from 'src/app/shared/service/uploadImage.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -53,7 +54,8 @@ export class DetailGroupComponent implements OnInit, OnDestroy {
         private router: Router,
         private groupClient: GroupClient,
         private authService: AuthService,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private uploadImageService: UploadImageService
     ) {}
 
     ngOnInit() {
@@ -62,6 +64,10 @@ export class DetailGroupComponent implements OnInit, OnDestroy {
             .pipe(map((params) => +params.get('id')))
             .subscribe((id) => (this.groupId = +id));
 
+        this.loadData();
+    }
+
+    loadData() {
         this.groupClient.getGroupDetailById(this.groupId).subscribe(
             (response) => (this.groupDetail = response.data),
             (error) => {
@@ -104,7 +110,15 @@ export class DetailGroupComponent implements OnInit, OnDestroy {
     selectFile(event: any): void {
         const image: FileList = event.target.files;
         if (image) {
-            // api update group avatar
+            this.groupClient.updateAvatar(this.groupId).subscribe((response) => {
+                const presignUrl = response.data.imageUploads.presignUrl;
+                this.uploadImageService
+                    .uploadSingleImage(presignUrl, image[0])
+                    .subscribe(async (response) => {
+                        await this.loadData();
+                        this.toastr.success('Cập nhập ảnh đại diện thành công.');
+                    });
+            });
         }
     }
 
@@ -186,13 +200,16 @@ export class DetailGroupComponent implements OnInit, OnDestroy {
         });
 
         if (result.isConfirmed) {
-            this.groupClient.leaveGroup(this.groupId).subscribe((response) => {
-                this.toastr.success(`Thoát khỏi nhóm thành công`);
-                setTimeout(() => window.location.reload(), 1500);
-            }, (error) => {
-                console.log(error);
-                this.toastr.error(`Thoát khỏi nhóm thất bại`);
-            })
+            this.groupClient.leaveGroup(this.groupId).subscribe(
+                (response) => {
+                    this.toastr.success(`Thoát khỏi nhóm thành công`);
+                    setTimeout(() => window.location.reload(), 1500);
+                },
+                (error) => {
+                    console.log(error);
+                    this.toastr.error(`Thoát khỏi nhóm thất bại`);
+                }
+            );
         }
     }
 
