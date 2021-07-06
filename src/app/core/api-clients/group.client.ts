@@ -48,7 +48,10 @@ export class GroupClient {
         return this.http.get<ResponseModel<Group[]>>(url, { params });
     }
 
-    getAllSearchAvailableGroup(req: SearchRequest, query: string): Observable<ResponseModel<Group[]>> {
+    getAllSearchAvailableGroup(
+        req: SearchRequest,
+        query: string
+    ): Observable<ResponseModel<Group[]>> {
         const url = `${this.baseUrl}/Group?query=${query}`;
         const params = {
             PageNumber: `${req.pageNumber}`,
@@ -176,5 +179,11 @@ export class GroupClient {
     leaveGroup(groupId: number): Observable<ResponseModel<any>> {
         const url = `${this.baseUrl}/Group/${groupId}/leave`;
         return this.http.delete<ResponseModel<any>>(url);
+    }
+
+    updateAvatar(groupId: number): Observable<ResponseModel<any>> {
+        const url = `${this.baseUrl}/Group/${groupId}/update-avatar`;
+
+        return this.http.put<ResponseModel<any>>(url, null);
     }
 }
