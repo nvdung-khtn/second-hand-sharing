@@ -1,12 +1,14 @@
 <div class="create-post-modal">
   <span class="create-post-modal__close" (click)="onClose()">&times;</span>
 
-  <div class="create-post-modal__title">{{!isPostItemEvent ? 'Đăng bài viết' : 'Quyên góp mới'}}</div>
+  <div class="create-post-modal__title">{{ !isPostItemEvent ? "Đăng bài viết" : "Quyên góp mới" }}</div>
 
   <div class="create-post-modal__user-info">
     <div class="create-post-modal__user-info__profile">
-      <img class="create-post-modal__user-info__profile__avatar"
-        [src]="currentUser?.avatarUrl ? currentUser?.avatarUrl : 'assets/image/default-avatar.png'" />
+      <img
+        class="create-post-modal__user-info__profile__avatar"
+        [src]="currentUser?.avatarUrl ? currentUser?.avatarUrl : 'assets/image/default-avatar.png'"
+      />
 
       <div class="create-post-modal__user-info__profile__info">
         <div class="create-post-modal__user-info__profile__info__name">
@@ -45,8 +47,9 @@
       <div *ngFor="let item of url; let index = index" class="create-post-modal__add-image__container">
         <img [src]="item" *ngIf="url" class="create-post-modal__add-image__container__image" />
 
-        <span class="create-post-modal__add-image__container__close"
-          (click)="onRemoveSelectedFile(index)">&times;</span>
+        <span class="create-post-modal__add-image__container__close" (click)="onRemoveSelectedFile(index)"
+          >&times;</span
+        >
       </div>
 
       <div class="create-post-modal__add-image__btn">
@@ -55,34 +58,47 @@
           <div class="create-post-modal__add-image__btn__text">Thêm ảnh</div>
         </label>
 
-        <input type="file" id="uploadImage" accept="image/png" multiple
-          (change)="selectFile($event)" />
+        <input type="file" id="uploadImage" accept="image/png" multiple (change)="selectFile($event)" />
       </div>
     </div>
 
     <div class="create-post-modal__category">
-      <app-category [categoryBackground]="this.categoryTabBackground"
-        [categoryIconBackground]="this.categoryIconBackground" (categoryIDChange)="handleCategoryId($event)"
-        [disableAllCate]="true"></app-category>
+      <app-category
+        [categoryBackground]="this.categoryTabBackground"
+        [categoryIconBackground]="this.categoryIconBackground"
+        (categoryIDChange)="handleCategoryId($event)"
+        [disableAllCate]="true"
+      ></app-category>
     </div>
 
-    <input type="number" class="create-post-modal__phone" placeholder="Số điện thoại liên hệ"
-      formControlName="phoneNumber" />
+    <input
+      type="number"
+      class="create-post-modal__phone"
+      placeholder="Số điện thoại liên hệ"
+      formControlName="phoneNumber"
+    />
 
-    <textarea rows="4" class="create-post-modal__description" placeholder="Nội dung bài đăng"
-      formControlName="description"></textarea>
+    <textarea
+      rows="4"
+      class="create-post-modal__description"
+      placeholder="Nội dung bài đăng"
+      formControlName="description"
+    ></textarea>
 
-    <button type="submit" class="create-post-modal__btn">{{!isPostItemEvent ? 'Đăng bài' : 'Tạo quyên góp'}}</button>
+    <button type="submit" class="create-post-modal__btn">{{ !isPostItemEvent ? "Đăng bài" : "Tạo quyên góp" }}</button>
   </form>
 
   <div class="address-modal" [style.display]="this.isOpenAddressModal ? 'block' : 'none'">
-    <app-address-modal [(openAddressModal)]="isOpenAddressModal" [(addressData)]="receiveAddress">
-    </app-address-modal>
+    <app-address-modal [(openAddressModal)]="isOpenAddressModal" [(addressData)]="receiveAddress"> </app-address-modal>
   </div>
 </div>
 
-<app-message-modal [isSuccessButton]="this.isSuccess" [message]="this.messageModalMessage"
-  [openMessageModal]="this.isOpenMessageModal" [handleCloseParent]="this.isOpenModal"
-  (modalChange)="this.modalChange.emit($event)"></app-message-modal>
+<app-message-modal
+  [isSuccessButton]="this.isSuccess"
+  [message]="this.messageModalMessage"
+  [openMessageModal]="this.isOpenMessageModal"
+  [handleCloseParent]="this.isOpenModal"
+  (modalChange)="this.modalChange.emit($event)"
+></app-message-modal>
 
 <app-loader [style.display]="this.loading ? 'block' : 'none'"></app-loader>
