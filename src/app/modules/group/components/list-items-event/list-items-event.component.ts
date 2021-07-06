@@ -2,6 +2,8 @@ import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CategoryClient } from 'src/app/core/api-clients/category.client';
+import { EventClient } from 'src/app/core/api-clients/event.client';
+import { GroupClient } from 'src/app/core/api-clients/group.client';
 import { HomeClient } from 'src/app/core/api-clients/home.client';
 import { ItemClient } from 'src/app/core/api-clients/item.client';
 import { SearchRequest } from 'src/app/core/constants/common.constant';
@@ -13,78 +15,13 @@ import { Item } from 'src/app/core/constants/item.constant';
     styleUrls: ['./list-items-event.component.scss'],
 })
 export class ListItemsEventComponent implements OnInit {
-    
-    listItemEvent = [
-        {
-            id: 88,
-            itemName: 'test donate group 3 2',
-            address: {
-                street: '123 street',
-                wardId: 14,
-                districtId: 9,
-                cityId: 15,
-            },
-            postTime: '2021-06-28T15:26:34.283266',
-            description: 'test donate item for group 3 2',
-            imageUrl: null,
-            donateAccountName: 'Ngan',
-            avatarUrl:
-                'https://storage.googleapis.com/secondhandsharing.appspot.com/abbb30a9-0407-4385-83e0-6af689fb93e0',
-            status: 0,
-        },
-        {
-            id: 87,
-            itemName: 'test donate group 3',
-            address: {
-                street: '123 street',
-                wardId: 14,
-                districtId: 9,
-                cityId: 15,
-            },
-            postTime: '2021-06-27T15:26:34.283266',
-            description: 'test donate item for group 3',
-            imageUrl:
-                'https://storage.googleapis.com/secondhandsharing.appspot.com/36844963-9409-43de-bc26-48c9290fbf9b',
-            donateAccountName: 'Ngan',
-            avatarUrl:
-                'https://storage.googleapis.com/secondhandsharing.appspot.com/abbb30a9-0407-4385-83e0-6af689fb93e0',
-            status: 1,
-        },
-        {
-            id: 89,
-            itemName: 'test donate group 3 2',
-            address: {
-                street: '123 street',
-                wardId: 14,
-                districtId: 9,
-                cityId: 15,
-            },
-            postTime: '2021-06-25T15:26:34.283266',
-            description: 'test donate item for group 3 3',
-            imageUrl: null,
-            donateAccountName: 'Ngan',
-            avatarUrl:
-                'https://storage.googleapis.com/secondhandsharing.appspot.com/abbb30a9-0407-4385-83e0-6af689fb93e0',
-            status: 1,
-        },
-        {
-            id: 90,
-            itemName: 'test donate group 3 2',
-            address: {
-                street: '123 street',
-                wardId: 14,
-                districtId: 9,
-                cityId: 15,
-            },
-            postTime: '2021-06-24T15:26:34.283266',
-            description: '12',
-            imageUrl: null,
-            donateAccountName: 'Ngan',
-            avatarUrl:
-                'https://storage.googleapis.com/secondhandsharing.appspot.com/abbb30a9-0407-4385-83e0-6af689fb93e0',
-            status: 0,
-        },
-    ];
+    @Input() eventDetail;
+
+    myRole = '';
+
+    isEventEnded = false;
+
+    listItemEvent = [];
 
     eventId: number;
     groupId: number;
@@ -99,9 +36,10 @@ export class ListItemsEventComponent implements OnInit {
     message: string;
     isOpenModal = false;
     defaultReq: SearchRequest;
+
     // tslint:disable: no-inferrable-types
     private defaultPageNumber: number = 1;
-    private defaultPageSize: number = 4;
+    private defaultPageSize: number = 200;
 
     constructor(
         private homeClient: HomeClient,
@@ -109,6 +47,8 @@ export class ListItemsEventComponent implements OnInit {
         private toastr: ToastrService,
         private itemClient: ItemClient,
         private route: ActivatedRoute,
+        private eventClient: EventClient,
+        private groupClient: GroupClient,
     ) {
         this.defaultReq = new SearchRequest(this.defaultPageNumber, this.defaultPageSize);
     }
@@ -117,8 +57,9 @@ export class ListItemsEventComponent implements OnInit {
         this.myInfo = JSON.parse(localStorage.getItem('userInfo'));
         this.eventId = Number(this.route.snapshot.paramMap.get('eventId'));
         this.groupId = Number(this.route.snapshot.paramMap.get('groupId'));
-
+        this.checkDate();
         // gọi api get list event items
+        this.getMyRole(this.groupId, this.myInfo?.id)
     }
 
     // tslint:disable: use-lifecycle-interface
@@ -129,11 +70,46 @@ export class ListItemsEventComponent implements OnInit {
         // gọi api get list event items
     }
 
+    getMyRole = (groupId: number, userId: number) => {
+        this.groupClient.getRoleByUserId(groupId, userId).subscribe(
+            (response) => {
+                if (response.succeeded) {
+                    this.myRole = response.message;
+                    if (this.myRole !== '') {
+                        this.eventClient.getAllItemsInEvent(this.defaultReq, this.eventId).subscribe((response) => {
+                            this.listItemEvent = response?.data;
+                        })
+                    }
+                    else {
+                        this.eventClient.getMyDonations(this.defaultReq, this.eventId).subscribe((response) => {
+                            this.listItemEvent = response?.data;
+                        })
+                    }
+                }
+            },
+            (error) => {
+                this.eventClient.getMyDonations(this.defaultReq, this.eventId).subscribe((response) => {
+                    this.listItemEvent = response?.data;
+                })
+                console.log(error)
+            }
+        );
+    };
+
     onItemListScrollDown = () => {
         // gọi api get list events items tương tự list items trên trang chủ
     };
 
     onClickPost = () => {
       this.isOpenModal = true;
+    }
+
+    checkDate = () => {
+        const gmt0Time = new Date().toString().replace('+0700', '+1400');
+        const now = new Date(gmt0Time);
+        const end = new Date(this.eventDetail?.endDate);
+        if (now >= end) {
+            this.isEventEnded = true;
+        }
     }
 }

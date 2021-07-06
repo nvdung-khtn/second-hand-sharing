@@ -15,7 +15,9 @@
             <input type="file" id="uploadImage" accept="image/png" (change)="selectFile($event)" />
           </div>
 
-          <div class="event__date">{{ eventDetail?.startDate }} - {{ eventDetail?.endDate }}</div>
+          <div class="event__date">
+            {{ eventDetail?.startDate | date: "dd/MM/yyyy" }} - {{ eventDetail?.endDate | date: "dd/MM/yyyy" }}
+          </div>
           <div class="event__info">
             <div class="event__info__name">
               {{ eventDetail?.eventName }}

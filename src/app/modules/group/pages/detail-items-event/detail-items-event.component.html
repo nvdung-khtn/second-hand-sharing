@@ -73,38 +73,48 @@
             </span>
           </div>
 
-          <div class="item-event__grid__card__right__description">
-            Người được đề xuất:
-            <span class="text" *ngIf="assignedMember">{{ assignedMember?.fullName }}</span>
-            <span class="text" *ngIf="!assignedMember">Chưa có đề xuất</span>
-          </div>
-
           <div>
             <!-- FORM THÀNH VIÊN TRONG GROUP -->
-            <ng-container *ngIf="userId != item?.donateAccountId; else isOwner">
+            <ng-container *ngIf="userId != item?.donateAccountId">
               <button class="btn-user-info" [routerLink]="['/profile', item?.donateAccountId]">
                 Thông tin người cho
               </button>
-  
-              <div class="assign-dropdown" *ngIf="this.myRole === 'admin'">
-                <mat-form-field appearance="fill">
-                  <mat-label>Thành viên đảm nhiệm</mat-label>
-                  <mat-select disableOptionCentering (selectionChange)="onSelectedDropdown($event)">
-                    <mat-option *ngFor="let user of memberGroupList" [value]="user">
-                      {{ user.fullName }}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
             </ng-container>
+
+            <div
+              [style.display]="this.isOwner === true && item?.status === ItemStatus.PROCESSING ? 'flex' : 'none'"
+            >
+              <img class="tick-image" src="assets/image/done.png" />
+              <div class="accepted-by-admin">Quản trị viên đã chấp nhận vật phẩm của bạn</div>
+            </div>
           </div>
         </div>
 
-        <div [style.display]="this.myRole === 'member' && this.assignedMember?.id === this.userId ? 'flex' : 'none'">
-          <img class="tick-image" src="assets/image/done.png" />
-          <div class="accepted-by-owner">Quản trị viên chọn bạn đi nhận vật phẩm này</div>
+        <div *ngIf="item?.status !== ItemStatus.COMPLETED">
+          <div [style.display]="userId === item?.donateAccountId ? 'flex' : 'none'" (click)="confirmGiven()">
+            <div class="confirm-btn">Xác nhận đã cho</div>
+          </div>
+
+          <div>
+            <div
+              [style.display]="this.isAccepted === false && this.myRole === 'admin' ? 'flex' : 'none'"
+              (click)="onAcceptItem()"
+            >
+              <div class="accept-btn">Chấp nhận</div>
+            </div>
+
+            <div
+              [style.display]="this.isAccepted === true && this.myRole === 'admin' ? 'flex' : 'none'"
+              (click)="onDeclineItem()"
+            >
+              <div class="decline-btn">Hủy chấp nhận</div>
+            </div>
+
+            <div [style.display]="this.myRole === 'admin' ? 'flex' : 'none'" (click)="onRejectItem()">
+              <div class="reject-btn">Từ chối</div>
+            </div>
+          </div>
         </div>
-        
       </div>
     </div>
   </div>

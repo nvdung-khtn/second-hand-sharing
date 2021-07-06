@@ -17,6 +17,7 @@ import { FormsModule } from '@angular/forms';
 import { PhoneNumberPipe } from './pipes/phone-number.pipe';
 import { LoaderComponent } from './components/loader/loader.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { RemainTimePipe } from './pipes/remain-time.pipe';
 
 @NgModule({
     declarations: [
@@ -30,6 +31,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
         PhoneNumberPipe,
         LoaderComponent,
         PageNotFoundComponent,
+        RemainTimePipe
     ],
     imports: [CommonModule, RouterModule, MatIconModule, FontAwesomeModule, FormsModule],
     exports: [
@@ -42,6 +44,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
         PhoneNumberPipe,
         MessengerComponent,
         LoaderComponent,
+        RemainTimePipe
     ],
     providers: [JwtHelperService, { provide: JWT_OPTIONS, useValue: JWT_OPTIONS }],
 })

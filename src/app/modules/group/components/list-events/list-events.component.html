@@ -1,24 +1,42 @@
 <div class="list-events">
-    <div class="event flex" *ngFor="let event of events" [routerLink]="['/group', event?.groupId , 'event', event?.id]">
-        <img class="event__avatar" [src]="'assets/image/event.png'" />
+  <div
+    class="list-events-container"
+    *ngFor="let event of events"
+    [routerLink]="['/group', event?.groupId, 'event', event?.id]"
+  >
+    <div class="group-section">
+      <div class="group-section__container">
+        <img class="group-section__avatar" [src]="event?.groupAvatar ? event?.groupAvatar : 'assets/image/group.png'" />
 
-        <div class="event__info">
-            <div>
-                {{event?.startDate}}
-            </div>
-            <!-- <div>
-                {{event?.endDate}}
-            </div> -->
-            <div class="event__name">
-                {{event?.eventName}}
-            </div>
-            <div class="event__content">
-                {{event?.content}}
-            </div>
+        <div class="group-section__info">
+          <div class="group-section__name">
+            {{ event?.groupName }}
+          </div>
+          <div class="group-section__date">
+            {{ event?.startDate | time}}
+          </div>
         </div>
-    </div>
+      </div>
 
-    <div class="noData" *ngIf="events?.length === 0">
-        Không có sự kiện diễn ra
+      <div>Còn lại: {{ event?.endDate | remainTime }}</div>
     </div>
+    <div class="event flex">
+      <div class="event__info">
+        <div class="event__name">
+          {{ event?.eventName }}
+        </div>
+
+        <div class="event__time">
+          <mat-icon class="icon">calendar_today</mat-icon>
+          {{ event?.startDate | date: "dd/MM/yyyy"}} - {{ event?.endDate | date: "dd/MM/yyyy" }}
+        </div>
+
+        <div class="event__content">
+          {{ event?.content }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="noData" *ngIf="events?.length === 0">Không có sự kiện đang diễn ra</div>
 </div>

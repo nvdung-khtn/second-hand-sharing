@@ -15,5 +15,9 @@
     {{ post?.content }}
   </div>
 
-  <img *ngIf="post?.imageUrl" class="post-image" src="{{ post?.imageUrl }}" />
+  <img *ngIf="post?.imageUrl[0]" class="post-image" src="{{post?.imageUrl[0]}}" />
+</div>
+
+<div class="no-post" [style.display]="listDiscussion?.length === 0 ? 'flex' : 'none'">
+  Nhóm chưa có bất kỳ bài đăng nào
 </div>
