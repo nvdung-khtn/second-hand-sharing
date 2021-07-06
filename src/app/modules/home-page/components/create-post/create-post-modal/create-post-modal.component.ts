@@ -173,7 +173,6 @@ export class CreatePostModalComponent implements OnInit, OnDestroy {
                     // Reset Data in post
                     this.postForm.reset();
                     this.loading = false;
-
                 },
                 (error) => {
                     this.loading = false;
