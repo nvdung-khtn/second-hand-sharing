@@ -23,7 +23,7 @@
       <mat-form-field appearance="fill">
         <mat-label>Tỉnh/Thành phố</mat-label>
         <mat-select [(value)]="addressData.cityId" disableOptionCentering
-          (selectionChange)="onSelected(selectedType.CITY, $event)">>
+          (selectionChange)="onSelected(selectedType.CITY, $event)">
           <mat-option *ngFor="let city of citys" [value]="city.cityId">
             {{city.cityName}}
           </mat-option>
