@@ -90,12 +90,35 @@ export class GroupClient {
         return this.http.post<ResponseModel<string>>(url, groupId);
     }
 
+    // **Member
+    cancelJoin(groupId: number): Observable<ResponseModel<unknown>> {
+        const url = `${this.baseUrl}/Group/${groupId}/join`;
+
+        return this.http.post<ResponseModel<unknown>>(url, groupId);
+    }
+
+    // Member accept
+    acceptInvitation(groupId: number): Observable<ResponseModel<unknown>> {
+        const url = `${this.baseUrl}/Group/${groupId}/accept-invitation`;
+
+        return this.http.put<ResponseModel<unknown>>(url, groupId);
+    }
+
+    // Member reject
+    declineInvitation(groupId: number): Observable<ResponseModel<unknown>> {
+        const url = `${this.baseUrl}/Group/${groupId}/decline-invitation`;
+
+        return this.http.put<ResponseModel<unknown>>(url, groupId);
+    }
+
+    // admin
     approveToJoin(groupId: number, memberId: number): Observable<ResponseModel<any>> {
         const url = `${this.baseUrl}/Group/${groupId}/join-request/${memberId}/accept`;
 
         return this.http.put<ResponseModel<any>>(url, { groupId, memberId });
     }
 
+    // admin
     rejectToJoin(groupId: number, memberId: number): Observable<ResponseModel<any>> {
         const url = `${this.baseUrl}/Group/${groupId}/join-request/${memberId}/reject`;
 

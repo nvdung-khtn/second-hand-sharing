@@ -20,9 +20,9 @@ export class MembersGroupComponent implements OnInit {
     selectedUser: number = -1;
 
     memberRequest: SearchRequest;
-    admins: Member[] = [];
-    members: Member[] = [];
-    requestJoins: Member[] = [];
+    admins: Member[];
+    members: Member[];
+    requestJoins: Member[];
 
     constructor(private groupClient: GroupClient, private toastr: ToastrService) {
         this.memberRequest = new SearchRequest(1, 100);
@@ -80,10 +80,13 @@ export class MembersGroupComponent implements OnInit {
 
         if (result.isConfirmed) {
             this.groupClient.kickOutMember(this.groupId, memberId).subscribe((response) => {
+                this.groupClient
+                    .getAllMemberByGroupId(this.memberRequest, this.groupId)
+                    .subscribe((response) => {
+                        this.members = response.data;
+                    });
+                this.selectedUser = -1;
                 this.toastr.success('Xóa bỏ thành viên thành công');
-                setTimeout(() => {
-                    window.location.reload();
-                }, 1000);
             });
         }
     }
@@ -102,10 +105,19 @@ export class MembersGroupComponent implements OnInit {
 
         if (result.isConfirmed) {
             this.groupClient.promoteMember(this.groupId, memberId).subscribe((response) => {
+                this.groupClient
+                    .getAllAdminByGroupId(this.memberRequest, this.groupId)
+                    .subscribe((response) => {
+                        this.admins = response.data;
+                    });
+                this.groupClient
+                    .getAllMemberByGroupId(this.memberRequest, this.groupId)
+                    .subscribe((response) => {
+                        this.members = response.data;
+                    });
+
+                this.selectedUser = -1;
                 this.toastr.success('Thăng cấp thành công');
-                setTimeout(() => {
-                    window.location.reload();
-                }, 1000);
             });
         }
     }
@@ -117,19 +129,42 @@ export class MembersGroupComponent implements OnInit {
 
     approveToJoin(memberId: number) {
         this.groupClient.approveToJoin(this.groupId, memberId).subscribe((response) => {
+            let newMember: Member;
+            // // Cần check lại
+            // this.requestJoins = this.requestJoins.map((user) => {
+            //     if (user.requesterId === memberId) {
+            //         newMember = user;
+            //         return;
+            //     }
+
+            //     return user;
+            // });
+            // this.members = [...this.members, newMember];
+
+            this.groupClient
+                .getAllMemberByGroupId(this.memberRequest, this.groupId)
+                .subscribe((response) => {
+                    this.members = response.data;
+                });
+            this.groupClient
+                .getAllRequestJoin(this.memberRequest, this.groupId)
+                .subscribe((response) => {
+                    this.requestJoins = response.data;
+                });
+
             this.toastr.success('Phê duyệt yêu cầu thành công');
-            setTimeout(() => {
-                window.location.reload();
-            }, 1500);
         });
     }
 
     rejectToJoin(memberId: number) {
         this.groupClient.rejectToJoin(this.groupId, memberId).subscribe((response) => {
+            this.groupClient
+                .getAllRequestJoin(this.memberRequest, this.groupId)
+                .subscribe((response) => {
+                    this.requestJoins = response.data;
+                });
+
             this.toastr.success('Từ chối yêu cầu thành công');
-            setTimeout(() => {
-                window.location.reload();
-            }, 1500);
         });
     }
 }

@@ -1,9 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { Observable } from 'rxjs';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { map, pluck, takeUntil } from 'rxjs/operators';
 import { GroupClient } from 'src/app/core/api-clients/group.client';
+import { Group, MemberJoinStatus } from 'src/app/core/constants/group.constant';
 import { UserInfo } from 'src/app/core/constants/user.constant';
 import { AuthService } from 'src/app/shared/service/auth.service';
 import Swal from 'sweetalert2';
@@ -37,12 +39,13 @@ export class DetailGroupComponent implements OnInit, OnDestroy {
     groupId: number;
     isMember: boolean = false;
     myRole = '';
-    groupDetail: any;
+    groupDetail: Group;
     openInviteModal = false;
     currentUser: UserInfo;
 
     // join status
-    joinStatus = 0;
+    joinStatus: MemberJoinStatus;
+    MemberJoinStatus = MemberJoinStatus;
 
     destroy$ = new Subject<void>();
     constructor(
@@ -53,11 +56,20 @@ export class DetailGroupComponent implements OnInit, OnDestroy {
         private toastr: ToastrService
     ) {}
 
-    ngOnInit(): void {
+    ngOnInit() {
         this.getCurrentUser();
-        this.groupId = Number(this.route.snapshot.paramMap.get('id'));
+        this.route.paramMap
+            .pipe(map((params) => +params.get('id')))
+            .subscribe((id) => (this.groupId = +id));
+
+        this.groupClient.getGroupDetailById(this.groupId).subscribe(
+            (response) => (this.groupDetail = response.data),
+            (error) => {
+                this.router.navigateByUrl('/404');
+            }
+        );
+
         this.getMyRole(this.groupId, this.currentUser.id);
-        this.getGroupInfo(this.groupId);
         this.groupClient.getJoinStatus(this.groupId).subscribe((response) => {
             this.joinStatus = response.data;
         });
@@ -69,6 +81,7 @@ export class DetailGroupComponent implements OnInit, OnDestroy {
         });
     }
 
+    // Error 400 khi user không phải là member
     getMyRole(groupId: number, userId: number) {
         this.groupClient.getRoleByUserId(groupId, userId).subscribe(
             (response) => {
@@ -82,15 +95,6 @@ export class DetailGroupComponent implements OnInit, OnDestroy {
                 console.error(error);
             }
         );
-    }
-
-    getGroupInfo(groupId: number) {
-        this.groupClient.getGroupDetailById(this.groupId).subscribe((response) => {
-            this.groupDetail = response.data;
-        },
-        (error) => {
-            this.router.navigateByUrl('/404');
-        });
     }
 
     onSelectTab(id: number) {
@@ -111,7 +115,7 @@ export class DetailGroupComponent implements OnInit, OnDestroy {
     async onClickJoin() {
         let result = await Swal.fire({
             title: 'Xác Nhận',
-            text: `Bạn muốn tham gia group này`,
+            text: `Bạn muốn tham gia nhóm ${this.groupDetail.groupName}`,
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -121,25 +125,36 @@ export class DetailGroupComponent implements OnInit, OnDestroy {
         });
 
         if (result.isConfirmed) {
-            this.groupClient.joinGroup(this.groupId).subscribe((response) => {
-                this.toastr.success(`Đã gửi yêu cầu tới quản trị viên.`);
-            });
+            await this.groupClient.joinGroup(this.groupId).toPromise();
+            this.toastr.success(`Đã gửi yêu cầu tới quản trị viên.`);
             this.groupClient.getJoinStatus(this.groupId).subscribe((response) => {
                 this.joinStatus = response.data;
             });
         }
     }
 
-    onClickCancelJoin() {
-        console.log('cancel join')
+    async onClickCancelJoin() {
+        // chehck lai sau
+        //await this.groupClient.cancelJoin(this.groupId).toPromise();
     }
 
     onAcceptInvite() {
-        console.log('accpet invite')
+        this.groupClient.acceptInvitation(this.groupId).subscribe((response) => {
+            this.getMyRole(this.groupId, this.currentUser.id);
+            this.groupClient.getJoinStatus(this.groupId).subscribe((response) => {
+                this.joinStatus = response.data;
+            });
+            this.toastr.success('Đã chấp nhận lời mời.');
+        });
     }
 
     onDeclineInvite() {
-        console.log('decline invite')
+        this.groupClient.declineInvitation(this.groupId).subscribe((response) => {
+            this.groupClient.getJoinStatus(this.groupId).subscribe((response) => {
+                this.joinStatus = response.data;
+            });
+            this.toastr.success('Đã từ chối lời mời.');
+        });
     }
 
     ngOnDestroy() {

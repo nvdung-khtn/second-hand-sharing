@@ -30,6 +30,7 @@
           </div>
         </div>
       </div>
+      <span *ngIf="requestJoins?.length == 0">Không có yêu cầu tham gia mới.</span>
     </div>
   </div>
 
@@ -89,7 +90,7 @@
           <div class="dropdown" *ngIf="isAdmin">
             <mat-icon #toggleButton class="more-btn" (click)="onDisplayMenu(user)">more_vert</mat-icon>
             <div #menu class="dropdown-content"
-              [ngClass]="this.selectedUser === user?.userId ? 'displayMore' : 'hideMore'">
+              [class]="this.selectedUser === user?.userId ? 'displayMore' : 'hideMore'">
               <div class="dropdown-option" (click)="onUpToAdmin(user.userId)">Thăng chức làm quản trị viên</div>
               <div class="dropdown-option" (click)="kickOutMember(user.userId)">Trục xuất khỏi nhóm</div>
             </div>

@@ -103,3 +103,12 @@
 .padding {
     padding: 0.25rem 1rem;
 }
+
+.btn-group {
+    margin-top: 12px;
+    width: 25%;
+    float: right;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
