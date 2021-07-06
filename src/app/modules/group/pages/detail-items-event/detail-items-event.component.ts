@@ -120,9 +120,10 @@ export class DetailItemsEventComponent implements OnInit {
     };
 
     onClose() {
-        const history: any = this.location.getState();
+        /* const history: any = this.location.getState();
         if (history.navigationId > 1) { this.location.back(); }
-        else this.router.navigateByUrl('/home')
+        else this.router.navigateByUrl('/home') */
+        this.location.back();
     }
 
     // Xác nhận cho.
