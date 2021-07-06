@@ -10,9 +10,7 @@ import { Group_Post } from 'src/app/core/constants/group-post.constant';
     styleUrls: ['./list-discussion.component.scss'],
 })
 export class ListDiscussionComponent implements OnInit {
-    // group
-    groupId = -1;
-
+    groupId: number;
     listDiscussion: Group_Post[] = [];
 
     constructor(private route: ActivatedRoute, private groupPostClient: GroupPostClient) {}

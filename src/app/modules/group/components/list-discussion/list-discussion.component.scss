@@ -48,3 +48,14 @@
         align-items: center;
     }
 }
+
+.no-post {
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 1.5rem;
+    border-radius: $border-radius-light;
+    @include box-shadow();
+    margin: 1rem 0;
+}

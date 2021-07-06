@@ -31,7 +31,7 @@ export class CreateGroupModalComponent implements OnInit {
         this.groupForm = this.fb.group({
             groupName: ['', [Validators.required]],
             description: ['', [Validators.required]],
-            rules: ['', [Validators.required]],
+            /* rules: ['', [Validators.required]], */
         });
     }
 
@@ -45,9 +45,9 @@ export class CreateGroupModalComponent implements OnInit {
         return this.groupForm.get('description');
     }
 
-    get rules() {
+    /* get rules() {
         return this.groupForm.get('rules');
-    }
+    } */
 
     onCloseModal() {
         this.modal = false;

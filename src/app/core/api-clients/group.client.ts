@@ -48,6 +48,16 @@ export class GroupClient {
         return this.http.get<ResponseModel<Group[]>>(url, { params });
     }
 
+    getAllSearchAvailableGroup(req: SearchRequest, query: string): Observable<ResponseModel<Group[]>> {
+        const url = `${this.baseUrl}/Group?query=${query}`;
+        const params = {
+            PageNumber: `${req.pageNumber}`,
+            PageSize: `${req.pageSize}`,
+        };
+
+        return this.http.get<ResponseModel<Group[]>>(url, { params });
+    }
+
     getGroupDetailById(groupId: number): Observable<ResponseModel<Group>> {
         const url = `${this.baseUrl}/Group/${groupId}`;
         return this.http.get<ResponseModel<Group>>(url);
@@ -90,6 +100,11 @@ export class GroupClient {
         const url = `${this.baseUrl}/Group/${groupId}/join`;
 
         return this.http.post<ResponseModel<string>>(url, groupId);
+    }
+
+    cancelJoinGroup(groupId: number): Observable<ResponseModel<any>> {
+        const url = `${this.baseUrl}/Group/${groupId}/join-request`;
+        return this.http.delete<ResponseModel<any>>(url);
     }
 
     // **Member
@@ -147,5 +162,19 @@ export class GroupClient {
     inviteMember(groupId: number, userId: number): Observable<ResponseModel<any>> {
         const url = `${this.baseUrl}/Group/${groupId}/member`;
         return this.http.post<ResponseModel<any>>(url, { userId });
+    }
+
+    getGroupEvent(req: SearchRequest, groupId: number): Observable<ResponseModel<any>> {
+        const url = `${this.baseUrl}/Group/${groupId}/event`;
+        const params = {
+            PageNumber: `${req.pageNumber}`,
+            PageSize: `${req.pageSize}`,
+        };
+        return this.http.get<ResponseModel<any>>(url, { params });
+    }
+
+    leaveGroup(groupId: number): Observable<ResponseModel<any>> {
+        const url = `${this.baseUrl}/Group/${groupId}/leave`;
+        return this.http.delete<ResponseModel<any>>(url);
     }
 }

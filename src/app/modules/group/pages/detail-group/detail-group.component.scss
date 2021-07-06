@@ -129,10 +129,25 @@
         cursor: pointer;
     }
 
+    .invite-group-btn {
+        display: flex;
+    }
+
     .invite-btn {
         width: 4rem;
         padding: 5px 10px;
         cursor: pointer;
+    }
+
+    .out-btn {
+        margin-left: 0.5rem;
+        width: 6rem;
+        padding: 5px 10px;
+        cursor: pointer;
+        background-color: unset;
+        border: 1px solid $primary-color;
+        color: $primary-color;
+        box-shadow: unset;
     }
 
     .join-btn {

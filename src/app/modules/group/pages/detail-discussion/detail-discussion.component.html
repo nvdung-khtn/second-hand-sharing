@@ -8,7 +8,7 @@
         />
         <div class="post-owner__info">
           <div class="post-owner__name">{{ detailPost?.postByAccountName }}</div>
-          <div class="post-owner__time">{{ detailPost?.postTime }}</div>
+          <div class="post-owner__time">{{ detailPost?.postTime | time }}</div>
         </div>
       </div>
 
@@ -64,12 +64,18 @@
         </div>
       </div>
 
-      <div class="user-comment">
-        <img class="comment-avatar" [src]="'assets/image/default-avatar.png'" />
+      <div class="user-comment" *ngFor="let comment of commentOnPost">
+        <img
+          class="comment-avatar"
+          [src]="comment?.avatarUrl ? comment?.avatarUrl : 'assets/image/default-avatar.png'"
+        />
         <div class="comment-group">
-          <div class="comment-username">Vũ</div>
+          <div>
+            <span class="comment-username">{{ comment?.postByAccountName }}</span>
+            <span class="comment-time">{{ comment?.postTime | time }}</span>
+          </div>
           <div class="comment-text">
-            Đây là comment nè
+            {{ comment?.content }}
           </div>
         </div>
       </div>

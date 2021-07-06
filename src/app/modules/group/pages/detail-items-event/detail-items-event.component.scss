@@ -360,7 +360,53 @@
     width: 25%;
 }
 
-.accepted-by-owner {
+.confirm-btn, .accept-btn, .decline-btn {
+    width: 100%;
+    padding: 10px 0;
+    text-align: center;
+    cursor: pointer;
+    background-color: $btn-color;
+    color: white;
+    border-radius: $border-radius-light;
+    cursor: pointer;
+    border: none;
+    &:hover {
+        background-color: $btn-selected;
+    }
+    &:disabled {
+        background-color: $btn-disabled;
+    }
+}
+
+.decline-btn {
+    margin-top: 0.5rem;
+    background-color: $cancel-button;
+
+    &:hover {
+        background-color: $cancel-button;
+    }
+}
+
+.reject-btn {
+    width: 100%;
+    padding: 10px 0;
+    text-align: center;
+    cursor: pointer;
+    color: red;
+    background-color: white;
+    border: 1px solid red;
+    border-radius: $border-radius-light;
+    cursor: pointer;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    &:hover {
+        background-color: red;
+        border: 1px solid red;
+        color: white;
+    }
+}
+
+.accepted-by-admin {
     display: flex;
     align-items: center;
     justify-content: center;

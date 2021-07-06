@@ -3,8 +3,10 @@
     <div class="detail-group__header">
       <div class="max-width">
         <div class="detail-group__group-avatar">
-          <img class="detail-group__avatar"
-            [src]="groupDetail?.avatarURL ? groupDetail?.avatarURL : 'assets/image/group-default-cover.png'" />
+          <img
+            class="detail-group__avatar"
+            [src]="groupDetail?.avatarUrl ? groupDetail?.avatarUrl : 'assets/image/group-default-cover.png'"
+          />
           <div class="detail-group__avatar-btn">
             <label for="uploadImage">
               <mat-icon class="detail-group__avatar-btn__icon">camera_alt</mat-icon>
@@ -18,49 +20,71 @@
             </div>
 
             <!-- JOIN BUTTOM  -->
-            <div class="primary-button cancel-btn"
+            <div
+              class="primary-button cancel-btn"
               [style.display]="!this.isMember && this.joinStatus === MemberJoinStatus.JOIN_REQUEST ? 'block' : 'none'"
-              (click)="onClickCancelJoin()">
+              (click)="onClickCancelJoin()"
+            >
               Hủy tham gia
             </div>
-            <div class="primary-button join-btn"
+            <div
+              class="primary-button join-btn"
               [style.display]="!this.isMember && this.joinStatus === MemberJoinStatus.NULL ? 'block' : 'none'"
-              (click)="onClickJoin()">
+              (click)="onClickJoin()"
+            >
               Tham gia
             </div>
 
             <!-- INVITE BUTTOM -->
-            <div class="primary-button invite-btn" [style.display]="this.isMember ? 'block' : 'none'"
-              (click)="onInvite()">
-              + Mời
+            <div class="invite-group-btn" [style.display]="this.myRole !== '' ? 'flex' : 'none'">
+              <div
+                class="primary-button invite-btn"
+                [style.display]="this.myRole === 'admin' ? 'block' : 'none'"
+                (click)="onInvite()"
+              >
+                + Mời
+              </div>
+              <div
+                class="primary-button out-btn"
+                [style.display]="this.myRole !== '' ? 'block' : 'none'"
+                (click)="onLeave()"
+              >
+                Rời nhóm
+              </div>
             </div>
 
             <!-- ACCEPT OR CANCEL INVITE BUTTON -->
-            <div class="accept-and-cancel"
-              [style.display]="!this.isMember && this.joinStatus === MemberJoinStatus.ADMIN_INVITE ? 'flex' : 'none'">
-              <div class="primary-button accept-btn" (click)="onAcceptInvite()">
-                Đồng ý
-              </div>
-              <div class="primary-button decline-btn" (click)="onDeclineInvite()">
-                Từ chối
-              </div>
+            <div
+              class="accept-and-cancel"
+              [style.display]="!this.isMember && this.joinStatus === MemberJoinStatus.ADMIN_INVITE ? 'flex' : 'none'"
+            >
+              <div class="primary-button accept-btn" (click)="onAcceptInvite()">Đồng ý</div>
+              <div class="primary-button decline-btn" (click)="onDeclineInvite()">Từ chối</div>
             </div>
           </div>
         </div>
 
-        <div class="seft-request"
-          [style.display]="!this.isMember && this.joinStatus === MemberJoinStatus.JOIN_REQUEST ? 'flex' : 'none'">
+        <div
+          class="seft-request"
+          [style.display]="!this.isMember && this.joinStatus === MemberJoinStatus.JOIN_REQUEST ? 'flex' : 'none'"
+        >
           Yêu cầu của bạn đang được Quản trị viên xử lý
         </div>
 
-        <div class="seft-request"
-          [style.display]="!this.isMember && this.joinStatus === MemberJoinStatus.ADMIN_INVITE ? 'flex' : 'none'">
+        <div
+          class="seft-request"
+          [style.display]="!this.isMember && this.joinStatus === MemberJoinStatus.ADMIN_INVITE ? 'flex' : 'none'"
+        >
           Bạn nhận được lời mời tham gia vào nhóm này
         </div>
 
         <div class="row detail-group__group-tabs">
-          <div class="col-3 detail-group__tab" [ngClass]="{ selectedTabStyle: this.selectedTab === tab?.id }"
-            *ngFor="let tab of tabContext" (click)="onSelectTab(tab?.id)">
+          <div
+            class="col-3 detail-group__tab"
+            [ngClass]="{ selectedTabStyle: this.selectedTab === tab?.id }"
+            *ngFor="let tab of tabContext"
+            (click)="onSelectTab(tab?.id)"
+          >
             {{ tab?.name }}
           </div>
         </div>
@@ -77,7 +101,10 @@
 </div>
 
 <div id="invite-modal" class="invite-modal" [style.display]="this.openInviteModal ? 'block' : 'none'">
-  <app-invite-modal [groupId]="this.groupId" [isOpenModal]="this.openInviteModal"
-    (modalChange)="this.openInviteModal = $event">
+  <app-invite-modal
+    [groupId]="this.groupId"
+    [isOpenModal]="this.openInviteModal"
+    (modalChange)="this.openInviteModal = $event"
+  >
   </app-invite-modal>
 </div>

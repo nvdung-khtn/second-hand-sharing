@@ -1,23 +1,21 @@
 <div class="about-event">
-    <div class="about-event__title">
-        Thông tin sự kiện
-    </div>
-    
-    <div class="flex">
-        <mat-icon class="icon">calendar_today</mat-icon>
-        <div class="text">
-            {{eventDetail?.startDate}} - {{eventDetail?.endDate}}
-        </div>        
-    </div>
+  <div class="about-event__title">Thông tin sự kiện</div>
 
-    <div class="flex">
-        <mat-icon class="icon">flag</mat-icon>
-        <div class="text">
-            {{hostedGroup?.groupName}}
-        </div>        
+  <div class="flex">
+    <mat-icon class="icon red">calendar_today</mat-icon>
+    <div class="text">
+      {{ eventDetail?.startDate | date: "dd/MM/yyyy" }} - {{ eventDetail?.endDate | date: "dd/MM/yyyy" }}
     </div>
+  </div>
 
-    <div class="about-event__description">
-        {{eventDetail?.content}}
+  <div class="flex">
+    <mat-icon class="icon blue">flag</mat-icon>
+    <div class="text">
+      {{ eventDetail?.groupName }}
     </div>
+  </div>
+
+  <div class="about-event__description">
+    {{ eventDetail?.content }}
+  </div>
 </div>

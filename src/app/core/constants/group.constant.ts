@@ -4,7 +4,7 @@ export class Group {
     id: number;
     groupName: string;
     description: string;
-    avatarURL: string;
+    avatarUrl: string;
     createDate: string;
     rules: string;
 }
@@ -31,4 +31,14 @@ export class Group_Member {
         public member: UserInfo[],
         public joinedRequest: UserInfo[]
     ) {}
+}
+
+export class GroupPost {
+    id: number;
+    content: string;
+    postTime: string;
+    imageUrl: string[];
+    postByAccountId: number;
+    postByAccountName: string;
+    avatarUrl: string;
 }

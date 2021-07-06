@@ -106,9 +106,12 @@
 
 .btn-group {
     margin-top: 12px;
-    width: 25%;
     float: right;
     display: flex;
     justify-content: flex-end;
     align-items: center;
+}
+
+.border-radius {
+    border-radius: $border-radius-light !important;
 }

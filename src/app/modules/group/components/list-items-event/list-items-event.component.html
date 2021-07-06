@@ -1,4 +1,4 @@
-<div class="create-post">
+<div class="create-post" [style.display]="this.isEventEnded === true ? 'none' : 'flex'">
   <div class="create-post__btn">
     <div class="create-post__btn__inside" (click)="onClickPost()">Quyên góp vật phẩm</div>
   </div>
@@ -45,9 +45,12 @@
       </div>
     </div>
   </div>
-  <div [style.display]="listItemEvent?.length === 0 ? 'flex' : 'none'" class="noData">
-    <!-- Them hình ảnh | icon -->
+  <div [style.display]="this.myRole !== '' && listItemEvent?.length === 0 ? 'flex' : 'none'" class="noData">
     Chưa có vật phẩm quyên góp
+  </div>
+
+  <div [style.display]="this.myRole === '' && listItemEvent?.length === 0 ? 'flex' : 'none'" class="noData">
+    Bạn chưa quyên góp vật phẩm nào
   </div>
 
   <div [style.display]="isEnd && listItemEvent?.length !== 0 ? 'flex' : 'none'" class="endData">
