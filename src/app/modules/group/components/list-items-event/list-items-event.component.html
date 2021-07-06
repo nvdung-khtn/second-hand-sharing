@@ -4,10 +4,25 @@
   </div>
 </div>
 
-<div *ngIf="listItemEvent; else loadingTmpl" class="list-event-items" infiniteScroll
-  [infiniteScrollDistance]="itemListScrollDistance" [infiniteScrollThrottle]="itemListScrollThrottle"
-  (scrolled)="onItemListScrollDown()" [scrollWindow]="false" [alwaysCallback]="true"
-  [style.display]="listItemEvent?.length === 0 ? 'flex' : 'block'">
+<div class="create-post flex" *ngIf="this.myRole !== ''" (click)="onToogleEventDonations()">
+  <div class="flex-text">
+    Danh sách vật phẩm quyên góp <span class="number-donate">({{listItemEvent?.length}})</span>
+  </div>
+
+  <mat-icon [style.transform]="this.toogleEventDonations === true ? 'rotate(180deg)' : 'unset'">keyboard_arrow_down</mat-icon>
+</div>
+
+<div
+  *ngIf="listItemEvent && this.myRole !== '' && this.toogleEventDonations === true; else loadingTmpl"
+  class="list-event-items"
+  infiniteScroll
+  [infiniteScrollDistance]="itemListScrollDistance"
+  [infiniteScrollThrottle]="itemListScrollThrottle"
+  (scrolled)="onItemListScrollDown()"
+  [scrollWindow]="false"
+  [alwaysCallback]="true"
+  [style.display]="listItemEvent?.length === 0 ? 'flex' : 'block'"
+>
   <div class="list-event-items__grid" [style.display]="listItemEvent?.length === 0 ? 'none' : 'grid'">
     <div class="list-event-items__grid__card" *ngFor="let item of listItemEvent"
       [routerLink]="['/group',this.groupId, 'event', this.eventId, 'item', item?.id]">
@@ -37,15 +52,71 @@
       </div>
     </div>
   </div>
-  <div [style.display]="this.myRole !== '' && listItemEvent?.length === 0 ? 'flex' : 'none'" class="noData">
+  <div [style.display]="listItemEvent?.length === 0 ? 'flex' : 'none'" class="noData">
     Chưa có vật phẩm quyên góp
   </div>
 
-  <div [style.display]="this.myRole === '' && listItemEvent?.length === 0 ? 'flex' : 'none'" class="noData">
+  <div [style.display]="isEnd && listItemEvent?.length !== 0 ? 'flex' : 'none'" class="endData">
+    Không còn bài đăng để xem
+  </div>
+</div>
+
+<div class="create-post flex" (click)="onToogleMyDonations()">
+  <div class="flex-text">
+    Quyên góp của tôi <span class="number-donate">({{myItemDonations?.length}})</span>
+  </div>
+
+  <mat-icon [style.transform]="this.toogleMyDonations === true ? 'rotate(180deg)' : 'unset'">keyboard_arrow_down</mat-icon>
+
+</div>
+
+<div
+  *ngIf="myItemDonations && this.toogleMyDonations === true; else loadingTmpl"
+  class="list-event-items"
+  infiniteScroll
+  [infiniteScrollDistance]="itemListScrollDistance"
+  [infiniteScrollThrottle]="itemListScrollThrottle"
+  (scrolled)="onItemListScrollDown()"
+  [scrollWindow]="false"
+  [alwaysCallback]="true"
+  [style.display]="myItemDonations?.length === 0 ? 'flex' : 'block'"
+>
+  <div class="list-event-items__grid" [style.display]="myItemDonations?.length === 0 ? 'none' : 'grid'">
+    <div class="list-event-items__grid__card" *ngFor="let item of myItemDonations" [routerLink]="['/group',this.groupId, 'event', this.eventId, 'item', item?.id]">
+      <div class="list-event-items__grid__card__image">
+        <img
+          class="list-event-items__grid__card__image__inside"
+          [src]="item?.imageUrl ? item.imageUrl : 'assets/image/default-image.png'"
+        />
+      </div>
+
+      <div class="list-event-items__grid__card__name">
+        {{ item?.itemName }}
+      </div>
+
+      <div class="list-event-items__grid__card__userName">
+        {{ item?.donateAccountName }}
+      </div>
+
+      <div class="list-event-items__grid__card__post-info">
+        <div class="list-event-items__grid__card__post-info__time">
+          {{ item?.postTime | time }} - {{ item?.address | address }}
+        </div>
+      </div>
+
+      <div class="list-event-items__grid__card__line"></div>
+
+      <div class="list-event-items__grid__card__description">
+        {{ item?.description }}
+      </div>
+    </div>
+  </div>
+
+  <div [style.display]="myItemDonations?.length === 0 ? 'flex' : 'none'" class="noData">
     Bạn chưa quyên góp vật phẩm nào
   </div>
 
-  <div [style.display]="isEnd && listItemEvent?.length !== 0 ? 'flex' : 'none'" class="endData">
+  <div [style.display]="isEnd && myItemDonations?.length !== 0 ? 'flex' : 'none'" class="endData">
     Không còn bài đăng để xem
   </div>
 </div>
