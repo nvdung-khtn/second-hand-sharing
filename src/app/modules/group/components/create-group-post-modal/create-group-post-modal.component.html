@@ -6,6 +6,11 @@
     <div class="row-control">
       <textarea formControlName="content" rows="4" class="input" placeholder="Nội dung bài viết"></textarea>
     </div>
+    <div *ngIf="content.invalid && (content.dirty || content.touched)" class="message-error">
+      <div *ngIf="content.errors?.required">
+        Vui lòng nhập trường này.
+      </div>
+    </div>
 
     <!-- add image -->
     <div class="create-group-post__add-image">
@@ -29,8 +34,8 @@
     <div class="privacy">
       <mat-form-field appearance="fill">
         <mat-label>Quyền riêng tư</mat-label>
-        <mat-select disableOptionCentering (selectionChange)="onSelectedPrivacy($event)">
-          <mat-option *ngFor="let privacy of privacyList" [value]="privacy">
+        <mat-select [(value)]="privacyList[0].id" disableOptionCentering (selectionChange)="onSelectedPrivacy($event)">
+          <mat-option *ngFor="let privacy of privacyList" [value]="privacy.id">
             {{ privacy.name }}
           </mat-option>
         </mat-select>
@@ -40,3 +45,5 @@
     <button type="submit" class="primary-button create-group-post__create-btn">Đăng bài</button>
   </form>
 </div>
+
+<app-loader [style.display]="this.loading ? 'block' : 'none'"></app-loader>

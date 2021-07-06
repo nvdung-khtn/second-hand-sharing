@@ -4,6 +4,8 @@ import { environment } from 'src/environments/environment';
 import { ResponseModel, SearchRequest } from '../constants/common.constant';
 import { Group, Member } from '../constants/group.constant';
 import { Observable } from 'rxjs';
+import { CreateItem } from '../constants/item.constant';
+import { CreatePostRequest } from '../constants/group-post.constant';
 
 @Injectable({
     providedIn: 'root',

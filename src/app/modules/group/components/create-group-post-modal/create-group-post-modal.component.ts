@@ -1,7 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { GroupPostClient } from 'src/app/core/api-clients/group-post.client';
 import { GroupClient } from 'src/app/core/api-clients/group.client';
+import { UploadImageService } from 'src/app/shared/service/uploadImage.service';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'app-create-group-post-modal',
@@ -35,15 +38,20 @@ export class CreateGroupPostModalComponent implements OnInit {
         },
     ];
 
+    loading = false;
+    preSignUrl: string[] = [];
+    isSuccess = true;
+
     groupForm: FormGroup;
 
     constructor(
         private fb: FormBuilder,
-        private groupClient: GroupClient,
-        private toastr: ToastrService
+        private groupPostClient: GroupPostClient,
+        private toastr: ToastrService,
+        private uploadImageService: UploadImageService
     ) {
         this.groupForm = this.fb.group({
-            visibility: ['', [Validators.required]],
+            visibility: [1, [Validators.required]],
             content: ['', [Validators.required]],
         });
     }
@@ -63,6 +71,7 @@ export class CreateGroupPostModalComponent implements OnInit {
     onCloseModal() {
         this.isOpenModal = false;
         this.modalChange.emit(this.isOpenModal);
+        this.groupForm.reset();
     }
 
     onSubmit() {
@@ -71,18 +80,53 @@ export class CreateGroupPostModalComponent implements OnInit {
             return;
         }
 
-        // api tạo sự kiện
+        const formData = {
+            ...this.groupForm.value,
+            imageNumber: this.selectedFiles?.length,
+            groupId: this.groupId,
+        };
 
-        /* this.groupClient.createGroup(this.groupForm.getRawValue()).subscribe((response) => {
-          this.toastr.success('Tạo group thành công.');
-          this.onCloseModal();
-          window.location.reload();
-      }); */
+        this.loading = true;
+        this.groupPostClient.createPost(formData).subscribe(
+            (response) => {
+                this.loading = false;
+                response.data.imageUploads.forEach((image) =>
+                    this.preSignUrl.push(image.presignUrl)
+                );
+                // Upload image to cloud
+                this.uploadImages(this.preSignUrl);
+                this.isSuccess = true;
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success...',
+                    text: 'Đăng bài thành công.',
+                }).then(() => this.onCloseModal());
+
+                this.loading = false;
+            },
+            (error) => {
+                this.loading = false;
+                console.log(error);
+            }
+        );
+    }
+
+    uploadImages(urls) {
+        // Reset selectedFiles
+        const images = this.selectedFiles;
+        this.selectedFiles = null;
+        // Upload to cloude
+        if (images) {
+            const count = images.length;
+
+            for (let index = 0; index < count; index++) {
+                this.uploadImageService.uploadSingleImage(urls[index], images[index]).subscribe();
+            }
+        }
     }
 
     showSelectedFile(event) {
-        // let event = originalEvent;
-        // tslint:disable-next-line: prefer-for-of
         for (let i = 0; i < event?.target?.files?.length; i++) {
             this.myFiles.push(event.target.files[i]);
             if (!event.target.files[i] || event.target.files[i].length === 0) {
