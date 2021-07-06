@@ -4,12 +4,7 @@
     <img class="post-owner__avatar" [src]="post?.avatarUrl ? post?.avatarUrl : 'assets/image/default-avatar.png'" />
     <div class="post-owner__info">
       <div class="post-owner__name">{{ post?.postByAccountName }}</div>
-      <div class="post-owner__time">{{ post?.postTime | time }}
-        <span>- công khai</span>
-        <template>
-          <span>- không công khai</span>
-        </template>
-      </div>
+      <div class="post-owner__time">{{ post?.postTime | time }}</div>
     </div>
   </div>
 
