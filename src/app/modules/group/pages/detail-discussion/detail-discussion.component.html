@@ -15,9 +15,11 @@
       <div class="">{{ detailPost?.content }}</div>
     </div>
 
+    <span class="post-element__left__close" (click)="onClose()">&times;</span>
+
+
     <div class="post-element" [style.display]="detailPost?.imageUrl.length === 0 ? 'none' : 'block'">
       <div class="post-element__left">
-        <span class="post-element__left__close" (click)="onClose()">&times;</span>
 
         <mat-carousel
           class="post-element__left__image"

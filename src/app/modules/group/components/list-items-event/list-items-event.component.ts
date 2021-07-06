@@ -22,6 +22,7 @@ export class ListItemsEventComponent implements OnInit {
     isEventEnded = false;
 
     listItemEvent = [];
+    myItemDonations = [];
 
     eventId: number;
     groupId: number;
@@ -36,6 +37,10 @@ export class ListItemsEventComponent implements OnInit {
     message: string;
     isOpenModal = false;
     defaultReq: SearchRequest;
+
+    // toogle
+    toogleEventDonations = false;
+    toogleMyDonations = false;
 
     // tslint:disable: no-inferrable-types
     private defaultPageNumber: number = 1;
@@ -79,17 +84,20 @@ export class ListItemsEventComponent implements OnInit {
                         this.eventClient.getAllItemsInEvent(this.defaultReq, this.eventId).subscribe((response) => {
                             this.listItemEvent = response?.data;
                         })
+                        this.eventClient.getMyDonations(this.defaultReq, this.eventId).subscribe((response) => {
+                            this.myItemDonations = response?.data;
+                        })
                     }
                     else {
                         this.eventClient.getMyDonations(this.defaultReq, this.eventId).subscribe((response) => {
-                            this.listItemEvent = response?.data;
+                            this.myItemDonations = response?.data;
                         })
                     }
                 }
             },
             (error) => {
                 this.eventClient.getMyDonations(this.defaultReq, this.eventId).subscribe((response) => {
-                    this.listItemEvent = response?.data;
+                    this.myItemDonations = response?.data;
                 })
                 console.log(error)
             }
@@ -111,5 +119,13 @@ export class ListItemsEventComponent implements OnInit {
         if (now >= end) {
             this.isEventEnded = true;
         }
+    }
+
+    onToogleEventDonations = () => {
+        this.toogleEventDonations = !this.toogleEventDonations;
+    }
+
+    onToogleMyDonations = () => {
+        this.toogleMyDonations = !this.toogleMyDonations;
     }
 }
