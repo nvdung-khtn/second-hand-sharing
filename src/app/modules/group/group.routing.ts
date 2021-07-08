@@ -10,9 +10,10 @@ import { FormsModule } from '@angular/forms';
 const routes: Routes = [
     { path: '', component: GroupComponent },
     { path: ':id', component: DetailGroupComponent },
-    { path: ':groupId/discussion/:discussionId', component: DetailDiscussionComponent },
-    { path: ':groupId/event/:eventId', component: EventComponent },
-    { path: ':groupId/event/:eventId/item/:itemId', component: DetailItemsEventComponent },
+    { path: ':id/:tabId', component: DetailGroupComponent },
+    { path: ':groupId/2/:discussionId', component: DetailDiscussionComponent },
+    { path: ':groupId/3/:eventId', component: EventComponent },
+    { path: ':groupId/3/:eventId/item/:itemId', component: DetailItemsEventComponent },
 ];
 
 @NgModule({

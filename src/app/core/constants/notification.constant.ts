@@ -6,6 +6,9 @@ export enum NotifyType {
     REQUEST_STATUS,
     SEND_THANKS,
     CONFIRM_SENT,
+    INVITE_MEMBER,
+    ACCEPT_INVITATION,
+    JOIN_REQUEST
 }
 
 export class Notification {

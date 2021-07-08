@@ -2,11 +2,13 @@
 // tslint:disable: prefer-for-of
 import { Component, Input, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
 import { GroupClient } from 'src/app/core/api-clients/group.client';
 import { SearchRequest } from 'src/app/core/constants/common.constant';
 import { Member } from 'src/app/core/constants/group.constant';
+import { NotificationService } from 'src/app/shared/service/notification.service';
 import Swal from 'sweetalert2';
-
+import { NotifyType } from 'src/app/core/constants/notification.constant';
 @Component({
     selector: 'app-members-group',
     templateUrl: './members-group.component.html',
@@ -24,11 +26,43 @@ export class MembersGroupComponent implements OnInit {
     members: Member[];
     requestJoins: Member[];
 
-    constructor(private groupClient: GroupClient, private toastr: ToastrService) {
+    // noti
+    subscriptionNoti: Subscription;
+    realTimeNoti: any;
+    notification: any;
+    notiType: string;
+
+    constructor(
+        private groupClient: GroupClient,
+        private toastr: ToastrService,
+        private notificationService: NotificationService
+    ) {
         this.memberRequest = new SearchRequest(1, 100);
     }
 
     ngOnInit(): void {
+        this.subscriptionNoti = this.notificationService.currentNoti.subscribe((message: any) => {
+            this.realTimeNoti = message;
+            this.notification = this.parseNoti(this.realTimeNoti);
+            this.notiType = this.parseType(this.realTimeNoti);
+            if (this.notification?.groupId === this.groupId) {
+                if (this.notiType === NotifyType.JOIN_REQUEST + '') {
+                    this.groupClient
+                        .getAllRequestJoin(this.memberRequest, this.groupId)
+                        .subscribe((response) => {
+                            this.requestJoins = response.data;
+                        });
+                }
+                if (this.notiType === NotifyType.ACCEPT_INVITATION + '') {
+                    this.groupClient
+                        .getAllMemberByGroupId(this.memberRequest, this.groupId)
+                        .subscribe((response) => {
+                            this.members = response.data;
+                        });
+                }
+            }
+        });
+
         // gọi api get member list và get admin
         this.groupClient
             .getAllAdminByGroupId(this.memberRequest, this.groupId)
@@ -167,4 +201,15 @@ export class MembersGroupComponent implements OnInit {
             this.toastr.success('Từ chối yêu cầu thành công');
         });
     }
+    parseNoti = (message) => {
+        if (message.hasOwnProperty('message')) {
+            return JSON.parse(message?.message);
+        }
+    };
+
+    parseType = (message) => {
+        if (message.hasOwnProperty('type')) {
+            return message?.type;
+        }
+    };
 }

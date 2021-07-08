@@ -20,7 +20,7 @@ export class EventComponent implements OnInit {
         },
     ];
 
-    selectedTab = 1;
+    selectedTab = 2;
     eventId: number;
     isMember = false;
     myRole = '';
