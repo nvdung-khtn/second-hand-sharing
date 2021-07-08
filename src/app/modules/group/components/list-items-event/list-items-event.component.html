@@ -82,7 +82,7 @@
   [style.display]="myItemDonations?.length === 0 ? 'flex' : 'block'"
 >
   <div class="list-event-items__grid" [style.display]="myItemDonations?.length === 0 ? 'none' : 'grid'">
-    <div class="list-event-items__grid__card" *ngFor="let item of myItemDonations" [routerLink]="['/group',this.groupId, 'event', this.eventId, 'item', item?.id]">
+    <div class="list-event-items__grid__card" *ngFor="let item of myItemDonations" [routerLink]="['/group',this.groupId, '3', this.eventId, 'item', item?.id]">
       <div class="list-event-items__grid__card__image">
         <img
           class="list-event-items__grid__card__image__inside"
