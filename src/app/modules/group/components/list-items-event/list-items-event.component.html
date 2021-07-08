@@ -1,12 +1,12 @@
 <div class="create-post" [style.display]="this.isEventEnded === true ? 'none' : 'flex'">
   <div class="create-post__btn">
-    <div class="create-post__btn__inside" (click)="onClickPost()">Quyên góp vật phẩm</div>
+    <div class="create-post__btn__inside" (click)="onClickPost()">Tặng vật phẩm cho sự kiện</div>
   </div>
 </div>
 
 <div class="create-post flex" *ngIf="this.myRole !== ''" (click)="onToogleEventDonations()">
   <div class="flex-text">
-    Danh sách vật phẩm quyên góp <span class="number-donate">({{listItemEvent?.length}})</span>
+    Danh sách vật phẩm tặng sự kiện <span class="number-donate">({{listItemEvent?.length}})</span>
   </div>
 
   <mat-icon [style.transform]="this.toogleEventDonations === true ? 'rotate(180deg)' : 'unset'">keyboard_arrow_down</mat-icon>
@@ -53,7 +53,7 @@
     </div>
   </div>
   <div [style.display]="listItemEvent?.length === 0 ? 'flex' : 'none'" class="noData">
-    Chưa có vật phẩm quyên góp
+    Chưa có vật phẩm tặng sự kiện
   </div>
 
   <div [style.display]="isEnd && listItemEvent?.length !== 0 ? 'flex' : 'none'" class="endData">
@@ -63,7 +63,7 @@
 
 <div class="create-post flex" (click)="onToogleMyDonations()">
   <div class="flex-text">
-    Quyên góp của tôi <span class="number-donate">({{myItemDonations?.length}})</span>
+    Vật phẩm tặng sự kiện của tôi <span class="number-donate">({{myItemDonations?.length}})</span>
   </div>
 
   <mat-icon [style.transform]="this.toogleMyDonations === true ? 'rotate(180deg)' : 'unset'">keyboard_arrow_down</mat-icon>
@@ -113,7 +113,7 @@
   </div>
 
   <div [style.display]="myItemDonations?.length === 0 ? 'flex' : 'none'" class="noData">
-    Bạn chưa quyên góp vật phẩm nào
+    Bạn chưa tặng sự kiện vật phẩm nào
   </div>
 
   <div [style.display]="isEnd && myItemDonations?.length !== 0 ? 'flex' : 'none'" class="endData">

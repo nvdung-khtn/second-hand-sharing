@@ -75,8 +75,8 @@
         </div>
       </div>
       <!-- <div class="user-profile__heading">Bài đã đăng</div> -->
-      <app-list-items *ngIf="this.selectedTab === 1" [registration]="true" [registrationId]="this.userId"></app-list-items>
-      <app-list-items *ngIf="this.selectedTab === 2" [donations]="true" [donationsId]="this.userId"></app-list-items>
+      <app-list-items *ngIf="this.selectedTab === 1"  [isSelfScroll]="true" [registration]="true" [registrationId]="this.userId"></app-list-items>
+      <app-list-items *ngIf="this.selectedTab === 2"  [isSelfScroll]="true" [donations]="true" [donationsId]="this.userId"></app-list-items>
     </div>
   </div>
 

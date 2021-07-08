@@ -8,6 +8,9 @@
   [scrollWindow]="false"
   [alwaysCallback]="true"
   [style.display]="items?.length === 0 ? 'flex' : 'block'"
+  [infiniteScrollContainer]="this.scrollContainer"
+  [fromRoot]="true"
+  [ngClass]="{ selfScroll: this.isSelfScroll === true }"
 >
   <div class="list-items__grid" [style.display]="items?.length === 0 ? 'none' : 'grid'">
     <div class="list-items__grid__card" routerLink="/item/{{ item?.id }}" *ngFor="let item of items">

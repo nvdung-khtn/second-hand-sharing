@@ -1,7 +1,7 @@
 <div class="create-post-modal">
   <span class="create-post-modal__close" (click)="onClose()">&times;</span>
 
-  <div class="create-post-modal__title">{{ !isPostItemEvent ? "Đăng bài viết" : "Quyên góp mới" }}</div>
+  <div class="create-post-modal__title">{{ !isPostItemEvent ? "Đăng vật phẩm cần tặng" : "Tặng vật phẩm cho sự kiện" }}</div>
 
   <div class="create-post-modal__user-info">
     <div class="create-post-modal__user-info__profile">
@@ -41,7 +41,7 @@
   </div>
 
   <form [formGroup]="postForm" (ngSubmit)="onSubmitPost()">
-    <input class="create-post-modal__input-title" placeholder="Tiêu đề" formControlName="itemName" />
+    <input class="create-post-modal__input-title" placeholder="Tên vật phẩm" formControlName="itemName" />
 
     <div class="create-post-modal__add-image">
       <div *ngFor="let item of url; let index = index" class="create-post-modal__add-image__container">
@@ -85,7 +85,7 @@
       formControlName="description"
     ></textarea>
 
-    <button type="submit" class="create-post-modal__btn">{{ !isPostItemEvent ? "Đăng bài" : "Tạo quyên góp" }}</button>
+    <button type="submit" class="create-post-modal__btn">{{ !isPostItemEvent ? "Đăng vật phẩm" : "Tặng" }}</button>
   </form>
 
   <div class="address-modal" [style.display]="this.isOpenAddressModal ? 'block' : 'none'">
