@@ -1,5 +1,5 @@
 .my-registration {
     ::ng-deep .list-items {
-        height: 100vh !important;
+        height: calc(100vh - 11vh) !important;
     }
 }

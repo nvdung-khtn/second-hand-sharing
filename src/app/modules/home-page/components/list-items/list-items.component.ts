@@ -18,6 +18,8 @@ export class ListItemsComponent implements OnInit, OnChanges {
     @Input() donationsId: number;
     @Input() registration: boolean;
     @Input() registrationId: number;
+    @Input() scrollContainer = ".list-items";
+    @Input() isSelfScroll = false;
 
     loading = false;
     isEnd = false;

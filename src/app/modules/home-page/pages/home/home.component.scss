@@ -1,6 +1,8 @@
 @import '../../../../../styles/variables';
 
 .home{
+    height: 90vh;
+    overflow-y: scroll;
 
     &__section {
         margin-bottom: 12px;

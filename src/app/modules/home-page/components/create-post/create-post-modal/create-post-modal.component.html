@@ -1,7 +1,7 @@
 <div class="create-post-modal">
   <span class="create-post-modal__close" (click)="onClose()">&times;</span>
 
-  <div class="create-post-modal__title">{{ !isPostItemEvent ? "Đăng bài viết" : "Quyên góp mới" }}</div>
+  <div class="create-post-modal__title">{{ !isPostItemEvent ? "Đăng món hàng cần tặng" : "Quyên góp mới" }}</div>
 
   <div class="create-post-modal__user-info">
     <div class="create-post-modal__user-info__profile">
@@ -85,7 +85,7 @@
       formControlName="description"
     ></textarea>
 
-    <button type="submit" class="create-post-modal__btn">{{ !isPostItemEvent ? "Đăng bài" : "Tạo quyên góp" }}</button>
+    <button type="submit" class="create-post-modal__btn">{{ !isPostItemEvent ? "Đăng món hàng" : "Tặng" }}</button>
   </form>
 
   <div class="address-modal" [style.display]="this.isOpenAddressModal ? 'block' : 'none'">
