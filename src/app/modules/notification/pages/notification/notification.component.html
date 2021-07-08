@@ -76,6 +76,45 @@
             Chủ sở hữu đã xác nhận tặng vật phẩm cho <b>{{ handleReceiverName(noti?.data) }}</b>
           </div>
         </div>
+
+        <div
+          #INVITE_MEMBER
+          *ngIf="noti?.type === NotifyType.INVITE_MEMBER"
+          class="flex"
+        >
+          <img class="notification__avatar" src="{{noti?.data?.avatarUrl || 'assets/image/group.png'}}" />
+
+          <div class="noti-info">
+            <div class="notification__title">{{ noti?.data?.groupName }}</div>
+            Bạn nhận được lời mời vào nhóm <b>{{ noti?.data?.groupName }}</b>
+          </div>
+        </div>
+
+        <div
+          #ACCEPT_INVITATION
+          *ngIf="noti?.type === NotifyType.ACCEPT_INVITATION"
+          class="flex"
+        >
+          <img class="notification__avatar" src="{{noti?.data?.avatarUrl || 'assets/image/group.png'}}" />
+
+          <div class="noti-info">
+            <div class="notification__title">{{ noti?.data?.groupName }}</div>
+            <b>{{ noti?.data?.fullName }}</b> đã chấp nhận lời mời vào nhóm <b>{{ noti?.data?.groupName }}</b>
+          </div>
+        </div>
+
+        <div
+          #JOIN_REQUEST
+          *ngIf="noti?.type === NotifyType.JOIN_REQUEST"
+          class="flex"
+        >
+          <img class="notification__avatar" src="{{noti?.data?.avatarUrl || 'assets/image/group.png'}}" />
+
+          <div class="noti-info">
+            <div class="notification__title">{{ noti?.data?.groupName }}</div>
+            <b>{{ noti?.data?.fullName }}</b> đã gửi yêu cầu tham gia vào nhóm <b>{{ noti?.data?.groupName }}</b>
+          </div>
+        </div>
       </div>
       <div class="time">
         <i>{{ noti?.createTime | time }}</i>

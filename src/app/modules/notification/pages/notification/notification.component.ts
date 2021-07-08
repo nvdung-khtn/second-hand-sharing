@@ -65,12 +65,27 @@ export class NotificationComponent implements OnInit {
     }
 
     handleNotiType(type: number, index) {
-        if (type !== 5) {
+        if (type !== 5 && type <= 6) {
             this.loading = true;
             const data: any = this.notifications[index].data;
             this.router.navigate(['/item', data.itemId]).then(() => {
                 this.loading = false;
             });
+        }
+
+        if (type >= 6 ) {
+            this.loading = true;
+            const data: any = this.notifications[index].data;
+            if (type === 9) {
+                this.router.navigate(['/group', data.groupId, '4']).then(() => {
+                    this.loading = false;
+                });
+            }
+            else {
+                this.router.navigate(['/group', data.groupId]).then(() => {
+                    this.loading = false;
+                });
+            }
         }
     }
 }

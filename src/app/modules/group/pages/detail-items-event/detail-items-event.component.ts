@@ -147,7 +147,7 @@ export class DetailItemsEventComponent implements OnInit {
         this.eventClient.rejectItem(this.eventId, this.itemId).subscribe((response) => {
             this.isAccepted = false;
             this.toastr.success("Đã từ chối nhận vật phẩm này")
-            this.router.navigateByUrl(`/group/${this.groupId}/event/${this.eventId}`)
+            this.router.navigateByUrl(`/group/${this.groupId}/3/${this.eventId}`)
         })
     }
 

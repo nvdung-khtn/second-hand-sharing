@@ -1,5 +1,5 @@
 <div class="list-discusstion" *ngFor="let post of listDiscussion"
-  [routerLink]="['/group', this.groupId, 'discussion', post?.id]">
+  [routerLink]="['/group', this.groupId, '2', post?.id]">
   <div class="post-owner">
     <img class="post-owner__avatar" [src]="post?.avatarUrl ? post?.avatarUrl : 'assets/image/default-avatar.png'" />
     <div class="post-owner__info">

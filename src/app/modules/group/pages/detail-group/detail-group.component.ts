@@ -1,15 +1,18 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Subject } from 'rxjs';
 import { map, pluck, takeUntil } from 'rxjs/operators';
 import { GroupClient } from 'src/app/core/api-clients/group.client';
 import { Group, MemberJoinStatus } from 'src/app/core/constants/group.constant';
 import { UserInfo } from 'src/app/core/constants/user.constant';
 import { AuthService } from 'src/app/shared/service/auth.service';
+import { NotificationService } from 'src/app/shared/service/notification.service';
 import { UploadImageService } from 'src/app/shared/service/uploadImage.service';
 import Swal from 'sweetalert2';
+import { NotifyType } from 'src/app/core/constants/notification.constant';
+import {Location} from '@angular/common'; 
 
 @Component({
     selector: 'app-detail-group',
@@ -48,6 +51,12 @@ export class DetailGroupComponent implements OnInit, OnDestroy {
     joinStatus: MemberJoinStatus;
     MemberJoinStatus = MemberJoinStatus;
 
+    // noti
+    subscriptionNoti: Subscription;
+    realTimeNoti: any;
+    notification: any;
+    notiType: string;
+
     destroy$ = new Subject<void>();
     constructor(
         private route: ActivatedRoute,
@@ -55,7 +64,9 @@ export class DetailGroupComponent implements OnInit, OnDestroy {
         private groupClient: GroupClient,
         private authService: AuthService,
         private toastr: ToastrService,
-        private uploadImageService: UploadImageService
+        private uploadImageService: UploadImageService,
+        private notificationService: NotificationService,
+        private location: Location
     ) {}
 
     ngOnInit() {
@@ -63,8 +74,37 @@ export class DetailGroupComponent implements OnInit, OnDestroy {
         this.route.paramMap
             .pipe(map((params) => +params.get('id')))
             .subscribe((id) => (this.groupId = +id));
-
+        this.selectedTab = Number(this.route.snapshot.paramMap.get('tabId') || 1);
+        if (this.selectedTab <= 0 || this.selectedTab > 4 || isNaN(this.selectedTab)) {
+            this.router.navigateByUrl('/404');
+        }
         this.loadData();
+
+        this.subscriptionNoti = this.notificationService.currentNoti.subscribe((message: any) => {
+            this.realTimeNoti = message;
+            this.notification = this.parseNoti(this.realTimeNoti);
+            this.notiType = this.parseType(this.realTimeNoti);
+            if (this.notification?.groupId === this.groupId) {
+                if (this.notiType === NotifyType.INVITE_MEMBER + '') {
+                    this.groupClient.getJoinStatus(this.groupId).subscribe((response) => {
+                        this.joinStatus = response.data;
+                    });
+                    this.toastr.success(
+                        `Bạn nhận được yêu cầu tham gia vào nhóm ${this.notification?.groupName}`
+                    );
+                }
+                if (this.notiType === NotifyType.ACCEPT_INVITATION + '') {
+                    this.toastr.success(
+                        `${this.notification?.fullName} đã chấp nhận yêu cầu tham gia vào nhóm này`
+                    );
+                }
+                if (this.notiType === NotifyType.JOIN_REQUEST + '') {
+                    this.toastr.success(
+                        `${this.notification?.fullName} đã gửi yêu cầu tham gia vào nhóm này`
+                    );
+                }
+            }
+        });
     }
 
     loadData() {
@@ -94,7 +134,7 @@ export class DetailGroupComponent implements OnInit, OnDestroy {
                 if (response.succeeded) {
                     this.myRole = response.message;
                     this.isMember = true;
-                    this.selectedTab = 2;
+                    /* this.selectedTab = 2; */
                 }
             },
             (error) => {
@@ -105,6 +145,7 @@ export class DetailGroupComponent implements OnInit, OnDestroy {
 
     onSelectTab(id: number) {
         this.selectedTab = id;
+        this.location.replaceState(`/group/${this.groupId}/${this.selectedTab}`)
     }
 
     selectFile(event: any): void {
@@ -217,4 +258,16 @@ export class DetailGroupComponent implements OnInit, OnDestroy {
         this.destroy$.next();
         this.destroy$.complete();
     }
+
+    parseNoti = (message) => {
+        if (message.hasOwnProperty('message')) {
+            return JSON.parse(message?.message);
+        }
+    };
+
+    parseType = (message) => {
+        if (message.hasOwnProperty('type')) {
+            return message?.type;
+        }
+    };
 }
